@@ -1,20 +1,63 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import AccountLogin from '../../model/AccountLogin';
+import Account from '../../model/Account.tsx';
 
 const UserContext = createContext();
 const UserUpdateContext = createContext();
 
 export function UserProvider({ children }) {
-  const [user, setUser] = useState(new AccountLogin("", "", ""));
+  const [user, setUser] = useState(
+    new Account(
+      1,
+      '',
+      '',
+      '',
+      false,
+      false,
+      false,
+      false,
+      true
+    )
+  );
 
-  const handleUserOnChange = (username, password, employeeName) => {
-    setUser(new AccountLogin(username, password, employeeName));
-    localStorage.setItem("employeeName", employeeName);
+  const handleUserOnChange = (
+    accountId,
+    accountUsername,
+    accountPassword,
+    employeeName,
+    accessInventoryManagementSystem,
+    accessEmployeeManagementSystem,
+    accessIncomeAndExpenseSystem,
+    accessOrderingSystem,
+    isActive
+  ) => {
+    setUser(
+      new Account(
+        accountId,
+        accountUsername,
+        accountPassword,
+        employeeName,
+        accessInventoryManagementSystem,
+        accessEmployeeManagementSystem,
+        accessIncomeAndExpenseSystem,
+        accessOrderingSystem,
+        isActive
+    ));
   }
 
   useEffect(() => {
     const fetchUser = () => {
-      setUser(new AccountLogin("", "", localStorage.getItem('employeeName')))
+      setUser(
+        new Account(
+        localStorage.getItem('accountId'),
+        localStorage.getItem('accountUsername'),
+        localStorage.getItem('accountPassword'),
+        localStorage.getItem('employeeName'),
+        localStorage.getItem('accessInventoryManagementSystem'),
+        localStorage.getItem('accessEmployeeManagementSystem'),
+        localStorage.getItem('accessIncomeAndExpenseSystem'),
+        localStorage.getItem('accessOrderingSystem'),
+        localStorage.getItem('isActive')
+      ))
     };
 
     fetchUser();

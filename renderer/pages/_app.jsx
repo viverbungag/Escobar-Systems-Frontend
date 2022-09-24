@@ -2,6 +2,7 @@ import React from "react";
 import Head from "next/head";
 import "../src/styles/global.scss";
 import { UserProvider } from '../src/components/contexts/UserContext';
+import Toast from "../src/components/InventoryManagementSystem/Shared/Toast/Toast"
 
 export default function (props) {
   const { Component, pageProps } = props;
@@ -22,6 +23,7 @@ export default function (props) {
         />
       </Head>
       <UserProvider>
+        <Toast />
         <Component {...pageProps} />
       </UserProvider>
     </React.Fragment>

@@ -1,5 +1,5 @@
 import React from 'react'
-import StockOutTransactionPage from "../src/components/StockOutTransaction/Page/StockOutTransactionPage";
+import StockOutTransactionPage from "../src/components/InventoryManagementSystem/StockOutTransaction/Page/StockOutTransactionPage";
 
 const stockOut = () => {
   return (

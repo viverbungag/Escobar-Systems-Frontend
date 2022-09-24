@@ -120,7 +120,7 @@ class Rest {
       .post(url, body)
       .then(function (response) {
         if (response.status === 200) {
-          handleSuccessAction(response.data.employeeName);
+          handleSuccessAction(response.data);
           toast.success(successMessage);
         }
       })

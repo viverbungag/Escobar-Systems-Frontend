@@ -1,4 +1,4 @@
-import MenuCategoryPage from "../src/components/MenuCategory/Page/MenuCategoryPage";
+import MenuCategoryPage from "../src/components/InventoryManagementSystem/MenuCategory/Page/MenuCategoryPage";
 
 import React from "react";
 
