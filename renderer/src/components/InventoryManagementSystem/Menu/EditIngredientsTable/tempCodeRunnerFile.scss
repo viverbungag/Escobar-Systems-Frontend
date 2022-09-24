@@ -1,0 +1,50 @@
+.edit-ingredients-table{
+    height: 100%;
+    width:100%;
+    max-width:100%;
+
+    table{
+        border-collapse: collapse;
+        border-spacing: 0;
+        min-width:100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        padding: 1rem;
+    }
+
+    &__checkbox-row{
+        width: 0.5rem;
+    }
+
+    &__input{
+        // display: block;
+        width:3rem;
+        height:2rem;
+        font-size: 1rem;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        padding: 0.5rem;
+        // margin : 0 auto;
+        
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+        }
+        &[type=number] {    
+        -moz-appearance: textfield;
+}
+    }
+
+    &__measurement{
+        padding-left: 0.5rem;
+    }
+
+    &__row{
+        &--disabled{
+            background-color: #efefef;
+        }
+    }
+}

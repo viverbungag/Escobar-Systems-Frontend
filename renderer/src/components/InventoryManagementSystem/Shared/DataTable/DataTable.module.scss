@@ -1,0 +1,67 @@
+.data-table{
+    min-width:100%;
+    min-height: 45rem;
+    max-height: 45rem;
+    overflow-y: auto;
+
+    &__row{
+        &--selected{
+            background-color: #f0f8ff;
+        }
+    }
+
+
+    &__checkbox-column{
+        width: 1rem;
+    }
+
+
+    table{
+        border-collapse: collapse;
+        border-spacing: 0;
+        min-width:100%;
+    }
+    tbody{
+        tr{
+            &:hover{
+                background-color: #efefef;
+                cursor: pointer;
+            }
+        }
+    }
+
+
+    td {
+        border-bottom: 1px solid #ddd;
+        padding: 0.5rem;
+    }
+
+    &__controls{
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__sort {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__edit-icon{
+        button{
+            width: fit-content;
+            background-color: transparent;
+            border: 0;
+            padding:0;
+            cursor: pointer;
+        }
+
+        svg{
+            &:hover{
+                color:#f75b75;
+            }
+        }
+
+    }
+}

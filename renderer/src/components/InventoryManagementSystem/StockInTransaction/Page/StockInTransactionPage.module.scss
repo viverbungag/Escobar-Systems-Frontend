@@ -1,0 +1,26 @@
+.stock-in-transaction-page{
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    min-width: 100vw;
+
+    &__upper-section{
+        width: 100%;
+        z-index: 1401;
+    }
+
+    &__lower-section{
+        margin-top: 1.5rem;
+        z-index: 1400;
+        width: fit-content;
+    }
+
+    :global {
+        .Toastify__toast-container--bottom-center{
+            margin-left: 8.5rem;
+        }
+    }
+}
+
+
+

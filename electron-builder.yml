@@ -1,0 +1,12 @@
+appId: com.exe.IMS
+productName: Inventory Management System
+copyright: Copyright © 2022 Viver Val Bungag
+directories:
+  output: dist
+  buildResources: resources
+files:
+  - from: .
+    filter:
+      - package.json
+      - app
+publish: null

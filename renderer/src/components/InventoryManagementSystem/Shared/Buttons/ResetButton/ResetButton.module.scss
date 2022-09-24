@@ -1,0 +1,31 @@
+.reset-button{
+    border: 0;
+    background-color: #f75b75;
+    padding: 0.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+
+
+    &__container{
+        display: flex;
+        gap: 0.2rem;
+        align-items: center;
+    }
+
+    
+    &__label{
+        font-size: 1rem;
+        color: #ffffff;
+        text-align: center;
+    }
+
+    &__icon{
+        svg{
+            color:#ffffff;
+            font-size: 1.2rem;
+        }
+    }
+
+
+
+}

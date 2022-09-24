@@ -1,0 +1,98 @@
+$max-height: 35rem;
+
+.edit-menu-modal {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 50rem;
+    top: 12%;
+    overflow: none;
+    min-height: 25rem;
+    max-height: $max-height;
+    display: block;
+    border-radius: 10px;
+    background-color: #ffffff;
+    border: 0;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  
+    &__content {
+        max-height:$max-height;
+        display: flex;
+    }
+
+    &__left-section{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 2rem;
+        font-family: Helvetica, Arial, sans-serif;
+    }
+
+    &__right-section{
+        padding: 2rem;
+        border-left: 1px solid #888888;
+        flex-grow: 1;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap:1rem;
+    }
+
+    &__right-upper-section{
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+
+      h4{
+        font-size: 1rem;
+      }
+    }
+  
+    &__title {
+      text-align: center;
+      font-size: 1.3rem;
+    }
+  
+    &__body {
+      padding-top: 2rem;
+      width: 14rem;
+      display: flex;
+      flex-direction: column;
+      margin: 0 auto;
+      gap: 2rem;
+    }
+  
+    &__text-field {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      align-items: center;
+
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+      }
+
+      input[type=number] {
+          -moz-appearance: textfield;
+      }
+    }
+  
+    &__save-button {
+      margin-top: 2rem;
+      align-self: center;
+    }
+  
+    &__text {
+      font-family: Helvetica, Arial, sans-serif;
+    }
+
+  }
+  

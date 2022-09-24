@@ -1,0 +1,32 @@
+.edit-ingredients-button{
+    border: 0;
+    background-color: #b4b4b4;
+    padding: 0.6rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    width: fit-content;
+
+
+    &__container{
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+    }
+
+    
+    &__label{
+        font-size: 1.2rem;
+        color: #ffffff;
+        text-align: center;
+    }
+
+    &__icon{
+        svg{
+            color:#ffffff;
+            font-size: 1.2rem;
+        }
+    }
+
+
+
+}

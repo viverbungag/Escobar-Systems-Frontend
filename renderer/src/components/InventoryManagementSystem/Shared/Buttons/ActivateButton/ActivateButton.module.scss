@@ -1,0 +1,27 @@
+.activate-button{
+    border: 0;
+    background-color: #75c8fc;
+    padding: 0.6rem 2rem;
+    border-radius: 5px;
+    width: fit-content;
+    cursor: pointer;
+    
+    &:disabled{
+        background-color: #b8dbf0;
+        cursor:default;
+    }
+
+    &__container{
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+    }
+
+    
+    &__label{
+        font-size: 1.2rem;
+        color: #ffffff;
+        text-align: center;
+
+    }
+}

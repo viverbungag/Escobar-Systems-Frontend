@@ -1,0 +1,17 @@
+.filter-transaction-section{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    &__item{
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+
+        h3{
+            font-size: 1.3rem;
+            font-weight: 500;
+        }
+    }
+}

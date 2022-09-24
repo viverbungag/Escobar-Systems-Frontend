@@ -1,0 +1,31 @@
+.open-filter-button{
+    border: 0;
+    background-color: #6ab7f6;
+    padding: 0.6rem;
+    border-radius: 5px;
+    cursor: pointer;
+
+
+    &__container{
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+    }
+
+    
+    &__label{
+        font-size: 1.2rem;
+        color: #ffffff;
+        text-align: center;
+    }
+
+    &__icon{
+        svg{
+            color:#ffffff;
+            font-size: 1.5rem;
+        }
+    }
+
+
+
+}

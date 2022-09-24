@@ -1,0 +1,49 @@
+.stock-out-supply-table{
+    min-width:100%;
+    min-height: 45rem;
+    max-height: 45rem;
+    overflow-y: auto;
+
+    &__row{
+        &--selected{
+            background-color: #f0f8ff;
+        }
+    }
+
+
+    &__checkbox-column{
+        width: 1rem;
+    }
+
+
+    table{
+        border-collapse: collapse;
+        border-spacing: 0;
+        min-width:100%;
+    }
+    tbody{
+        tr{
+            &:hover{
+                background-color: #efefef;
+            }
+        }
+    }
+
+
+    td {
+        border-bottom: 1px solid #ddd;
+        padding: 1.2rem 0.5rem;
+    }
+
+    &__controls{
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__sort {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        align-items: center;
+    }
+}
