@@ -67,6 +67,7 @@ export default function LoginPage() {
       localStorage.setItem("accessEmployeeManagementSystem", employee.accessEmployeeManagementSystem);
       localStorage.setItem("accessIncomeAndExpenseSystem", employee.accessIncomeAndExpenseSystem);
       localStorage.setItem("accessOrderingSystem", employee.accessOrderingSystem);
+      localStorage.setItem("isAdmin", true);
 
       router.push("/main-admin-dashboard");
     };
@@ -92,6 +93,7 @@ export default function LoginPage() {
       localStorage.setItem("accessIncomeAndExpenseSystem", employee.accessIncomeAndExpenseSystem);
       localStorage.setItem("accessOrderingSystem", employee.accessOrderingSystem);
       localStorage.setItem("isActive", employee.isActive);
+      localStorage.setItem("isAdmin", false);
 
       router.push("/main-employee-dashboard");
     };

@@ -58,7 +58,9 @@ const DashboardPage = () => {
   const router = useRouter();
 
   const handleBackButtonOnClick = () => {
-    router.push("/main-dashboard");
+    localStorage.getItem("isAdmin") === "true"
+      ? router.push("/main-admin-dashboard")
+      : router.push("/main-employee-dashboard");
   }
 
   const handleActivePageSizeChange = (event) => {
