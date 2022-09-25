@@ -1,0 +1,29 @@
+
+  .sidenav {
+    height: 100%;
+    width: 9.375rem;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #fafafa;
+
+  }
+
+  .wrapper {
+    padding:30px;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding-bottom: 0.5rem;
+
+  }
+
+  .img-section {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 0.5rem;
+    align-items: center;
+    justify-content: center;
+  }

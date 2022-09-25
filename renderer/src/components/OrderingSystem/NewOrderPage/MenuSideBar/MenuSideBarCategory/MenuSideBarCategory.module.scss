@@ -1,0 +1,36 @@
+
+.MenuSideBarCategory{
+    border-radius: 6px;
+    color: black;
+    height: 100px;
+    width: 100px;
+    background-color: white;
+    border: 1px solid black;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    padding: 15px 15px;
+    gap: 10px;
+    user-select: none;
+
+
+    &--selected{
+        background-color: #003049;
+        color: white;
+    }
+
+    p{
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 16px;
+    }
+}
+
+.MenuSideBarCategory:hover{
+    background-color: #fafafa;
+}
+.MenuSideBarCategory--selected:hover{
+    background-color: #003049;
+    color: white;
+}

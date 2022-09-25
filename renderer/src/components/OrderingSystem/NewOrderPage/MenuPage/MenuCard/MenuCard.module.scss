@@ -1,0 +1,112 @@
+
+.MenuCard {
+    background-color: white;
+    display: flex;
+    padding-left: 2rem;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.wrapper{
+    border-radius: 6px;
+    color: black;
+    height: 250px;
+    width: 180px;
+    background-color: white;
+    border: 1px solid black;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.02);
+    h1{
+        font-family: 'SF Pro Text';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 19px;
+    }
+
+    .servings{
+        font-family: 'SF Pro Text';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 19px;
+    }
+}
+.wrapper:hover{
+    background-color: #fafafa;
+}
+
+.wrapper:active{
+    color: white;
+    background-color: #003049;
+}
+
+
+.wrapper--zeroserving{
+    border-radius: 6px;
+    color: black;
+    height: 250px;
+    width: 180px;
+    background-color: grey;
+    border: 1px solid black;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.02);
+    h1{
+        font-family: 'SF Pro Text';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 19px;
+    }
+
+    .servings{
+        font-family: 'SF Pro Text';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 19px;
+    }
+
+    .servings--selected{
+        font-family: 'SF Pro Text';
+        font-style: normal;
+        font-weight: 0;
+        font-size: 0px;
+        line-height: 0px;
+        visibility: hidden;
+    }
+    .servings--selected::after{
+        font-family: 'SF Pro Text';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 19px;
+        visibility: visible;
+        content: 'Out of Stock';
+        display: flex;
+        flex-wrap:wrap;
+    }
+}
+
+.wrapper--zeroserving:active{
+  color: black;
+  user-select: none;
+
+}
+
+.wrapper--zeroserving:hover{
+
+    background-color:grey;
+
+
+}

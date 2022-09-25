@@ -1,0 +1,548 @@
+
+.MenuOrderTab {
+    display: flex;
+    flex-direction: column;
+    padding: 5px 10px 20px;
+    gap: 20px;
+    overflow: auto;
+    width: 455px;
+    min-height: 93.6vh;    
+    background: #FFFFFF;
+    box-shadow: -4px 0px 20px rgba(0, 0, 0, 0.02);
+    user-select: none;
+}
+
+.txt-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+    gap: 10px;
+    
+    h3{
+        padding-left: 10px;
+        font-family: 'SF Pro Text';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 22px;
+        line-height: 24px;
+    }
+    button{
+        display: flex;
+        background-color: white;
+        border: 1px solid white;
+
+    }
+    button:active{
+        display: flex;
+        transform: translateY(-3px);
+    }
+}
+
+.container{
+    padding-top: 20px;
+    padding-left: 5px;
+    .container-section{
+        padding-bottom:15px;
+    }
+}
+
+.total-section{
+    display: flex;
+    align-items: center;
+    padding: 12px 10px 12px 20px;
+    width: 320px;
+    height: 50px;
+    background: #003049;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
+    border-radius: 6px;
+
+    .total-section--wrapper{
+        gap: 190px;
+        justify-content: space-between;
+        flex-direction: row;
+        align-items: center;
+        display: flex;
+
+        h1{
+            font-family: 'SF Pro Text';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 19px;
+            color: white;
+        }
+        .pay-section {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            padding: 0px;
+            gap: 5px;
+
+            h2{
+                font-family: 'SF Pro Text';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 19px;
+                color: white;
+            }
+        }
+    }
+    
+
+}
+
+.total-section:active{
+    transform: translateY(4px);
+}
+.style {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 566px;
+    height: 410px;
+    display: flex;
+    background-color: #FAFAFA;
+    border: 3px solid;
+    border-radius: 6px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
+    user-select: none;
+
+    .Close_Button{
+        position:absolute;
+        top:0;
+        right:0;
+        background-color: red;
+        color: white;
+        border: 3px solid #000000;
+    }
+    .Close_Button:active{
+        box-shadow: 0 5px #666;
+        transform: translate(2px);
+        background-color: #f80707bc;
+    }
+
+    .Wrapper{ 
+        .Image-Section {
+            margin-bottom: 25px;
+        }
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+
+        .Text-Section {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            
+            .Input-Section--Payment{
+                display: flex;
+                flex-direction: row;
+                gap: 30px;
+
+                h1 {
+
+                    font-style: normal;
+                    font-weight: 500;
+                    font-size: 16px;
+                    line-height: 16px;
+                    text-align: center;
+                    display: inline-block;
+                    white-space: nowrap;
+                }
+                .Input-Forms--Payment{
+                    margin-left: auto; 
+                    margin-right: 0;
+                    width: 220px;
+                    font-size: 13px;
+                    border-radius: 4px;
+                    border-color: #CED4DA;
+                    padding: 5px;
+                    margin-right: 10px;
+                    ::placeholder {
+                        color: #6C757D;
+                        opacity: 1;
+
+                        }
+                    }
+                    
+                }
+
+                .Input-Section--Discount{
+                    display: flex;
+                    flex-direction: row;
+                    gap: 5px;
+
+    
+                    h1 {
+    
+                        font-style: normal;
+                        font-weight: 500;
+                        font-size: 16px;
+                        line-height: 16px;
+                        text-align: center;
+                        display: inline-block;
+                        white-space: nowrap;
+                    }
+
+                    .Input-Forms--Discount{
+                        margin-left: auto; 
+                        margin-right: 0;
+                        width: 200px;
+                        font-size: 12.5px;
+
+                        border-radius: 4px;
+                        border-color: #CED4DA;
+                        padding: 5px;
+                        ::placeholder {
+                            color: #6C757D;
+                            opacity: 1;
+                            font-size: 12px;
+                        }
+                    }
+                    .Percentage{
+                        font-size:16px;
+                        display: flex;
+                        align-items: center;
+                        margin-right: 10px;
+
+                    }
+                        
+                    }
+                
+            
+            }
+            .Button-Section {
+                margin-top: 20px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 30px;
+
+                .Confirm_Button{
+                    width: 128px;
+                    height: 45.84px;
+                    box-sizing: border-box;
+                    background: #36CD1D;
+                    border: 3px solid #000000;
+                    color: white;
+                    justify-content: center;
+
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 20px;
+                    line-height: 30px;
+                }
+            }
+        }
+    }
+
+.child-style{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 566px;
+    height: 410px;
+    display: flex;
+    background-color: #FAFAFA;
+    border: 3px solid;
+    border-radius: 6px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
+    user-select: none;
+
+    .Close_Button{
+        position:absolute;
+        top:0;
+        right:0;
+        background-color: red;
+        color: white;
+        border: 3px solid #000000;
+    }
+    
+    .Close_Button:active{
+        box-shadow: 0 5px #666;
+        transform: translateY(2px);
+        background-color: #f80707bc;
+
+    }
+    .print-icon{
+        position:absolute;
+        margin-top: 10px;
+        margin-right: 90px;
+        right:0;
+
+    }
+
+
+
+    .Wrapper{ 
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 100px;
+        width: 50%;
+
+        .Text-Section {
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+            width: 100%;
+            margin-bottom: 10px;
+            .Order-Text{
+                font-style: normal;
+                font-weight: 700;
+                font-size: 20px;
+                line-height: 20px;
+                text-align: center;
+                margin-right: auto;
+                margin-left: 5px; 
+            }
+            .Date-Text{
+                font-style: normal;
+                font-weight: 700;
+                font-size: 20px;
+                line-height: 20px;
+                text-align: center;
+                margin-right: 5px;
+                margin-left: auto; 
+            }
+        }
+        .Title-Section {
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+            width: 100%;
+            margin-bottom: 5px;
+
+            
+            .Qty-Text{
+                font-style: normal;
+                font-weight: 550;
+                font-size: 18px;
+                line-height: 20px;
+                margin-right: auto;
+                margin-left: 20px; 
+            }
+            .Title-Text{
+                font-style: normal;
+                font-weight: 550;
+                font-size: 18px;
+                line-height: 20px;
+                margin-left: 20px;
+
+            }
+            .Price-Text{
+                font-style: normal;
+                font-weight: 550;
+                font-size: 18px;
+                line-height: 20px;
+                margin-right: 10px;
+                margin-left: auto;     
+            }
+        }
+        .Component-Section{
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            margin-bottom: 5px;
+            
+            .Quantity-Component{
+                font-family: 'ABeeZee';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 20px;
+                margin-right: auto;
+                margin-left: 30px; 
+
+            }
+            .Menuname-Component{
+                font-family: 'ABeeZee';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 20px; 
+                margin-left: 10px;
+            }
+            .Price-Component{
+                font-family: 'ABeeZee';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 20px;
+                margin-right: 10px;
+                margin-left: auto;                
+            }
+        }
+
+        .CustomerPayment-Section {
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+            width: 100%;
+            margin-bottom: 5px;
+
+            
+            .CustomerPayment{
+                font-family: 'ABeeZee';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 16px;
+                text-align: left;
+                margin-right: auto;
+                margin-left: 10px; 
+            }
+
+            .CustomerPaymentPrice{
+                display: flex;
+                margin-left: auto; 
+                margin-right: 10px;
+                font-family: 'ABeeZee';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 16px;
+            }
+        }
+
+        .Subtotal-Section {
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+            width: 100%;
+            margin-bottom: 5px;
+
+            .Subtotal{
+                font-family: 'ABeeZee';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 16px;
+                text-align: left;
+                margin-right: auto;
+                margin-left: 10px; 
+            }
+
+            .SubtotalPrice{
+                display: flex;
+                margin-left: auto; 
+                margin-right: 10px;
+                font-family: 'ABeeZee';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 16px;
+            }
+        }
+
+        .Discounted-Section {
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+            width: 100%;
+            margin-bottom: 5px;
+
+            .Discount{
+                font-family: 'ABeeZee';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 16px;
+                text-align: left;
+                margin-right: auto;
+                margin-left: 10px; 
+            }
+
+            .DiscountPrice{
+                display: flex;
+                margin-left: auto; 
+                margin-right: 10px;
+                font-family: 'ABeeZee';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 16px;
+            }
+        }
+
+        .Total-Section {
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+            width: 100%;
+            margin-bottom: 5px;
+
+            .Total{
+                font-family: 'ABeeZee';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 16px;
+                text-align: left;
+                margin-right: auto;
+                margin-left: 10px; 
+            }
+
+            .TotalPrice{
+                display: flex;
+                margin-left: auto; 
+                margin-right: 10px;
+                font-family: 'ABeeZee';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 16px;
+            }
+        }
+
+        .Change-Section {
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+            width: 100%;
+            margin-bottom: 5px;
+
+            .Change{
+                font-family: 'ABeeZee';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 16px;
+                text-align: left;
+                margin-right: auto;
+                margin-left: 10px; 
+            }
+
+            .ChangePrice{
+                display: flex;
+                margin-left: auto; 
+                margin-right: 10px;
+                font-family: 'ABeeZee';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 16px;
+            }
+        }
+
+
+    }
+}
+

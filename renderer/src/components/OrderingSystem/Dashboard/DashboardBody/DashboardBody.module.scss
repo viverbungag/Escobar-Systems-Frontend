@@ -1,0 +1,52 @@
+
+.DashboardBody{ 
+    background-color: #003049;
+    min-height: 100vh;    
+    padding: 150px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    user-select: none;
+
+    .Container{
+        margin-left: 300px;
+        display: flex;
+        margin-bottom: 30px;
+        width: 1200px;
+
+        .Clock--Container{
+            display: flex;
+            background-color: white;
+            border-radius: 50%;
+            color: black;
+            size: 10px;
+            gap: 2rem;
+            align-items: center;
+            width: 100%;
+            padding-left: 200px;
+        }
+
+        .Txt-Container{
+            margin-left: 70px;
+            display: flex;
+            flex-direction: column;
+            width: 600px;
+            height: 400px;
+            margin-bottom: 30px;
+            align-items: center;
+            background-color: white;
+            color: #003049;
+            border: 2px solid black;  
+              
+            h1{
+                position: top;
+                margin-left: 10px;
+                margin-top: 10px;
+                font-size: 45px;
+            }
+        }
+    
+    }
+
+
+}

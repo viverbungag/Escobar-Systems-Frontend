@@ -1,0 +1,58 @@
+
+.SidebarCategory{
+    border-radius: 6px;
+    color: black;
+    width: 80px;
+    height: 80px;
+    background-color: white;
+    border: 1px solid black;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    user-select: none;
+
+
+    p{
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 14px;
+    }
+}
+.SidebarCategory:active{
+    color: white;
+    background-color: #003049;
+}
+
+.SidebarCategory:hover{
+    color: black;
+    background-color: #fafafa;
+}
+
+
+
+
+
+.Selected{
+    border-radius: 6px;
+    color: white;
+    height: 80px;
+    width: 80px;
+    background-color: #003049;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    
+
+    p{
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 14px;
+    }
+}
+
+.Selected:hover{
+    color: white;
+    background-color: #003049;
+}
