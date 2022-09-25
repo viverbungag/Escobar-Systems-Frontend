@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react";
 import styles from "./ViewTransactionPage.module.scss";
-import WindowControlBar from "../../Shared/WindowControlBar/WindowControlBar";
+import WindowControlBar from "../../../Shared/WindowControlBar/WindowControlBar";
 import Navigation from "../../Shared/Navigation/Navigation";
 import Toast from "../../Shared/Toast/Toast";
-import PaginationFilter from "../../../model/PaginationFilter";
-import TransactionPrintDetails from "../../../model/TransactionPrintDetails";
-import Rest from "../../../rest/Rest";
+import PaginationFilter from "../../../../model/PaginationFilter.tsx";
+import TransactionPrintDetails from "../../../../model/TransactionPrintDetails.tsx";
+import Rest from "../../../../rest/Rest.tsx";
 import ViewTransactionTable from "../ViewTransactionTable/ViewTransactionTable";
 // import FilterTransactionSection from "../FilterTransactionSection/FilterTransactionSection";
 import FilterTransactionModal from "../FilterTransactionModal/FilterTransactionModal";
 import OpenFilterButton from "../../Shared/Buttons/OpenFilterButton/OpenFilterButton";
 import PrintButton from "../../Shared/Buttons/PrintButton/PrintButton";
 import { toast } from "react-toastify";
-import { useUser } from "../../contexts/UserContext";
+import { useUser } from "../../../contexts/UserContext";
+import { useRouter } from "next/router";
 
 const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
@@ -118,6 +119,12 @@ const ViewTransactionPage = () => {
   const handleFilterModalOnClose = () => setOpenFilterModal(false);
 
   const rest = new Rest();
+
+  const router = useRouter();
+
+  const handleBackButtonOnClick = () => {
+    router.push("/main-dashboard");
+  }
 
   const handleActivePageSizeChange = (event) => {
     setPaginationFilter(
@@ -334,7 +341,7 @@ const ViewTransactionPage = () => {
         saveFilterOnClick={handleSaveFilterOnClick}
       />
       <section className={styles["supply-page__upper-section"]}>
-        <WindowControlBar />
+        <WindowControlBar handleBackButtonOnClick={handleBackButtonOnClick}/>
       </section>
 
       <section className={styles["supply-page__lower-section"]}>

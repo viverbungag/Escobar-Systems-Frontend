@@ -1,6 +1,11 @@
 html,body{
     overflow: hidden;
     font-family: Helvetica, Arial, sans-serif;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    scroll-padding-top: 3rem;
+    background-color: white;
 }
 
 * {

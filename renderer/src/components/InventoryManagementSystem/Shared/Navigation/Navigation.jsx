@@ -10,10 +10,9 @@ import GroupIcon from "@mui/icons-material/Group";
 import BrunchDiningIcon from "@mui/icons-material/BrunchDining";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import StraightenIcon from "@mui/icons-material/Straighten";
-import LogoutIcon from "@mui/icons-material/Logout";
 import PersonIcon from "@mui/icons-material/Person";
 import Link from "next/link";
-import { useUser } from '../../contexts/UserContext';
+import { useUser } from '../../../contexts/UserContext';
 
 const Navigation = ({ page }) => {
   const { employeeName } = useUser();
@@ -28,7 +27,7 @@ const Navigation = ({ page }) => {
         <div className={styles["navigation__category"]}>
           <div className={styles["navigation__title"]}>NAVIGATION</div>
           <div className={styles["navigation__list"]}>
-            <Link href="/dashboard">
+            <Link href="/InventoryManagementSystem/dashboard">
               <div
                 className={[
                   styles["navigation__item-container"],
@@ -43,7 +42,7 @@ const Navigation = ({ page }) => {
               </div>
             </Link>
 
-            <Link href="/menu">
+            <Link href="/InventoryManagementSystem/menu">
               <div
                 className={[
                   styles["navigation__item-container"],
@@ -57,7 +56,7 @@ const Navigation = ({ page }) => {
                 <div className={styles["navigation__item-text"]}>Menu</div>
               </div>
             </Link>
-            <Link href="/supply">
+            <Link href="/InventoryManagementSystem/supply">
               <div
                 className={[
                   styles["navigation__item-container"],
@@ -77,7 +76,7 @@ const Navigation = ({ page }) => {
         <div className={styles["navigation__category"]}>
           <div className={styles["navigation__title"]}>TRANSACTIONS</div>
           <div className={styles["navigation__list"]}>
-            <Link href="/stock-in">
+            <Link href="/InventoryManagementSystem/stock-in">
               <div
                 className={[
                   styles["navigation__item-container"],
@@ -92,7 +91,7 @@ const Navigation = ({ page }) => {
               </div>
             </Link>
 
-            <Link href="/stock-out">
+            <Link href="/InventoryManagementSystem/stock-out">
               <div
                 className={[
                   styles["navigation__item-container"],
@@ -107,7 +106,7 @@ const Navigation = ({ page }) => {
               </div>
             </Link>
 
-            <Link href="/view-transactions">
+            <Link href="/InventoryManagementSystem/view-transactions">
               <div
                 className={[
                   styles["navigation__item-container"],
@@ -129,7 +128,7 @@ const Navigation = ({ page }) => {
         <div className={styles["navigation__category"]}>
           <div className={styles["navigation__title"]}>OTHERS</div>
           <div className={styles["navigation__list"]}>
-            <Link href="/supplier">
+            <Link href="/InventoryManagementSystem/supplier">
               <div
                 className={[
                   styles["navigation__item-container"],
@@ -144,7 +143,7 @@ const Navigation = ({ page }) => {
               </div>
             </Link>
 
-            <Link href="/menu-category">
+            <Link href="/InventoryManagementSystem/menu-category">
               <div
                 className={[
                   styles["navigation__item-container"],
@@ -161,7 +160,7 @@ const Navigation = ({ page }) => {
               </div>
             </Link>
 
-            <Link href="/supply-category">
+            <Link href="/InventoryManagementSystem/supply-category">
               <div
                 className={[
                   styles["navigation__item-container"],
@@ -178,7 +177,7 @@ const Navigation = ({ page }) => {
               </div>
             </Link>
 
-            <Link href="/unit-of-measurement">
+            <Link href="/InventoryManagementSystem/unit-of-measurement">
               <div
                 className={[
                   styles["navigation__item-container"],
@@ -192,20 +191,6 @@ const Navigation = ({ page }) => {
                 <div className={styles["navigation__item-text"]}>
                   Unit of Measurement
                 </div>
-              </div>
-            </Link>
-          </div>
-        </div>
-
-        <div className={styles["navigation__category"]}>
-          <div className={styles["navigation__title"]}>ACCOUNT</div>
-          <div className={styles["navigation__list"]}>
-            <Link href="/login">
-              <div className={styles["navigation__item-container"]}>
-                <div className={styles["navigation__item-icon"]}>
-                  <LogoutIcon />
-                </div>
-                <div className={styles["navigation__item-text"]}>Logout</div>
               </div>
             </Link>
           </div>

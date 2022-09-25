@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import styles from "./DashboardPage.module.scss";
-import WindowControlBar from "../../Shared/WindowControlBar/WindowControlBar";
+import WindowControlBar from "../../../Shared/WindowControlBar/WindowControlBar";
 import Navigation from "../../Shared/Navigation/Navigation";
-import Rest from "../../../rest/Rest";
+import Rest from "../../../../rest/Rest.tsx";
 import Pagination from "src/model/Pagination";
 import DashboardTable from "../DashboardTable/DashboardTable";
+import { useRouter } from "next/router";
 
 const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
@@ -53,6 +54,12 @@ const DashboardPage = () => {
   const [activeTotalPages, setActiveTotalPages] = useState(0);
 
   const rest = new Rest();
+
+  const router = useRouter();
+
+  const handleBackButtonOnClick = () => {
+    router.push("/main-dashboard");
+  }
 
   const handleActivePageSizeChange = (event) => {
     setActivePagination(
@@ -131,7 +138,7 @@ const DashboardPage = () => {
   return (
     <div className={styles["dashboard-page"]}>
       <section className={styles["dashboard-page__upper-section"]}>
-        <WindowControlBar />
+        <WindowControlBar handleBackButtonOnClick={handleBackButtonOnClick}/>
       </section>
 
       <section className={styles["dashboard-page__lower-section"]}>

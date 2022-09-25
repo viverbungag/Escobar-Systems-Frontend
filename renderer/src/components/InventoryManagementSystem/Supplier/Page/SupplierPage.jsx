@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import DataTable from "../../Shared/DataTable/DataTable";
 import styles from "./SupplierPage.module.scss";
-import WindowControlBar from "../../Shared/WindowControlBar/WindowControlBar";
+import WindowControlBar from "../../../Shared/WindowControlBar/WindowControlBar";
 import Navigation from "../../Shared/Navigation/Navigation";
 import SaveButton from "../../Shared/Buttons/SaveButton/SaveButton";
 import InactivateButton from "../../Shared/Buttons/InactivateButton/InactivateButton";
@@ -10,9 +10,10 @@ import AddSupplierModal from "../AddSupplierModal/AddSupplierModal";
 import InactiveSupplierModal from "../InactiveSupplierModal/InactiveSupplierModal";
 import EditSupplierModal from "../EditSupplierModal/EditSupplierModal";
 import Toast from "../../Shared/Toast/Toast";
-import Pagination from "src/model/Pagination";
-import Rest from "../../../rest/Rest";
-import Supplier from "../../../model/Supplier";
+import Pagination from "../../../../model/Pagination.tsx";
+import Rest from "../../../../rest/Rest.tsx";
+import Supplier from "../../../../model/Supplier.tsx";
+import { useRouter } from "next/router";
 
 const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
@@ -94,6 +95,12 @@ const SupplierPage = () => {
   const [openEditModal, setOpenEditModal] = useState(false);
 
   const rest = new Rest();
+
+  const router = useRouter();
+
+  const handleBackButtonOnClick = () => {
+    router.push("/main-dashboard");
+  }
 
   const handleOpenAddModal = () => {
     setOpenAddModal(true);
@@ -669,7 +676,7 @@ const SupplierPage = () => {
       />
 
       <section className={styles["supplier-page__upper-section"]}>
-        <WindowControlBar />
+        <WindowControlBar handleBackButtonOnClick={handleBackButtonOnClick}/>
       </section>
 
       <section className={styles["supplier-page__lower-section"]}>

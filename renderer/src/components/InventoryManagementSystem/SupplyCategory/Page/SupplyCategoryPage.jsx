@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import DataTable from "../../Shared/DataTable/DataTable";
 import styles from "./SupplyCategoryPage.module.scss";
-import WindowControlBar from "../../Shared/WindowControlBar/WindowControlBar";
+import WindowControlBar from "../../../Shared/WindowControlBar/WindowControlBar";
 import Navigation from "../../Shared/Navigation/Navigation";
 import SaveButton from "../../Shared/Buttons/SaveButton/SaveButton";
 import InactivateButton from "../../Shared/Buttons/InactivateButton/InactivateButton";
@@ -10,9 +10,10 @@ import AddSupplyCategoryModal from "../AddSupplyCategoryModal/AddSupplyCategoryM
 import InactiveSupplyCategoryModal from "../InactiveSupplyCategoryModal/InactiveSupplyCategoryModal";
 import EditSupplyCategoryModal from "../EditSupplyCategoryModal/EditSupplyCategoryModal";
 import Toast from "../../Shared/Toast/Toast";
-import Pagination from "src/model/Pagination";
-import Rest from "../../../rest/Rest";
-import SupplyCategory from "../../../model/SupplyCategory";
+import Pagination from "../../../../model/Pagination.tsx";
+import Rest from "../../../../rest/Rest.tsx";
+import SupplyCategory from "../../../../model/SupplyCategory.tsx";
+import { useRouter } from "next/router";
 
 const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
@@ -70,6 +71,12 @@ const SupplyCategoryPage = () => {
   const [openEditModal, setOpenEditModal] = useState(false);
 
   const rest = new Rest();
+
+  const router = useRouter();
+
+  const handleBackButtonOnClick = () => {
+    router.push("/main-dashboard");
+  }
 
   const handleOpenAddModal = () => {
     setOpenAddModal(true);
@@ -544,7 +551,7 @@ const SupplyCategoryPage = () => {
       />
 
       <section className={styles["supply-category-page__upper-section"]}>
-        <WindowControlBar />
+        <WindowControlBar handleBackButtonOnClick={handleBackButtonOnClick}/>
       </section>
 
       <section className={styles["supply-category-page__lower-section"]}>

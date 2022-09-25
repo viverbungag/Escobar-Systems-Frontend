@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./EditSupplyModal.module.scss";
-import ModalSaveButton from "src/components/Shared/Buttons/ModalSaveButton/ModalSaveButton";
+import ModalSaveButton from "../../Shared/Buttons/ModalSaveButton/ModalSaveButton";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
