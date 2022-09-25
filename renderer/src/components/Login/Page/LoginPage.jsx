@@ -8,6 +8,7 @@ import { useUser, useUserUpdate } from '../../contexts/UserContext';
 import { useRouter } from "next/router";
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import WindowControlBar from '../../Shared/WindowControlBar/WindowControlBar';
 
 const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
@@ -117,6 +118,7 @@ export default function LoginPage() {
 
   return (
     <div>
+      <WindowControlBar hideBackButton />
         <div className={styles.section}>
             <div className={styles.container}>
               <ToggleButtonGroup
@@ -134,7 +136,7 @@ export default function LoginPage() {
                         Login
                     </div>
                     <div className={styles.lower}>
-                        Escobar Employee Management System
+                        Escobar Systems
                     </div>
                 </div>
                 <div className={styles.content}>

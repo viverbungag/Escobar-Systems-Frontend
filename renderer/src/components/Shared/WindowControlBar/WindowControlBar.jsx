@@ -14,13 +14,13 @@ const minimizeApp = () => {
   ipcRenderer.send('minimize');
 }
 
-const WindowControlBar = ({handleBackButtonOnClick}) => {
+const WindowControlBar = ({handleBackButtonOnClick, hideBackButton}) => {
   return (
     <div className={styles["window-control-bar"]}>
       <div className={styles["window-control-bar__contents"]}>
-        <section className={styles["window-control-bar__left-section"]} onClick={handleBackButtonOnClick}>
+        {hideBackButton ? <div/> : <section className={styles["window-control-bar__left-section"]} onClick={handleBackButtonOnClick}>
           <ArrowBackIosNewIcon /> <span>Back to Home</span>
-        </section>
+        </section>}
         <section className={styles["window-control-bar__right-section"]}>
           <div
             className={[
