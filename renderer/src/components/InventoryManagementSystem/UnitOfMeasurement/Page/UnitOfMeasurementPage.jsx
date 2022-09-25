@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import DataTable from "../../Shared/DataTable/DataTable";
 import styles from "./UnitOfMeasurementPage.module.scss";
-import WindowControlBar from "../../../components/Shared/WindowControlBar/WindowControlBar";
+import WindowControlBar from "../../../../components/Shared/WindowControlBar/WindowControlBar";
 import Navigation from "../../Shared/Navigation/Navigation";
 import SaveButton from "../../Shared/Buttons/SaveButton/SaveButton";
 import InactivateButton from "../../Shared/Buttons/InactivateButton/InactivateButton";
@@ -10,9 +10,9 @@ import AddUnitOfMeasurementModal from "../AddUnitOfMeasurementModal/AddUnitOfMea
 import InactiveUnitOfMeasurementModal from "../InactiveUnitOfMeasurementModal/InactiveUnitOfMeasurementModal";
 import EditUnitOfMeasurementModal from "../EditUnitOfMeasurementModal/EditUnitOfMeasurementModal";
 import Toast from "../../Shared/Toast/Toast";
-import Pagination from "../../../model/Pagination";
-import Rest from "../../../rest/Rest";
-import UnitOfMeasurement from "../../../model/UnitOfMeasurement";
+import Pagination from "../../../../model/Pagination.tsx";
+import Rest from "../../../../rest/Rest.tsx";
+import UnitOfMeasurement from "../../../../model/UnitOfMeasurement.tsx";
 
 const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 

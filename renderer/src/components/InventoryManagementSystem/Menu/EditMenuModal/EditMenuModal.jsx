@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./EditMenuModal.module.scss";
-import ModalSaveButton from "src/components/Shared/Buttons/ModalSaveButton/ModalSaveButton";
+import ModalSaveButton from "../../Shared/Buttons/ModalSaveButton/ModalSaveButton";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
@@ -9,7 +9,7 @@ import ItemsSelect from "../../Shared/ItemsSelect/ItemsSelect";
 import IngredientsTable from "../IngredientsTable/IngredientsTable";
 import EditIngredientsButton from "../../Shared/Buttons/EditIngredientsButton/EditIngredientsButton";
 import EditIngredientsModal from "../EditIngredientsModal/EditIngredientsModal";
-import MenuIngredients from "src/model/MenuIngredients";
+import MenuIngredients from "../../../../model/MenuIngredients.tsx";
 
 const EditMenuModal = ({
   activeMenus,

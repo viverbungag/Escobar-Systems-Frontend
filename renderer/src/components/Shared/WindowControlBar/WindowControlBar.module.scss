@@ -1,0 +1,67 @@
+.window-control-bar{
+    left:0;
+    right:0;
+    top:0;
+    background-color: #D3D3D3;
+    position:fixed;
+    
+    &__contents{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+    }
+
+    &__left-section{
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        cursor: pointer;
+        min-height: 100%;
+        padding: 0.6rem 0.8rem;
+        svg{
+            font-size: 1rem;
+        }
+
+        &:hover{
+            background-color: #e7e4e5;
+        }
+    }
+
+    &__right-section{
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        min-height: 100%;
+    }
+
+    &__icon{
+        padding: 0.6rem 0.8rem;
+        svg{
+            font-size: 1rem;
+            transition: transform 0.2s;
+        }
+
+        &:hover{
+            cursor: pointer;
+
+            svg{
+                transform: scale(1.1) translateY(-2.5px);
+            }
+            
+        }
+    }
+
+    &__exit-icon{
+        &:hover{
+            background-color: #f22e52;
+        }
+    }
+
+    &__minimize-icon{
+        &:hover{
+            background-color: #e7e4e5;
+        }
+    }
+
+}
