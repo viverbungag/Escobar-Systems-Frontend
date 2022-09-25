@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import ActiveCategoryTable from '../ActiveCategoryTable/ActiveCategoryTable';
 import InactiveCategoryTable from '../InactiveCategoryTable/InactiveCategoryTable';
 import styles from './ExpenseCategoryContent.module.scss';
-import Toast from '../../Shared/Toast/Toast';
 import Rest from '../../../../rest/Rest.tsx';
 import { Modal } from '@mui/material';
 import MediumButton from '../../Shared/MediumButton/MediumButton';
@@ -51,7 +50,6 @@ export default function ExpenseCategoryContent() {
 
   return (
     <div className={styles.container}>
-    <Toast />
       <div className={styles.content}>
         <div className={styles.header}>
           <button onClick={handleOpenAddModal}>

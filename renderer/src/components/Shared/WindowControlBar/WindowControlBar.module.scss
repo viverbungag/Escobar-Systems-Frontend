@@ -4,6 +4,7 @@
     top:0;
     background-color: #D3D3D3;
     position:fixed;
+    z-index: 100;
     
     &__contents{
         display: flex;

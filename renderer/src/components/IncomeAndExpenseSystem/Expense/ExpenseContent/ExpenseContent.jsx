@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './ExpenseContent.module.scss';
 import Rest from '../../../../rest/Rest.tsx';
-import Toast from '../../Shared/Toast/Toast.jsx';
 import MediumButton from '../../Shared/MediumButton/MediumButton';
 import { Modal } from '@mui/material';
 import ExpenseTable from '../ExpenseTable/ExpenseTable';
@@ -67,7 +66,6 @@ export default function ExpenseContent() {
 
   return (
     <div className={styles.container}>
-      <Toast />
       <div className={styles.content}>
         <div className={styles.header}>
           <button onClick={handleOpenAddModal}>

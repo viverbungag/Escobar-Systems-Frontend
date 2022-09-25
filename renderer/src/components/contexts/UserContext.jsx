@@ -52,11 +52,11 @@ export function UserProvider({ children }) {
         localStorage.getItem('accountUsername'),
         localStorage.getItem('accountPassword'),
         localStorage.getItem('employeeName'),
-        localStorage.getItem('accessInventoryManagementSystem'),
-        localStorage.getItem('accessEmployeeManagementSystem'),
-        localStorage.getItem('accessIncomeAndExpenseSystem'),
-        localStorage.getItem('accessOrderingSystem'),
-        localStorage.getItem('isActive')
+        localStorage.getItem('accessInventoryManagementSystem') === "true",
+        localStorage.getItem('accessEmployeeManagementSystem') === "true",
+        localStorage.getItem('accessIncomeAndExpenseSystem') === "true",
+        localStorage.getItem('accessOrderingSystem') === "true",
+        localStorage.getItem('isActive') === "true"
       ))
     };
 

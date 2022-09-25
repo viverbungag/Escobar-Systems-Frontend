@@ -8,12 +8,23 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TextField } from '@mui/material';
 import dayjs from 'dayjs';
+import WindowControlBar from '../../../src/components/Shared/WindowControlBar/WindowControlBar';
+// import DashboardTable from "../DashboardTable/DashboardTable";
+import { useRouter } from "next/router";
 
 const INITIAL_URL = "http://localhost:8080/api/v1";
 
 function HomePage() {
 
   const rest = new Rest();
+
+  const router = useRouter();
+
+  const handleBackButtonOnClick = () => {
+    localStorage.getItem("isAdmin") === "true"
+      ? router.push("/main-admin-dashboard")
+      : router.push("/main-employee-dashboard");
+  }
 
   const [fromDate, setFromDate] = useState(dayjs().date(1).subtract(4, 'month'));
   const[toDate, setToDate] = useState(dayjs().date(1));
@@ -103,15 +114,17 @@ function HomePage() {
 
   return (
     <div className={styles["home-page"]}>
-      <SideMenu homeState="active" viewincomeState="" viewexpenseState="" />
-      <div className={styles["home-page__contents"]}>   
+      <WindowControlBar handleBackButtonOnClick={handleBackButtonOnClick}/>
+      <div className={styles["home-page__body"]}>
+        <SideMenu homeState="active" viewincomeState="" viewexpenseState="" />
+        <div className={styles["home-page__contents"]}>
           {/* <div className={styles.header}>
             <div className={styles.text}>Monthly Report for {currentDate}</div>
           </div> */}
           <section className={styles["home-page__date-section"]}>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
-                views={['year', 'month']}
+                views={["year", "month"]}
                 label="From"
                 value={fromDate}
                 minDate={dayjs().year(2018)}
@@ -122,7 +135,7 @@ function HomePage() {
             </LocalizationProvider>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
-                views={['year', 'month']}
+                views={["year", "month"]}
                 label="To"
                 value={toDate}
                 minDate={fromDate}
@@ -138,8 +151,7 @@ function HomePage() {
               donutGraphData={donutGraphData}
             />
           </div>
-          <div >
-      </div>
+        </div>
       </div>
     </div>
   );
