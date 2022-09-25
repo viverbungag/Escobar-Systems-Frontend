@@ -1,0 +1,32 @@
+@import '/styles/variables.scss';
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-top-right-radius: 1rem;
+    border-top-left-radius: 1rem;
+    // box-shadow: 1px 1px 6px rgb(75, 74, 74);
+    flex: 1;
+    .header {
+        // border-top-right-radius: 1rem;
+        // border-top-left-radius: 1rem;
+        width: 100%;
+        text-align: center;
+        background-color: black;
+        color:white;
+        padding: 1rem;
+        font-weight: $h4FontWeight;
+        font-size: $h5FontSize;
+    }
+    .content {
+        // width: 80%;
+        padding:  1.5rem 0 2.5rem 0;
+        display: flex;
+        align-items: flex-end;
+        gap: 1rem;
+        button {
+            border: none;
+        }
+    }
+}

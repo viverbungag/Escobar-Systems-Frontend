@@ -1,0 +1,72 @@
+@import '../../../../styles/EmployeeManagementSystem/variables.scss';
+
+.container {
+    color: black; 
+    width: 900px;
+    button {
+        border: none;
+    }
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+        font-size: $h4FontSize;
+        font-weight: $h1FontWeight;
+        text-transform: uppercase;
+        .edit_icon {
+            color: grey;
+            transition: scale 0.4s;
+            &:hover {
+                cursor: pointer;
+                transform: scale(1.1);
+                color: rgb(255, 111, 0);
+            }
+        }
+        .exit_edit_icon {
+            color: rgb(255, 111, 0);
+            transition: scale 0.4s;
+            &:hover {
+                cursor: pointer;
+                transform: scale(1.1);
+                color: $color--primary
+            }
+        }
+    }
+    .content {
+        display: flex;
+        justify-content: space-between;
+        padding: 2rem;
+        gap: 3rem;
+        user-select: none;
+        &_group {
+            width: 50%;
+            &_label {
+                margin-bottom: 1rem;
+                font-weight: $h3FontWeight;
+            }
+            &_detail {
+                height: 100%;
+            }
+            &_checkbox {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                &_label {
+                    font-size: $bodyFontSize; 
+                    color: rgb(140, 140, 140);
+                }
+            }
+        }
+    }
+    .footer {
+        padding: 2rem;
+        margin-top: 1rem;
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-end;
+    }
+}
+

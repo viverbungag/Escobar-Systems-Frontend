@@ -1,0 +1,88 @@
+@import '/styles/variables.scss';
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
+    button {
+        border: none;
+    }
+    .header{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: white;
+        background-color: black;
+        padding: 1rem;
+        text-align: center;
+        font-size: $h5FontSize;
+        font-weight: $h4FontWeight;
+        &_icon {
+            color: grey;
+            transition: scale 0.4s;
+            &:hover {
+                cursor: pointer;
+                transform: scale(1.1);
+                color: $color--primary
+            }
+            &_exit {
+                color: $color--primary;
+            }
+        }
+    }
+    .content_outer {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 1.5rem;
+        flex-direction: column;
+        .content_name {
+            font-size: $h5FontSize;
+            font-weight: $h4FontWeight;
+        }
+        .content_inner {
+            display: flex;
+            color: black;
+            gap: 2rem;
+            &_left {
+                flex: 1;
+            }
+            &_right {
+                flex: 1;
+            }
+            &_label {
+                color: gray;
+                font-weight: $bodyFontWeight;
+                font-size: $bodyFontSize;
+                margin-bottom: 1rem;
+            }
+            &_row {
+                display: flex;
+                align-items: flex-start;
+                justify-content: space-between;
+                gap: 1rem;
+                font-weight: $bodyFontWeight;
+                font-size: 0.9rem;
+                margin: 0.6rem 0;
+            }
+        }
+        .group_textfields_select {
+            width: 100%;
+            &_label {
+                font-size: $body2FontSize;
+                color: rgb(129, 129, 129);
+            }
+        }
+    }
+    .footer {
+        padding: 1rem;
+        align-self: flex-end;
+    }
+    .footer_invisible{
+        visibility: hidden;
+        opacity: 0;
+        padding: 1rem;
+        align-self: flex-end;
+    }
+}
