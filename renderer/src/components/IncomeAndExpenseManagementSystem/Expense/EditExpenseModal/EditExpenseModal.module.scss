@@ -1,0 +1,87 @@
+@import '../../../../styles/IncomeAndExpenseManagementSystem/variables.scss';
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
+    height: 400px;
+    button {
+        border: none;
+    }
+    .header{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: white;
+        background-color: black;
+        padding: 1rem;
+        text-align: center;
+        font-size: $h5FontSize;
+        font-weight: $h4FontWeight;
+        &_icon {
+            color: grey;
+            transition: scale 0.4s;
+            &:hover {
+                cursor: pointer;
+                transform: scale(1.1);
+                color: $color--primary
+            }
+            &_exit {
+                color: $color--primary;
+            }
+        }
+    }
+    .content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 2rem;
+        .group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1rem;
+            &_label {
+                color: rgb(120, 120, 120);
+                font-weight: $h4FontWeight;
+                text-transform: capitalize;
+            }
+            &_textfields {
+                display: flex;
+                align-items: flex-end;
+                gap: 2rem;
+                &_row {
+                    display: flex;
+                    flex-direction: column;
+                    width: 100%;
+                    .error {
+                        display: none;
+                        &_show {
+                            display: block;
+                            font-size: $body2FontSize;
+                            color: red;
+                        }
+                    }
+                }
+                &_select {
+                    flex: 1;
+                    &_label {
+                        font-size: $body2FontSize;
+                        color: rgb(75, 75, 75);
+                    }
+                }
+            }
+        }
+    }
+    .footer {
+        padding: 1rem;
+        align-self: flex-end;
+    }
+    .footer_invisible{
+        visibility: hidden;
+        opacity: 0;
+        padding: 1rem;
+        align-self: flex-end;
+    }
+}

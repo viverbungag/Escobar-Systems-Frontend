@@ -24,6 +24,7 @@
     "axios": "^0.27.2",
     "date-fns": "^2.29.1",
     "dateformat": "^5.0.3",
+    "dayjs": "^1.11.5",
     "electron-log": "^4.4.8",
     "electron-serve": "^1.1.0",
     "electron-store": "^8.0.1",

@@ -1,0 +1,52 @@
+@import '/styles/variables.scss';
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem;
+    width: 100%;
+    .row {
+        display: flex;
+        margin: 0.5rem 0;
+        flex-direction: column;
+        justify-content: center;
+        align-self: center;
+        gap: 0.5rem;
+        flex: 1;
+        .box {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 900px;
+            // height: 250px;
+            padding: 1rem;
+            overflow: hidden;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+            &_transactions {
+                background-color: rgba(32, 32, 32);
+                .box_header {
+                    color: grey !important;
+                }
+            }
+            .box_header {
+                width: 100%;
+                border-bottom: 1px solid grey;
+                padding-bottom: 0.2rem;
+                text-align: left;
+                font-size: $h5FontSize;
+                font-weight: $h3FontWeight;
+                text-transform: uppercase;
+                color: grey;
+            }
+            .box_content {
+                &_donut {
+                    display: flex;
+                    align-self: center;
+                    width: 400px;
+                }
+            }
+        }
+    }
+}
