@@ -17,6 +17,16 @@
             font-size: $bodyFontSize;
             font-weight: $h3FontWeight;
             text-transform: uppercase;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-end;
+            .print_btn {
+                &:hover {
+                    transform: translateY(-2.5px);
+                    cursor: pointer !important;
+                    color: $color--primary;
+                }
+            }
         }
     }
     .table {

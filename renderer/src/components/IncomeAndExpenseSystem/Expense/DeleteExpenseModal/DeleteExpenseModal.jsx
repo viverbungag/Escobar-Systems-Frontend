@@ -13,7 +13,7 @@ export default function DeleteExpenseModal({ deleteSuccessAction, selectedValues
                 `${INITIAL_URL}/expense/delete/${item.expenseId}`,
                 item,
                 deleteSuccessAction,
-                `Successfully deleted Expense ID: ${item.expenseId}.`
+                `Successfully deleted expense.`
             )
         })
     }
@@ -54,3 +54,4 @@ export default function DeleteExpenseModal({ deleteSuccessAction, selectedValues
     </div>
   )
 }
+

@@ -4,10 +4,10 @@ import { IconButton, Modal, Tooltip } from '@mui/material';
 import MediumButton from '../../Shared/MediumButton/MediumButton';
 import SearchBar from 'material-ui-search-bar';
 import { DataGrid } from '@mui/x-data-grid';
-import ExpenseEditableMoreInfo from '../ExpenseEditableMoreInfo/ExpenseEditableMoreInfo';
 import EditExpenseModal from '../EditExpenseModal/EditExpenseModal';
-import Rest from '../../../../rest/Rest.tsx';
 import DeleteExpenseModal from '../DeleteExpenseModal/DeleteExpenseModal';
+import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
+import { printPdf } from '../../print/printFunctions';
 
 const INITIAL_URL = "http://localhost:8080/api/v1";
 
@@ -18,22 +18,32 @@ function capitalizeData(data){
 
 
 export default function ExpenseEditableTable({ reload, expenseEditableData, expenseCategories }) {
-  const rest = new Rest();
+  //for pdf
+  const title = 'Escobar - Expense Transactions Data';
+  const pdfColumns = [
+    { header:"ID", dataKey: 'expenseId' },
+    { header:"Category", dataKey: 'expenseCategoryName' },
+    { header:"Description", dataKey: 'expenseDescription' },
+    { header:"Date", dataKey: 'expenseDate' },
+    { header:"Cost", dataKey: 'expenseCost' }
+  ]
+  const [pdfRows, setPdfRows] = useState([]);
+  //
     //columns
   const headCells = [
-    { field: 'expenseId', headerName: 'ID', flex: 1, align: 'left'},
     { field: 'expenseCategoryName', headerName: 'Category Name', flex: 2, align: 'left'},
     { field: 'expenseDate', headerName: 'Transaction Date', flex: 2, align: 'left'},
-    { field: 'expenseCost', headerName: 'Cost', flex: 2, align: 'left'}
+    { field: 'expenseCost', headerName: 'Cost', flex: 1, align: 'left'}
   ];
   const [rows, setRows] = useState([]);
   //  search
   const [searched, setSearched] = useState("");
   const requestSearch = (searchValue) => {
     const filteredRows = expenseEditableData.filter((row) => {
-      return String(row.expenseId).includes(searchValue) || row.expenseCategoryName.toLowerCase().includes(searchValue.toLowerCase());
+      return row.expenseCategoryName.toLowerCase().includes(searchValue.toLowerCase()) || String(row.expenseDate).toLowerCase().includes(searchValue.toLowerCase()) || String(row.expenseCost).includes(searchValue);
       });
       setRows(filteredRows);
+      setPdfRows(filteredRows);
     };
   const cancelSearch = () => {
     setSearched("");
@@ -57,14 +67,14 @@ export default function ExpenseEditableTable({ reload, expenseEditableData, expe
     setSelectedValues(arr);
   }
   //edit
-  const [openEditModal, setOpenEditModal] = useState(false);
-  const handleOpenEditModal = () => { 
+  const [openMoreModal, setopenMoreModal] = useState(false);
+  const handleOpenMoreModal = () => { 
     handleSelectedValues();
-    setOpenEditModal(true); 
+    setopenMoreModal(true); 
   };
-  const handleCloseEditModal = () => { setOpenEditModal(false) };
+  const handleCloseMoreModal = () => { setopenMoreModal(false) };
   const editSuccessAction = () => {
-    handleCloseEditModal();
+    handleCloseMoreModal();
     reload();
     setRows(expenseEditableData);
   }
@@ -91,14 +101,9 @@ export default function ExpenseEditableTable({ reload, expenseEditableData, expe
     if(selected.length == 1 ){
       return (
         <>
-          <Tooltip title="More Expense Information">
-            <IconButton onClick={handleOpenMoreInfoModal}>
-              <MediumButton label="More Info" />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Edit Expense">
-            <IconButton onClick={handleOpenEditModal}>
-              <MediumButton label="Edit" />
+          <Tooltip title="Edit/More Info">
+            <IconButton onClick={handleOpenMoreModal}>
+              <MediumButton label="More" />
             </IconButton>
           </Tooltip>
           <Tooltip title="Delete Expense">
@@ -111,14 +116,9 @@ export default function ExpenseEditableTable({ reload, expenseEditableData, expe
     }else if(selected.length > 1){
       return (
         <>
-          <Tooltip title="More Expense Information">
-            <IconButton disabled onClick={handleOpenMoreInfoModal}>
-              <MediumButton label="More Info" />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Edit Employee Position">
-            <IconButton disabled onClick={handleOpenEditModal}>
-              <MediumButton label="Edit" />
+          <Tooltip title="Edit/More Info">
+            <IconButton disabled onClick={handleOpenMoreModal}>
+              <MediumButton label="More" />
             </IconButton>
           </Tooltip>
           <Tooltip title="Inactivate Employee Position/s">
@@ -131,14 +131,9 @@ export default function ExpenseEditableTable({ reload, expenseEditableData, expe
     }else if(selected.length == 0){
       return (
         <>
-          <Tooltip title="More Expense Information">
-            <IconButton disabled onClick={handleOpenMoreInfoModal}>
-              <MediumButton label="More Info" />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Edit Expense Category">
-            <IconButton disabled onClick={handleOpenEditModal}>
-              <MediumButton label="Edit" />
+          <Tooltip title="Edit/More Info">
+            <IconButton disabled onClick={handleOpenMoreModal}>
+              <MediumButton label="More" />
             </IconButton>
           </Tooltip>
           <Tooltip title="Inactivate Expense Categories">
@@ -153,6 +148,7 @@ export default function ExpenseEditableTable({ reload, expenseEditableData, expe
 
   useEffect(() => {
     setRows(expenseEditableData);
+    setPdfRows(expenseEditableData);
   }, [expenseEditableData])
 
   useEffect(() => {
@@ -164,6 +160,9 @@ export default function ExpenseEditableTable({ reload, expenseEditableData, expe
     <div className={styles.header}>
       <div className={styles.left}>
         Expense
+        <Tooltip title='Print Active Employee Data'>
+          <LocalPrintshopIcon className={styles.print_btn} onClick={() => printPdf(title, pdfColumns, pdfRows)}/>
+        </Tooltip>
       </div>
       <div className={styles.right}>
         {showButtons()}
@@ -189,14 +188,7 @@ export default function ExpenseEditableTable({ reload, expenseEditableData, expe
         checkboxSelection
       />
     </div>
-    <Modal open={openMoreInfoModal} onClose={handleCloseMoreInfoModal}>
-      <div className={styles.modal}>
-        <ExpenseEditableMoreInfo
-        selectedValues={selectedValues}
-        />
-      </div>
-    </Modal>
-    <Modal open={openEditModal} onClose={handleCloseEditModal}>
+    <Modal open={openMoreModal} onClose={handleCloseMoreModal}>
       <div className={styles.modal}>
         <EditExpenseModal
         expenseCategories={expenseCategories}

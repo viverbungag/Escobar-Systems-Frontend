@@ -6,10 +6,19 @@ import SearchBar from 'material-ui-search-bar';
 import { DataGrid } from '@mui/x-data-grid';
 import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
 import Rest from "../../../../rest/Rest.tsx";
+import { printPdf } from '../../print/printFunctions';
 
 const INITIAL_URL = "http://localhost:8080/api/v1";
 
 export default function IncomeTable() {
+  //for pdf
+  const title = 'Escobar - Income Data';
+  const pdfColumns = [
+    { header:"Date", dataKey: 'incomeDate' },
+    { header:"Daily Income", dataKey: 'dailyIncome' }
+  ]
+  const [pdfRows, setPdfRows] = useState([]);
+  //
   const rest = new Rest();
   //get income data
   const [incomeData, setIncomeData] = useState([]);
@@ -26,7 +35,7 @@ export default function IncomeTable() {
   }
   //table headers
   const headCells = [
-    { field: 'incomeDate', headerName: 'Income Date', flex: 1, align: 'left' },
+    { field: 'incomeDate', headerName: 'Date', flex: 1, align: 'left' },
     { field: 'dailyIncome', headerName: 'Daily Income', flex: 1, align: 'left' }
   ]
   //  search
@@ -37,6 +46,7 @@ export default function IncomeTable() {
       return String(row.incomeDate).toLowerCase().includes(searchValue.toLowerCase()) || String(row.dailyIncome).includes(searchValue);
     });
     setRows(filteredRows);
+    setPdfRows(filteredRows);
   };
   const cancelSearch = () => {
     setSearched("");
@@ -51,32 +61,6 @@ export default function IncomeTable() {
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const handleOpenDeleteModal = () => { setOpenDeleteModal(true) };
   const handleCloseDeleteModal = () => { setOpenDeleteModal(false) };
-  //show delete button on click
-  function showButtons() {
-    if(selected.length > 0 ){
-      return (
-        <>
-        <Tooltip title="Inactivate Employee/s">
-          <IconButton onClick={handleOpenDeleteModal}>
-            <MediumButton label="Delete" />
-          </IconButton>
-        </Tooltip>
-        </>
-      )
-    } 
-  }
-  //handle to be deletec
-  const arrDeleted = [];
-  const handleToBeDeleted = () => {
-    for(let i=0; i< selected.length; i++){
-        rows.map((item) => {
-            if(item.incomeId == selected[i]){
-              console.log(item.incomeId, item.incomeCategory, item.incomeDate)
-              arrDeleted.push(item);
-            }
-        })
-    }
-  }
 
   useEffect(() => {
     getIncomeData();
@@ -84,6 +68,7 @@ export default function IncomeTable() {
 
   useEffect(() => {
     setRows(incomeData);
+    setPdfRows(incomeData);
   }, [incomeData]);
 
   return (
@@ -96,12 +81,9 @@ export default function IncomeTable() {
                     onChange={(searchValue) => requestSearch(searchValue)}
                     onCancelSearch={() => cancelSearch()}
                 />
-                <div className={styles.print_btn}>
-                    <LocalPrintshopIcon />
-                </div>
-            </div>
-            <div className={styles.right}>
-            {showButtons()}
+                <Tooltip title='Print Active Employee Data'>
+                  <LocalPrintshopIcon className={styles.print_btn} onClick={() => printPdf(title, pdfColumns, pdfRows)}/>
+                </Tooltip>
             </div>
         </div>
         <div className={styles.table}>
@@ -113,26 +95,6 @@ export default function IncomeTable() {
               disableSelectionOnClick
             />
         </div>
-
-        <Modal open={openDeleteModal} onClose={handleCloseDeleteModal} >
-            <div className={styles.modal}>
-                <div className={styles.header}>
-                    Confirm Delete
-                </div>
-                <div className={styles.content}>
-                  {arrDeleted.map((item) => {
-                    return (
-                      <div key={item.incomeId}>
-                        {item.incomeCategory}
-                      </div>
-                    )
-                  })}
-                </div>
-                <div className={styles.footer}>
-                    <MediumButton label="Delete" />
-                </div>
-            </div>
-        </Modal>
     </div>
   )
 }

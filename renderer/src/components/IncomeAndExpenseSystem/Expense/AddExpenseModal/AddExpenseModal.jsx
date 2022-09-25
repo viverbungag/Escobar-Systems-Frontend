@@ -13,10 +13,13 @@ import dateFormat from 'dateformat';
 const INITIAL_URL = "http://localhost:8080/api/v1";
 
 function capitalizeData(data){
-  data = data.charAt(0).toUpperCase() + data.slice(1).toLowerCase();
-  return data;
+  var separateWord = data.toLowerCase().split(' ');
+    for (var i = 0; i < separateWord.length; i++) {
+        separateWord[i] = separateWord[i].charAt(0).toUpperCase() +
+        separateWord[i].substring(1);
+    }
+    return separateWord.join(' ');
 }
-
 export default function AddExpenseModal({ reload, expenseCategories, addSuccessAction }) {
     const rest = new Rest();
     //datetime

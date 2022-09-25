@@ -4,7 +4,6 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    padding: 0 3rem;
     position: relative;
     .header {
         padding: 1rem;
@@ -18,7 +17,7 @@
         height: 5rem;
         .left {
             display: flex;
-            align-items: center;
+            align-items: flex-end;
             gap: 1rem;
             transition: transform 0.2s;
             .print_btn {

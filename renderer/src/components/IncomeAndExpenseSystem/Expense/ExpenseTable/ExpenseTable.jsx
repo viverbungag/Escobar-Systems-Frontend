@@ -1,27 +1,46 @@
 import React, { useState, useEffect } from 'react';
 import styles from './ExpenseTable.module.scss';
-import { IconButton, Modal, Tooltip } from '@mui/material';
-import MediumButton from '../../Shared/MediumButton/MediumButton';
+import { Modal, Tooltip } from '@mui/material';
 import SearchBar from 'material-ui-search-bar';
 import { DataGrid } from '@mui/x-data-grid';
 import ExpenseMoreInfo from '../ExpenseMoreInfo/ExpenseMoreInfo';
+import InfoIcon from '@mui/icons-material/Info';
+import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
+import { printPdf } from '../../print/printFunctions';
 
 export default function ExpenseTable({ expenseData }) {
+  console.log(expenseData)
+  //for pdf
+  const title = 'Escobar - Expense Stock-In Data';
+  const pdfColumns = [
+    { header:"ID", dataKey: 'transactionId' },
+    { header:"Transaction Date", dataKey: 'transactionDate' },
+    { header:"Supply", dataKey: 'supplyName' },
+    { header:"Cost", dataKey: 'expenseCost' }
+  ]
+  const [pdfRows, setPdfRows] = useState([]);
+  //
   //columns
   const headCells = [
-    { field: 'transactionId', headerName: 'ID', flex: 1, align: 'left'},
     { field: 'transactionDate', headerName: 'Transaction Date', flex: 2, align: 'left'},
-    { field: 'supplyName', headerName: 'Supply Name', flex: 2, align: 'left'},
-    { field: 'expenseCost', headerName: 'Cost', flex: 2, align: 'left'}
+    { field: 'supplyName', headerName: 'Supply Name', flex:1, align: 'left'},
+    { field: 'expenseCost', headerName: 'Cost', flex: 1, align: 'left'},
+    { field: 'icon', headerName: '', flex: 1, align: 'center', renderCell: () => (
+      <Tooltip title='View Information'>
+        <InfoIcon className={styles.info_icon} onClick={handleOpenMoreInfoModal} />
+      </Tooltip>
+    ) }
   ];
   const [rows, setRows] = useState([]);
   //  search
   const [searched, setSearched] = useState("");
   const requestSearch = (searchValue) => {
     const filteredRows = expenseData.filter((row) => {
-      return String(row.expenseId).includes(searchValue) || row.expenseName.toLowerCase().includes(searchValue.toLowerCase());
+      return String(row.supplyName).toLowerCase().includes(searchValue.toLowerCase()) || String(row.transactionDate).toLowerCase().includes(searchValue.toLowerCase()) || String(row.expenseCost).includes(searchValue);
       });
       setRows(filteredRows);
+      setPdfRows(filteredRows);
+
     };
   const cancelSearch = () => {
     setSearched("");
@@ -51,33 +70,10 @@ export default function ExpenseTable({ expenseData }) {
     setOpenMoreInfoModal(true); 
   };
   const handleCloseMoreInfoModal = () => { setOpenMoreInfoModal(false); };
-  //get shown buttons
-  function showButtons() {
-    if(selected.length == 1 ){
-      return (
-        <>
-          <Tooltip title="More Expense Information">
-            <IconButton onClick={handleOpenMoreInfoModal}>
-              <MediumButton label="More Info" />
-            </IconButton>
-          </Tooltip>
-        </>
-      )
-    }else if(selected.length == 0 || selected.length > 1){
-      return (
-        <>
-          <Tooltip title="More Expense Information">
-            <IconButton disabled onClick={handleOpenMoreInfoModal}>
-              <MediumButton label="More Info" />
-            </IconButton>
-          </Tooltip>
-        </>
-      )
-    }
-  };
 
   useEffect(() => {
     setRows(expenseData);
+    setPdfRows(expenseData);
   }, [expenseData])
 
   useEffect(() => {
@@ -89,9 +85,12 @@ export default function ExpenseTable({ expenseData }) {
     <div className={styles.header}>
       <div className={styles.left}>
         Expense Stock-In
+        <Tooltip title='Print Active Employee Data'>
+          <LocalPrintshopIcon className={styles.print_btn} onClick={() => printPdf(title, pdfColumns, pdfRows)}/>
+        </Tooltip>
       </div>
       <div className={styles.right}>
-        {showButtons()}
+        {/* {showButtons()} */}
       </div>
     </div>
     <div className={styles.sub_header}>
@@ -111,7 +110,8 @@ export default function ExpenseTable({ expenseData }) {
         columns={headCells}
         pageSize={20}
         onSelectionModelChange={handleSelect}
-        checkboxSelection
+        hideFooterSelectedRowCount
+        // checkboxSelection
       />
     </div>
     <Modal open={openMoreInfoModal} onClose={handleCloseMoreInfoModal}>

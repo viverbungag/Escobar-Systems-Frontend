@@ -69,7 +69,7 @@ export default function ExpenseContent() {
       <div className={styles.content}>
         <div className={styles.header}>
           <button onClick={handleOpenAddModal}>
-            <MediumButton label="Add Expense Transaction" />
+            <MediumButton label="Add Expense" />
           </button>
         </div>
         <div className={styles.tables}>

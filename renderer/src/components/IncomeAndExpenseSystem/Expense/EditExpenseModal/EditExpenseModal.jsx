@@ -13,8 +13,12 @@ import dateFormat from 'dateformat';
 const INITIAL_URL = "http://localhost:8080/api/v1";
 
 function capitalizeData(data){
-  data = data.charAt(0).toUpperCase() + data.slice(1).toLowerCase();
-  return data;
+  var separateWord = data.toLowerCase().split(' ');
+    for (var i = 0; i < separateWord.length; i++) {
+        separateWord[i] = separateWord[i].charAt(0).toUpperCase() +
+        separateWord[i].substring(1);
+    }
+    return separateWord.join(' ');
 }
 
 export default function EditExpenseModal({ expenseCategories, selectedValues, editSuccessAction }) {
@@ -63,6 +67,26 @@ export default function EditExpenseModal({ expenseCategories, selectedValues, ed
         `Successfully edited Expense ID: ${values.expenseId}`
       )
     }
+    const showDescription = () => {
+      if(values.expenseDescription == null || values.expenseDescription == ''){
+        return(
+          'None'
+        )
+      }else{
+        return(
+          values.expenseDescription
+        )
+      }
+    }
+    //edit status
+    const [toEdit, setToEdit] = useState(false);
+    const isEdit = () => {
+      if(toEdit){
+          setToEdit(false);
+      }else {
+          setToEdit(true);
+      }
+    }
 
     useEffect(() => {
       setDatetimeValues();
@@ -72,55 +96,111 @@ export default function EditExpenseModal({ expenseCategories, selectedValues, ed
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <div className={styles.container}>
         <div className={styles.header}>
-            Edit Expense ID: {values.expenseId}
+          <div className={styles.header_id}>
+            Expense {values.expenseId}
+          </div>
+          <div className={styles.header_icon}>
+            {toEdit ? (
+                <HighlightOffIcon className={styles.header_icon_exit} onClick={isEdit} />
+            ) : (
+                <EditIcon className={styles.header_icon_edit} onClick={isEdit} />
+            )}
+          </div>
         </div>
-        <div className={styles.content}>
-        <div className={styles.group}>
-          <div className={styles.group_textfields}>
-            <div className={styles.group_textfields_row}>
-            <div className={styles.group_textfields_select}>
-                <div className={styles.group_textfields_select_label}>Position</div> 
-                <Select
-                  placeholder={selectedExpense.expenseCategoryName}
-                  defaultValue={selectedExpense.expenseCategoryName}
-                  options={expenseCategories.map((item) => {
-                    return {
-                      key: 'expenseCategoryName',
-                      value: item.expenseCategoryName,
-                      label: item.expenseCategoryName
-                    }
-                  })}
-                  onChange={onChange}
-                />
+          {toEdit ? (
+            <>
+            <div className={styles.content}>
+              <div className={styles.group}>
+                <div className={styles.group_textfields}>
+                  <div className={styles.group_textfields_row}>
+                  <div className={styles.group_textfields_select}>
+                      <div className={styles.group_textfields_select_label}>Position</div> 
+                      <Select
+                        placeholder={selectedExpense.expenseCategoryName}
+                        defaultValue={selectedExpense.expenseCategoryName}
+                        options={expenseCategories.map((item) => {
+                          return {
+                            key: 'expenseCategoryName',
+                            value: item.expenseCategoryName,
+                            label: item.expenseCategoryName
+                          }
+                        })}
+                        onChange={onChange}
+                      />
+                    </div>
+                  </div>
+                  <div className={styles.group_textfields_row}>
+                    <DateTimePicker
+                      label="Expense Transaction Datetime"
+                      value={datetime}
+                      onChange={handleDatetimeChange}
+                      renderInput={(params) => <TextField {...params} />}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className={styles.group}>
+                <div className={styles.group_textfields}>
+                  <div className={styles.group_textfields_row}>
+                    <TextField onChange={onChange} name="expenseDescription" label="Expense Description" defaultValue={values.expenseDescription} variant="standard" fullWidth />
+                  </div>
+                  <div className={styles.group_textfields_row}>
+                    <TextField onChange={onChange} name="expenseCost" label="Expense Cost" defaultValue={selectedExpense.expenseCost} variant="standard" fullWidth />
+                  </div>
+                </div>
               </div>
             </div>
-            <div className={styles.group_textfields_row}>
-              <DateTimePicker
-                label="Expense Transaction Datetime"
-                value={datetime}
-                onChange={handleDatetimeChange}
-                renderInput={(params) => <TextField {...params} />}
-              />
+            <div className={styles.footer}>
+              <button onClick={handleSubmit}>
+                <MediumButton label='SUBMIT' />
+              </button>
             </div>
-          </div>
-        </div>
-        <div className={styles.group}>
-          <div className={styles.group_textfields}>
-            <div className={styles.group_textfields_row}>
-              <TextField onChange={onChange} name="expenseDescription" label="Expense Description" defaultValue={values.expenseDescription} variant="standard" fullWidth />
+            </>
+          ) : (
+            <>
+            <div className={styles.content}>
+              <div className={styles.group}>
+                <div className={styles.group_textfields}>
+                  <div className={styles.group_textfields_row}>
+                    <div className={styles.group_textfields_select}>
+                      <div className={styles.group_textfields_select_label}>Expense Category</div> 
+                      {selectedExpense.expenseCategoryName}
+                    </div>
+                  </div>
+                  <div className={styles.group_textfields_row}>
+                    <div className={styles.group_textfields_select}>
+                      <div className={styles.group_textfields_select_label}>Expense Datetime</div> 
+                      {datetime}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className={styles.group}>
+                <div className={styles.group_textfields}>
+                  <div className={styles.group_textfields_row}>
+                    <div className={styles.group_textfields_select}>
+                      <div className={styles.group_textfields_select_label}>Expense Description</div> 
+                      {showDescription()}
+                    </div>
+                  </div>
+                  <div className={styles.group_textfields_row}>
+                    <div className={styles.group_textfields_select}>
+                      <div className={styles.group_textfields_select_label}>Expense Cost</div> 
+                      {selectedExpense.expenseCost} 
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className={styles.group_textfields_row}>
-              <TextField onChange={onChange} name="expenseCost" label="Expense Cost" defaultValue={selectedExpense.expenseCost} variant="standard" fullWidth />
+            <div className={styles.footer_invisible}>
+              <button onClick={handleSubmit}>
+                <MediumButton label="Submit" />
+              </button>
             </div>
-          </div>
-        </div>
-        </div>
-        <div className={styles.footer}>
-          <button onClick={handleSubmit}>
-            <MediumButton label='SUBMIT' />
-          </button>
-        </div>
+            </>
+          ) }
       </div>
     </LocalizationProvider>
   )
 }
+
