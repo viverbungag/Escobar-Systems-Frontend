@@ -9,6 +9,7 @@ import PaymentsIcon from '@mui/icons-material/Payments';
 import LogoutIcon from "@mui/icons-material/Logout";
 import Link from 'next/link';
 import { useUser } from '../../contexts/UserContext';
+import WindowControlBar from '../../Shared/WindowControlBar/WindowControlBar';
 
 
 const MainAdminDashboardPage = () => {
@@ -40,6 +41,7 @@ const MainAdminDashboardPage = () => {
 
   return (
     <div className={styles["main-dashboard-page"]}>
+      <WindowControlBar hideBackButton />
       <header className={styles["main-dashboard-page__header"]}>
         <h3>WELCOME</h3>
         <h2>{employeeName}</h2>
