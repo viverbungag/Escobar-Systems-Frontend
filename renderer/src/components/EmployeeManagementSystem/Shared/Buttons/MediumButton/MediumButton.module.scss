@@ -3,12 +3,15 @@
 .container {
     background-color: white;
     text-decoration: none;
-    font-size: $h5FontSize;
+    font-size: $bodyFontSize;
     text-align: center;
     border-radius: 10rem;
     border: 2px solid grey;
     width: fit-content;
-    padding: 0.3rem 2rem;
+    padding: 0.1rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     &:hover {
         cursor: pointer;
         background-color: grey;
