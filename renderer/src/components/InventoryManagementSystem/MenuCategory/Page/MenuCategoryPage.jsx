@@ -13,6 +13,7 @@ import Toast from "../../Shared/Toast/Toast";
 import Pagination from "../../../../model/Pagination.tsx";
 import Rest from "../../../../rest/Rest.tsx";
 import MenuCategory from "../../../../model/MenuCategory.tsx";
+import { useRouter } from "next/router";
 
 const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
@@ -70,6 +71,12 @@ const MenuCategoryPage = () => {
   const [openEditModal, setOpenEditModal] = useState(false);
 
   const rest = new Rest();
+
+  const router = useRouter();
+
+  const handleBackButtonOnClick = () => {
+    router.push("/main-dashboard");
+  }
 
   const handleOpenAddModal = () => {
     setOpenAddModal(true);
@@ -539,7 +546,7 @@ const MenuCategoryPage = () => {
       />
 
       <section className={styles["menu-category-page__upper-section"]}>
-        <WindowControlBar />
+        <WindowControlBar handleBackButtonOnClick={handleBackButtonOnClick}/>
       </section>
 
       <section className={styles["menu-category-page__lower-section"]}>

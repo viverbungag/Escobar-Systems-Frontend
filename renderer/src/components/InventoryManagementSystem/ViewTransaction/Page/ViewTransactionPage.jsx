@@ -13,6 +13,7 @@ import OpenFilterButton from "../../Shared/Buttons/OpenFilterButton/OpenFilterBu
 import PrintButton from "../../Shared/Buttons/PrintButton/PrintButton";
 import { toast } from "react-toastify";
 import { useUser } from "../../../contexts/UserContext";
+import { useRouter } from "next/router";
 
 const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
@@ -118,6 +119,12 @@ const ViewTransactionPage = () => {
   const handleFilterModalOnClose = () => setOpenFilterModal(false);
 
   const rest = new Rest();
+
+  const router = useRouter();
+
+  const handleBackButtonOnClick = () => {
+    router.push("/main-dashboard");
+  }
 
   const handleActivePageSizeChange = (event) => {
     setPaginationFilter(
@@ -334,7 +341,7 @@ const ViewTransactionPage = () => {
         saveFilterOnClick={handleSaveFilterOnClick}
       />
       <section className={styles["supply-page__upper-section"]}>
-        <WindowControlBar />
+        <WindowControlBar handleBackButtonOnClick={handleBackButtonOnClick}/>
       </section>
 
       <section className={styles["supply-page__lower-section"]}>

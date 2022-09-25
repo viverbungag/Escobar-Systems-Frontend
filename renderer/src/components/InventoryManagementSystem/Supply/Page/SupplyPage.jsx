@@ -13,6 +13,7 @@ import Toast from "../../Shared/Toast/Toast";
 import Pagination from "../../../../model/Pagination.tsx";
 import Rest from "../../../../rest/Rest.tsx";
 import Supply from "../../../../model/Supply.tsx";
+import { useRouter } from "next/router";
 
 const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
@@ -119,6 +120,12 @@ const SupplyPage = () => {
   const [activeSupplyCategories, setActiveSupplyCategories] = useState([]);
 
   const rest = new Rest();
+
+  const router = useRouter();
+
+  const handleBackButtonOnClick = () => {
+    router.push("/main-dashboard");
+  }
 
   const handleOpenAddModal = () => {
     setAddedSupply(
@@ -814,7 +821,7 @@ const SupplyPage = () => {
       />
 
       <section className={styles["supply-page__upper-section"]}>
-        <WindowControlBar />
+        <WindowControlBar handleBackButtonOnClick={handleBackButtonOnClick}/>
       </section>
 
       <section className={styles["supply-page__lower-section"]}>

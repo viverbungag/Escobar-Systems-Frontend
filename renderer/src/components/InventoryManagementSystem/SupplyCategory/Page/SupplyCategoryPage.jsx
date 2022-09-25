@@ -13,6 +13,7 @@ import Toast from "../../Shared/Toast/Toast";
 import Pagination from "../../../../model/Pagination.tsx";
 import Rest from "../../../../rest/Rest.tsx";
 import SupplyCategory from "../../../../model/SupplyCategory.tsx";
+import { useRouter } from "next/router";
 
 const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
@@ -70,6 +71,12 @@ const SupplyCategoryPage = () => {
   const [openEditModal, setOpenEditModal] = useState(false);
 
   const rest = new Rest();
+
+  const router = useRouter();
+
+  const handleBackButtonOnClick = () => {
+    router.push("/main-dashboard");
+  }
 
   const handleOpenAddModal = () => {
     setOpenAddModal(true);
@@ -544,7 +551,7 @@ const SupplyCategoryPage = () => {
       />
 
       <section className={styles["supply-category-page__upper-section"]}>
-        <WindowControlBar />
+        <WindowControlBar handleBackButtonOnClick={handleBackButtonOnClick}/>
       </section>
 
       <section className={styles["supply-category-page__lower-section"]}>

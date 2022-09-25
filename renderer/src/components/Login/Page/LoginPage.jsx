@@ -68,7 +68,7 @@ export default function LoginPage() {
       localStorage.setItem("accessIncomeAndExpenseSystem", employee.accessIncomeAndExpenseSystem);
       localStorage.setItem("accessOrderingSystem", employee.accessOrderingSystem);
 
-      router.push("/main-dashboard");
+      router.push("/main-admin-dashboard");
     };
     const successfulLoginEmployee = (employee) => {
       console.log(employee);
@@ -93,7 +93,7 @@ export default function LoginPage() {
       localStorage.setItem("accessOrderingSystem", employee.accessOrderingSystem);
       localStorage.setItem("isActive", employee.isActive);
 
-      router.push("/main-dashboard");
+      router.push("/main-employee-dashboard");
     };
     const handleAdminLogin = () => {
       rest.login(

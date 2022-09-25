@@ -13,6 +13,7 @@ import Rest from "../../../../rest/Rest.tsx";
 import Transaction from "../../../../model/Transaction.tsx";
 import dateFormat from "dateformat";
 import { useUser } from "../../../contexts/UserContext";
+import { useRouter } from "next/router";
 
 const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
@@ -42,6 +43,12 @@ const StockInTransactionPage = () => {
   );
 
   const rest = new Rest();
+
+  const router = useRouter();
+
+  const handleBackButtonOnClick = () => {
+    router.push("/main-dashboard");
+  }
 
   const handleTransactionDateOnChange = (newDate) => {
     setAddTransaction(
@@ -227,7 +234,7 @@ const StockInTransactionPage = () => {
           onClickAddButton={handleAddModalButtonClicked}
         />
         <section className={styles["stock-in-transaction-page__upper-section"]}>
-          <WindowControlBar />
+          <WindowControlBar handleBackButtonOnClick={handleBackButtonOnClick}/>
         </section>
         <section className={styles["stock-in-transaction-page__lower-section"]}>
           <Navigation page="stock-in" />

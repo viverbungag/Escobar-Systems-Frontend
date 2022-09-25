@@ -9,6 +9,8 @@ import Rest from "../../../../rest/Rest.tsx";
 import Transaction from "../../../../model/Transaction.tsx";
 import StockOutSupplyTable from "../StockOutSupplyTable/StockOutSupplyTable";
 import { useUser } from "../../../contexts/UserContext";
+import { useRouter } from "next/router";
+
 
 const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
@@ -104,6 +106,12 @@ const StockOutTransactionPage = () => {
   const [openStockOutModal, setOpenStockOutModal] = useState(false);
 
   const rest = new Rest();
+
+  const router = useRouter();
+
+  const handleBackButtonOnClick = () => {
+    router.push("/main-dashboard");
+  }
 
   const handleOpenStockOutModal = (supply) => {
     setAddTransaction(
@@ -264,7 +272,7 @@ const StockOutTransactionPage = () => {
       />
 
       <section className={styles["stock-out-transaction-page__upper-section"]}>
-        <WindowControlBar />
+        <WindowControlBar handleBackButtonOnClick={handleBackButtonOnClick}/>
       </section>
 
       <section className={styles["stock-out-transaction-page__lower-section"]}>

@@ -13,6 +13,7 @@ import Toast from "../../Shared/Toast/Toast";
 import Pagination from "../../../../model/Pagination.tsx";
 import Rest from "../../../../rest/Rest.tsx";
 import UnitOfMeasurement from "../../../../model/UnitOfMeasurement.tsx";
+import { useRouter } from "next/router";
 
 const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
@@ -80,6 +81,12 @@ const UnitOfMeasurementPage = () => {
   const [openEditModal, setOpenEditModal] = useState(false);
 
   const rest = new Rest();
+
+  const router = useRouter();
+
+  const handleBackButtonOnClick = () => {
+    router.push("/main-dashboard");
+  }
 
   const handleOpenAddModal = () => {
     setOpenAddModal(true);
@@ -594,7 +601,7 @@ const UnitOfMeasurementPage = () => {
       />
 
       <section className={styles["unit-of-measurement-page__upper-section"]}>
-        <WindowControlBar />
+        <WindowControlBar handleBackButtonOnClick={handleBackButtonOnClick}/>
       </section>
 
       <section className={styles["unit-of-measurement-page__lower-section"]}>
