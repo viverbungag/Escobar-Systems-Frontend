@@ -7,7 +7,7 @@ import ExpenseTable from '../ExpenseTable/ExpenseTable';
 import ExpenseEditableTable from '../ExpenseEditableTable/ExpenseEditableTable';
 import AddExpenseModal from '../AddExpenseModal/AddExpenseModal';
 
-const INITIAL_URL = "http://localhost:8080/api/v1";
+const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
 export default function ExpenseContent() {
   const rest = new Rest();

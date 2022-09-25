@@ -7,7 +7,7 @@ import { Modal } from '@mui/material';
 import MediumButton from '../../Shared/MediumButton/MediumButton';
 import AddExpenseCategory from '../AddExpenseCategory/AddExpenseCategory';
 
-const INITIAL_URL = "http://localhost:8080/api/v1";
+const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
 
 export default function ExpenseCategoryContent() {

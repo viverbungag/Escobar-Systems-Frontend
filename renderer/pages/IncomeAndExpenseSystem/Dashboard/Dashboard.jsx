@@ -12,7 +12,7 @@ import WindowControlBar from '../../../src/components/Shared/WindowControlBar/Wi
 // import DashboardTable from "../DashboardTable/DashboardTable";
 import { useRouter } from "next/router";
 
-const INITIAL_URL = "http://localhost:8080/api/v1";
+const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
 function HomePage() {
 

@@ -10,7 +10,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import MediumButton from '../../Shared/MediumButton/MediumButton';
 import dateFormat from 'dateformat';
 
-const INITIAL_URL = "http://localhost:8080/api/v1";
+const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
 function capitalizeData(data){
   var separateWord = data.toLowerCase().split(' ');

@@ -5,7 +5,7 @@ import styles from './AddExpenseCategory.module.scss';
 import Rest from '../../../../rest/Rest.tsx';
 import ExpenseCategory from '../../../../model/ExpenseCategory.tsx';
 
-const INITIAL_URL = "http://localhost:8080/api/v1";
+const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
 function capitalizeData(data){
   data = data.charAt(0).toUpperCase() + data.slice(1).toLowerCase();

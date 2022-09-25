@@ -8,7 +8,7 @@ import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
 import Rest from "../../../../rest/Rest.tsx";
 import { printPdf } from '../../print/printFunctions';
 
-const INITIAL_URL = "http://localhost:8080/api/v1";
+const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
 export default function IncomeTable() {
   //for pdf
