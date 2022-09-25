@@ -34,7 +34,7 @@ const MainAdminDashboardPage = () => {
   }
 
   const handleIncomeAndExpenseSystemButtonOnClick = () => {
-
+    router.push("IncomeAndExpenseSystem/Dashboard/Dashboard");
   }
 
 

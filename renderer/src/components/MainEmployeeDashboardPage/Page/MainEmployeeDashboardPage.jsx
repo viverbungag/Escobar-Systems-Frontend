@@ -15,7 +15,13 @@ import WindowControlBar from '../../Shared/WindowControlBar/WindowControlBar';
 const MainEmployeeDashboardPage = () => {
   const router = useRouter();
 
-  const { employeeName, accessInventoryManagementSystem, accessEmployeeManagementSystem, accessIncomeAndExpenseSystem, accessOrderingSystem } = useUser();
+  const {
+    employeeName,
+    accessInventoryManagementSystem,
+    accessEmployeeManagementSystem,
+    accessIncomeAndExpenseSystem,
+    accessOrderingSystem,
+  } = useUser();
 
   const handleInventoryManagementSystemButtonOnClick = () => {
     router.push("InventoryManagementSystem/dashboard");
@@ -30,7 +36,7 @@ const MainEmployeeDashboardPage = () => {
   }
 
   const handleIncomeAndExpenseSystemButtonOnClick = () => {
-
+    router.push("IncomeAndExpenseSystem/Dashboard/Dashboard");
   }
 
 

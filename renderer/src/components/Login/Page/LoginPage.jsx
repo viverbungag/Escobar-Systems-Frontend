@@ -1,6 +1,6 @@
 import { TextField } from '@mui/material';
 import React, { useState } from 'react';
-import BigButton from '../../EmployeeManagementSystem/Shared/Buttons/BigButton/BigButton';
+import BigButton from '../../Shared/Buttons/BigButton/BigButton';
 import styles from './LoginPage.module.scss';
 // import Toast from '../../components/Shared/Toast/Toast.jsx';
 import Rest from '../../../rest/Rest.tsx';
