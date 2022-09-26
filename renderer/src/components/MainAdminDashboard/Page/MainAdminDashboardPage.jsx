@@ -25,10 +25,6 @@ const MainAdminDashboardPage = () => {
     router.push("EmployeeManagementSystem/AttendancePage/AttendancePage");
   }
 
-  const handleEmployeeAttendanceSystemButtonOnClick = () => {
-
-  }
-
   const handleOrderingSystemButtonOnClick = () => {
     router.push("OrderingSystem/dashboard");
   }
