@@ -2,7 +2,7 @@ import React from 'react';
 import IncomeTable from '../../../src/components/IncomeAndExpenseSystem/Income/IncomeTable/IncomeTable';
 import SideMenu from '../../../src/components/IncomeAndExpenseSystem/Shared/SideMenu/SideMenu';
 import styles from './IncomePage.module.scss';
-import WindowControlBar from '../../../src/components/Shared/WindowControlBar/WindowControlBar';
+import TitleBar from '../../../src/components/IncomeAndExpenseSystem/Shared/TitleBar/TitleBar';
 import { useRouter } from "next/router";
 
 export default function IncomePage() {
@@ -16,9 +16,11 @@ export default function IncomePage() {
   }
 
   return (
-    <div className={styles["income-page"]}>
-      <WindowControlBar handleBackButtonOnClick={handleBackButtonOnClick}/>
-      <div className={styles.section}>
+    <div>
+      <div className={styles.title_bar}>
+        <TitleBar />
+      </div>
+       <div className={styles.section}>
         <SideMenu
           homeState=""
           viewincomeState="active"

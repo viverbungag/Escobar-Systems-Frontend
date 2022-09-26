@@ -8,8 +8,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TextField } from '@mui/material';
 import dayjs from 'dayjs';
-import WindowControlBar from '../../../src/components/Shared/WindowControlBar/WindowControlBar';
-// import DashboardTable from "../DashboardTable/DashboardTable";
+import TitleBar from '../../../src/components/IncomeAndExpenseSystem/Shared/TitleBar/TitleBar';
 import { useRouter } from "next/router";
 
 const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
@@ -113,43 +112,44 @@ function HomePage() {
   const currentDate = `${current.getMonth()+1}/${current.getFullYear()}`;
 
   return (
-    <div className={styles["home-page"]}>
-      <WindowControlBar handleBackButtonOnClick={handleBackButtonOnClick}/>
-      <div className={styles["home-page__body"]}>
-        <SideMenu homeState="active" viewincomeState="" viewexpenseState="" />
-        <div className={styles["home-page__contents"]}>
-          {/* <div className={styles.header}>
-            <div className={styles.text}>Monthly Report for {currentDate}</div>
-          </div> */}
-          <section className={styles["home-page__date-section"]}>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DatePicker
-                views={["year", "month"]}
-                label="From"
-                value={fromDate}
-                minDate={dayjs().year(2018)}
-                maxDate={toDate}
-                onChange={handleFromDateOnChange}
-                renderInput={(params) => <TextField {...params} />}
+    <div>
+      <div className={styles.title_bar}>
+        <TitleBar />
+      </div>
+      <div className={styles["home-page"]}>
+        <div className={styles["home-page__body"]}>
+          <SideMenu homeState="active" viewincomeState="" viewexpenseState="" />
+          <div className={styles["home-page__contents"]}>
+            <section className={styles["home-page__date-section"]}>
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <DatePicker
+                  views={["year", "month"]}
+                  label="From"
+                  value={fromDate}
+                  minDate={dayjs().year(2018)}
+                  maxDate={toDate}
+                  onChange={handleFromDateOnChange}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+              </LocalizationProvider>
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <DatePicker
+                  views={["year", "month"]}
+                  label="To"
+                  value={toDate}
+                  minDate={fromDate}
+                  maxDate={dayjs()}
+                  onChange={handleToDateOnChange}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+              </LocalizationProvider>
+            </section>
+            <div className={styles.charts}>
+              <IncomeExpenseChart
+                verticalBarGraphData={verticalBarGraphData}
+                donutGraphData={donutGraphData}
               />
-            </LocalizationProvider>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DatePicker
-                views={["year", "month"]}
-                label="To"
-                value={toDate}
-                minDate={fromDate}
-                maxDate={dayjs()}
-                onChange={handleToDateOnChange}
-                renderInput={(params) => <TextField {...params} />}
-              />
-            </LocalizationProvider>
-          </section>
-          <div className={styles.charts}>
-            <IncomeExpenseChart
-              verticalBarGraphData={verticalBarGraphData}
-              donutGraphData={donutGraphData}
-            />
+            </div>
           </div>
         </div>
       </div>

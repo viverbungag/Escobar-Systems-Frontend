@@ -3,6 +3,7 @@ import React from "react";
 import styles from "./SideMenu.module.scss";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import { useUser } from "../../../contexts/UserContext";
+import { useRouter } from "next/router";
 
 function SideMenu({
   homeState,
@@ -11,6 +12,11 @@ function SideMenu({
   viewexpensecategoryState,
 }) {
   const { employeeName } = useUser();
+  const router = useRouter();
+  const handleLogout = () => {
+    router.push("/main-admin-dashboard");
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -75,6 +81,9 @@ function SideMenu({
       </div>
       <div className={styles.footer}>
         <div className={styles.current_user}>{employeeName}</div>
+        <div className={styles.logout_btn_container}>
+          <LogoutRoundedIcon className={styles.logout_btn} onClick={handleLogout} />
+        </div>
       </div>
     </div>
   );

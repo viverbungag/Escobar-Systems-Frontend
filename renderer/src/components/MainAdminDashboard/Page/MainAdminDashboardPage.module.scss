@@ -4,7 +4,8 @@ $hover-color: #fdb530;
 .main-dashboard-page{
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    height: 100vh;
+    overflow-y: scroll;
 
     &__header{
         padding-top: 5rem;

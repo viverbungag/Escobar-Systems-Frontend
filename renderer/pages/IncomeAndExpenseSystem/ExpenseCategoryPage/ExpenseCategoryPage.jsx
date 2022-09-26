@@ -3,7 +3,7 @@ import styles from './ExpenseCategoryPage.module.scss';
 import ExpenseCategoryContent from '../../../src/components/IncomeAndExpenseSystem/ExpenseCategory/ExpenseCategoryContent/ExpenseCategoryContent';
 import SideMenu from '../../../src/components/IncomeAndExpenseSystem/Shared/SideMenu/SideMenu';
 import { useRouter } from "next/router";
-import WindowControlBar from '../../../src/components/Shared/WindowControlBar/WindowControlBar';
+import TitleBar from '../../../src/components/IncomeAndExpenseSystem/Shared/TitleBar/TitleBar';
 
 export default function ExpenseCategoryPage() {
 
@@ -16,19 +16,21 @@ export default function ExpenseCategoryPage() {
   }
 
   return (
-    <div className={styles["expense-category-page"]}>
-      <WindowControlBar handleBackButtonOnClick={handleBackButtonOnClick}/>
-      <div className={styles.section}>
-        <SideMenu
-          homeState=""
-          viewincomeState=""
-          viewexpenseState=""
-          viewexpensecategoryState="active"
-        />
-        <div className={styles.content}>
-          <ExpenseCategoryContent />
-        </div>
+    <div>
+      <div className={styles.title_bar}>
+        <TitleBar />
       </div>
+      <div className={styles.section}>
+          <SideMenu
+            homeState=""
+            viewincomeState=""
+            viewexpenseState=""
+            viewexpensecategoryState="active"
+          />
+          <div className={styles.content}>
+            <ExpenseCategoryContent />
+          </div>
+        </div>
     </div>
   );
 }
