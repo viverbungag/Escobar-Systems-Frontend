@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import styles from './PaymentPage.module.scss';
-import Sidebar from "./PaymentPageBody/PaymentPageBody.jsx";
+import Sidebar from "../Sidebar/Sidebar.jsx";
 import PaymentPageBody from "./PaymentPageBody/PaymentPageBody.jsx";
-import PaymentOrderTab from "./PaymentOrderTab/PaymentOrderTab.jsx";
+import PaymentOrderTab from "./PaymentOrderTab/PaymentOrderTab";
 import Pagination from "../../../model/Pagination";
 import Rest from "../../../rest/Rest.tsx";
+import WindowControlBar from "../../Shared/WindowControlBar/WindowControlBar";
+import { useRouter } from "next/router";
 
 const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
@@ -18,8 +20,15 @@ const PaymentPage = () => {
   const [orderDiscount, setOrderDiscount] = useState(0);
   const [customerPayment, setOrderCustomerPayment] = useState(0);
 
-
   const rest = new Rest();
+
+  const router = useRouter();
+
+  const handleBackButtonOnClick = () => {
+    localStorage.getItem("isAdmin") === "true"
+      ? router.push("/main-admin-dashboard")
+      : router.push("/main-employee-dashboard");
+  };
 
   const handlePageSizeOnChange = (event) => {
     setPagination(
@@ -51,6 +60,7 @@ const PaymentPage = () => {
   }
 
   const handleOrdersLoad = (contents) => {
+    console.log("contents: " + contents);
     setOrders(contents);
   }
 
@@ -59,6 +69,7 @@ const PaymentPage = () => {
   }
 
   const getAllOrders = () => {
+    console.log("contents: ");
     rest.getWithPagination(
       `${INITIAL_URL}/orders/paged`,
       pagination.tojson(),
@@ -81,11 +92,13 @@ const PaymentPage = () => {
   }
 
   useEffect(() => {
+    // console.log("contents: ");
     getAllOrders();
   }, [pagination]);
 
   return (
     <div className={styles["PaymentPage"]}>
+      <WindowControlBar handleBackButtonOnClick={handleBackButtonOnClick} />
       <Sidebar page="paymentpage" />
       <div className={styles["Component"]}>
         <PaymentPageBody

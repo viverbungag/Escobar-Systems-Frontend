@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './PaymentPageBody.module.scss';
 import PaymentPageCard  from "./PaymentPageCard/PaymentPageCard.jsx";
-import TablePagination  from "@mui/material";
+import {TablePagination}  from "@mui/material";
 import shortid from 'shortid';
 
 

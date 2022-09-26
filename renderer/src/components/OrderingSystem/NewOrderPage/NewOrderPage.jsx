@@ -11,6 +11,8 @@ import FoodOrder from '../../../model/FoodOrder.tsx';
 import MenuModel from '../../../model/Menu.tsx';
 import useUser from '../../contexts/UserContext';
 import OrderMenu from '../../../model/OrderMenu.tsx';
+import { useRouter } from "next/router";
+import WindowControlBar from '../../Shared/WindowControlBar/WindowControlBar';
 
 // import { MenuData } from "../../data/DataIndex";
 const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
@@ -18,6 +20,14 @@ const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 const NewOrderPage = () => {
 
   const rest = new Rest();
+
+  const router = useRouter();
+
+  const handleBackButtonOnClick = () => {
+    localStorage.getItem("isAdmin") === "true"
+      ? router.push("/main-admin-dashboard")
+      : router.push("/main-employee-dashboard");
+  };
 
   // const { employeeName } = useUser();
 
@@ -210,6 +220,7 @@ const NewOrderPage = () => {
 
   return (
     <div className={styles["NewOrderPage"]}>
+      <WindowControlBar handleBackButtonOnClick={handleBackButtonOnClick} />
       <MenuSideBar
         items={activeMenuCategories}
         categoryOnChange={handleCategoryOnChange}
