@@ -1,4 +1,4 @@
-@import '/styles/variables.scss';
+@import '../../../../styles/variables.scss';
 
 .container {
     display: flex;
@@ -12,13 +12,12 @@
         .button {
             background: none;
             border: none;
-            // color: $color--blue2;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: transform 0.2s;
             &:hover {
-                // color: $color--darkblue;
+                color: grey;
                 transform: scale(1.1) translateY(-2.5px);
                 cursor: pointer !important;
             }

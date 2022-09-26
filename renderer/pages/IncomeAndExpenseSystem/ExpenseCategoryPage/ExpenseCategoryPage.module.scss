@@ -1,10 +1,18 @@
 @import '../../../src/styles/variables.scss';
 
+.title_bar {
+    width: 100%;
+    position: sticky;
+    top: 0;
+    height: fit-content;
+}
 
 .section {
-    // height: 100vh;
     margin-left: 20rem;
-    margin-top: 3rem;
+    button {
+        border: none;
+        background: none;
+    }
     .content {
         display: flex;
         height: 90vh;

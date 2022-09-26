@@ -13,7 +13,6 @@
     color: white;
     overflow-x: hidden; 
     padding: 1rem;
-    padding-top: 4rem;
     .header {
         padding: 1rem;
         background-color: rgb(20, 20, 20);
@@ -103,13 +102,17 @@
             overflow-wrap: break-word;
             word-wrap: break-word;
         }
-        .logout_btn {
+        .logout_btn_container {
             width: 10%;
-            transition: transform 0.5s;
-            &:hover {
-                color: $color--primary;
-                cursor: pointer;
-                transform: translateX(4px);
+            -webkit-transform: scaleX(-1);
+            transform: scaleX(-1);
+            .logout_btn {
+                transition: transform 0.5s;
+                &:hover {
+                    color: $color--primary;
+                    cursor: pointer;
+                    transform: translateX(4px);
+                }
             }
         }
     }

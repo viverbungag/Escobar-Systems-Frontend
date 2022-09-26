@@ -2,7 +2,6 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 
 export function printPdf(title, headCells, rows) {
-    console.log(rows);
     const doc = new jsPDF();
     var img = new Image();
     img.src = '/images/logo.png';
@@ -41,7 +40,6 @@ export function printPdf(title, headCells, rows) {
         margin: { top: 35 },
     })
 
-    // Total page number plugin only available in jspdf v1.0+
     if (typeof doc.putTotalPages === 'function') {
         doc.putTotalPages(totalPagesExp)
     }

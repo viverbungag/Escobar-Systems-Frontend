@@ -15,35 +15,24 @@
     }
 }
 
-.header {
-    position: sticky;
-    z-index: 999;
-    top: 0;
+.title_bar {
     width: 100%;
-    padding: 0.5rem 0;
-    display: flex;
-    justify-content: right;
-    .text {
-        font-size: $h5FontSize;
-        font-weight: $h3FontWeight;
-        background-color: rgb(32, 32, 32);
-        color: grey;
-        border-bottom-left-radius: 1rem;
-        border-top-left-radius: 1rem;
-        padding: 1rem;
-        box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
-    }
+    position: sticky;
+    top: 0;
+    height: fit-content;
+    background-color: white;
 }
 
 .home-page{
     display: flex;
     flex-direction: column;
+    height: 90vh;
+    overflow-y: scroll;
 
     &__body{
         display: flex;
         padding-top: 1rem;
         margin-left: 20rem;
-        margin-top: 5rem;
     }
 
     &__contents{
