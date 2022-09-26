@@ -47,6 +47,23 @@ class Rest {
       });
   }
 
+  getMenuBasedOnCategory(
+    url: string,
+    body: Object,
+    handleSuccessAction: Function,
+  ) {
+    axios
+      .post(url, body)
+      .then(function (response) {
+        if (response.status === 200) {
+          handleSuccessAction(response.data);
+        }
+      })
+      .catch(function (error) {
+        toast.error(error?.response?.data?.message);
+      });
+  }
+  
   add(
     url: string,
     body: Object,

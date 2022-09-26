@@ -30,7 +30,7 @@ const MainAdminDashboardPage = () => {
   }
 
   const handleOrderingSystemButtonOnClick = () => {
-
+    router.push("OrderingSystem/dashboard");
   }
 
   const handleIncomeAndExpenseSystemButtonOnClick = () => {
