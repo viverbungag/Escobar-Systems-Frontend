@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./AddStockOutTransactionModal.module.scss";
-import ModalSaveButton from "../../Shared/Buttons/ModalSaveButton/ModalSaveButton";
+import ModalSaveButton from "../Buttons/ModalSaveButton/ModalSaveButton";
 import TextField from "@mui/material/TextField";
 import { Modal, Slide, Backdrop } from "@mui/material";
 import InputAdornment from '@mui/material/InputAdornment';

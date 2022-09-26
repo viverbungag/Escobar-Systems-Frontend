@@ -11,13 +11,15 @@ const ItemsSelect = ({ label, items, selectedItem, itemOnChange }) => {
       <FormControl variant="standard" sx={{ minWidth: 230 }}>
         <InputLabel id="demo-simple-select-standard-label">{label}</InputLabel>
         <Select
-          labelId="demo-simple-select-standard-label"
           id="demo-simple-select-standard"
           value={selectedItem}
           onChange={itemOnChange}
           label="Age"
           fullWidth
           disabled={items.length <= 0 && selectedItem === undefined}
+          sx={{
+            maxHeight:"10rem"
+          }}
         >
           {items.length > 0 ? (
             items.map((item, index) => {

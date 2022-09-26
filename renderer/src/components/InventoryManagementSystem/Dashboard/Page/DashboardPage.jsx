@@ -6,7 +6,11 @@ import Rest from "../../../../rest/Rest.tsx";
 import Pagination from "src/model/Pagination";
 import DashboardInMinimumTable from "../DashboardInMinimumTable/DashboardInMinimumTable";
 import DashboardExpiredTable from "../DashboardExpiredTable/DashboardExpiredTable";
+import AddStockOutTransactionModal from '../../Shared/AddStockOutTransactionModal/AddStockOutTransactionModal';
 import { useRouter } from "next/router";
+import Transaction from "../../../../model/Transaction.tsx";
+import { useUser } from '../../../contexts/UserContext';
+import { toast } from 'react-toastify';
 
 const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
@@ -79,6 +83,12 @@ const expiredSortItems = [
 
 const DashboardPage = () => {
 
+  const currentDate = new Date();
+  const defaultExpirationDate = new Date(currentDate.getTime());
+  defaultExpirationDate.setDate(defaultExpirationDate.getDate() + 7);
+
+  const { employeeName } = useUser();
+
   const [inMinimumSupplies, setInMinimumSupplies] = useState([]);
   const [expiredSupplies, setExpiredSupplies] = useState([]);
 
@@ -92,6 +102,25 @@ const DashboardPage = () => {
   const [activeInMinimumTotalPages, setActiveInMinimumTotalPages] = useState(0);
   const [activeExpiredTotalPages, setActiveExpiredTotalPages] = useState(0);
 
+  const [expiredQuantity, setExpiredQuantity] = useState(0);
+
+  const [addTransaction, setAddTransaction] = useState(
+    new Transaction(
+      1,
+      employeeName,
+      currentDate,
+      "",
+      1,
+      "",
+      "",
+      0,
+      defaultExpirationDate,
+      "STOCK_OUT"
+    )
+  );
+
+  const [openStockOutModal, setOpenStockOutModal] = useState(false);
+
   const rest = new Rest();
 
   const router = useRouter();
@@ -100,7 +129,84 @@ const DashboardPage = () => {
     localStorage.getItem("isAdmin") === "true"
       ? router.push("/main-admin-dashboard")
       : router.push("/main-employee-dashboard");
-  }
+  };
+
+  const handleOpenStockOutModal = (supply) => {
+    setAddTransaction(
+      new Transaction(
+        supply.transactionId,
+        employeeName,
+        currentDate,
+        supply.supplierName,
+        1,
+        supply.supplyName,
+        supply.unitOfMeasurementName,
+        0,
+        defaultExpirationDate,
+        "STOCK_OUT"
+      )
+    );
+    setExpiredQuantity(supply.supplyQuantity);
+    setOpenStockOutModal(true);
+  };
+  const handleCloseAddModal = () => {
+    setOpenStockOutModal(false);
+  };
+
+  const handleQuantityStockOutChange = (event) => {
+    setAddTransaction(
+      new Transaction(
+        1,
+        employeeName,
+        currentDate,
+        addTransaction.supplierName,
+        event.target.value,
+        addTransaction.supplyName,
+        addTransaction.unitOfMeasurementAbbreviation,
+        0,
+        defaultExpirationDate,
+        "STOCK_OUT"
+      )
+    );
+  };
+
+  const handleAddModalButtonClicked = () => {
+    
+    if (addTransaction.supplyQuantity > expiredQuantity){
+      toast.error("The inputted quantity should not be over the expired quantity");
+      return;
+    }
+    
+    stockOut();
+  };
+
+  const addSuccessAction = () => {
+    loadAllSupplies();
+    setOpenStockOutModal(false);
+    setAddTransaction(
+      new Transaction(
+        1,
+        employeeName,
+        currentDate,
+        "",
+        1,
+        "",
+        "",
+        1,
+        defaultExpirationDate,
+        "STOCK_OUT"
+      )
+    );
+  };
+
+  const stockOut = () => {
+    rest.add(
+      `${INITIAL_URL}/transaction/expired/stock-out`,
+      addTransaction.toJson(),
+      addSuccessAction,
+      `Successully added the transaction`
+    );
+  };
 
   const handleActiveInMinimumPageSizeChange = (event) => {
     setActiveInMinimumPagination(
@@ -241,6 +347,16 @@ const DashboardPage = () => {
 
   return (
     <div className={styles["dashboard-page"]}>
+      <AddStockOutTransactionModal 
+        supplyName={addTransaction.supplyName}
+        quantity ={addTransaction.supplyQuantity}
+        unitOfMeasurement={addTransaction.unitOfMeasurementAbbreviation}
+        quantityOnChange={handleQuantityStockOutChange}
+        onClickAddButton={handleAddModalButtonClicked}
+        openAddModal={openStockOutModal}
+        handleCloseAddModal={handleCloseAddModal}
+      />
+
       <section className={styles["dashboard-page__upper-section"]}>
         <WindowControlBar handleBackButtonOnClick={handleBackButtonOnClick} />
       </section>
@@ -274,7 +390,7 @@ const DashboardPage = () => {
             </section>
           </section>
 
-          <section className={styles["dashboard-page__expired-section"]}>
+          {/* <section className={styles["dashboard-page__expired-section"]}>
             <div className={styles["dashboard-page__title"]}>
               <h1>EXPIRED PRODUCTS</h1>
             </div>
@@ -295,10 +411,11 @@ const DashboardPage = () => {
                   handlePageSizeChange={handleActiveExpiredPageSizeChange}
                   handleSortedByChange={handleActiveExpiredSortedByChange}
                   handleSortOrderChange={handleActiveExpiredSortOrderChange}
+                  handleOpenStockOutModal={handleOpenStockOutModal}
                 />
               </div>
             </section>
-          </section>
+          </section> */}
         </section>
       </section>
     </div>
