@@ -4,17 +4,13 @@ import WindowControlBar from "../../../Shared/WindowControlBar/WindowControlBar"
 import Navigation from "../../Shared/Navigation/Navigation";
 import Rest from "../../../../rest/Rest.tsx";
 import Pagination from "src/model/Pagination";
-import DashboardTable from "../DashboardTable/DashboardTable";
+import DashboardInMinimumTable from "../DashboardInMinimumTable/DashboardInMinimumTable";
+import DashboardExpiredTable from "../DashboardExpiredTable/DashboardExpiredTable";
 import { useRouter } from "next/router";
 
 const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
-const headers = [
-  {
-    id: "id",
-    label: "Id",
-    value: "supplyId",
-  },
+const inMinimumHeaders = [
   {
     id: "supply",
     label: "Name",
@@ -32,7 +28,7 @@ const headers = [
   },
 ];
 
-const sortItems = [
+const inMinimumSortItems = [
   {
     label: "Name",
   },
@@ -44,14 +40,57 @@ const sortItems = [
   },
 ];
 
+const expiredHeaders = [
+  {
+    id: "expiryDate",
+    label: "Expiry Date",
+    value: "expiryDate",
+    format: (string) => string.split("T")[0]
+  },
+  {
+    id: "supply",
+    label: "Supply",
+    value: "supplyName",
+  },
+  {
+    id: "supplyQuantity",
+    label: "Quantity",
+    value: "supplyQuantity",
+  },
+  {
+    id: "unitOfMeasurementAbbreviation",
+    label: "Measurement",
+    value: "unitOfMeasurementAbbreviation",
+  }
+];
+
+const expiredSortItems = [
+  {
+    label: "Transaction Date",
+  },
+  {
+    label: "Supply",
+  },
+  {
+    label: "Quantity",
+  },
+];
+
 
 const DashboardPage = () => {
 
-  const [inMinimumSupplies, setInMinimumSuppies] = useState([]);
-  const [activePagination, setActivePagination] = useState(
+  const [inMinimumSupplies, setInMinimumSupplies] = useState([]);
+  const [expiredSupplies, setExpiredSupplies] = useState([]);
+
+  const [activeInMinimumPagination, setActiveInMinimumPagination] = useState(
     new Pagination(0, 10, "None", true)
   );
-  const [activeTotalPages, setActiveTotalPages] = useState(0);
+  const [activeExpiredPagination, setActiveExpiredPagination] = useState(
+    new Pagination(0, 10, "None", true)
+  );
+
+  const [activeInMinimumTotalPages, setActiveInMinimumTotalPages] = useState(0);
+  const [activeExpiredTotalPages, setActiveExpiredTotalPages] = useState(0);
 
   const rest = new Rest();
 
@@ -63,67 +102,122 @@ const DashboardPage = () => {
       : router.push("/main-employee-dashboard");
   }
 
-  const handleActivePageSizeChange = (event) => {
-    setActivePagination(
+  const handleActiveInMinimumPageSizeChange = (event) => {
+    setActiveInMinimumPagination(
       new Pagination(
-        activePagination.pageNo,
+        activeInMinimumPagination.pageNo,
         parseInt(event.target.value, 10),
-        activePagination.sortedBy,
-        activePagination.isAscending
+        activeInMinimumPagination.sortedBy,
+        activeInMinimumPagination.isAscending
+      )
+    );
+    
+  };
+  const handleActiveExpiredPageSizeChange = (event) => {
+    setActiveExpiredPagination(
+      new Pagination(
+        activeExpiredPagination.pageNo,
+        parseInt(event.target.value, 10),
+        activeExpiredPagination.sortedBy,
+        activeExpiredPagination.isAscending
       )
     );
     
   };
 
-  const handleActivePageNoChange = (event, newPageNo) => {
-    setActivePagination(
+  const handleActiveInMinimumPageNoChange = (event, newPageNo) => {
+    setActiveInMinimumPagination(
       new Pagination(
         newPageNo,
-        activePagination.pageSize,
-        activePagination.sortedBy,
-        activePagination.isAscending
+        activeInMinimumPagination.pageSize,
+        activeInMinimumPagination.sortedBy,
+        activeInMinimumPagination.isAscending
       )
     );
-    
+  };
+  const handleActiveExpiredPageNoChange = (event, newPageNo) => {
+    setActiveExpiredPagination(
+      new Pagination(
+        newPageNo,
+        activeExpiredPagination.pageSize,
+        activeExpiredPagination.sortedBy,
+        activeExpiredPagination.isAscending
+      )
+    );
   };
 
-  const handleActiveSortedByChange = (event) => {
-    setActivePagination(
+  const handleActiveInMinimumSortedByChange = (event) => {
+    setActiveInMinimumPagination(
       new Pagination(
-        activePagination.pageNo,
-        activePagination.pageSize,
+        activeInMinimumPagination.pageNo,
+        activeInMinimumPagination.pageSize,
         event.target.value,
-        activePagination.isAscending
+        activeInMinimumPagination.isAscending
       )
     );
-    
+  };
+  const handleActiveExpiredSortedByChange = (event) => {
+    setActiveExpiredPagination(
+      new Pagination(
+        activeExpiredPagination.pageNo,
+        activeExpiredPagination.pageSize,
+        event.target.value,
+        activeExpiredPagination.isAscending
+      )
+    );
   };
 
-  const handleActiveSortOrderChange = (event) => {
-    setActivePagination(
+  const handleActiveInMinimumSortOrderChange = (event) => {
+    setActiveInMinimumPagination(
       new Pagination(
-        activePagination.pageNo,
-        activePagination.pageSize,
-        activePagination.sortedBy,
+        activeInMinimumPagination.pageNo,
+        activeInMinimumPagination.pageSize,
+        activeInMinimumPagination.sortedBy,
+        event.target.value === "Ascending" ? true : false
+      )
+    );
+  };
+  const handleActiveExpiredSortOrderChange = (event) => {
+    setActiveExpiredPagination(
+      new Pagination(
+        activeExpiredPagination.pageNo,
+        activeExpiredPagination.pageSize,
+        activeExpiredPagination.sortedBy,
         event.target.value === "Ascending" ? true : false
       )
     );
   };
 
   const handleInMinimumSuppliesLoad = (contents) => {
-    setInMinimumSuppies(contents);
+    setInMinimumSupplies(contents);
   };
 
-  const handleActiveTotalPagesLoad = (data) => {
-    setActiveTotalPages(data);
+  const handleActiveInMinimumTotalPagesLoad = (data) => {
+    setActiveInMinimumTotalPages(data);
   };
 
   const getAllInMinimumSupplies = () => {
     rest.getWithPagination(
       `${INITIAL_URL}/supply/active/in-minimum`,
-      activePagination.tojson(),
+      activeInMinimumPagination.tojson(),
       handleInMinimumSuppliesLoad,
-      handleActiveTotalPagesLoad
+      handleActiveInMinimumTotalPagesLoad
+    );
+  };
+  const handleExpiredSuppliesLoad = (contents) => {
+    setExpiredSupplies(contents);
+  };
+
+  const handleActiveExpiredTotalPagesLoad = (data) => {
+    setActiveExpiredTotalPages(data);
+  };
+
+  const getAllExpiredSupplies = () => {
+    rest.getWithPagination(
+      `${INITIAL_URL}/transaction/expired`,
+      activeExpiredPagination.tojson(),
+      handleExpiredSuppliesLoad,
+      handleActiveExpiredTotalPagesLoad
     );
   };
 
@@ -131,43 +225,79 @@ const DashboardPage = () => {
     getAllInMinimumSupplies();
   };
 
+  const loadAllExpiredSupplies = () => {
+    getAllExpiredSupplies();
+  };
+
 
   useEffect(() => {
     loadAllInMinimumSupplies();
-  }, [activePagination]);
+  }, [activeInMinimumPagination]);
+
+  useEffect(() => {
+    loadAllExpiredSupplies();
+  }, [activeExpiredPagination]);
 
 
   return (
     <div className={styles["dashboard-page"]}>
       <section className={styles["dashboard-page__upper-section"]}>
-        <WindowControlBar handleBackButtonOnClick={handleBackButtonOnClick}/>
+        <WindowControlBar handleBackButtonOnClick={handleBackButtonOnClick} />
       </section>
 
       <section className={styles["dashboard-page__lower-section"]}>
         <Navigation page="dashboard" />
         <section className={styles["dashboard-page__main-section"]}>
-          <div className={styles["dashboard-page__title"]}>
-            <h1>SUPPLIES IN MINIMUM</h1>
-          </div>
-          <section className={styles["dashboard-page__main-bottom-section"]}>
-            <div className={styles["dashboard-page__in-minimum-table"]}>
-              <DashboardTable
-                headers={headers}
-                rows={inMinimumSupplies}
-                sortOrder={
-                  activePagination.isAscending ? "Ascending" : "Descending"
-                }
-                sortedBy={activePagination.sortedBy}
-                pageNo={activePagination.pageNo}
-                pageSize={activePagination.pageSize}
-                totalPages={activeTotalPages}
-                sortItems={sortItems}
-                handlePageNoChange={handleActivePageNoChange}
-                handlePageSizeChange={handleActivePageSizeChange}
-                handleSortedByChange={handleActiveSortedByChange}
-                handleSortOrderChange={handleActiveSortOrderChange}
-              />
+          <section className={styles["dashboard-page__in-minimum-section"]}>
+            <div className={styles["dashboard-page__title"]}>
+              <h1>SUPPLIES IN MINIMUM</h1>
             </div>
+            <section className={styles["dashboard-page__main-bottom-section"]}>
+              <div className={styles["dashboard-page__in-minimum-table"]}>
+                <DashboardInMinimumTable
+                  headers={inMinimumHeaders}
+                  rows={inMinimumSupplies}
+                  sortOrder={
+                    activeInMinimumPagination.isAscending ? "Ascending" : "Descending"
+                  }
+                  sortedBy={activeInMinimumPagination.sortedBy}
+                  pageNo={activeInMinimumPagination.pageNo}
+                  pageSize={activeInMinimumPagination.pageSize}
+                  totalPages={activeInMinimumTotalPages}
+                  sortItems={inMinimumSortItems}
+                  handlePageNoChange={handleActiveInMinimumPageNoChange}
+                  handlePageSizeChange={handleActiveInMinimumPageSizeChange}
+                  handleSortedByChange={handleActiveInMinimumSortedByChange}
+                  handleSortOrderChange={handleActiveInMinimumSortOrderChange}
+                />
+              </div>
+            </section>
+          </section>
+
+          <section className={styles["dashboard-page__expired-section"]}>
+            <div className={styles["dashboard-page__title"]}>
+              <h1>EXPIRED PRODUCTS</h1>
+            </div>
+            <section className={styles["dashboard-page__main-bottom-section"]}>
+              <div className={styles["dashboard-page__in-minimum-table"]}>
+                <DashboardExpiredTable
+                  headers={expiredHeaders}
+                  rows={expiredSupplies}
+                  sortOrder={
+                    activeExpiredPagination.isAscending ? "Ascending" : "Descending"
+                  }
+                  sortedBy={activeExpiredPagination.sortedBy}
+                  pageNo={activeExpiredPagination.pageNo}
+                  pageSize={activeExpiredPagination.pageSize}
+                  totalPages={activeExpiredTotalPages}
+                  sortItems={expiredSortItems}
+                  handlePageNoChange={handleActiveExpiredPageNoChange}
+                  handlePageSizeChange={handleActiveExpiredPageSizeChange}
+                  handleSortedByChange={handleActiveExpiredSortedByChange}
+                  handleSortOrderChange={handleActiveExpiredSortOrderChange}
+                />
+              </div>
+            </section>
           </section>
         </section>
       </section>

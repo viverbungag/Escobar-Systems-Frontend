@@ -57,7 +57,7 @@ const StockInTransactionModal = ({
                   renderInput={(params) => <TextField {...params} />}
                 />
               </LocalizationProvider>
-              {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DesktopDatePicker
                   label="Expiry Date"
                   inputFormat="MM/dd/yyyy"
@@ -65,7 +65,7 @@ const StockInTransactionModal = ({
                   onChange={expiryDateOnChange}
                   renderInput={(params) => <TextField {...params} />}
                 />
-              </LocalizationProvider> */}
+              </LocalizationProvider>
               <ItemsSelect
                 label="Supply"
                 items={allSupplies.map((supply)=>supply.supplyName)}

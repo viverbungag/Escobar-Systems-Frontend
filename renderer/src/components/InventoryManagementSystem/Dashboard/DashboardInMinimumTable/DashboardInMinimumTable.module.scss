@@ -1,4 +1,4 @@
-.stock-out-supply-table{
+.dashboard-in-minimum-table{
     min-width:100%;
     min-height: 40rem;
     max-height: 40rem;
@@ -38,7 +38,7 @@
     &__controls{
         display: flex;
         // flex-direction: column;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
     }
 
