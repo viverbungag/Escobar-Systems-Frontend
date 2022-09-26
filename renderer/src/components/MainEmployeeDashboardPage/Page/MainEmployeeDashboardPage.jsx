@@ -28,7 +28,7 @@ const MainEmployeeDashboardPage = () => {
   }
 
   const handleEmployeeAttendanceSystemButtonOnClick = () => {
-
+    router.push("EmployeeManagementSystem/HomePage/HomePage");
   }
 
   const handleOrderingSystemButtonOnClick = () => {
