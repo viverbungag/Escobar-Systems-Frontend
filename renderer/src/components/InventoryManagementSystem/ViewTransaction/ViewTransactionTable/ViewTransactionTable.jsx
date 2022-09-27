@@ -57,7 +57,23 @@ export default function ViewTransactionTable({
             return (
               <tr key={shortid.generate()}>
                 {headers.map((header, index) => {
-                  const rowValue = header?.format === undefined ? String(row[header.value]): header.format(String(row[header.value]));
+                  const rowFormattedValue =
+                    header?.format === undefined
+                      ? String(row[header.value])
+                      : header.format(String(row[header.value]));
+
+                  const excludedColumnsWhenStockOut = [
+                    "Expiry Date",
+                    "Supplier",
+                    "Price per Unit",
+                  ];
+
+                  const rowValue =
+                    excludedColumnsWhenStockOut.includes(header.label) &&
+                    row.transactionType === "STOCK_OUT"
+                      ? "----"
+                      : rowFormattedValue;
+                      
                   return (
                     <td key={shortid.generate()}>
                       {rowValue}

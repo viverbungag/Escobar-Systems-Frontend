@@ -138,7 +138,7 @@ const DashboardPage = () => {
         employeeName,
         currentDate,
         supply.supplierName,
-        1,
+        supply.supplyQuantity,
         supply.supplyName,
         supply.unitOfMeasurementName,
         0,
@@ -156,11 +156,11 @@ const DashboardPage = () => {
   const handleQuantityStockOutChange = (event) => {
     setAddTransaction(
       new Transaction(
-        1,
+        addTransaction.transactionId,
         employeeName,
         currentDate,
         addTransaction.supplierName,
-        event.target.value,
+        Number(event.target.value),
         addTransaction.supplyName,
         addTransaction.unitOfMeasurementAbbreviation,
         0,
@@ -181,7 +181,7 @@ const DashboardPage = () => {
   };
 
   const addSuccessAction = () => {
-    loadAllSupplies();
+    getAllExpiredSupplies();
     setOpenStockOutModal(false);
     setAddTransaction(
       new Transaction(
@@ -390,7 +390,7 @@ const DashboardPage = () => {
             </section>
           </section>
 
-          {/* <section className={styles["dashboard-page__expired-section"]}>
+          <section className={styles["dashboard-page__expired-section"]}>
             <div className={styles["dashboard-page__title"]}>
               <h1>EXPIRED PRODUCTS</h1>
             </div>
@@ -415,7 +415,7 @@ const DashboardPage = () => {
                 />
               </div>
             </section>
-          </section> */}
+          </section>
         </section>
       </section>
     </div>
