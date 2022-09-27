@@ -52,15 +52,20 @@ export default function IncomeTable() {
     setSearched("");
     setRows(incomeData);
   };
-  //handle select
-  const [selected, setSelected] = useState("");
-  const handleSelect = (ids) => {
-    setSelected(ids);
-  }
-  //modal
-  const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  const handleOpenDeleteModal = () => { setOpenDeleteModal(true) };
-  const handleCloseDeleteModal = () => { setOpenDeleteModal(false) };
+
+  // function compare(a, b) {
+  //   // Use toUpperCase() to ignore character casing
+  //   const incomeDateA = a.incomeDate.toUpperCase();
+  //   const incomeDateB = b.incomeDate.toUpperCase();
+  
+  //   let comparison = 0;
+  //   if (incomeDateA > incomeDateB) {
+  //     comparison = 1;
+  //   } else if (incomeDateA < incomeDateB) {
+  //     comparison = -1;
+  //   }
+  //   return comparison;
+  // }
 
   useEffect(() => {
     getIncomeData();
@@ -68,8 +73,11 @@ export default function IncomeTable() {
 
   useEffect(() => {
     setRows(incomeData);
-    setPdfRows(incomeData);
   }, [incomeData]);
+
+  useEffect(() => {
+    setPdfRows(rows);
+  }, [rows]);
 
   return (
     <div className={styles.container}>
@@ -87,7 +95,12 @@ export default function IncomeTable() {
             </div>
         </div>
         <div className={styles.table}>
-            <DataGrid
+              <DataGrid
+              initialState={{
+                sorting: {
+                  sortModel: [{ field: 'incomeDate', sort: 'desc' }],
+                },
+              }}
               getRowId={(row) => row.incomeDate}
               rows={rows}
               columns={headCells}
