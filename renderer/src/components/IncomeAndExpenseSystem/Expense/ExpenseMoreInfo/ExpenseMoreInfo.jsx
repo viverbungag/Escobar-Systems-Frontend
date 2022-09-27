@@ -7,6 +7,7 @@ import EventIcon from '@mui/icons-material/Event';
 import { Tooltip } from '@mui/material';
 
 export default function ExpenseMoreInfo({ selectedValues }) {
+    // console.log(selectedValues)
     const [values, setValues] = useState([])
     const getValues = () => {
         selectedValues.map((item) => {
@@ -26,7 +27,7 @@ export default function ExpenseMoreInfo({ selectedValues }) {
   return (
     <div className={styles.container}>
         <div className={styles.header}>
-            Expense Stock-In ID: {values.id}
+            Expense Stock-In ID: {selectedValues.id}
         </div>
         <div className={styles.content_outer}>
             <div className={styles.content_name}>
