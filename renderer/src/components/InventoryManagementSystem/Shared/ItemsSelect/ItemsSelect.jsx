@@ -14,7 +14,7 @@ const ItemsSelect = ({ label, items, selectedItem, itemOnChange }) => {
           id="demo-simple-select-standard"
           value={selectedItem}
           onChange={itemOnChange}
-          label="Age"
+          label={label}
           fullWidth
           disabled={items.length <= 0 && selectedItem === undefined}
           sx={{

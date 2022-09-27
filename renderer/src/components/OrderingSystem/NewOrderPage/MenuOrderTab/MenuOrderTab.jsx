@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import { toast } from 'react-toastify';
-import Icon from '@iconify/react';
+import {Icon} from '@iconify/react';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import InputLabel from '@mui/material/InputLabel';
@@ -20,19 +20,16 @@ const MenuOrderTab = ({
   handleQuantityOnChange,
   handleDeleteItemButtonOnClick,
   deleteAllItemOnClick,
-  payButtonOnClick
+  payButtonOnClick,
+  allOrders,
+  selectedOrder,
+  handleSelectedOrderOnChange,
+  type,
+  handleTypeChange
 }) => {
-  const [age, setAge] = React.useState('');
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
   const [total, setTotal] = useState(1);
   const [open, setOpen] = React.useState(false);
-  const [type, setType] = useState('new-user');
-  const handleTypeChange = (e) => {
-    setType(e.target.value);
-  }
   const [customerPayment, setCustomerPayment] = useState(0);
   const [discountPayment, setDiscountPayment] = useState(0);
 
@@ -41,7 +38,16 @@ const MenuOrderTab = ({
     setOpen(false);
   };
   const handleOpen = () => {
-    console.log("open");
+    if (menuOnCategory.orderMenu.length === 0){
+      toast.error("There should atleast be 1 menu item");
+      return;
+    }
+
+    if (type === 'existing-user' && selectedOrder === ''){
+      toast.error("Please select from the existing orders");
+      return;
+    }
+
     setOpen(true);
   };
   const customerPaymentOnChange = (e) => {
@@ -72,7 +78,7 @@ const MenuOrderTab = ({
           onChange={handleTypeChange}
         >
           <ToggleButton value="new-user">New Order</ToggleButton>
-          <ToggleButton value="existing-">Existing Order</ToggleButton>
+          <ToggleButton value="existing-user">Existing Order</ToggleButton>
         </ToggleButtonGroup>        
       <button onClick={deleteAllItemOnClick}>
           <Image
@@ -85,6 +91,31 @@ const MenuOrderTab = ({
           />
         </button>
       </div>
+      <Box sx={{ minWidth: 120 }} className={[styles["InputLabel"], type === "new-user" && styles["none"]].join(" ")}>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label"> Select Order Menu </InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={selectedOrder}
+            label="Select Order Menu"
+            onChange={handleSelectedOrderOnChange}
+          >
+          {allOrders.map((item) => {
+            return (
+            //   <div
+            //     className={styles["container-section"]}
+            //     key={item.orderId} 
+            //   >
+            //   <MenuItem key={item.orderId} value={item.orderId}>{`Order #${item.orderId}`} </MenuItem>
+              
+            // </div>
+            <MenuItem key={item.orderId} value={item.orderId}>{`Order #${item.orderId}`} </MenuItem>
+            );
+          })}
+          </Select>
+        </FormControl>
+      </Box>
 
       <div className={styles["container"]}>
         {menuOnCategory.orderMenu.map((item) => {
@@ -98,38 +129,12 @@ const MenuOrderTab = ({
                 price={item.menuPrice}
                 quantity={item.orderMenuQuantity}
                 quantityOnChange={handleQuantityOnChange}
-                numberOfServingsLeft={item.numberOfServingsLeft}
                 handleDeleteItemButtonOnClick={handleDeleteItemButtonOnClick}
               />
             </div>
           );
         })}
       </div>
-        <Box sx={{ minWidth: 120 }} className={[styles["InputLabel"], type === "new-user" && styles["none"]].join(" ")}>
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label"> Select Order Menu </InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={age}
-            label="Select Order Menu"
-            onChange={handleChange}
-          >
-            
-          {menuOnCategory.orderMenu.map((item) => {
-            return (
-              <div
-                className={styles["container-section"]}
-                key={shortid.generate()}
-              >
-              <MenuItem> {item.menuId} </MenuItem>
-              
-            </div>
-            );
-          })}
-          </Select>
-        </FormControl>
-      </Box>
       <div className={styles["total-section"]} onClick={handleOpen}>
         <div className={styles["total-section--wrapper"]}>
           <h1> ₱ {total}</h1>
@@ -326,7 +331,6 @@ function ChildModal({payButtonOnClick, total, customerPayment, handleMainModalCl
     </React.Fragment>
   );
 }
-
 
 export default MenuOrderTab
 

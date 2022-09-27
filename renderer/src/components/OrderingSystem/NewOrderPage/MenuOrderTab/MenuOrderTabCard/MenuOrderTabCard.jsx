@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './MenuOrderTabCard.module.scss'
 import Image from "next/image";
 
-const MenuOrderTabCard = ({title, price, quantity, quantityOnChange, handleDeleteItemButtonOnClick, numberOfServingsLeft}) => {
+const MenuOrderTabCard = ({title, price, quantity, quantityOnChange, handleDeleteItemButtonOnClick}) => {
 
   return (
         <div className={styles['MenuOrderTabCard']}>
@@ -10,7 +10,7 @@ const MenuOrderTabCard = ({title, price, quantity, quantityOnChange, handleDelet
             <div className={styles['Title-Section']}>
               <h2> {title}</h2>
                 <div className={styles['Counter-Section']}>
-                <button onClick={()=>quantityOnChange(title,  quantity, -1, numberOfServingsLeft)}>
+                <button onClick={()=>quantityOnChange(title,  quantity, -1)}>
                 <Image
                   src="/OrderingSystem/images/counter.svg"
                   alt="minus icon"
@@ -21,7 +21,7 @@ const MenuOrderTabCard = ({title, price, quantity, quantityOnChange, handleDelet
                 />  
                 </button>
                 <h2> {quantity} </h2>
-                <button onClick={()=>quantityOnChange(title, quantity, 1, numberOfServingsLeft)}>
+                <button onClick={()=>quantityOnChange(title, quantity, 1)}>
                 <Image
                   src="/OrderingSystem/images/counter-add.svg"
                   alt="add icon"
