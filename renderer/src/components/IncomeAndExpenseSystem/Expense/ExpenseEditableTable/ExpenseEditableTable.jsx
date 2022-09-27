@@ -31,7 +31,7 @@ export default function ExpenseEditableTable({ reload, expenseEditableData, expe
   //
     //columns
   const headCells = [
-    { field: 'expenseDate', headerName: 'Transaction Date', flex: 2, align: 'left'},
+    { field: 'expenseDate', headerName: 'Transaction Date', flex: 2, align: 'left', valueGetter: (params)=> params.row.expenseDate.split(["T"])[0]},
     { field: 'expenseCategoryName', headerName: 'Category Name', flex: 2, align: 'left'},
     { field: 'expenseCost', headerName: 'Cost', flex: 1, align: 'left'}
   ];

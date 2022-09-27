@@ -4,8 +4,7 @@ import PaymentOrderTabCard from "./PaymentOrderTabCard/PaymentOrderTabCard";
 import shortid from 'shortid';
 import {Icon} from '@iconify/react';
 
-const PaymentOrderTab = ({orderTabItems, orderCardSelected, orderDiscount, customerPayment}) => {
-
+const PaymentOrderTab = ({orderTabItems, orderCardSelected, orderDiscount, customerPayment, totalPayment}) => {
   const title = 'Escobar - Employee Attendance Data';
   const pdfColumns = [
     { header:"ID", dataKey: 'employeeAttendanceJoinId' },
@@ -14,7 +13,7 @@ const PaymentOrderTab = ({orderTabItems, orderCardSelected, orderDiscount, custo
     { header:"Type", dataKey: 'attendanceType' }
   ]
   //
-  const total = orderTabItems.reduce(
+  const subTotal = orderTabItems.reduce(
     (sum, currentMenu) =>
       sum + currentMenu.foodOrder.menu.menuPrice * currentMenu.foodOrder.menuQuantity,
     0
@@ -78,7 +77,7 @@ const PaymentOrderTab = ({orderTabItems, orderCardSelected, orderDiscount, custo
         ].join(" ")}
       >
         <h2 className={styles["Subtotal"]}> SubTotal </h2>
-        <h2 className={styles["SubtotalPrice"]}> {total} </h2>
+        <h2 className={styles["SubtotalPrice"]}> {subTotal} </h2>
       </div>
 
       <div
@@ -89,7 +88,7 @@ const PaymentOrderTab = ({orderTabItems, orderCardSelected, orderDiscount, custo
       >
         <h2 className={styles["Discount"]}> Discounted Price </h2>
         <h2 className={styles["DiscountPrice"]}>
-          {total * (orderDiscount / 100)}
+          {subTotal * (orderDiscount / 100)}
         </h2>
       </div>
 
@@ -102,7 +101,7 @@ const PaymentOrderTab = ({orderTabItems, orderCardSelected, orderDiscount, custo
         <h2 className={styles["Total"]}> Total </h2>
         <h2 className={styles["TotalPrice"]}>
           {" "}
-          {total - total * (orderDiscount / 100)}
+          {subTotal - subTotal * (orderDiscount / 100)}
         </h2>
       </div>
 
@@ -114,7 +113,7 @@ const PaymentOrderTab = ({orderTabItems, orderCardSelected, orderDiscount, custo
       >
         <h2 className={styles["Change"]}> Change </h2>
         <h2 className={styles["ChangePrice"]}>
-          {customerPayment - (total - orderDiscount)}
+          {customerPayment - (subTotal - orderDiscount)}
         </h2>
       </div>
     </div>

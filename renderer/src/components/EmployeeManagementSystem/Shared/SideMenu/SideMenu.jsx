@@ -53,7 +53,7 @@ function SideMenu({ homeState, viewattendanceState, viewemployeeState, viewposit
         <div className={styles.footer}>
             <div className={styles.user_container}>
                 <div className={styles.current_user}>{employeeName}</div>
-                <div className={styles.current_type}>Admin</div>
+                {/* <div className={styles.current_type}>Admin</div> */}
             </div>
             <div className={styles.logout_btn_container}>
                 <LogoutRoundedIcon className={styles.logout_btn} onClick={handleLogout} />

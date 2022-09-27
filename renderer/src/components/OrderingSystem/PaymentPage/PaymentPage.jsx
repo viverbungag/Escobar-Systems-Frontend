@@ -19,6 +19,7 @@ const PaymentPage = () => {
   const [orderCardSelected, setOrderCardSelected] = useState(null);
   const [orderDiscount, setOrderDiscount] = useState(0);
   const [customerPayment, setOrderCustomerPayment] = useState(0);
+  const [totalPayment, setTotalPayment] = useState(0); 
 
   const rest = new Rest();
 
@@ -52,15 +53,16 @@ const PaymentPage = () => {
     );
   }
 
-  const handleOrderCardOnClick = (items, orderId, discount, customerPayment) => {
+  const handleOrderCardOnClick = (items, orderId, discount, customerPayment, totalCost) => {
     setOrderTabItems(items);
     setOrderCardSelected(orderId);
     setOrderDiscount(discount);
     setOrderCustomerPayment(customerPayment);
+    setTotalPayment(totalCost);
   }
 
   const handleOrdersLoad = (contents) => {
-    console.log("contents: " + contents);
+    console.log("contents: ", contents);
     setOrders(contents);
   }
 
@@ -69,7 +71,6 @@ const PaymentPage = () => {
   }
 
   const getAllOrders = () => {
-    console.log("contents: ");
     rest.getWithPagination(
       `${INITIAL_URL}/orders/paged`,
       pagination.tojson(),
@@ -117,6 +118,7 @@ const PaymentPage = () => {
         orderCardSelected={orderCardSelected}
         orderDiscount={orderDiscount}
         customerPayment={customerPayment}
+        totalPayment={totalPayment}
         />
       </div>
     </div>

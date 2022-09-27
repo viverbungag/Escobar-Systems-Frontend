@@ -14,6 +14,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import dayjs from 'dayjs';
 
 const MenuOrderTab = ({
   menuOnCategory,
@@ -183,7 +184,7 @@ const MenuOrderTab = ({
                 />
                 </div>
 
-                <div className={styles["Input-Section--Discount"]}>
+                {type === 'new-user' && <div className={styles["Input-Section--Discount"]}>
                 <h1> Input Discount Value : </h1>
                 <input
                   value={discountPayment}
@@ -194,7 +195,7 @@ const MenuOrderTab = ({
                   placeholder="Input Percentage of the Discount"
                 />
                 <h1 className={styles["Percentage"]}> % </h1>
-                </div>
+                </div>}
 
                 </div>
               <div className={styles["Button-Section"]}>
@@ -279,7 +280,7 @@ function ChildModal({payButtonOnClick, total, customerPayment, handleMainModalCl
 
             
                 <div className={styles['Text-Section']}>
-                  <h1 className={styles['Order-Text']}> Order # 20  </h1>
+                  <h1 className={styles['Order-Text']}>{dayjs().format('YYYY / MM / DD – HH:MM')}</h1>
                   {/* <h1  className={styles['Date-Text']}> {`${new Date().getFullYear()} / ${new Date().getMonth()} / ${new Date().getDate()}`} </h1> */}
                 </div>
 

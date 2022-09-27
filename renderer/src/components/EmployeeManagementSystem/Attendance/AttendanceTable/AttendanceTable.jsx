@@ -22,7 +22,7 @@ export default function AttendanceTable() {
   //
   const headCells = [
     { field: 'employeeName', headerName: 'Employee Name', flex: 1, align: 'left' },
-    { field: 'attendanceTime', headerName: 'Time', flex: 1, align: 'left' },
+    { field: 'attendanceTime', headerName: 'Time', flex: 1, align: 'left', valueGetter: (params)=> params.row.attendanceTime.replace("T", "–")},
     { field: 'attendanceType', headerName: 'Type', flex: 1, align: 'left' },
   ]
   const rest = new Rest();
