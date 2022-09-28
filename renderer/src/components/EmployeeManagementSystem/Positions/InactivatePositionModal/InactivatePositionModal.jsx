@@ -3,7 +3,7 @@ import MediumButton from '../../Shared/Buttons/MediumButton/MediumButton';
 import styles from './InactivatePositionModal.module.scss';
 import Rest from "../../../../rest/Rest.tsx";
 
-const INITIAL_URL = "http://localhost:8080/api/v1";
+const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
 export default function InactivatePositionModal({ inactivateSuccessAction, selectedValues }) {
     const rest = new Rest();

@@ -5,7 +5,7 @@ import Type from '../../../../model/Types.tsx'
 import { TextField } from '@mui/material';
 import MediumButton from '../../Shared/Buttons/MediumButton/MediumButton';
 
-const INITIAL_URL = "http://localhost:8080/api/v1";
+const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
 function capitalizeData(data){
   var separateWord = data.toLowerCase().split(' ');

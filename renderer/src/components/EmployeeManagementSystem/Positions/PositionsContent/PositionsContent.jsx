@@ -10,7 +10,7 @@ import InactivePositionsTable from '../InactivePositionsTable/InactivePositionsT
 import EditPositionModal from '../EditPositionModal/EditPositionModal';
 import InactivatePositionModal from '../InactivatePositionModal/InactivatePositionModal';
 
-const INITIAL_URL = "http://localhost:8080/api/v1";
+const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
 export default function PositionsContent() {
     const headCells = [

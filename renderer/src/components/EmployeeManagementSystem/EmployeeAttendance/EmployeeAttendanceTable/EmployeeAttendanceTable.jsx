@@ -7,7 +7,7 @@ import Rest from "../../../../rest/Rest.tsx";
 import { Modal } from '@mui/material';
 import { useUser } from '../../../contexts/UserContext';
 
-const INITIAL_URL = "http://localhost:8080/api/v1";
+const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
 export default function EmployeeAttendanceTable() {
 
