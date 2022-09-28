@@ -26,7 +26,8 @@ const MenuOrderTab = ({
   selectedOrder,
   handleSelectedOrderOnChange,
   type,
-  handleTypeChange
+  handleTypeChange,
+  orderDiscount
 }) => {
 
   const [total, setTotal] = useState(1);
@@ -73,15 +74,15 @@ const MenuOrderTab = ({
     <div className={styles["MenuOrderTab"]}>
       <div className={styles["txt-section"]}>
         <ToggleButtonGroup
-          className={'toggle_group'}
+          className={"toggle_group"}
           value={type}
           exclusive
           onChange={handleTypeChange}
         >
           <ToggleButton value="new-user">New Order</ToggleButton>
           <ToggleButton value="existing-user">Existing Order</ToggleButton>
-        </ToggleButtonGroup>        
-      <button onClick={deleteAllItemOnClick}>
+        </ToggleButtonGroup>
+        <button onClick={deleteAllItemOnClick}>
           <Image
             src="/OrderingSystem/images/delete.svg"
             alt="clear all icon"
@@ -92,9 +93,18 @@ const MenuOrderTab = ({
           />
         </button>
       </div>
-      <Box sx={{ minWidth: 120 }} className={[styles["InputLabel"], type === "new-user" && styles["none"]].join(" ")}>
+      <Box
+        sx={{ minWidth: 120 }}
+        className={[
+          styles["InputLabel"],
+          type === "new-user" && styles["none"],
+        ].join(" ")}
+      >
         <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label"> Select Order Menu </InputLabel>
+          <InputLabel id="demo-simple-select-label">
+            {" "}
+            Select Order Menu{" "}
+          </InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
@@ -102,18 +112,20 @@ const MenuOrderTab = ({
             label="Select Order Menu"
             onChange={handleSelectedOrderOnChange}
           >
-          {allOrders.map((item) => {
-            return (
-            //   <div
-            //     className={styles["container-section"]}
-            //     key={item.orderId} 
-            //   >
-            //   <MenuItem key={item.orderId} value={item.orderId}>{`Order #${item.orderId}`} </MenuItem>
-              
-            // </div>
-            <MenuItem key={item.orderId} value={item.orderId}>{`Order #${item.orderId}`} </MenuItem>
-            );
-          })}
+            {allOrders.map((item) => {
+              return (
+                //   <div
+                //     className={styles["container-section"]}
+                //     key={item.orderId}
+                //   >
+                //   <MenuItem key={item.orderId} value={item.orderId}>{`Order #${item.orderId}`} </MenuItem>
+
+                // </div>
+                <MenuItem key={item.orderId} value={item.orderId}>
+                  {`Order #${item.orderId}`}{" "}
+                </MenuItem>
+              );
+            })}
           </Select>
         </FormControl>
       </Box>
@@ -160,21 +172,20 @@ const MenuOrderTab = ({
             X{" "}
           </Button>
           <div className={styles["Image-Section"]}>
-              <Image
-                src="/OrderingSystem/images/logo.png"
-                alt="Escobar Logo"
-                width="40"
-                height="40"
-                objectFit="contain"
-                draggable="false"
-              />
-            </div>
+            <Image
+              src="/OrderingSystem/images/logo.png"
+              alt="Escobar Logo"
+              width="40"
+              height="40"
+              objectFit="contain"
+              draggable="false"
+            />
+          </div>
           <div className={styles["Wrapper"]}>
             <div className={styles["Text-Section"]}>
-            <div className={styles["Input-Section--Payment"]}>
-
-              <h1> Please input the Customer Payment : </h1>
-              <input
+              <div className={styles["Input-Section--Payment"]}>
+                <h1> Please input the Customer Payment : </h1>
+                <input
                   value={customerPayment}
                   onChange={customerPaymentOnChange}
                   type="text"
@@ -182,34 +193,38 @@ const MenuOrderTab = ({
                   className={styles["Input-Forms--Payment"]}
                   placeholder="Input the money of the customer"
                 />
-                </div>
-
-                {type === 'new-user' && <div className={styles["Input-Section--Discount"]}>
-                <h1> Input Discount Value : </h1>
-                <input
-                  value={discountPayment}
-                  onChange={discountPaymentOnChange}
-                  type="text"
-                  id="first"
-                  className={styles["Input-Forms--Discount"]}
-                  placeholder="Input Percentage of the Discount"
-                />
-                <h1 className={styles["Percentage"]}> % </h1>
-                </div>}
-
-                </div>
-              <div className={styles["Button-Section"]}>
-                <ChildModal
-                  className={styles["Confirm_Button"]}
-                  payButtonOnClick={payButtonOnClick}
-                  total={total}
-                  customerPayment={customerPayment}
-                  handleMainModalClose={handleClose}
-                  discountPayment={discountPayment}
-                  menuOnCategory={menuOnCategory}
-
-                />
               </div>
+
+              {type === "new-user" ? (
+                <div className={styles["Input-Section--Discount"]}>
+                  <h1> Input Discount Value : </h1>
+                  <input
+                    value={discountPayment}
+                    onChange={discountPaymentOnChange}
+                    type="text"
+                    id="first"
+                    className={styles["Input-Forms--Discount"]}
+                    placeholder="Input Percentage of the Discount"
+                  />
+                  <h1 className={styles["Percentage"]}> % </h1>
+                </div>
+              ) : (
+                <h3>{`Discount: ${orderDiscount}%`}</h3>
+              )}
+            </div>
+            <div className={styles["Button-Section"]}>
+              <ChildModal
+                className={styles["Confirm_Button"]}
+                payButtonOnClick={payButtonOnClick}
+                total={total}
+                customerPayment={customerPayment}
+                handleMainModalClose={handleClose}
+                discountPayment={discountPayment}
+                menuOnCategory={menuOnCategory}
+                type={type}
+                orderDiscount={orderDiscount}
+              />
+            </div>
           </div>
         </Box>
       </Modal>
@@ -217,7 +232,7 @@ const MenuOrderTab = ({
   );
 };
 
-function ChildModal({payButtonOnClick, total, customerPayment, handleMainModalClose, discountPayment, menuOnCategory}) {
+function ChildModal({payButtonOnClick, total, customerPayment, handleMainModalClose, discountPayment, menuOnCategory, type, orderDiscount}) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
     if (isNaN(customerPayment)){
@@ -313,12 +328,12 @@ function ChildModal({payButtonOnClick, total, customerPayment, handleMainModalCl
 
                 <div className={styles['Discounted-Section']}>
                   <h2 className={styles['Discount']}> Discounted Price </h2>
-                  <h2  className={styles['DiscountPrice']}> ₱ {total * (discountPayment/100)}  </h2>
+                  <h2  className={styles['DiscountPrice']}> ₱ {type === "new-user" ? (total * (discountPayment/100)) : (total * (orderDiscount/100))}  </h2>
                 </div>
 
                 <div className={styles['Total-Section']}>
                   <h2 className={styles['Total']}> Total </h2>
-                  <h2  className={styles['TotalPrice']}> ₱ {total - (total * (discountPayment/100))}  </h2>
+                  <h2  className={styles['TotalPrice']}> ₱ {type === "new-user" ? (total - (total * (discountPayment/100))): (total - (total * (orderDiscount/100)))}  </h2>
                 </div>
 
                 <div className={styles['Change-Section']}>

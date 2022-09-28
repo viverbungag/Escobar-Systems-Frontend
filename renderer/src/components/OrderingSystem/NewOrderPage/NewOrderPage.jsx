@@ -47,8 +47,17 @@ const NewOrderPage = () => {
   const [payment, setPayment] = useState(0);
 
   const [selectedOrder, setSelectedOrder] = useState('');
+
+  const [orderDiscount, setOrderDiscount] = useState('');
+
   const handleSelectedOrderOnChange = (event) => {
-    setSelectedOrder(event.target.value);
+    const orderId = event.target.value;
+
+    const currentSelectedOrder = allOrders.find((order)=> order.orderId === orderId);
+    setOrderDiscount(currentSelectedOrder.discount);
+
+
+    setSelectedOrder(orderId);
   };
 
   const [type, setType] = useState('new-user');
@@ -299,6 +308,7 @@ const NewOrderPage = () => {
           handleSelectedOrderOnChange={handleSelectedOrderOnChange}
           type={type}
           handleTypeChange={handleTypeChange}
+          orderDiscount={orderDiscount}
         />
       </div>
     </div>
