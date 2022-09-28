@@ -1,10 +1,11 @@
-import styles from "./DashboardTable.module.scss";
+import styles from "./DashboardExpiredTable.module.scss";
 import { TablePagination } from "@mui/material";
 import SortSelect from "../../Shared/SortSelect/SortSelect";
 import SortOrderRadioGroup from "../../Shared/SortOrderRadioGroup/SortOrderRadioGroup";
+import StockOutButton from "../../Shared/Buttons/StockOutButton/StockOutButton";
 import shortid from 'shortid';
 
-export default function DashboardTable({
+export default function DashboardExpiredTable({
   headers,
   rows,
   sortOrder,
@@ -17,11 +18,12 @@ export default function DashboardTable({
   handlePageSizeChange,
   handleSortedByChange,
   handleSortOrderChange,
+  handleOpenStockOutModal,
 }) {
   return (
-    <div className={styles["stock-out-supply-table"]}>
-      <div className={styles["stock-out-supply-table__controls"]}>
-        <div className={styles["stock-out-supply-table__sort"]}>
+    <div className={styles["dashboard-expired-table"]}>
+      <div className={styles["dashboard-expired-table__controls"]}>
+        <div className={styles["dashboard-expired-table__sort"]}>
           <SortSelect
             sortItems={sortItems}
             selectedSort={sortedBy}
@@ -42,12 +44,14 @@ export default function DashboardTable({
           onRowsPerPageChange={handlePageSizeChange}
         />
       </div>
+
       <table>
         <thead>
           <tr>
             {headers.map((header, index) => (
               <td key={shortid.generate()}>{header.label}</td>
             ))}
+            <td></td>
           </tr>
         </thead>
         <tbody>
@@ -55,17 +59,25 @@ export default function DashboardTable({
             return (
               <tr key={shortid.generate()}>
                 {headers.map((header, index) => {
+                  const rowValue =
+                    header?.format === undefined
+                      ? String(row[header.value])
+                      : header.format(String(row[header.value]));
                   return (
-                    <td key={shortid.generate()}>
-                      {String(row[header.value])}
-                    </td>
+                    <td key={Object.values(row)[1] + index}>{rowValue}</td>
                   );
                 })}
+                <td>
+                  <StockOutButton
+                    onClick={() => handleOpenStockOutModal(row)}
+                    label="Stock-Out"
+                  />
+                </td>
               </tr>
             );
           })}
         </tbody>
       </table>
-      </div>
+    </div>
   );
 }

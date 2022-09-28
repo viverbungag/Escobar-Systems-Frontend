@@ -4,7 +4,7 @@ import 'jspdf-autotable';
 export function printPdf(title, headCells, rows) {
     const doc = new jsPDF();
     var img = new Image();
-    img.src = '/images/logo.png';
+    img.src = '/images/forPDF/logo.png';
     var totalPagesExp = '{total_pages_count_string}'
 
     doc.autoTable({
@@ -19,10 +19,10 @@ export function printPdf(title, headCells, rows) {
         didDrawPage: function (data) {
         // Header
         doc.addImage(img, 'png', data.settings.margin.left, 15, 15, 15)
-        .setFontSize(15).setFont(undefined, 'bold')
-        doc.text('Escobar', data.settings.margin.left + 18, 22)
-        .setFontSize(10).setFont(undefined, 'normal')
-        doc.text(title, data.settings.margin.left + 18, 26)
+        doc.setFontSize(20).setFont(undefined, 'bold');
+        doc.text('Escobar', data.settings.margin.left + 18, 22);
+        doc.setFontSize(10).setFont(undefined, 'normal')
+        doc.text(title, data.settings.margin.left + 18, 26);
 
         // Footer
         var str = 'Page ' + doc.internal.getNumberOfPages()

@@ -19,11 +19,6 @@ const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
 const headers = [
   {
-    id: "id",
-    label: "Id",
-    value: "unitOfMeasurementId",
-  },
-  {
     id: "name",
     label: "Name",
     value: "unitOfMeasurementName",

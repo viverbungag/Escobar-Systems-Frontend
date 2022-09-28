@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import styles from './PaymentPage.module.scss';
-import Sidebar from "./PaymentPageBody/PaymentPageBody.jsx";
+import Sidebar from "../Sidebar/Sidebar.jsx";
 import PaymentPageBody from "./PaymentPageBody/PaymentPageBody.jsx";
-import PaymentOrderTab from "./PaymentOrderTab/PaymentOrderTab.jsx";
+import PaymentOrderTab from "./PaymentOrderTab/PaymentOrderTab";
 import Pagination from "../../../model/Pagination";
 import Rest from "../../../rest/Rest.tsx";
+import WindowControlBar from "../../Shared/WindowControlBar/WindowControlBar";
+import { useRouter } from "next/router";
 
 const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
@@ -17,9 +19,17 @@ const PaymentPage = () => {
   const [orderCardSelected, setOrderCardSelected] = useState(null);
   const [orderDiscount, setOrderDiscount] = useState(0);
   const [customerPayment, setOrderCustomerPayment] = useState(0);
-
+  const [totalPayment, setTotalPayment] = useState(0); 
 
   const rest = new Rest();
+
+  const router = useRouter();
+
+  const handleBackButtonOnClick = () => {
+    localStorage.getItem("isAdmin") === "true"
+      ? router.push("/main-admin-dashboard")
+      : router.push("/main-employee-dashboard");
+  };
 
   const handlePageSizeOnChange = (event) => {
     setPagination(
@@ -43,14 +53,16 @@ const PaymentPage = () => {
     );
   }
 
-  const handleOrderCardOnClick = (items, orderId, discount, customerPayment) => {
+  const handleOrderCardOnClick = (items, orderId, discount, customerPayment, totalCost) => {
     setOrderTabItems(items);
     setOrderCardSelected(orderId);
     setOrderDiscount(discount);
     setOrderCustomerPayment(customerPayment);
+    setTotalPayment(totalCost);
   }
 
   const handleOrdersLoad = (contents) => {
+    console.log("contents: ", contents);
     setOrders(contents);
   }
 
@@ -81,11 +93,13 @@ const PaymentPage = () => {
   }
 
   useEffect(() => {
+    // console.log("contents: ");
     getAllOrders();
   }, [pagination]);
 
   return (
     <div className={styles["PaymentPage"]}>
+      <WindowControlBar handleBackButtonOnClick={handleBackButtonOnClick} />
       <Sidebar page="paymentpage" />
       <div className={styles["Component"]}>
         <PaymentPageBody
@@ -104,6 +118,7 @@ const PaymentPage = () => {
         orderCardSelected={orderCardSelected}
         orderDiscount={orderDiscount}
         customerPayment={customerPayment}
+        totalPayment={totalPayment}
         />
       </div>
     </div>

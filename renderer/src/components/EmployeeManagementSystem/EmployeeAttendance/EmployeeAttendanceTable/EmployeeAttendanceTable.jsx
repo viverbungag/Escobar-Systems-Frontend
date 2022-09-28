@@ -7,13 +7,13 @@ import Rest from "../../../../rest/Rest.tsx";
 import { Modal } from '@mui/material';
 import { useUser } from '../../../contexts/UserContext';
 
-const INITIAL_URL = "http://localhost:8080/api/v1";
+const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
 export default function EmployeeAttendanceTable() {
 
   const { employeeName } = useUser();
   const headCells = [
-    { field: 'attendanceTime', headerName: 'Time', flex: 1, align: 'left' },
+    { field: 'attendanceTime', headerName: 'Time', flex: 1, align: 'left', valueGetter: (params)=> params.row.attendanceTime.replace("T", "–") },
     { field: 'attendanceType', headerName: 'Type', flex: 1, align: 'left' },
   ]
   const rest = new Rest();

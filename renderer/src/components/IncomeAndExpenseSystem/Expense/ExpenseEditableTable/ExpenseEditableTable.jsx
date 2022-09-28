@@ -31,8 +31,8 @@ export default function ExpenseEditableTable({ reload, expenseEditableData, expe
   //
     //columns
   const headCells = [
+    { field: 'expenseDate', headerName: 'Transaction Date', flex: 2, align: 'left', valueGetter: (params)=> params.row.expenseDate.split(["T"])[0]},
     { field: 'expenseCategoryName', headerName: 'Category Name', flex: 2, align: 'left'},
-    { field: 'expenseDate', headerName: 'Transaction Date', flex: 2, align: 'left'},
     { field: 'expenseCost', headerName: 'Cost', flex: 1, align: 'left'}
   ];
   const [rows, setRows] = useState([]);
@@ -89,13 +89,6 @@ export default function ExpenseEditableTable({ reload, expenseEditableData, expe
     handleCloseDeleteModal();
     reload();
   }
-  //more info modal
-  const [openMoreInfoModal, setOpenMoreInfoModal] = useState(false);
-  const handleOpenMoreInfoModal = () => {
-    handleSelectedValues(); 
-    setOpenMoreInfoModal(true); 
-  };
-  const handleCloseMoreInfoModal = () => { setOpenMoreInfoModal(false); };
   //get shown buttons
   function showButtons() {
     if(selected.length == 1 ){
@@ -179,7 +172,12 @@ export default function ExpenseEditableTable({ reload, expenseEditableData, expe
       </div>
     </div>
     <div className={styles.table}>
-      <DataGrid
+        <DataGrid
+        initialState={{
+          sorting: {
+            sortModel: [{ field: 'expenseDate', sort: 'desc' }],
+          },
+        }}
         getRowId={(row) => row.expenseId}
         rows={rows}
         columns={headCells}

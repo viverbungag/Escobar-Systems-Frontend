@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./StockOutTransactionPage.module.scss";
 import WindowControlBar from "../../../Shared/WindowControlBar/WindowControlBar";
 import Navigation from "../../Shared/Navigation/Navigation";
-import AddStockOutTransactionModal from "../AddStockOutTransactionModal/AddStockOutTransactionModal";
-import Toast from "../../Shared/Toast/Toast";
+import AddStockOutTransactionModal from "../../Shared/AddStockOutTransactionModal/AddStockOutTransactionModal";
 import Pagination from "../../../../model/Pagination.tsx";
 import Rest from "../../../../rest/Rest.tsx";
 import Transaction from "../../../../model/Transaction.tsx";
@@ -15,11 +14,6 @@ import { useRouter } from "next/router";
 const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
 const headers = [
-  {
-    id: "id",
-    label: "Id",
-    value: "supplyId",
-  },
   {
     id: "name",
     label: "Name",
@@ -262,7 +256,6 @@ const StockOutTransactionPage = () => {
 
   return (
     <div className={styles["stock-out-transaction-page"]}>
-      <Toast />
       <AddStockOutTransactionModal 
         supplyName={addTransaction.supplyName}
         quantity ={addTransaction.supplyQuantity}

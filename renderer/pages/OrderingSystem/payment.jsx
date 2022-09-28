@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import PaymentPage from '../../src/components/OrderingSystem/PaymentPage/PaymentPage.jsx';
 
-function Home() {
+function payment() {
   return (
     <React.Fragment>
       <Head>
@@ -16,4 +16,4 @@ function Home() {
   );
 };
 
-export default Home;
+export default payment;

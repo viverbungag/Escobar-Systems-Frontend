@@ -9,7 +9,6 @@ import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
 import { printPdf } from '../../print/printFunctions';
 
 export default function ExpenseTable({ expenseData }) {
-  console.log(expenseData)
   //for pdf
   const title = 'Escobar - Expense Stock-In Data';
   const pdfColumns = [
@@ -19,11 +18,10 @@ export default function ExpenseTable({ expenseData }) {
     { header:"Cost", dataKey: 'expenseCost' }
   ]
   const [pdfRows, setPdfRows] = useState([]);
-  //
   //columns
   const headCells = [
-    { field: 'transactionDate', headerName: 'Transaction Date', flex: 2, align: 'left'},
-    { field: 'supplyName', headerName: 'Supply Name', flex:1, align: 'left'},
+    { field: 'transactionDate', headerName: 'Transaction Date', flex: 2, align: 'left', valueGetter: (params)=> params.row.transactionDate.split(["T"])[0]},
+    { field: 'supplyName', headerName: 'Supply Name', flex:2, align: 'left'},
     { field: 'expenseCost', headerName: 'Cost', flex: 1, align: 'left'},
     { field: 'icon', headerName: '', flex: 1, align: 'center', renderCell: () => (
       <Tooltip title='View Information'>
@@ -62,12 +60,16 @@ export default function ExpenseTable({ expenseData }) {
       })
     }
     setSelectedValues(arr);
+    showSelectedValues();
+  }
+  const showSelectedValues = () => {
+    console.log(selectedValues)
   }
   //more info modal
   const [openMoreInfoModal, setOpenMoreInfoModal] = useState(false);
   const handleOpenMoreInfoModal = () => {
-    handleSelectedValues(); 
-    setOpenMoreInfoModal(true); 
+    console.log(selectedValues)
+    // setOpenMoreInfoModal(true);
   };
   const handleCloseMoreInfoModal = () => { setOpenMoreInfoModal(false); };
 
@@ -82,45 +84,46 @@ export default function ExpenseTable({ expenseData }) {
 
   return (
     <div className={styles.container}>
-    <div className={styles.header}>
-      <div className={styles.left}>
-        Expense Stock-In
-        <Tooltip title='Print Active Employee Data'>
-          <LocalPrintshopIcon className={styles.print_btn} onClick={() => printPdf(title, pdfColumns, pdfRows)}/>
-        </Tooltip>
+      <div className={styles.header}>
+        <div className={styles.left}>
+          Expense Stock-In
+          <Tooltip title='Print Active Employee Data'>
+            <LocalPrintshopIcon className={styles.print_btn} onClick={() => printPdf(title, pdfColumns, pdfRows)}/>
+          </Tooltip>
+        </div>
       </div>
-      <div className={styles.right}>
-        {/* {showButtons()} */}
+      <div className={styles.sub_header}>
+        <div className={styles.left}>
+          <SearchBar 
+            placeholder="Search Expense Transactions Table"
+            value={searched}
+            onChange={(searchValue) => requestSearch(searchValue)}
+            onCancelSearch={() => cancelSearch()}
+          />
+        </div>
       </div>
-    </div>
-    <div className={styles.sub_header}>
-      <div className={styles.left}>
-        <SearchBar 
-          placeholder="Search Expense Transactions Table"
-          value={searched}
-          onChange={(searchValue) => requestSearch(searchValue)}
-          onCancelSearch={() => cancelSearch()}
+      <div className={styles.table}>
+        <DataGrid
+          initialState={{
+            sorting: {
+              sortModel: [{ field: 'transactionDate', sort: 'desc' }],
+            },
+          }}
+          getRowId={(row) => row.transactionId}
+          rows={rows}
+          columns={headCells}
+          pageSize={20}
+          onSelectionModelChange={handleSelect}
+          hideFooterSelectedRowCount
         />
       </div>
-    </div>
-    <div className={styles.table}>
-      <DataGrid
-        getRowId={(row) => row.transactionId}
-        rows={rows}
-        columns={headCells}
-        pageSize={20}
-        onSelectionModelChange={handleSelect}
-        hideFooterSelectedRowCount
-        // checkboxSelection
-      />
-    </div>
-    <Modal open={openMoreInfoModal} onClose={handleCloseMoreInfoModal}>
-      <div className={styles.modal}>
-        <ExpenseMoreInfo
-          selectedValues={selectedValues}
-        />
-      </div>
-    </Modal>
+      <Modal open={openMoreInfoModal} onClose={handleCloseMoreInfoModal}>
+        <div className={styles.modal}>
+          <ExpenseMoreInfo
+            selectedValues={selectedValues}
+          />
+        </div>
+      </Modal>
     </div>
   )
 }

@@ -7,7 +7,6 @@ import SaveButton from "../../Shared/Buttons/SaveButton/SaveButton";
 import InactivateButton from "../../Shared/Buttons/InactivateButton/InactivateButton";
 import InactiveItemsButton from "../../Shared/Buttons/InactiveItemsButton/InactiveItemsButton";
 import StockInTransactionModal from "../StockInTransactionModal/StockInTransactionModal";
-import Toast from "../../Shared/Toast/Toast";
 import Pagination from "../../../../model/Pagination.tsx";
 import Rest from "../../../../rest/Rest.tsx";
 import Transaction from "../../../../model/Transaction.tsx";
@@ -215,7 +214,6 @@ const StockInTransactionPage = () => {
   return (
     <>
       <div className={styles["stock-in-transaction-page"]}>
-        <Toast />
         <StockInTransactionModal
           allSupplies={activeSupplies}
           allSuppliers={activeSuppliers}

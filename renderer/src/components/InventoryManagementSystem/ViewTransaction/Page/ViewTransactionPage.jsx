@@ -19,14 +19,16 @@ const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
 const headers = [
   {
-    id: "id",
-    label: "Id",
-    value: "transactionId",
-  },
-  {
     id: "transactionDate",
     label: "Transaction Date",
     value: "transactionDate",
+    format: (string) => string.split("T")[0]
+  },
+  {
+    id: "expiryDate",
+    label: "Expiry Date",
+    value: "expiryDate",
+    format: (string) => string.split("T")[0]
   },
   {
     id: "supply",

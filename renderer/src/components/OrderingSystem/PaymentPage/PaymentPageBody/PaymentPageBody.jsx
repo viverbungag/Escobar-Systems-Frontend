@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './PaymentPageBody.module.scss';
 import PaymentPageCard  from "./PaymentPageCard/PaymentPageCard.jsx";
-import TablePagination  from "@mui/material";
+import {TablePagination}  from "@mui/material";
 import shortid from 'shortid';
 
 
@@ -31,7 +31,7 @@ const PaymentPageBody = ({
 
       {items.map((item) => {
         return (
-          <div key={shortid.generate()} onClick={()=>{orderCardOnClick(item.customerFoodOrders, item.orderId, item.discount, item.payment)}}>
+          <div key={shortid.generate()} onClick={()=>{orderCardOnClick(item.customerFoodOrders, item.orderId, item.discount, item.payment, item.totalCost)}}>
             <PaymentPageCard
               ordernum={item.orderId}
               quantity={item.customerFoodOrders.length}

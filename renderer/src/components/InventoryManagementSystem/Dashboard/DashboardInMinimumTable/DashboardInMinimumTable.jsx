@@ -1,11 +1,10 @@
-import styles from "./ViewTransactionTable.module.scss";
+import styles from "./DashboardInMinimumTable.module.scss";
 import { TablePagination } from "@mui/material";
 import SortSelect from "../../Shared/SortSelect/SortSelect";
 import SortOrderRadioGroup from "../../Shared/SortOrderRadioGroup/SortOrderRadioGroup";
-import StockOutButton from "../../Shared/Buttons/StockOutButton/StockOutButton";
 import shortid from 'shortid';
 
-export default function ViewTransactionTable({
+export default function DashboardInMinimumTable({
   headers,
   rows,
   sortOrder,
@@ -20,9 +19,9 @@ export default function ViewTransactionTable({
   handleSortOrderChange,
 }) {
   return (
-    <div className={styles["stock-out-supply-table"]}>
-      <div className={styles["stock-out-supply-table__controls"]}>
-        <div className={styles["stock-out-supply-table__sort"]}>
+    <div className={styles["dashboard-in-minimum-table"]}>
+      <div className={styles["dashboard-in-minimum-table__controls"]}>
+        <div className={styles["dashboard-in-minimum-table__sort"]}>
           <SortSelect
             sortItems={sortItems}
             selectedSort={sortedBy}
@@ -43,7 +42,6 @@ export default function ViewTransactionTable({
           onRowsPerPageChange={handlePageSizeChange}
         />
       </div>
-
       <table>
         <thead>
           <tr>
@@ -57,26 +55,9 @@ export default function ViewTransactionTable({
             return (
               <tr key={shortid.generate()}>
                 {headers.map((header, index) => {
-                  const rowFormattedValue =
-                    header?.format === undefined
-                      ? String(row[header.value])
-                      : header.format(String(row[header.value]));
-
-                  const excludedColumnsWhenStockOut = [
-                    "Expiry Date",
-                    "Supplier",
-                    "Price per Unit",
-                  ];
-
-                  const rowValue =
-                    excludedColumnsWhenStockOut.includes(header.label) &&
-                    row.transactionType === "STOCK_OUT"
-                      ? "----"
-                      : rowFormattedValue;
-                      
                   return (
                     <td key={shortid.generate()}>
-                      {rowValue}
+                      {String(row[header.value])}
                     </td>
                   );
                 })}
@@ -85,6 +66,6 @@ export default function ViewTransactionTable({
           })}
         </tbody>
       </table>
-    </div>
+      </div>
   );
 }

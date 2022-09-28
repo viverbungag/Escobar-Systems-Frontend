@@ -9,8 +9,12 @@ import Order from '../../../model/Order.tsx';
 import CustomerFoodOrder from '../../../model/CustomerFoodOrder.tsx';
 import FoodOrder from '../../../model/FoodOrder.tsx';
 import MenuModel from '../../../model/Menu.tsx';
-import useUser from '../../contexts/UserContext';
+import {useUser} from '../../contexts/UserContext';
 import OrderMenu from '../../../model/OrderMenu.tsx';
+import { useRouter } from "next/router";
+import WindowControlBar from '../../Shared/WindowControlBar/WindowControlBar';
+import dayjs from 'dayjs';
+import { toast } from 'react-toastify';
 
 // import { MenuData } from "../../data/DataIndex";
 const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
@@ -19,7 +23,15 @@ const NewOrderPage = () => {
 
   const rest = new Rest();
 
-  // const { employeeName } = useUser();
+  const router = useRouter();
+
+  const handleBackButtonOnClick = () => {
+    localStorage.getItem("isAdmin") === "true"
+      ? router.push("/main-admin-dashboard")
+      : router.push("/main-employee-dashboard");
+  };
+
+  const { employeeName } = useUser();
 
   const [activeMenuCategories, setActiveMenuCategories] = useState([]);
 
@@ -28,7 +40,30 @@ const NewOrderPage = () => {
   const[menusBasedOnCategory, setMenusBasedOnCategory] = useState([]);
   const[menuOnCategory, setMenuOnCategory] = useState(new MenuOnCategory("", []));
 
+  const [allOrders, setAllOrders] = useState([]);
+
+  const [allMenus, setAllMenus] = useState([]);
+
   const [payment, setPayment] = useState(0);
+
+  const [selectedOrder, setSelectedOrder] = useState('');
+
+  const [orderDiscount, setOrderDiscount] = useState('');
+
+  const handleSelectedOrderOnChange = (event) => {
+    const orderId = event.target.value;
+
+    const currentSelectedOrder = allOrders.find((order)=> order.orderId === orderId);
+    setOrderDiscount(currentSelectedOrder.discount);
+
+
+    setSelectedOrder(orderId);
+  };
+
+  const [type, setType] = useState('new-user');
+  const handleTypeChange = (e) => {
+    setType(e.target.value);
+  }
 
   const handleCartChange = (newMenu) => {
     newMenu.orderMenuQuantity = 1;
@@ -80,8 +115,10 @@ const NewOrderPage = () => {
       newMenuOnCategory
     ));
   }
-  const handleQuantityOnChange = (name, quantity, quantityToAdd, numberOfServingsLeft) => {
-    // if (numberOfServingsLeft > 0 && quantityToAdd === 1){
+  const handleQuantityOnChange = (name, quantity, quantityToAdd) => {
+    const currentNumberOfServings = allMenus.find((menu) => menu.menuName === name).numberOfServingsLeft;
+
+    if (currentNumberOfServings < 1 && quantityToAdd === 1) return;
       if (quantity + quantityToAdd <= 0){
         const newMenuOnCategory = [];
         menuOnCategory.orderMenu.forEach((currentMenu)=> {
@@ -96,8 +133,10 @@ const NewOrderPage = () => {
       // }
       return;
     }
-
-    if (numberOfServingsLeft > 0 && quantityToAdd === 1) return;
+    // console.log("number of servings left: " + numberOfServingsLeft);
+    // console.log("quantity: " + quantity);
+    // console.log("quantity: " + quantity);
+    
   
     const newMenuOnCategory = menuOnCategory.orderMenu.map((currentMenu)=> {
         if (currentMenu.menuName === name){
@@ -134,6 +173,19 @@ const NewOrderPage = () => {
     );
   };
 
+  const handleAllMenusLoad = (data) => {
+    setAllMenus(data);
+  }
+
+  const getAllMenus = () => {
+
+    rest.getMenuBasedOnCategory(
+      `${INITIAL_URL}/orders/menu`,
+      menuOnCategory.toJson(),
+      handleAllMenusLoad
+    );
+  };
+
   const handleCategoryOnChange = (newCategory) => {
     setCurrentMenuCategory(newCategory);
     setMenuOnCategory(
@@ -145,9 +197,8 @@ const NewOrderPage = () => {
   }
 
   const handlePayButtonOnClick = (customerPayment, discountPayment) => {
-    const customerFoodOrders = menuOnCategory.orderMenu.map((orderMenu) => {
-      console.log("orderMenu: ", orderMenu);
 
+    const customerFoodOrders = menuOnCategory.orderMenu.map((orderMenu) => {
       return (new CustomerFoodOrder(1, new FoodOrder(1, new MenuModel(
         orderMenu.menuId, 
         orderMenu.menuName, 
@@ -167,7 +218,7 @@ const NewOrderPage = () => {
     const order = new Order(
       1,
       employeeName,
-      new Date(),
+      dayjs().add(8, 'hour'),
       customerFoodOrders,
       customerPayment,
       discountPayment,
@@ -182,21 +233,48 @@ const NewOrderPage = () => {
         )
       );
     }
+    if (type === 'new-user'){
+      rest.add(
+        `${INITIAL_URL}/orders/add`,
+        order,
+        handleOrderSuccess,
+        "Ordered Successfully"
+      )
+    }
 
-    rest.add(
-      `${INITIAL_URL}/orders/add`,
-      order,
-      handleOrderSuccess,
-      "Ordered Successfully"
+    if (type === 'existing-user'){
+
+      rest.add(
+        `${INITIAL_URL}/orders/add/existing/${selectedOrder}`,
+        order,
+        handleOrderSuccess,
+        "Ordered Successfully"
+      )
+    }
+
+  }
+
+  const handleGetAllOrdersSuccess = (contents) => {
+    setAllOrders(contents)
+  }
+
+  const getAllOrders = () => {
+    rest.get(
+      `${INITIAL_URL}/orders/today`,
+      handleGetAllOrdersSuccess,
     )
   }
 
   useEffect(() => {
     getAllActiveMenuCategories();
+    getAllOrders();
+    getAllMenus();
   }, []);
 
   useEffect(() => {
     getAllMenusBasedOnCategory();
+    getAllOrders();
+    getAllMenus();
   }, [menuOnCategory]);
 
   useEffect(() => {
@@ -210,6 +288,7 @@ const NewOrderPage = () => {
 
   return (
     <div className={styles["NewOrderPage"]}>
+      <WindowControlBar handleBackButtonOnClick={handleBackButtonOnClick} />
       <MenuSideBar
         items={activeMenuCategories}
         categoryOnChange={handleCategoryOnChange}
@@ -224,6 +303,12 @@ const NewOrderPage = () => {
           handleDeleteItemButtonOnClick={handleDeleteItemButtonOnClick}
           deleteAllItemOnClick={deleteAllItemOnClick}
           payButtonOnClick={handlePayButtonOnClick}
+          allOrders={allOrders}
+          selectedOrder={selectedOrder}
+          handleSelectedOrderOnChange={handleSelectedOrderOnChange}
+          type={type}
+          handleTypeChange={handleTypeChange}
+          orderDiscount={orderDiscount}
         />
       </div>
     </div>

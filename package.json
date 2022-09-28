@@ -6,7 +6,7 @@
   "author": "Viver Val Bungag <viverbungag1@gmail.com>",
   "main": "app/background.js",
   "scripts": {
-    "dev": "nextron -p 1112",
+    "dev": "nextron",
     "build": "nextron build",
     "postinstall": "electron-builder install-app-deps",
     "storybook": "start-storybook -p 6006",

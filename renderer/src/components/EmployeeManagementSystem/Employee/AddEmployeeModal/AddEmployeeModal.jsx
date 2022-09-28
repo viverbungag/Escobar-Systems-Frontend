@@ -7,7 +7,7 @@ import { TextField } from '@mui/material';
 import MediumButton from '../../Shared/Buttons/MediumButton/MediumButton';
 import dateFormat from 'dateformat';
 
-const INITIAL_URL = "http://localhost:8080/api/v1";
+const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
 function onlyLetters(data){
   return (/^[a-zA-Z\s]+$/).test(data);

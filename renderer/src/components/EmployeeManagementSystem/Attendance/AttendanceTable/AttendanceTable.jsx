@@ -7,7 +7,7 @@ import Rest from "../../../../rest/Rest.tsx";
 import { printPdf } from '../../../../../print/printFunctions';
 import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
 
-const INITIAL_URL = "http://localhost:8080/api/v1";
+const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
 export default function AttendanceTable() {
   //for pdf
@@ -22,7 +22,7 @@ export default function AttendanceTable() {
   //
   const headCells = [
     { field: 'employeeName', headerName: 'Employee Name', flex: 1, align: 'left' },
-    { field: 'attendanceTime', headerName: 'Time', flex: 1, align: 'left' },
+    { field: 'attendanceTime', headerName: 'Time', flex: 1, align: 'left', valueGetter: (params)=> params.row.attendanceTime.replace("T", "–")},
     { field: 'attendanceType', headerName: 'Type', flex: 1, align: 'left' },
   ]
   const rest = new Rest();
