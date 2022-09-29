@@ -288,7 +288,6 @@ const NewOrderPage = () => {
 
   return (
     <div className={styles["NewOrderPage"]}>
-      <WindowControlBar handleBackButtonOnClick={handleBackButtonOnClick} />
       <MenuSideBar
         items={activeMenuCategories}
         categoryOnChange={handleCategoryOnChange}

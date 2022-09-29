@@ -3,9 +3,20 @@ import styles from './Sidebar.module.scss'
 import Image from "next/image";
 import SidebarCategory from "./SidebarCategory/SidebarCategory.jsx";
 import Link from 'next/link';
+import { useRouter } from "next/router";
 
 const Sidebar= ({page}) => {
+
+  const router = useRouter();
+
+  const handleBackButtonOnClick = () => {
+    localStorage.getItem("isAdmin") === "true"
+      ? router.push("/main-admin-dashboard")
+      : router.push("/main-employee-dashboard");
+  };
+
   return (
+  
       <div className={styles['sidenav']}>
         <div className={styles['wrapper']}>
         </div>
@@ -39,6 +50,9 @@ const Sidebar= ({page}) => {
         </div>
         </Link>
 
+        <div className={styles['wrapper']}>
+        <SidebarCategory Title = 'Back' onClick = {handleBackButtonOnClick} />
+        </div>
 
 
         </div>

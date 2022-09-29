@@ -1,23 +1,60 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './PaymentOrderTab.module.scss';
 import PaymentOrderTabCard from "./PaymentOrderTabCard/PaymentOrderTabCard";
 import shortid from 'shortid';
 import {Icon} from '@iconify/react';
+import { printReceipt } from '../../../../../print/printFunctions';
+import { useUser } from "../../../contexts/UserContext";
 
 const PaymentOrderTab = ({orderTabItems, orderCardSelected, orderDiscount, customerPayment, totalPayment}) => {
-  const title = 'Escobar - Employee Attendance Data';
-  const pdfColumns = [
-    { header:"ID", dataKey: 'employeeAttendanceJoinId' },
-    { header:"Name", dataKey: 'employeeName' },
-    { header:"Time", dataKey: 'attendanceTime' },
-    { header:"Type", dataKey: 'attendanceType' }
-  ]
-  //
+  const { employeeName } = useUser();
   const subTotal = orderTabItems.reduce(
     (sum, currentMenu) =>
       sum + currentMenu.foodOrder.menu.menuPrice * currentMenu.foodOrder.menuQuantity,
     0
   );
+  const discountedPrice = subTotal * (orderDiscount / 100)
+  const totalPrice = subTotal - subTotal * (orderDiscount / 100);
+  const change = customerPayment - (subTotal - orderDiscount);
+  
+  const arr = [];
+  const createNewCols = () => {
+    orderTabItems.map((item) => {
+      console.log(item.foodOrder.menu)
+      arr.push(
+        {
+          menuName: item.foodOrder.menu.menuName,
+          menuQuantity: item.foodOrder.menuQuantity,
+          menuPrice: item.foodOrder.menu.menuPrice
+        }
+      )
+    })
+    setPdfRows(arr);
+  }
+  //for pdf
+  const pdfColumns = [
+    { header:"Item", dataKey: 'menuName' },
+    { header:"Quantity", dataKey: 'menuQuantity' },
+    { header:"Price", dataKey: 'menuPrice' }
+  ]
+  const [pdfRows, setPdfRows] = useState([]);
+  const pdfPaymentColumns = [
+    { header: '', dataKey: 'label' },
+    { header: '', dataKey: 'data' }
+  ]
+  const pdfPaymentRows = [
+    { label: 'Cashier', data: employeeName },
+    { label: 'Customer Payment', data: customerPayment },
+    { label: 'SubTotal', data: subTotal },
+    { label: 'Discounted Price', data: discountedPrice },
+    { label: 'Total', data: totalPrice },
+    { label: 'Change', data: change }
+  ]
+  //
+
+  useEffect(() => {
+    createNewCols();
+  }, [orderTabItems])
 
   return (
     <div
@@ -36,7 +73,10 @@ const PaymentOrderTab = ({orderTabItems, orderCardSelected, orderDiscount, custo
             styles["print-icon"],
             !orderCardSelected && styles["print-none"],
           ].join(" ")}
-          onClick={() => printPdf(title)}
+          onClick={
+            () => printReceipt(orderCardSelected, pdfRows, pdfColumns, pdfPaymentRows, pdfPaymentColumns)
+            // () => console.log(pdfRows)
+          }
         />
       </div>
 
@@ -88,7 +128,7 @@ const PaymentOrderTab = ({orderTabItems, orderCardSelected, orderDiscount, custo
       >
         <h2 className={styles["Discount"]}> Discounted Price </h2>
         <h2 className={styles["DiscountPrice"]}>
-          {subTotal * (orderDiscount / 100)}
+          {discountedPrice}
         </h2>
       </div>
 
@@ -101,7 +141,7 @@ const PaymentOrderTab = ({orderTabItems, orderCardSelected, orderDiscount, custo
         <h2 className={styles["Total"]}> Total </h2>
         <h2 className={styles["TotalPrice"]}>
           {" "}
-          {subTotal - subTotal * (orderDiscount / 100)}
+          {totalPrice}
         </h2>
       </div>
 
@@ -113,7 +153,7 @@ const PaymentOrderTab = ({orderTabItems, orderCardSelected, orderDiscount, custo
       >
         <h2 className={styles["Change"]}> Change </h2>
         <h2 className={styles["ChangePrice"]}>
-          {customerPayment - (subTotal - orderDiscount)}
+          {change}
         </h2>
       </div>
     </div>
