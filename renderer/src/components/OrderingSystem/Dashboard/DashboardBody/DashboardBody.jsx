@@ -5,7 +5,7 @@ import 'react-clock/dist/Clock.css';
 import DashboardTable  from './DashBoardTable/DashboardTable.jsx';
 
 const DashboardBody = ({ unavailableMenu }) => {
-  console.log(unavailableMenu);
+  // console.log(unavailableMenu);
   const [value, setValue] = useState(new Date());
   
     useEffect(() => {

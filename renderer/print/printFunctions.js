@@ -46,3 +46,41 @@ export function printPdf(title, headCells, rows) {
 
     doc.save(`${title}.pdf`);
 }
+
+export function printReceipt(orderCardSelected, pdfRows, pdfColumns, pdfPaymentRows, pdfPaymentColumns) {
+    console.log(pdfRows)
+    const doc = new jsPDF('p', 'mm', [98.425, 210]);
+    var img = new Image();
+    img.src = '/images/forPDF/logo.png';
+
+    doc.addImage(img, 'png', 8, 15, 15, 15)
+    doc.setFontSize(15).setFont(undefined, 'bold');
+    doc.text('Escobar', 25, 22);
+    doc.setFontSize(8).setFont(undefined, 'normal')
+    doc.text(`Order Receipt`, 25, 26.5);
+    doc.setFontSize(15).setFont(undefined, 'bold')
+    doc.text(`Order #${orderCardSelected}`, 63, 24);
+
+    doc.autoTable({
+        startY: 40,
+        columns: pdfColumns,
+        body: pdfRows,
+        styles : { 
+            halign : 'left'
+        },
+        theme: 'plain'
+    })
+
+    doc.autoTable({
+        startY: doc.previousAutoTable.finalY + 10,
+        columns: pdfPaymentColumns,
+        body: pdfPaymentRows,
+        styles : { 
+            halign : 'left'
+        },
+        theme: 'plain'
+    })
+
+
+    doc.save(`receipt.pdf`);
+}
