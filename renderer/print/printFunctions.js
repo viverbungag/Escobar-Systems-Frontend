@@ -47,50 +47,40 @@ export function printPdf(title, headCells, rows) {
     doc.save(`${title}.pdf`);
 }
 
-export function printReceipt(orderTabItems, orderCardSelected, orderDiscount, customerPayment, totalPayment) {
-    console.log('Print: ' + orderTabItems);
-    // const doc = new jsPDF();
-    // var img = new Image();
-    // img.src = '/images/forPDF/logo.png';
-    // var totalPagesExp = '{total_pages_count_string}'
+export function printReceipt(orderCardSelected, pdfRows, pdfColumns, pdfPaymentRows, pdfPaymentColumns) {
+    console.log(pdfRows)
+    const doc = new jsPDF('p', 'mm', [98.425, 210]);
+    var img = new Image();
+    img.src = '/images/forPDF/logo.png';
 
-    // doc.autoTable({
-    //     columns: headCells,
-    //     styles : { 
-    //         halign : 'center'
-    //     },
-    //     headStyles : {
-    //         fillColor : [207, 92, 54]
-    //     },
-    //     body: rows,
-    //     didDrawPage: function (data) {
-    //     // Header
-    //     doc.addImage(img, 'png', data.settings.margin.left, 15, 15, 15)
-    //     doc.setFontSize(20).setFont(undefined, 'bold');
-    //     doc.text('Escobar', data.settings.margin.left + 18, 22);
-    //     doc.setFontSize(10).setFont(undefined, 'normal')
-    //     doc.text(title, data.settings.margin.left + 18, 26);
+    doc.addImage(img, 'png', 8, 15, 15, 15)
+    doc.setFontSize(15).setFont(undefined, 'bold');
+    doc.text('Escobar', 25, 22);
+    doc.setFontSize(8).setFont(undefined, 'normal')
+    doc.text(`Order Receipt`, 25, 26.5);
+    doc.setFontSize(15).setFont(undefined, 'bold')
+    doc.text(`Order #${orderCardSelected}`, 63, 24);
 
-    //     // Footer
-    //     var str = 'Page ' + doc.internal.getNumberOfPages()
-    //     // Total page number plugin only available in jspdf v1.0+
-    //     if (typeof doc.putTotalPages === 'function') {
-    //         str = str + ' of ' + totalPagesExp
-    //     }
-    //     doc.setFontSize(10)
+    doc.autoTable({
+        startY: 40,
+        columns: pdfColumns,
+        body: pdfRows,
+        styles : { 
+            halign : 'left'
+        },
+        theme: 'plain'
+    })
 
-    //     // jsPDF 1.4+ uses getWidth, <1.4 uses .width
-    //     var pageSize = doc.internal.pageSize
-    //     var pageHeight = pageSize.height ? pageSize.height : pageSize.getHeight()
-    //     doc.text(str, data.settings.margin.left, pageHeight - 10)
-    //     },
-    //     margin: { top: 35 },
-    // })
+    doc.autoTable({
+        startY: doc.previousAutoTable.finalY + 10,
+        columns: pdfPaymentColumns,
+        body: pdfPaymentRows,
+        styles : { 
+            halign : 'left'
+        },
+        theme: 'plain'
+    })
 
-    // if (typeof doc.putTotalPages === 'function') {
-    //     doc.putTotalPages(totalPagesExp)
-    // }
 
-    // doc.save(`${title}.pdf`);
-    // doc.print();
+    doc.save(`receipt.pdf`);
 }
