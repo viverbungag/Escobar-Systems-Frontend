@@ -14,12 +14,6 @@ const DashboardPage = () => {
 
   const router = useRouter();
 
-  const handleBackButtonOnClick = () => {
-    localStorage.getItem("isAdmin") === "true"
-      ? router.push("/main-admin-dashboard")
-      : router.push("/main-employee-dashboard");
-  };
-
   const [unavailableMenu, setUnavailableMenu] = useState([])
 
   const handleUnavialableMenuOnLoad = (data) =>{
@@ -34,7 +28,6 @@ const DashboardPage = () => {
 
   return (
         <div className={styles['Dashboard']}>
-          <WindowControlBar handleBackButtonOnClick={handleBackButtonOnClick} />
           <div className={styles['Component']}>
               <Sidebar page = "dashboard"/>
           </div>
