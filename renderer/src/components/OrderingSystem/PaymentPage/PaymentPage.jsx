@@ -99,7 +99,6 @@ const PaymentPage = () => {
 
   return (
     <div className={styles["PaymentPage"]}>
-      <WindowControlBar handleBackButtonOnClick={handleBackButtonOnClick} />
       <Sidebar page="paymentpage" />
       <div className={styles["Component"]}>
         <PaymentPageBody

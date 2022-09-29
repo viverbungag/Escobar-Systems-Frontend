@@ -1,0 +1,73 @@
+
+    .buttons {
+        display: flex;
+        align-items: center;
+        justify-content: right;
+
+        gap: 1rem;
+        .button {
+            background: none;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+            &:hover {
+                color: #003049;
+                transform: scale(1.1) translateY(-2.5px);
+                cursor: pointer !important;
+            }
+        }
+    }
+
+.container--Login {
+    display: flex;
+    padding: 1.1rem 1rem;
+    padding-left: 20rem;
+    background-color: #fafafa;
+    justify-content:right;
+}
+.container--Dashboard {
+    display: flex;
+    padding: 1.1rem 1rem;
+    padding-left: 20rem;
+    background-color: #fafafa;
+    justify-content:right;
+}
+.container--Payout {
+    display: flex;
+    padding: 1.1rem 1rem;
+    padding-left: 20rem;
+    background-color: #fafafa;
+    justify-content:right;
+
+}
+.container--Neworder {
+    display: flex;
+    padding: 1.1rem 1rem;
+    padding-left: 20rem;
+    background-color: #fafafa;
+    justify-content:right;
+}
+
+
+.Text--Login{
+    position:absolute;
+    margin-right: 1110px;
+    user-select: none;
+}
+.Text--Dashboard{
+    position:absolute;
+    margin-right: 950px;
+    user-select: none;
+}
+.Text--Payout{
+    position:absolute;
+    margin-right: 940px;
+    user-select: none;
+}
+.Text--Neworder{
+    position:absolute;
+    margin-right: 920px;
+    user-select: none;
+}
