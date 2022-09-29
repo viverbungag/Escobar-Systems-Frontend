@@ -2,7 +2,7 @@
 .Menu {
     background-color: #fafafa;
     width: 100%;
-    height: fit-content;
+    height: 85vh;
     display: flex;
     flex-direction: row;
     flex-basis: auto;
@@ -10,5 +10,6 @@
     row-gap: 60px;
     overflow: auto;
     margin-top: 30px;
+    overflow-y: scroll;
 }
 

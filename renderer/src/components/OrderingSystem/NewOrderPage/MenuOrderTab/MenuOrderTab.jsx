@@ -333,6 +333,7 @@ function ChildModal({payButtonOnClick, total, customerPayment, handleMainModalCl
             />
           </div>
         <Button onClick={handleClose} className={styles['Close_Button']}> X </Button>
+<<<<<<< HEAD
         <Icon 
           icon="bytesize:print" 
           height = "25" 
@@ -342,6 +343,9 @@ function ChildModal({payButtonOnClick, total, customerPayment, handleMainModalCl
             () => printReceipt(orderCardSelected, pdfRows, pdfColumns, pdfPaymentRows, pdfPaymentColumns)
           }
           />
+=======
+        {/* <Icon icon="bytesize:print" height = "25" width = "25" className={styles["print-icon"]} onClick={() => printPdf(title, pdfColumns, pdfRows)}/> */}
+>>>>>>> 07e1d5a07e0a5793158743921449adfd8b1714bb
 
           <div className={styles['Wrapper']}>
 

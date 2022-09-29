@@ -5,11 +5,13 @@
     padding: 5px 10px 20px;
     gap: 20px;
     overflow: auto;
-    width: 455px;
-    min-height: 93.6vh;    
+    width: 455px;  
     background: #FFFFFF;
     box-shadow: -4px 0px 20px rgba(0, 0, 0, 0.02);
     user-select: none;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 89vh;
 }
 .toggle_group {
     margin-top: 20px;
