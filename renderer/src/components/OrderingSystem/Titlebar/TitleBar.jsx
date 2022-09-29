@@ -17,7 +17,7 @@ const TitleBar = ({Page}) => {
     <div>
       <div className={[Page === "login" && styles["container--Login"], Page === "dashboard" && styles["container--Dashboard"], Page === "payout" && styles["container--Payout"], Page === "neworder" && styles["container--Neworder"]].join(" ")}>
         <div className={[Page === "login" && styles["Text--Login"], Page === "dashboard" && styles["Text--Dashboard"], Page === "payout" && styles["Text--Payout"], Page === "neworder" && styles["Text--Neworder"]].join(" ")}>
-          <h1> Escobar Ordering System </h1>
+          {/* <h1> Escobar Ordering System </h1> */}
         </div>
         <div className={styles.buttons}>
           <button id='minBtn' onClick={minimize_app} className={`${styles.button} ${styles.min_btn}`}>

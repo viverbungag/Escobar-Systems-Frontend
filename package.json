@@ -1,9 +1,9 @@
 {
   "private": false,
-  "name": "inventory-management-system",
-  "description": "Escobar's Inventory Management System",
+  "name": "escobar-systems",
+  "description": "Escobar's Systems",
   "version": "1.0.0",
-  "author": "Viver Val Bungag <viverbungag1@gmail.com>",
+  "author": "Viver Val Bungag <viverbungag1@gmail.com>, Julienne Andrea Panes <>, Jay Innhahn Tan<jaytan3825@gmail.com>, Aaron Go<>",
   "main": "app/background.js",
   "scripts": {
     "dev": "nextron",
