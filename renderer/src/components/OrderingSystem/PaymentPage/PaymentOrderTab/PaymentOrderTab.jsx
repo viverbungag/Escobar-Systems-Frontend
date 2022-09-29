@@ -3,6 +3,7 @@ import styles from './PaymentOrderTab.module.scss';
 import PaymentOrderTabCard from "./PaymentOrderTabCard/PaymentOrderTabCard";
 import shortid from 'shortid';
 import {Icon} from '@iconify/react';
+import { printReceipt } from '../../../../../print/printFunctions';
 
 const PaymentOrderTab = ({orderTabItems, orderCardSelected, orderDiscount, customerPayment, totalPayment}) => {
   const title = 'Escobar - Employee Attendance Data';
@@ -36,7 +37,7 @@ const PaymentOrderTab = ({orderTabItems, orderCardSelected, orderDiscount, custo
             styles["print-icon"],
             !orderCardSelected && styles["print-none"],
           ].join(" ")}
-          onClick={() => printPdf(title)}
+          onClick={() => printReceipt(orderTabItems, orderCardSelected, orderDiscount, customerPayment, totalPayment)}
         />
       </div>
 
