@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import styles from './MenuOrderTab.module.scss'
 import Image from "next/image";
-import  MenuOrderTabCard  from './MenuOrderTabCard/MenuOrderTabCard.jsx';
+import MenuOrderTabCard  from './MenuOrderTabCard/MenuOrderTabCard.jsx';
 import shortid from 'shortid';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -15,6 +15,9 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import dayjs from 'dayjs';
+import { useUser } from "../../../contexts/UserContext";
+import { printReceipt } from '../../../../../print/printFunctions';
+
 
 const MenuOrderTab = ({
   menuOnCategory,
@@ -34,7 +37,11 @@ const MenuOrderTab = ({
   const [open, setOpen] = React.useState(false);
   const [customerPayment, setCustomerPayment] = useState(0);
   const [discountPayment, setDiscountPayment] = useState(0);
-
+  const SubTotal = total;
+  const discountedPrice = total * (discountPayment / 100);
+  const totalPrice = total  - total * (discountPayment / 100);
+  const change = customerPayment - (total - discountPayment);
+  const { employeeName } = useUser();
 
   const handleClose = () => {
     setOpen(false);
@@ -59,6 +66,39 @@ const MenuOrderTab = ({
     setDiscountPayment(e.target.value);
   }
 
+  const arr = [];
+  const createNewCols = () => {
+    menuOnCategory.map((item) => {
+      console.log(item.foodOrder.menu)
+      arr.push(
+        {
+          menuName: menuOnCategory.orderMenu.menuName,
+          menuQuantity: menuOnCategory.orderMenu.menuQuantity,
+          menuPrice: menuOnCategory.orderMenu.menuPrice
+        }
+      )
+    })
+    setPdfRows(arr);
+  }
+
+  const pdfColumns = [
+    { header:"Item", dataKey: 'menuName' },
+    { header:"Quantity", dataKey: 'menuQuantity' },
+    { header:"Price", dataKey: 'menuPrice' }
+  ]
+  const [pdfRows, setPdfRows] = useState([]);
+  const pdfPaymentColumns = [
+    { header: '', dataKey: 'label' },
+    { header: '', dataKey: 'data' }
+  ]
+  const pdfPaymentRows = [
+    { label: 'Customer Payment', data: customerPayment },
+    { label: 'Discounted Price', data: discountedPrice },
+    { label: 'Total', data: totalPrice },
+    { label: 'Change', data: change },
+    { label: 'Cashier', data: employeeName }
+  ]
+
   useEffect(() => {
     setTotal(
       menuOnCategory.orderMenu.reduce(
@@ -68,6 +108,10 @@ const MenuOrderTab = ({
       )
     );
   }, [menuOnCategory]);
+
+  useEffect(() => {
+    createNewCols();
+  }, [menuOnCategory])
 
 
   return (
@@ -289,11 +333,18 @@ function ChildModal({payButtonOnClick, total, customerPayment, handleMainModalCl
             />
           </div>
         <Button onClick={handleClose} className={styles['Close_Button']}> X </Button>
-        <Icon icon="bytesize:print" height = "25" width = "25" className={styles["print-icon"]} onClick={() => printPdf(title, pdfColumns, pdfRows)}/>
+        <Icon 
+          icon="bytesize:print" 
+          height = "25" 
+          width = "25" 
+          className={styles["print-icon"]}           
+          onClick={
+            () => printReceipt(orderCardSelected, pdfRows, pdfColumns, pdfPaymentRows, pdfPaymentColumns)
+          }
+          />
 
           <div className={styles['Wrapper']}>
 
-            
                 <div className={styles['Text-Section']}>
                   <h1 className={styles['Order-Text']}>{dayjs().format('YYYY / MM / DD – HH:MM')}</h1>
                   {/* <h1  className={styles['Date-Text']}> {`${new Date().getFullYear()} / ${new Date().getMonth()} / ${new Date().getDate()}`} </h1> */}
