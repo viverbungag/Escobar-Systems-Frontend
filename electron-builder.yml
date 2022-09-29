@@ -1,6 +1,6 @@
-appId: com.exe.IMS
-productName: Inventory Management System
-copyright: Copyright © 2022 Viver Val Bungag
+appId: com.exe.escobar
+productName: Escobar's Systems
+copyright: Copyright © 2022 Viver Val Bungag, Julienne Andrea Panes, Jay Innhahn Tan, Aaron Go
 directories:
   output: dist
   buildResources: resources
