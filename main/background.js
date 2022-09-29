@@ -9,7 +9,7 @@ const findPidFromPort = require("find-pid-from-port");
 
 const isProd = process.env.NODE_ENV === "production";
 
-const BACKEND_PORT = 2323;
+const BACKEND_PORT = 1111;
 
 if (isProd) {
   serve({ directory: "app" });
@@ -29,7 +29,7 @@ if (isProd) {
 
     log.info(`Starting the spring boot app in port ${BACKEND_PORT}`);
     var pid;
-    var jarPath = 'C:\\JarPaths\\IMS\\libs\\IMS-0.0.1-SNAPSHOT.jar';
+    var jarPath = 'C:\\JarPaths\\escobar-systems\\libs\\escobar-systems-0.0.1-SNAPSHOT.jar';
     var child = require('child_process').spawn(
       'java', ['-jar', jarPath, `--server.port=${BACKEND_PORT}`]
     );

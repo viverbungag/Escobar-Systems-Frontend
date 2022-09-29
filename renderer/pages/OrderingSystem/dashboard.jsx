@@ -18,6 +18,5 @@ function dashboard() {
     </React.Fragment>
   );
 };
-console.log("yawa");
 
 export default dashboard;
