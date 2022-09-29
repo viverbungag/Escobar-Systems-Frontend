@@ -318,27 +318,27 @@ function ChildModal({payButtonOnClick, total, customerPayment, handleMainModalCl
 
                 <div className={styles['CustomerPayment-Section']}>
                   <h2 className={styles['CustomerPayment']}> Customer Payment </h2>
-                  <h2  className={styles['CustomerPaymentPrice']}> ₱ {customerPayment}  </h2>
+                  <h2 className={styles['CustomerPaymentPrice']}> ₱ {(customerPayment)}  </h2>
                 </div>
 
                 <div className={styles['Subtotal-Section']}>
                   <h2 className={styles['Subtotal']}> SubTotal </h2>
-                  <h2  className={styles['SubtotalPrice']}> ₱ {total}  </h2>
+                  <h2  className={styles['SubtotalPrice']}> ₱ {(total)}  </h2>
                 </div>
 
                 <div className={styles['Discounted-Section']}>
                   <h2 className={styles['Discount']}> Discounted Price </h2>
-                  <h2  className={styles['DiscountPrice']}> ₱ {type === "new-user" ? (total * (discountPayment/100)) : (total * (orderDiscount/100))}  </h2>
+                  <h2  className={styles['DiscountPrice']}> ₱ {type === "new-user" ? (total * (discountPayment/100)).toFixed(2) : (total * (orderDiscount/100)).toFixed(2)}  </h2>
                 </div>
 
                 <div className={styles['Total-Section']}>
                   <h2 className={styles['Total']}> Total </h2>
-                  <h2  className={styles['TotalPrice']}> ₱ {type === "new-user" ? (total - (total * (discountPayment/100))): (total - (total * (orderDiscount/100)))}  </h2>
+                  <h2  className={styles['TotalPrice']}> ₱ {type === "new-user" ? (total - (total * (discountPayment/100))).toFixed(2): (total - (total * (orderDiscount/100))).toFixed(2)}  </h2>
                 </div>
 
                 <div className={styles['Change-Section']}>
                   <h2 className={styles['Change']}> Change </h2>
-                  <h2  className={styles['ChangePrice']}> ₱ {customerPayment - (total - discountPayment)}  </h2>
+                  <h2  className={styles['ChangePrice']}> ₱ {(customerPayment - (total - discountPayment)).toFixed(2)}  </h2>
                 </div>
               
             </div>

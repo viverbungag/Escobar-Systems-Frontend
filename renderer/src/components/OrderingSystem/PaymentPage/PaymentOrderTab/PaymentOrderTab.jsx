@@ -88,7 +88,7 @@ const PaymentOrderTab = ({orderTabItems, orderCardSelected, orderDiscount, custo
       >
         <h2 className={styles["Discount"]}> Discounted Price </h2>
         <h2 className={styles["DiscountPrice"]}>
-          {subTotal * (orderDiscount / 100)}
+          {(subTotal * (orderDiscount / 100)).toFixed(2)}
         </h2>
       </div>
 
@@ -101,7 +101,7 @@ const PaymentOrderTab = ({orderTabItems, orderCardSelected, orderDiscount, custo
         <h2 className={styles["Total"]}> Total </h2>
         <h2 className={styles["TotalPrice"]}>
           {" "}
-          {subTotal - subTotal * (orderDiscount / 100)}
+          {(subTotal - subTotal * (orderDiscount / 100)).toFixed(2)}
         </h2>
       </div>
 
@@ -113,7 +113,7 @@ const PaymentOrderTab = ({orderTabItems, orderCardSelected, orderDiscount, custo
       >
         <h2 className={styles["Change"]}> Change </h2>
         <h2 className={styles["ChangePrice"]}>
-          {customerPayment - (subTotal - orderDiscount)}
+          {(customerPayment - (subTotal - orderDiscount)).toFixed(2)}
         </h2>
       </div>
     </div>

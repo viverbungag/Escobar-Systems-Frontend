@@ -2,10 +2,8 @@ import React from 'react';
 import Head from 'next/head';
 import TitleBar from '../../../renderer/src/components/OrderingSystem/TitleBar/TitleBar.jsx';
 import DashboardPage from '../../src/components/OrderingSystem/Dashboard/DashboardPage.jsx';
-// import useUser  from "../../src/components/contexts/UserContext";
 
 function dashboard() {
-  // const { employeeName } = useUser();
   return (
     <React.Fragment>
       <Head>
@@ -18,6 +16,5 @@ function dashboard() {
     </React.Fragment>
   );
 };
-console.log("yawa");
 
 export default dashboard;
