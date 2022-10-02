@@ -4,7 +4,7 @@ import Rest from '../../../../rest/Rest.tsx';
 import Expense from '../../../../model/Expense.tsx';
 import { TextField } from '@mui/material';
 import Select from 'react-select';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import EditIcon from '@mui/icons-material/Edit';
@@ -32,7 +32,7 @@ export default function EditExpenseModal({ expenseCategories, selectedValues, ed
             selectedExpense.expenseId,
             selectedExpense.expenseCategoryName,
             selectedExpense.expenseDescription,
-            selectedExpense.expenseDate,
+            dateFormat(selectedExpense.expenseDate, "yyyy-mm-dd"),
             selectedExpense.expenseCost
         )
     );
@@ -132,8 +132,9 @@ export default function EditExpenseModal({ expenseCategories, selectedValues, ed
                     </div>
                   </div>
                   <div className={styles.group_textfields_row}>
-                    <DateTimePicker
-                      label="Expense Transaction Datetime"
+                    <DesktopDatePicker
+                      label="Expense Date"
+                      inputFormat="YYYY-MM-DD"
                       value={datetime}
                       onChange={handleDatetimeChange}
                       renderInput={(params) => <TextField {...params} />}
@@ -171,7 +172,7 @@ export default function EditExpenseModal({ expenseCategories, selectedValues, ed
                   </div>
                   <div className={styles.group_textfields_row}>
                     <div className={styles.group_textfields_select}>
-                      <div className={styles.group_textfields_select_label}>Expense Datetime</div> 
+                      <div className={styles.group_textfields_select_label}>Expense Date</div> 
                       {datetime}
                     </div>
                   </div>

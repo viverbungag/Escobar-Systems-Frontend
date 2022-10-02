@@ -9,6 +9,7 @@ import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
 import { printPdf } from '../../print/printFunctions';
 
 export default function ExpenseTable({ expenseData }) {
+  console.log(expenseData)
   //for pdf
   const title = 'Escobar - Expense Stock-In Data';
   const pdfColumns = [
@@ -67,7 +68,10 @@ export default function ExpenseTable({ expenseData }) {
         <div className={styles.left}>
           Expense Stock-In
           <Tooltip title='Print Active Employee Data'>
-            <LocalPrintshopIcon className={styles.print_btn} onClick={() => printPdf(title, pdfColumns, pdfRows)}/>
+            <LocalPrintshopIcon className={styles.print_btn} onClick={
+              // () => printPdf(title, pdfColumns, pdfRows)
+              () => console.log(pdfRows)
+            }/>
           </Tooltip>
         </div>
       </div>

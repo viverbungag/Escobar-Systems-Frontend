@@ -9,6 +9,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import MediumButton from '../../Shared/MediumButton/MediumButton';
 import dateFormat from 'dateformat';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 
 const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
@@ -36,7 +37,6 @@ export default function AddExpenseModal({ reload, expenseCategories, addSuccessA
             '',
             '',
             '',
-            
         )
     );
     //onChange for all inputs
@@ -49,7 +49,7 @@ export default function AddExpenseModal({ reload, expenseCategories, addSuccessA
     }
     //datetime to values
     const setDatetimeValues = () => {
-      formattedDatetime = dateFormat(datetime, "yyyy-mm-dd") + "T" + dateFormat(datetime, "HH:MM:ss")
+      formattedDatetime = dateFormat(datetime, "yyyy-mm-dd");
       setValues({...values, expenseDate: formattedDatetime})
     }
     const handleSubmit = () => {
@@ -70,7 +70,7 @@ export default function AddExpenseModal({ reload, expenseCategories, addSuccessA
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <div className={styles.container}>
         <div className={styles.header}>
-            Edit Expense ID: {values.expenseId}
+            Add Expense ID: {values.expenseId}
         </div>
         <div className={styles.content}>
         <div className={styles.group}>
@@ -91,8 +91,9 @@ export default function AddExpenseModal({ reload, expenseCategories, addSuccessA
               </div>
             </div>
             <div className={styles.group_textfields_row}>
-              <DateTimePicker
-                label="Expense Transaction Datetime"
+              <DesktopDatePicker
+                label="Expense Date"
+                inputFormat="YYYY-MM-DD"
                 value={datetime}
                 onChange={handleDatetimeChange}
                 renderInput={(params) => <TextField {...params} />}

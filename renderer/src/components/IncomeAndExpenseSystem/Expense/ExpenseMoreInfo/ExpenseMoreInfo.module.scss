@@ -12,7 +12,7 @@
     .header{
         color: white;
         background-color: black;
-        padding: 1rem;
+        padding: 1rem 2rem;
         text-align: center;
         font-size: $h5FontSize;
         font-weight: $h4FontWeight;
@@ -39,7 +39,6 @@
             &_row {
                 display: flex;
                 align-items: flex-start;
-                // justify-content: space-between;
                 gap: 1rem;
                 font-weight: $bodyFontWeight;
                 font-size: 0.9rem;
