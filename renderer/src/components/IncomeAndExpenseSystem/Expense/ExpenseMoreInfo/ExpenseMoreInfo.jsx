@@ -6,20 +6,21 @@ import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import EventIcon from '@mui/icons-material/Event';
 import { Tooltip } from '@mui/material';
 
-export default function ExpenseMoreInfo({ selectedValues }) {
-    // console.log(selectedValues)
+export default function ExpenseMoreInfo({ selected, expenseData }) {
+    console.log(expenseData)
     const [values, setValues] = useState([])
     const getValues = () => {
-        selectedValues.map((item) => {
-            setValues({
-                id: item.transactionId,
-                transactionDate: item.transactionDate,
-                supplyName: item.supplyName,
-                expenseCost: item.expenseCost
-            })
+        expenseData.map((item) => {
+            if(item.transactionId == selected){
+                setValues ({
+                    id: item.transactionId,
+                    transactionDate: item.transactionDate,
+                    supplyName: item.supplyName,
+                    expenseCost: item.expenseCost
+                })
+            }
         })
     }
-
     useEffect(() => {
         getValues();
     }, []);
@@ -27,7 +28,7 @@ export default function ExpenseMoreInfo({ selectedValues }) {
   return (
     <div className={styles.container}>
         <div className={styles.header}>
-            Expense Stock-In ID: {selectedValues.id}
+            Expense Stock-In ID: {values.id}
         </div>
         <div className={styles.content_outer}>
             <div className={styles.content_name}>

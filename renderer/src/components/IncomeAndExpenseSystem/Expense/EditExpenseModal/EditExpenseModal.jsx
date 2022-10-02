@@ -7,6 +7,8 @@ import Select from 'react-select';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import EditIcon from '@mui/icons-material/Edit';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import MediumButton from '../../Shared/MediumButton/MediumButton';
 import dateFormat from 'dateformat';
 
@@ -101,9 +103,9 @@ export default function EditExpenseModal({ expenseCategories, selectedValues, ed
           </div>
           <div className={styles.header_icon}>
             {toEdit ? (
-                <HighlightOffIcon className={styles.header_icon_exit} onClick={isEdit} />
+                <HighlightOffIcon className={styles.exit_edit_icon} onClick={isEdit} />
             ) : (
-                <EditIcon className={styles.header_icon_edit} onClick={isEdit} />
+                <EditIcon className={styles.edit_icon} onClick={isEdit} />
             )}
           </div>
         </div>
