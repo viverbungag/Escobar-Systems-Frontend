@@ -24,7 +24,7 @@ export default function ExpenseTable({ expenseData }) {
     { field: 'supplyName', headerName: 'Supply Name', flex:2, align: 'left'},
     { field: 'expenseCost', headerName: 'Cost', flex: 1, align: 'left'},
     { field: 'icon', headerName: '', flex: 1, align: 'center', renderCell: () => (
-      <Tooltip title='View Information'>
+      <Tooltip title='View More Information'>
         <InfoIcon className={styles.info_icon} onClick={handleOpenMoreInfoModal} />
       </Tooltip>
     ) }
@@ -49,38 +49,17 @@ export default function ExpenseTable({ expenseData }) {
   const handleSelect = (ids) => {
     setSelected(ids);
   }
-  const [selectedValues, setSelectedValues] = useState([]);
-  const handleSelectedValues = () => {
-    const arr = [];
-    for(let i=0; i < selected.length; i++){
-      rows.map((item) => {
-        if(item.transactionId == selected[i]){
-          arr.push(item);
-        }
-      })
-    }
-    setSelectedValues(arr);
-    showSelectedValues();
-  }
-  const showSelectedValues = () => {
-    console.log(selectedValues)
-  }
   //more info modal
   const [openMoreInfoModal, setOpenMoreInfoModal] = useState(false);
   const handleOpenMoreInfoModal = () => {
-    console.log(selectedValues)
-    // setOpenMoreInfoModal(true);
+    setOpenMoreInfoModal(true);
   };
-  const handleCloseMoreInfoModal = () => { setOpenMoreInfoModal(false); };
+  const handleCloseMoreInfoModal = () => { setOpenMoreInfoModal(false) };
 
   useEffect(() => {
     setRows(expenseData);
     setPdfRows(expenseData);
   }, [expenseData])
-
-  useEffect(() => {
-    handleSelectedValues();
-  }, [selected])
 
   return (
     <div className={styles.container}>
@@ -120,7 +99,8 @@ export default function ExpenseTable({ expenseData }) {
       <Modal open={openMoreInfoModal} onClose={handleCloseMoreInfoModal}>
         <div className={styles.modal}>
           <ExpenseMoreInfo
-            selectedValues={selectedValues}
+            selected={selected}
+            expenseData={expenseData}
           />
         </div>
       </Modal>
