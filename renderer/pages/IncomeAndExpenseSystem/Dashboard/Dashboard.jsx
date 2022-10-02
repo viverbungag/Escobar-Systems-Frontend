@@ -19,11 +19,11 @@ function HomePage() {
 
   const router = useRouter();
 
-  const handleBackButtonOnClick = () => {
-    localStorage.getItem("isAdmin") === "true"
-      ? router.push("/main-admin-dashboard")
-      : router.push("/main-employee-dashboard");
-  }
+  // const handleBackButtonOnClick = () => {
+  //   localStorage.getItem("isAdmin") === "true"
+  //     ? router.push("/main-admin-dashboard")
+  //     : router.push("/main-employee-dashboard");
+  // }
 
   const [fromDate, setFromDate] = useState(dayjs().date(1).subtract(4, 'month'));
   const[toDate, setToDate] = useState(dayjs().date(1));
@@ -102,10 +102,40 @@ function HomePage() {
     );
   }
 
+  const [lineGraphData, setLineGraphData] = useState({
+    labels: [],
+    datasets: []
+  })
+
+  const getLineGraphDataOnSuccess = (data) => {
+    setLineGraphData({
+      labels: data.map((item) => item.donutLabel),
+      datasets: [
+        {
+          label: "Monthly",
+          data: data.map((item) => item.donutData),
+          backgroundColor: ["#35b000", "#e10000", "rgb(255, 208, 1)"],
+        },
+      ],
+    });
+  }
+
+  const getLineGraphData = () => {
+    rest.getPost(
+      `${INITIAL_URL}/expense/line-graph`,
+      {
+        toDate: toDate.add(1, 'month').date(0),
+        fromDate: fromDate
+      },
+      getLineGraphDataOnSuccess
+    );
+  }
+
   useEffect(() =>{
     // console.log(fromDate);
     getVerticalBarGraphData();
     getDonutGraphData();
+    getLineGraphData();
   }, [toDate, fromDate])
 
   const current = new Date();
@@ -148,6 +178,7 @@ function HomePage() {
               <IncomeExpenseChart
                 verticalBarGraphData={verticalBarGraphData}
                 donutGraphData={donutGraphData}
+                lineGraphData={lineGraphData}
               />
             </div>
           </div>
