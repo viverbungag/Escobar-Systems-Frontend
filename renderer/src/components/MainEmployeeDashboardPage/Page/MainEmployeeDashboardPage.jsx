@@ -78,6 +78,14 @@ const MainEmployeeDashboardPage = () => {
           </button>}
         </div>
         <footer className={styles["main-dashboard-page__footer"]}>
+          <div className={styles["main-dashboard-page__info"]}>
+            <div className={styles["main-dashboard-page__top-text"]}>
+              Escobar
+            </div>
+            <div className={styles["main-dashboard-page__bottom-text"]}>
+              Employee Dashboard
+            </div>
+          </div>
           <Link href= "/home">
           <div className={styles["main-dashboard-page__logout-container"]}>
             <LogoutIcon />

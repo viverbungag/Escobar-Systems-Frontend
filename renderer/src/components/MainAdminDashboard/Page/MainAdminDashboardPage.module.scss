@@ -70,9 +70,28 @@ $hover-color: #fdb530;
 
     &__footer{
         display: flex;
-        justify-content: end;
+        justify-content: space-between;
         padding: 2rem;
         width: 100%;
+    }
+
+    &__info{
+        font-family: 'Open Sans', sans-serif;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__top-text {
+        text-transform: uppercase;
+        font-weight: 900;
+        font-size: 1rem;
+    }
+
+    &__bottom-text {
+        text-transform: capitalize;
+        letter-spacing: 0.1rem;
+        font-weight: 500;
+        font-size: 1rem;
     }
 
     &__logout-container{
