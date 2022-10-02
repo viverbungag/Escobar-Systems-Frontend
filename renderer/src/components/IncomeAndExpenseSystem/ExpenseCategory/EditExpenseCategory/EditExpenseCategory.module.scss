@@ -4,7 +4,6 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    padding: 1rem;
     button {
         border: none;
     }
@@ -17,9 +16,12 @@
         .header {
             font-size: $h5FontSize;
             text-align: center;
+            background-color: black;
+            color: white;
+            padding: 1rem;
         }
         .content {
-            margin: 2rem 0;
+            padding: 1rem;
             font-size: $bodyFontSize;
             .content_header {
                 font-weight: $h3FontWeight;
@@ -28,6 +30,7 @@
         .footer {
             display: flex;
             align-self: flex-end;
+            padding: 1rem;
         }
     }
 }

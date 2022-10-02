@@ -28,10 +28,9 @@
     flex-direction: column;
     height: 90vh;
     overflow-y: scroll;
-
     &__body{
         display: flex;
-        padding-top: 1rem;
+        // padding-top: 1rem;
         margin-left: 20rem;
     }
 
@@ -43,7 +42,12 @@
     }
     
     &__date-section{
-        width: 900px;
+        position: fixed;
+        padding: 1rem;
+        z-index: 999;
+        background-color: white;
+        height: fit-content;
+        width: 1000px;
         display: flex;
         gap: 1rem;
         align-items: center;
