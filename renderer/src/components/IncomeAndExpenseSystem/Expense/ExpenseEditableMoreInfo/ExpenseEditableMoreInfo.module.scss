@@ -35,6 +35,7 @@
                 font-weight: $bodyFontWeight;
                 font-size: $bodyFontSize;
                 margin-bottom: 1rem;
+                white-space: nowrap;
             }
             &_row {
                 display: flex;

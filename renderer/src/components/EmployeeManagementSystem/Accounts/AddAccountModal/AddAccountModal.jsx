@@ -131,19 +131,19 @@ export default function AddAccountModal({ addSuccessAction, activeEmployees  }) 
                     <div className={styles.content_inner_label}>
                         Accessible Systems
                     </div>
-                    <div className={styles.content_inner_row}>
+                    <div className={styles.content_inner_row_checkbox}>
                         Inventory Management System:&nbsp;
                         <Checkbox onChange={handleChange} name='accessInventoryManagementSystem' />
                     </div>
-                    <div className={styles.content_inner_row}>
+                    <div className={styles.content_inner_row_checkbox}>
                         Employee Management System:&nbsp;
                         <Checkbox onChange={handleChange} name='accessEmployeeManagementSystem' />
                     </div>
-                    <div className={styles.content_inner_row}>
+                    <div className={styles.content_inner_row_checkbox}>
                         Income & Expense System:&nbsp;
                         <Checkbox onChange={handleChange} name='accessIncomeAndExpenseSystem' />
                     </div>
-                    <div className={styles.content_inner_row}>
+                    <div className={styles.content_inner_row_checkbox}>
                         Ordering System:&nbsp;
                         <Checkbox onChange={handleChange} name='accessOrderingSystem' />
                     </div>

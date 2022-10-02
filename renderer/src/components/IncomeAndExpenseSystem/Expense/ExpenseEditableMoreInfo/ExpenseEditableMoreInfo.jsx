@@ -4,6 +4,7 @@ import Inventory2Icon from '@mui/icons-material/Inventory2';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import ArticleIcon from '@mui/icons-material/Article';
 import EventIcon from '@mui/icons-material/Event';
+import dateFormat from 'dateformat';
 import { Tooltip } from '@mui/material';
 
 export default function ExpenseEditableMoreInfo({ selectedValues }) {
@@ -14,7 +15,7 @@ export default function ExpenseEditableMoreInfo({ selectedValues }) {
                 id: item.expenseId,
                 expenseCategoryName: item.expenseCategoryName,
                 expenseDescription: item.expenseDescription,
-                expenseDate: item.expenseDate,
+                expenseDate: dateFormat(item.expenseDate, "yyyy-mm-dd"),
                 expenseCost: item.expenseCost
             })
         })

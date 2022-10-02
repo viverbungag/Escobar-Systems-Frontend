@@ -51,7 +51,6 @@ export default function ExpenseContent() {
     handleCloseAddModal();
     reload();
   }
-
   //reload
   const reload = () => {
     getExpenseData();
