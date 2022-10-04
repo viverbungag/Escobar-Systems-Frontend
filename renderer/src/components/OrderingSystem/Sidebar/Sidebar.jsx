@@ -44,11 +44,18 @@ const Sidebar= ({page}) => {
         </div>
         </Link>
 
+        <Link href="/OrderingSystem/unpaid">
+        <div className={styles['wrapper']}>
+        <SidebarCategory isActive = {page==="unpaid"} Title = 'Unpaid'/>
+        </div>
+        </Link>
+
         <Link href="/OrderingSystem/payment">
         <div className={styles['wrapper']}>
         <SidebarCategory isActive = {page==="paymentpage"} Title = 'Payout'/>
         </div>
         </Link>
+
 
         <div className={styles['wrapper']}>
         <SidebarCategory Title = 'Back' onClick = {handleBackButtonOnClick} />

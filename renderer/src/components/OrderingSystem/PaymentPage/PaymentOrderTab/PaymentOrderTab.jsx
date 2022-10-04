@@ -31,6 +31,7 @@ const PaymentOrderTab = ({orderTabItems, orderCardSelected, orderDiscount, custo
     })
     setPdfRows(arr);
   }
+
   //for pdf
   const pdfColumns = [
     { header:"Item", dataKey: 'menuName' },
@@ -43,12 +44,12 @@ const PaymentOrderTab = ({orderTabItems, orderCardSelected, orderDiscount, custo
     { header: '', dataKey: 'data' }
   ]
   const pdfPaymentRows = [
-    { label: 'Cashier', data: employeeName },
     { label: 'Customer Payment', data: customerPayment },
     { label: 'SubTotal', data: subTotal },
     { label: 'Discounted Price', data: discountedPrice },
     { label: 'Total', data: totalPrice },
-    { label: 'Change', data: change }
+    { label: 'Change', data: change },
+    { label: 'Cashier', data: employeeName }
   ]
   //
 
@@ -128,7 +129,7 @@ const PaymentOrderTab = ({orderTabItems, orderCardSelected, orderDiscount, custo
       >
         <h2 className={styles["Discount"]}> Discounted Price </h2>
         <h2 className={styles["DiscountPrice"]}>
-          {discountedPrice}
+          {(subTotal * (orderDiscount / 100)).toFixed(2)}
         </h2>
       </div>
 
@@ -141,7 +142,7 @@ const PaymentOrderTab = ({orderTabItems, orderCardSelected, orderDiscount, custo
         <h2 className={styles["Total"]}> Total </h2>
         <h2 className={styles["TotalPrice"]}>
           {" "}
-          {totalPrice}
+          {(subTotal - subTotal * (orderDiscount / 100)).toFixed(2)}
         </h2>
       </div>
 
@@ -153,7 +154,7 @@ const PaymentOrderTab = ({orderTabItems, orderCardSelected, orderDiscount, custo
       >
         <h2 className={styles["Change"]}> Change </h2>
         <h2 className={styles["ChangePrice"]}>
-          {change}
+          {(customerPayment - (subTotal - orderDiscount)).toFixed(2)}
         </h2>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import styles from './MenuOrderTab.module.scss'
 import Image from "next/image";
-import  MenuOrderTabCard  from './MenuOrderTabCard/MenuOrderTabCard.jsx';
+import MenuOrderTabCard  from './MenuOrderTabCard/MenuOrderTabCard.jsx';
 import shortid from 'shortid';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -15,6 +15,8 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import dayjs from 'dayjs';
+import { useUser } from "../../../contexts/UserContext";
+import { printReceipt } from '../../../../../print/printFunctions';
 
 const MenuOrderTab = ({
   menuOnCategory,
@@ -34,7 +36,11 @@ const MenuOrderTab = ({
   const [open, setOpen] = React.useState(false);
   const [customerPayment, setCustomerPayment] = useState(0);
   const [discountPayment, setDiscountPayment] = useState(0);
-
+  const SubTotal = total;
+  const discountedPrice = total * (discountPayment / 100);
+  const totalPrice = total  - total * (discountPayment / 100);
+  const change = customerPayment - (total - discountPayment);
+  const { employeeName } = useUser();
 
   const handleClose = () => {
     setOpen(false);
@@ -59,6 +65,39 @@ const MenuOrderTab = ({
     setDiscountPayment(e.target.value);
   }
 
+  const arr = [];
+  const createNewCols = () => {
+    menuOnCategory.orderMenu.map((item) => {
+      console.log(item)
+      arr.push(
+        {
+          menuName: item.menuName,
+          menuQuantity: item.menuQuantity,
+          menuPrice: item.menuPrice
+        }
+      )
+    })
+    setPdfRows(arr);
+  }
+
+  const pdfColumns = [
+    { header:"Item", dataKey: 'menuName' },
+    { header:"Quantity", dataKey: 'menuQuantity' },
+    { header:"Price", dataKey: 'menuPrice' }
+  ]
+  const [pdfRows, setPdfRows] = useState([]);
+  const pdfPaymentColumns = [
+    { header: '', dataKey: 'label' },
+    { header: '', dataKey: 'data' }
+  ]
+  const pdfPaymentRows = [
+    { label: 'Customer Payment', data: customerPayment },
+    { label: 'Discounted Price', data: discountedPrice },
+    { label: 'Total', data: totalPrice },
+    { label: 'Change', data: change },
+    { label: 'Cashier', data: employeeName }
+  ]
+
   useEffect(() => {
     setTotal(
       menuOnCategory.orderMenu.reduce(
@@ -68,6 +107,10 @@ const MenuOrderTab = ({
       )
     );
   }, [menuOnCategory]);
+
+  useEffect(() => {
+    createNewCols();
+  }, [menuOnCategory.orderMenu])
 
 
   return (
@@ -114,13 +157,6 @@ const MenuOrderTab = ({
           >
             {allOrders.map((item) => {
               return (
-                //   <div
-                //     className={styles["container-section"]}
-                //     key={item.orderId}
-                //   >
-                //   <MenuItem key={item.orderId} value={item.orderId}>{`Order #${item.orderId}`} </MenuItem>
-
-                // </div>
                 <MenuItem key={item.orderId} value={item.orderId}>
                   {`Order #${item.orderId}`}{" "}
                 </MenuItem>
@@ -172,14 +208,15 @@ const MenuOrderTab = ({
             X{" "}
           </Button>
           <div className={styles["Image-Section"]}>
-            <Image
-              src="/OrderingSystem/images/logo.png"
-              alt="Escobar Logo"
-              width="40"
-              height="40"
-              objectFit="contain"
-              draggable="false"
-            />
+          <ToggleButtonGroup
+            className={"toggle_group"}
+            value={type}
+            exclusive
+            onChange={handleTypeChange}
+          >
+            <ToggleButton value="new-user">New Order</ToggleButton>
+            <ToggleButton value="existing-user">Existing Order</ToggleButton>
+          </ToggleButtonGroup>
           </div>
           <div className={styles["Wrapper"]}>
             <div className={styles["Text-Section"]}>
@@ -289,11 +326,9 @@ function ChildModal({payButtonOnClick, total, customerPayment, handleMainModalCl
             />
           </div>
         <Button onClick={handleClose} className={styles['Close_Button']}> X </Button>
-        {/* <Icon icon="bytesize:print" height = "25" width = "25" className={styles["print-icon"]} onClick={() => printPdf(title, pdfColumns, pdfRows)}/> */}
 
           <div className={styles['Wrapper']}>
 
-            
                 <div className={styles['Text-Section']}>
                   <h1 className={styles['Order-Text']}>{dayjs().format('YYYY / MM / DD – HH:MM')}</h1>
                   {/* <h1  className={styles['Date-Text']}> {`${new Date().getFullYear()} / ${new Date().getMonth()} / ${new Date().getDate()}`} </h1> */}
@@ -318,27 +353,27 @@ function ChildModal({payButtonOnClick, total, customerPayment, handleMainModalCl
 
                 <div className={styles['CustomerPayment-Section']}>
                   <h2 className={styles['CustomerPayment']}> Customer Payment </h2>
-                  <h2  className={styles['CustomerPaymentPrice']}> ₱ {customerPayment}  </h2>
+                  <h2 className={styles['CustomerPaymentPrice']}> ₱ {(customerPayment)}  </h2>
                 </div>
 
                 <div className={styles['Subtotal-Section']}>
                   <h2 className={styles['Subtotal']}> SubTotal </h2>
-                  <h2  className={styles['SubtotalPrice']}> ₱ {total}  </h2>
+                  <h2  className={styles['SubtotalPrice']}> ₱ {(total)}  </h2>
                 </div>
 
                 <div className={styles['Discounted-Section']}>
                   <h2 className={styles['Discount']}> Discounted Price </h2>
-                  <h2  className={styles['DiscountPrice']}> ₱ {type === "new-user" ? (total * (discountPayment/100)) : (total * (orderDiscount/100))}  </h2>
+                  <h2  className={styles['DiscountPrice']}> ₱ {type === "new-user" ? (total * (discountPayment/100)).toFixed(2) : (total * (orderDiscount/100)).toFixed(2)}  </h2>
                 </div>
 
                 <div className={styles['Total-Section']}>
                   <h2 className={styles['Total']}> Total </h2>
-                  <h2  className={styles['TotalPrice']}> ₱ {type === "new-user" ? (total - (total * (discountPayment/100))): (total - (total * (orderDiscount/100)))}  </h2>
+                  <h2  className={styles['TotalPrice']}> ₱ {type === "new-user" ? (total - (total * (discountPayment/100))).toFixed(2): (total - (total * (orderDiscount/100))).toFixed(2)}  </h2>
                 </div>
 
                 <div className={styles['Change-Section']}>
                   <h2 className={styles['Change']}> Change </h2>
-                  <h2  className={styles['ChangePrice']}> ₱ {customerPayment - (total - discountPayment)}  </h2>
+                  <h2  className={styles['ChangePrice']}> ₱ {(customerPayment - (total - discountPayment)).toFixed(2)}  </h2>
                 </div>
               
             </div>
