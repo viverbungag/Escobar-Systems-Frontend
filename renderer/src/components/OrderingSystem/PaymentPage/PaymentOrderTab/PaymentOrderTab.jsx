@@ -31,6 +31,7 @@ const PaymentOrderTab = ({orderTabItems, orderCardSelected, orderDiscount, custo
     })
     setPdfRows(arr);
   }
+
   //for pdf
   const pdfColumns = [
     { header:"Item", dataKey: 'menuName' },
@@ -43,12 +44,12 @@ const PaymentOrderTab = ({orderTabItems, orderCardSelected, orderDiscount, custo
     { header: '', dataKey: 'data' }
   ]
   const pdfPaymentRows = [
-    { label: 'Cashier', data: employeeName },
     { label: 'Customer Payment', data: customerPayment },
     { label: 'SubTotal', data: subTotal },
     { label: 'Discounted Price', data: discountedPrice },
     { label: 'Total', data: totalPrice },
-    { label: 'Change', data: change }
+    { label: 'Change', data: change },
+    { label: 'Cashier', data: employeeName }
   ]
   //
 

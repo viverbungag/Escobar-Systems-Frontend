@@ -18,7 +18,6 @@ import dayjs from 'dayjs';
 import { useUser } from "../../../contexts/UserContext";
 import { printReceipt } from '../../../../../print/printFunctions';
 
-
 const MenuOrderTab = ({
   menuOnCategory,
   handleQuantityOnChange,
@@ -68,13 +67,13 @@ const MenuOrderTab = ({
 
   const arr = [];
   const createNewCols = () => {
-    menuOnCategory.map((item) => {
-      console.log(item.foodOrder.menu)
+    menuOnCategory.orderMenu.map((item) => {
+      console.log(item)
       arr.push(
         {
-          menuName: menuOnCategory.orderMenu.menuName,
-          menuQuantity: menuOnCategory.orderMenu.menuQuantity,
-          menuPrice: menuOnCategory.orderMenu.menuPrice
+          menuName: item.menuName,
+          menuQuantity: item.menuQuantity,
+          menuPrice: item.menuPrice
         }
       )
     })
@@ -111,7 +110,7 @@ const MenuOrderTab = ({
 
   useEffect(() => {
     createNewCols();
-  }, [menuOnCategory])
+  }, [menuOnCategory.orderMenu])
 
 
   return (
@@ -158,13 +157,6 @@ const MenuOrderTab = ({
           >
             {allOrders.map((item) => {
               return (
-                //   <div
-                //     className={styles["container-section"]}
-                //     key={item.orderId}
-                //   >
-                //   <MenuItem key={item.orderId} value={item.orderId}>{`Order #${item.orderId}`} </MenuItem>
-
-                // </div>
                 <MenuItem key={item.orderId} value={item.orderId}>
                   {`Order #${item.orderId}`}{" "}
                 </MenuItem>
@@ -216,14 +208,15 @@ const MenuOrderTab = ({
             X{" "}
           </Button>
           <div className={styles["Image-Section"]}>
-            <Image
-              src="/OrderingSystem/images/logo.png"
-              alt="Escobar Logo"
-              width="40"
-              height="40"
-              objectFit="contain"
-              draggable="false"
-            />
+          <ToggleButtonGroup
+            className={"toggle_group"}
+            value={type}
+            exclusive
+            onChange={handleTypeChange}
+          >
+            <ToggleButton value="new-user">New Order</ToggleButton>
+            <ToggleButton value="existing-user">Existing Order</ToggleButton>
+          </ToggleButtonGroup>
           </div>
           <div className={styles["Wrapper"]}>
             <div className={styles["Text-Section"]}>
@@ -333,19 +326,6 @@ function ChildModal({payButtonOnClick, total, customerPayment, handleMainModalCl
             />
           </div>
         <Button onClick={handleClose} className={styles['Close_Button']}> X </Button>
-<<<<<<< HEAD
-        <Icon 
-          icon="bytesize:print" 
-          height = "25" 
-          width = "25" 
-          className={styles["print-icon"]}           
-          onClick={
-            () => printReceipt(orderCardSelected, pdfRows, pdfColumns, pdfPaymentRows, pdfPaymentColumns)
-          }
-          />
-=======
-        {/* <Icon icon="bytesize:print" height = "25" width = "25" className={styles["print-icon"]} onClick={() => printPdf(title, pdfColumns, pdfRows)}/> */}
->>>>>>> 07e1d5a07e0a5793158743921449adfd8b1714bb
 
           <div className={styles['Wrapper']}>
 
