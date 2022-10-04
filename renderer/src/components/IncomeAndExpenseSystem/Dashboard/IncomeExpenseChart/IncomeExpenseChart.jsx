@@ -3,7 +3,7 @@ import { Bar, Doughnut, Line } from "react-chartjs-2";
 import { Chart } from "chart.js/auto";
 import styles from './IncomeExpenseChart.module.scss';
 
-function IncomeExpenseChart({ verticalBarGraphData, donutGraphData, lineGrpahData }) {
+function IncomeExpenseChart({ verticalBarGraphData, donutGraphData, lineGraphData, tablesBarGraphData }) {
   return (
     <div className={styles.container}>
       <div className={styles.row}>
@@ -53,7 +53,7 @@ function IncomeExpenseChart({ verticalBarGraphData, donutGraphData, lineGrpahDat
           </div>
         </div>
         <div className={styles.box}>
-          <div className={styles.box_header}>Peak Income Hours</div>
+          <div className={styles.box_header}>Income Per Hour</div>
           <div
             className={[
               styles["box_content"],
@@ -61,7 +61,32 @@ function IncomeExpenseChart({ verticalBarGraphData, donutGraphData, lineGrpahDat
             ].join(" ")}
           >
             <Line
-              data={donutGraphData}
+              data={lineGraphData}
+              options={{
+                plugins: {
+                  legend: {
+                    position: "right",
+                    align: "center",
+                    labels: {
+                      usePointStyle: true,
+                      pointStyle: "circle",
+                    },
+                  },
+                },
+              }}
+            />
+          </div>
+        </div>
+        <div className={styles.box}>
+          <div className={styles.box_header}>Number of Orders Served Per Table</div>
+          <div
+            className={[
+              styles["box_content"],
+              styles["box_content_line"],
+            ].join(" ")}
+          >
+            <Bar
+              data={tablesBarGraphData}
               options={{
                 plugins: {
                   legend: {
