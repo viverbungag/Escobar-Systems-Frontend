@@ -116,55 +116,57 @@ const MenuOrderTab = ({
   return (
     <div className={styles["MenuOrderTab"]}>
       <div className={styles["txt-section"]}>
-        <ToggleButtonGroup
-          className={"toggle_group"}
-          value={type}
-          exclusive
-          onChange={handleTypeChange}
-        >
-          <ToggleButton value="new-user">New Order</ToggleButton>
-          <ToggleButton value="existing-user">Existing Order</ToggleButton>
-        </ToggleButtonGroup>
-        <button onClick={deleteAllItemOnClick}>
-          <Image
-            src="/OrderingSystem/images/delete.svg"
-            alt="clear all icon"
-            width="20"
-            height="20"
-            objectFit="cover"
-            draggable="false"
-          />
-        </button>
-      </div>
-      <Box
-        sx={{ minWidth: 120 }}
-        className={[
-          styles["InputLabel"],
-          type === "new-user" && styles["none"],
-        ].join(" ")}
-      >
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">
-            {" "}
-            Select Order Menu{" "}
-          </InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={selectedOrder}
-            label="Select Order Menu"
-            onChange={handleSelectedOrderOnChange}
+        <div className={styles["txt-section__top"]}>
+          <ToggleButtonGroup
+            className={"toggle_group"}
+            value={type}
+            exclusive
+            onChange={handleTypeChange}
           >
-            {allOrders.map((item) => {
-              return (
-                <MenuItem key={item.orderId} value={item.orderId}>
-                  {`Order #${item.orderId}`}{" "}
-                </MenuItem>
-              );
-            })}
-          </Select>
-        </FormControl>
-      </Box>
+            <ToggleButton value="new-user">New Order</ToggleButton>
+            <ToggleButton value="existing-user">Existing Order</ToggleButton>
+          </ToggleButtonGroup>
+          <button onClick={deleteAllItemOnClick}>
+            <Image
+              src="/OrderingSystem/images/delete.svg"
+              alt="clear all icon"
+              width="20"
+              height="20"
+              objectFit="cover"
+              draggable="false"
+            />
+          </button>
+        </div>
+        <Box
+          sx={{ minWidth: 120, padding: 1}}
+          className={[
+            styles["InputLabel"],
+            type === "new-user" && styles["none"],
+          ].join(" ")}
+        >
+        <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">
+              {" "}
+              Select Order Menu{" "}
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={selectedOrder}
+              label="Select Order Menu"
+              onChange={handleSelectedOrderOnChange}
+            >
+              {allOrders.map((item) => {
+                return (
+                  <MenuItem key={item.orderId} value={item.orderId}>
+                    {`Order #${item.orderId}`}{" "}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
+        </Box>
+      </div>
 
       <div className={styles["container"]}>
         {menuOnCategory.orderMenu.map((item) => {

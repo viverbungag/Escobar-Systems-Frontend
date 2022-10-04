@@ -8,6 +8,7 @@ const MenuSideBar = ({items, categoryOnChange, currentMenuCategory}) => {
 
   return (
     <div className={styles['MenuSideBar']}>
+      <div className={styles["MenuSideBar__header-container"]}>  
         <div className={styles['back-section']} >
         <Link href = "/OrderingSystem/dashboard"> 
         <button>
@@ -33,17 +34,18 @@ const MenuSideBar = ({items, categoryOnChange, currentMenuCategory}) => {
             draggable = 'false'
         /> 
         </div>
+      </div>
 
+      <div className={styles["MenuSideBar__options-container"]}>
         {items.map((item) =>{
-            return(
-              <div key={item} className={styles['wrapper']} onClick={()=>categoryOnChange(item)}>
-                <MenuSideBarCategory Title={item} isSelected={item === currentMenuCategory}/>
-              </div>
-            )
-          })}
-      </div>        
-
-     
+          return(
+            <div key={item} className={styles['wrapper']} onClick={()=>categoryOnChange(item)}>
+              <MenuSideBarCategory Title={item} isSelected={item === currentMenuCategory}/>
+            </div>
+          )
+        })}
+      </div>
+    </div>           
   )
 }
 

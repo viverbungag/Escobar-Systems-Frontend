@@ -21,14 +21,24 @@ const MenuOrderTabCard = ({title, price, quantity, quantityOnChange, handleDelet
                 />  
                 </button>
                 <h2> {quantity} </h2>
-                <button onClick={()=>quantityOnChange(title, quantity, 1)}>
+                {/* <button onClick={()=>quantityOnChange(title, quantity, 1)}>
                 <Image
 
                 />      
                 <Icon 
                 icon="carbon:add-filled" 
                 />
-
+    
+                </button> */}
+                <button onClick={()=>quantityOnChange(title, quantity, 1)}>
+                <Image
+                  src="/OrderingSystem/images/counter-add.svg"
+                  alt="add icon"
+                  width="25"
+                  height="25"
+                  objectFit="cover"
+                  draggable = 'false'
+                />      
                 </button>
               </div>
             </div>

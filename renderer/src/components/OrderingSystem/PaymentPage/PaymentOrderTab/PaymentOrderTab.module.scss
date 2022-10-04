@@ -1,21 +1,27 @@
 
 .PaymentOrderTab {
-    height: 85vh;
+    height: 89vh;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 10px 10px 20px;
+    // padding: 10px 10px 20px;
+    padding: 0 0.6rem;
     gap: 20px;
     width: 450px;
     overflow-y: scroll;
     overflow-x: hidden;
 }
 .orderno-section{
+    position: sticky;
+    top: 0;
+    background-color: #fafafa;
     width: 100%;
+    height: fit-content;
     display: flex;
     flex-direction: row;
-    margin-bottom: 20px;
-    margin-top: 10px;
+    // margin-bottom: 20px;
+    // margin-top: 10px;
+    padding: 1rem 0;
     justify-content: space-between;
     h1{
         font-family: 'SF Pro Text';
