@@ -23,9 +23,10 @@ const MenuOrderTabCard = ({title, price, quantity, quantityOnChange, handleDelet
                 </button>
                 <h2> {quantity} </h2>
                 <button onClick={()=>quantityOnChange(title, quantity, 1)}>
-
+    
                   <Icon icon={addCircle24Filled} height = "26" width="26" color = "#003049" />
                 </button>
+
               </div>
             </div>
 

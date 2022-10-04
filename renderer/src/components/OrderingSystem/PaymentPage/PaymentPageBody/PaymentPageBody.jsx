@@ -20,29 +20,33 @@ const PaymentPageBody = ({
 
   return (
     <div className={styles["PaymentPageBody"]}>
-      <TablePagination
-        component="div"
-        count={totalPages}
-        page={pageNo}
-        onPageChange={pageNoOnChange}
-        rowsPerPage={pageSize}
-        onRowsPerPageChange={pageSizeOnChange}
-      />
+      <div className={styles["PaymentPageBody__pagination-container"]}>
+        <TablePagination
+          component="div"
+          count={totalPages}
+          page={pageNo}
+          onPageChange={pageNoOnChange}
+          rowsPerPage={pageSize}
+          onRowsPerPageChange={pageSizeOnChange}
+        />
+      </div>
 
-      {items.map((item) => {
-        return (
-          <div key={shortid.generate()} onClick={()=>{orderCardOnClick(item.customerFoodOrders, item.orderId, item.discount, item.payment, item.totalCost)}}>
-            <PaymentPageCard
-              ordernum={item.orderId}
-              quantity={item.customerFoodOrders.length}
-              price={item.payment}
-              orderDate={item.orderTime}
-              isSelected={orderCardSelected === item.orderId}
-              voidButtonOnClick={voidButtonOnClick}
-            />
-          </div>
-        );
-      })}
+      <div className={styles["PaymentPageBody__cards-container"]}>
+        {items.map((item) => {
+          return (
+            <div key={shortid.generate()} onClick={()=>{orderCardOnClick(item.customerFoodOrders, item.orderId, item.discount, item.payment, item.totalCost)}}>
+              <PaymentPageCard
+                ordernum={item.orderId}
+                quantity={item.customerFoodOrders.length}
+                price={item.payment}
+                orderDate={item.orderTime}
+                isSelected={orderCardSelected === item.orderId}
+                voidButtonOnClick={voidButtonOnClick}
+              />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };

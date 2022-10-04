@@ -1,0 +1,26 @@
+
+.UnpaidOrderTabCard{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    width: 320px;
+    height: 60px;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
+    justify-content: space-between;
+    &__row {
+        font-family: 'SF Pro Text';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 15px;
+        line-height: 20px;
+        flex: 1;
+        align-self: center;
+        justify-self: center;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+}
+
