@@ -17,6 +17,9 @@ import Select from '@mui/material/Select';
 import dayjs from 'dayjs';
 import { useUser } from "../../../contexts/UserContext";
 import { printReceipt } from '../../../../../print/printFunctions';
+import trashCan from '@iconify/icons-akar-icons/trash-can';
+import chevronRight from '@iconify/icons-akar-icons/chevron-right';
+
 
 const MenuOrderTab = ({
   menuOnCategory,
@@ -126,14 +129,7 @@ const MenuOrderTab = ({
           <ToggleButton value="existing-user">Existing Order</ToggleButton>
         </ToggleButtonGroup>
         <button onClick={deleteAllItemOnClick}>
-          <Image
-            src="/OrderingSystem/images/delete.svg"
-            alt="clear all icon"
-            width="20"
-            height="20"
-            objectFit="cover"
-            draggable="false"
-          />
+          <Icon icon={trashCan} height = "24" width = "24" color = "#003049"/>
         </button>
       </div>
       <Box
@@ -189,14 +185,7 @@ const MenuOrderTab = ({
           <h1> ₱ {total}</h1>
           <div className={styles["pay-section"]}>
             <h2> Pay </h2>
-            <Image
-              src="/OrderingSystem/images/chevron.svg"
-              alt="Chevron icon"
-              width="20"
-              height="20"
-              objectFit="cover"
-              draggable="false"
-            />
+            <Icon icon={chevronRight}  height = "16" width = "16" color = "white" />
           </div>
         </div>
       </div>
@@ -214,8 +203,7 @@ const MenuOrderTab = ({
             exclusive
             onChange={handleTypeChange}
           >
-            <ToggleButton value="new-user">New Order</ToggleButton>
-            <ToggleButton value="existing-user">Existing Order</ToggleButton>
+
           </ToggleButtonGroup>
           </div>
           <div className={styles["Wrapper"]}>
