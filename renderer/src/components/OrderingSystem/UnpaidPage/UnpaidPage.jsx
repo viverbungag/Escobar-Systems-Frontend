@@ -4,7 +4,7 @@ import Sidebar from "../Sidebar/Sidebar.jsx";
 const UnpaidPage = () => {
   return (
     <div className={styles["UnpaidPage"]}>
-        <Sidebar page = 'unpaid' />
+        <Sidebar page = 'unpaid'/>
         <h1> hi </h1>
     </div>
   )
