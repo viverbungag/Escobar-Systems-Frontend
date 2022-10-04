@@ -60,7 +60,7 @@ function HomePage() {
   }
   
   const getVerticalBarGraphData = () => {
-    console.log(toDate);
+    // console.log(toDate);
     // console.log(toDate.add(1, 'month').date(0))
 
     rest.getPost(
@@ -85,7 +85,7 @@ function HomePage() {
         {
           label: "Monthly",
           data: data.map((item) => item.donutData),
-          backgroundColor: ["#35b000", "#e10000", "rgb(255, 208, 1)"],
+          backgroundColor: ["#e10000", "#35b000"],
         },
       ],
     });
@@ -109,12 +109,17 @@ function HomePage() {
 
   const getLineGraphDataOnSuccess = (data) => {
     setLineGraphData({
-      labels: data.map((item) => item.donutLabel),
+      labels: data.map((item) => item.incomeHour),
       datasets: [
         {
-          label: "Monthly",
-          data: data.map((item) => item.donutData),
-          backgroundColor: ["#35b000", "#e10000", "rgb(255, 208, 1)"],
+          label: "Income For This Hour",
+          data: data.map((item) => item.hourlyIncome),
+          backgroundColor: ["#225560"],
+        },
+        {
+          label: "Orders For This Hour",
+          data: data.map((item) => item.hourlyOrders),
+          backgroundColor: ["#F0803C"],
         },
       ],
     });
@@ -131,11 +136,41 @@ function HomePage() {
     );
   }
 
+  const [tablesBarGraphData, setTablesBarGraphData] = useState({
+    labels: [],
+    datasets: []
+  })
+
+  const getTablesBarGraphDataOnSuccess = (data) => {
+    setTablesBarGraphData({
+      labels: data.map((item) => item.tableNumber),
+      datasets: [
+        {
+          label: 'Orders Served', 
+          data: data.map((item) => item.totalCount),
+          backgroundColor: ["#35b000"],
+        }
+      ]
+    })
+  }
+
+  const getTablesBarGraphData = () => {
+    rest.getPost(
+      `${INITIAL_URL}/expense/table-graph`,
+      {
+        toDate: toDate.add(1, 'month').date(0),
+        fromDate: fromDate
+      },
+      getTablesBarGraphDataOnSuccess
+    )
+  }
+
   useEffect(() =>{
     // console.log(fromDate);
     getVerticalBarGraphData();
     getDonutGraphData();
     getLineGraphData();
+    getTablesBarGraphData();
   }, [toDate, fromDate])
 
   const current = new Date();
@@ -143,6 +178,7 @@ function HomePage() {
 
   return (
     <div>
+      {/* {console.log(lineGraphData)} */}
       <div className={styles.title_bar}>
         <TitleBar />
       </div>
@@ -179,6 +215,7 @@ function HomePage() {
                 verticalBarGraphData={verticalBarGraphData}
                 donutGraphData={donutGraphData}
                 lineGraphData={lineGraphData}
+                tablesBarGraphData={tablesBarGraphData}
               />
             </div>
           </div>
