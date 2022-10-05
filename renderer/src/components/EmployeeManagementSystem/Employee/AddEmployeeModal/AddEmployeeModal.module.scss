@@ -20,7 +20,9 @@
     .content {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        // justify-content: space-between;
+        height: 55vh;
+        overflow: auto;
         gap: 1rem;
         padding: 2rem;
         .group {

@@ -20,14 +20,15 @@
     .content {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: center;
+        height: 20vh;
+        overflow: auto;
         gap: 1rem;
-        padding: 2rem;
+        padding: 0 1rem;
         .group {
             display: flex;
             flex-direction: column;
             gap: 1rem;
-            margin-bottom: 2rem;
             &_label {
                 color: rgb(120, 120, 120);
                 font-weight: $h4FontWeight;

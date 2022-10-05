@@ -10,6 +10,9 @@ import { TextField } from '@mui/material';
 import dayjs from 'dayjs';
 import TitleBar from '../../../src/components/IncomeAndExpenseSystem/Shared/TitleBar/TitleBar';
 import { useRouter } from "next/router";
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import OrdersServedTable from '../../../src/components/IncomeAndExpenseSystem/Dashboard/OrdersServedTable/OrdersServedTable';
 
 const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
@@ -60,9 +63,6 @@ function HomePage() {
   }
   
   const getVerticalBarGraphData = () => {
-    // console.log(toDate);
-    // console.log(toDate.add(1, 'month').date(0))
-
     rest.getPost(
       `${INITIAL_URL}/expense/vertical-bar-graph`,
       {
@@ -164,6 +164,23 @@ function HomePage() {
       getTablesBarGraphDataOnSuccess
     )
   }
+  
+  const [ordersServedData, setOrdersServedData] = useState([]);
+
+  const getOrdersServedOnSuccess = (data) => {
+    setOrdersServedData(data);
+  }
+
+  const getOrdersServed = () => {
+    rest.getPost(
+      `${INITIAL_URL}/expense/orders-served`, 
+      {
+        toDate: toDate.add(1, 'month').date(0),
+        fromDate: fromDate
+      },
+      getOrdersServedOnSuccess
+    )
+  }
 
   useEffect(() =>{
     // console.log(fromDate);
@@ -171,14 +188,24 @@ function HomePage() {
     getDonutGraphData();
     getLineGraphData();
     getTablesBarGraphData();
+    getOrdersServed();
   }, [toDate, fromDate])
+
+  useEffect(() => {
+    getOrdersServed();
+  }, [])
 
   const current = new Date();
   const currentDate = `${current.getMonth()+1}/${current.getFullYear()}`;
 
+  const [type, setType] = useState('charts');
+
+  const handleToggleChange = (e) => {
+    setType(e.target.value);
+  }
+
   return (
     <div>
-      {/* {console.log(lineGraphData)} */}
       <div className={styles.title_bar}>
         <TitleBar />
       </div>
@@ -186,38 +213,62 @@ function HomePage() {
         <div className={styles["home-page__body"]}>
           <SideMenu homeState="active" viewincomeState="" viewexpenseState="" />
           <div className={styles["home-page__contents"]}>
-            <section className={styles["home-page__date-section"]}>
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <DatePicker
-                  views={["year", "month"]}
-                  label="From"
-                  value={fromDate}
-                  minDate={dayjs().year(2018)}
-                  maxDate={toDate}
-                  onChange={handleFromDateOnChange}
-                  renderInput={(params) => <TextField {...params} />}
-                />
-              </LocalizationProvider>
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <DatePicker
-                  views={["year", "month"]}
-                  label="To"
-                  value={toDate}
-                  minDate={fromDate}
-                  maxDate={dayjs()}
-                  onChange={handleToDateOnChange}
-                  renderInput={(params) => <TextField {...params} />}
-                />
-              </LocalizationProvider>
+            <section className={styles["home-page__top-section"]}>
+              <div className={styles["home-page__date-section"]}>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <DatePicker
+                    views={["year", "month"]}
+                    label="From"
+                    value={fromDate}
+                    minDate={dayjs().year(2018)}
+                    maxDate={toDate}
+                    onChange={handleFromDateOnChange}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                </LocalizationProvider>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <DatePicker
+                    views={["year", "month"]}
+                    label="To"
+                    value={toDate}
+                    minDate={fromDate}
+                    maxDate={dayjs()}
+                    onChange={handleToDateOnChange}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                </LocalizationProvider>
+              </div>
+              <div className={styles["home-page__toggle-section"]}>
+                <ToggleButtonGroup
+                  className={styles.toggle_group}
+                  color="primary"
+                  value={type}
+                  exclusive
+                  onChange={handleToggleChange}
+                >
+                  <ToggleButton value="charts">Charts</ToggleButton>
+                  <ToggleButton value="orders">Orders Served</ToggleButton>
+                </ToggleButtonGroup>
+              </div>
             </section>
-            <div className={styles.charts}>
-              <IncomeExpenseChart
-                verticalBarGraphData={verticalBarGraphData}
-                donutGraphData={donutGraphData}
-                lineGraphData={lineGraphData}
-                tablesBarGraphData={tablesBarGraphData}
-              />
-            </div>
+            { type === 'charts' ? (
+              <div className={styles["home-page__charts"]}>
+                <IncomeExpenseChart
+                  verticalBarGraphData={verticalBarGraphData}
+                  donutGraphData={donutGraphData}
+                  lineGraphData={lineGraphData}
+                  tablesBarGraphData={tablesBarGraphData}
+                />
+              </div>
+            ) : ( 
+              <div className={styles["home-page__orders-served-table"]}>
+                <OrdersServedTable 
+                  ordersServed={ordersServedData}
+                  fromDate={fromDate}
+                  toDate={toDate}
+                />
+              </div>
+            ) }
           </div>
         </div>
       </div>

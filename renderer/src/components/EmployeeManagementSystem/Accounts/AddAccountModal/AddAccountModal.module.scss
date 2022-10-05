@@ -19,10 +19,12 @@
     }
     .content_outer {
         display: flex;
-        justify-content: space-between;
+        height: 35vh;
+        overflow: auto;
         gap: 1rem;
-        padding: 2rem;
+        padding: 0 1rem;
         flex-direction: column;
+        justify-content: center;
         .content_name {
             font-size: $h5FontSize;
             font-weight: $h4FontWeight;

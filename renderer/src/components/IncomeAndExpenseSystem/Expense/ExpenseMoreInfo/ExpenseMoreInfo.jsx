@@ -7,6 +7,7 @@ import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import dateFormat from 'dateformat';
 import { Tooltip } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
 export default function ExpenseMoreInfo({ selected, expenseData }) {
     console.log(expenseData)
@@ -17,8 +18,11 @@ export default function ExpenseMoreInfo({ selected, expenseData }) {
                 setValues ({
                     id: item.transactionId,
                     transactionDate: dateFormat(item.transactionDate, "yyyy-mm-dd"),
+                    transactionSupplyQuantity: item.transactionSupplyQuantity,
                     supplyName: item.supplyName,
-                    expenseCost: item.expenseCost
+                    supplierName: item.supplierName,
+                    expenseCost: item.expenseCost,
+                    employeeName: item.employeeName
                 })
             }
         })
@@ -35,7 +39,7 @@ export default function ExpenseMoreInfo({ selected, expenseData }) {
         <div className={styles.content_outer}>
             <div className={styles.content_inner}>
                 <div className={styles.content_inner_label}>
-                        Expense Details
+                    Details
                 </div>
                 <div className={styles.content_inner_row}>
                     <Tooltip title="Transaction Date">
@@ -47,13 +51,15 @@ export default function ExpenseMoreInfo({ selected, expenseData }) {
                     <Tooltip title="Supply Name">
                         <Inventory2Icon/>
                     </Tooltip>
-                    {values.supplyName}
+                    {values.supplyName} 
+                    <CloseIcon /> 
+                    {values.transactionSupplyQuantity}
                 </div>
                 <div className={styles.content_inner_row}>
-                    <Tooltip title="Supplier Information">
+                    <Tooltip title="Supplier Name">
                         <ContactPhoneIcon/>
                     </Tooltip>
-                    {values.expenseCost} - {values.expenseCost}
+                    {values.supplierName}
                 </div>
                 <div className={styles.content_inner_row}>
                     <Tooltip title="Expense Cost">
@@ -62,10 +68,10 @@ export default function ExpenseMoreInfo({ selected, expenseData }) {
                     {values.expenseCost}
                 </div>
                 <div className={styles.content_inner_row}>
-                    <Tooltip title="Employee In Charge">
+                    <Tooltip title="Employee In-Charge">
                         <AdminPanelSettingsIcon/>
                     </Tooltip>
-                    {values.expenseCost}
+                    {values.employeeName}
                 </div>
             </div>
         </div>  

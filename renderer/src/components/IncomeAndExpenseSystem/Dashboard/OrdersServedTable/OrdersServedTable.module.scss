@@ -1,0 +1,31 @@
+@import '../../../../styles/variables.scss';
+
+.container {
+    display: flex;
+    flex-direction: column;
+    &__header {
+        padding: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 1rem;
+    }
+    &__table {
+        height: 70vh;
+    }
+}
+
+.search-bar {
+    width: 30%;
+    padding: 0;
+}
+
+.print-btn {
+    color: black;
+    transition: all 0.3s;
+    &:hover {
+        cursor: pointer;
+        transform: translateY(-3px);
+        color: $color--primary;
+    }
+}
