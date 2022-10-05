@@ -1,365 +1,353 @@
-
 .UnpaidOrderTab {
-    height: 89vh;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    // padding: 10px 10px 20px;
-    padding: 0 0.6rem;
-    gap: 20px;
-    width: 450px;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    background-color: white;
-
-}
-.orderno-section{
-    position: sticky;
-    top: 0;
-    background-color: white;
-    width: 100%;
-    height: fit-content;
-    display: flex;
-    flex-direction: row;
-    // margin-bottom: 20px;
-    // margin-top: 10px;
-    padding: 1rem 0;
-    justify-content: space-between;
-    h1{
-        font-family: 'SF Pro Text';
-        font-style: bold;
-        font-weight: 600;
-        font-size: 30px;
-        line-height: 14px;
-        margin-top: 10px;
-    }
-    .print-icon{
-        right: 0;
-        transition: transform 0.3s;
-        &:hover {
-            cursor: pointer;
-            transform: translateY(-5px);
-        }
-    }
-    .print-icon:active{
-        transform: translateY(-5px);
-    }   
-    .print-none{
-        display: none;
-    }
-
+	height: 89vh;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	// padding: 10px 10px 20px;
+	padding: 0 0.6rem;
+	gap: 20px;
+	width: 450px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	background-color: white;
 }
 
-.txt-section{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding-top: 10px;
-    gap: 10px;
-    p{
-        font-family: 'SF Pro Text';
-        font-style: normal;
-        font-weight: 700;
-        font-size: 22px;
-        line-height: 24px;
-    }
-
+.orderno-section {
+	position: sticky;
+	top: 0;
+	background-color: white;
+	width: 100%;
+	height: fit-content;
+	display: flex;
+	flex-direction: row;
+	// margin-bottom: 20px;
+	// margin-top: 10px;
+	padding: 1rem 0;
+	justify-content: space-between;
+	h1 {
+		font-family: "SF Pro Text";
+		font-style: bold;
+		font-weight: 600;
+		font-size: 30px;
+		line-height: 14px;
+		margin-top: 10px;
+	}
+	.print-icon {
+		right: 0;
+		transition: transform 0.3s;
+		&:hover {
+			cursor: pointer;
+			transform: translateY(-5px);
+		}
+	}
+	.print-icon:active {
+		transform: translateY(-5px);
+	}
+	.print-none {
+		display: none;
+	}
 }
 
+.txt-section {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding-top: 10px;
+	gap: 10px;
+	p {
+		font-family: "SF Pro Text";
+		font-style: normal;
+		font-weight: 700;
+		font-size: 22px;
+		line-height: 24px;
+	}
+}
 
-.title-section{
-    margin-top: -30px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding-top: 30px;
-    gap: 50px;
+.title-section {
+	margin-top: -30px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding-top: 30px;
+	gap: 50px;
 
-    p{
-        font-style: normal;
-        font-weight: 700;
-        font-size: 18px;
-        line-height: 20px;
-    }
-    .Quantity{
-        margin-right: 5px;
-    }
-
+	p {
+		font-style: normal;
+		font-weight: 700;
+		font-size: 18px;
+		line-height: 20px;
+	}
+	.Quantity {
+		margin-right: 5px;
+	}
 }
 
 .Text-Section {
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    width: 100%;
-    margin-bottom: 10px;
-    .Order-Text{
-        font-style: normal;
-        font-weight: 700;
-        font-size: 20px;
-        line-height: 20px;
-        text-align: center;
-        margin-right: auto;
-        margin-left: 5px; 
-    }
-    .Date-Text{
-        font-style: normal;
-        font-weight: 700;
-        font-size: 20px;
-        line-height: 20px;
-        text-align: center;
-        margin-right: 5px;
-        margin-left: auto; 
-    }
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: row;
+	width: 100%;
+	margin-bottom: 10px;
+	.Order-Text {
+		font-style: normal;
+		font-weight: 700;
+		font-size: 20px;
+		line-height: 20px;
+		text-align: center;
+		margin-right: auto;
+		margin-left: 5px;
+	}
+	.Date-Text {
+		font-style: normal;
+		font-weight: 700;
+		font-size: 20px;
+		line-height: 20px;
+		text-align: center;
+		margin-right: 5px;
+		margin-left: auto;
+	}
 }
 .Title-Section {
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    width: 100%;
-    margin-bottom: 5px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: row;
+	width: 100%;
+	margin-bottom: 5px;
 
-    
-    .Qty-Text{
-        font-style: normal;
-        font-weight: 550;
-        font-size: 18px;
-        line-height: 20px;
-        margin-right: auto;
-        margin-left: 20px; 
-    }
-    .Title-Text{
-        font-style: normal;
-        font-weight: 550;
-        font-size: 18px;
-        line-height: 20px;
-        margin-left: 20px;
-
-    }
-    .Price-Text{
-        font-style: normal;
-        font-weight: 550;
-        font-size: 18px;
-        line-height: 20px;
-        margin-right: 10px;
-        margin-left: auto;     
-    }
+	.Qty-Text {
+		font-style: normal;
+		font-weight: 550;
+		font-size: 18px;
+		line-height: 20px;
+		margin-right: auto;
+		margin-left: 20px;
+	}
+	.Title-Text {
+		font-style: normal;
+		font-weight: 550;
+		font-size: 18px;
+		line-height: 20px;
+		margin-left: 20px;
+	}
+	.Price-Text {
+		font-style: normal;
+		font-weight: 550;
+		font-size: 18px;
+		line-height: 20px;
+		margin-right: 10px;
+		margin-left: auto;
+	}
 }
-.Component-Section{
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    margin-bottom: 5px;
-    
-    .Quantity-Component{
-        font-family: 'ABeeZee';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 20px;
-        margin-right: auto;
-        margin-left: 30px; 
+.Component-Section {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	margin-bottom: 5px;
 
-    }
-    .Menuname-Component{
-        font-family: 'ABeeZee';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 20px; 
-        margin-left: 10px;
-    }
-    .Price-Component{
-        font-family: 'ABeeZee';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 20px;
-        margin-right: 10px;
-        margin-left: auto;                
-    }
+	.Quantity-Component {
+		font-family: "ABeeZee";
+		font-style: normal;
+		font-weight: 400;
+		font-size: 16px;
+		line-height: 20px;
+		margin-right: auto;
+		margin-left: 30px;
+	}
+	.Menuname-Component {
+		font-family: "ABeeZee";
+		font-style: normal;
+		font-weight: 400;
+		font-size: 16px;
+		line-height: 20px;
+		margin-left: 10px;
+	}
+	.Price-Component {
+		font-family: "ABeeZee";
+		font-style: normal;
+		font-weight: 400;
+		font-size: 16px;
+		line-height: 20px;
+		margin-right: 10px;
+		margin-left: auto;
+	}
 }
 
 .CustomerPayment-Section {
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    width: 100%;
-    margin-bottom: 5px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: row;
+	width: 100%;
+	margin-bottom: 5px;
 
-    
-    .CustomerPayment{
-        font-family: 'ABeeZee';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 16px;
-        text-align: left;
-        margin-right: auto;
-        margin-left: 10px; 
-    }
+	.CustomerPayment {
+		font-family: "ABeeZee";
+		font-style: normal;
+		font-weight: 400;
+		font-size: 16px;
+		line-height: 16px;
+		text-align: left;
+		margin-right: auto;
+		margin-left: 10px;
+	}
 
-    .CustomerPaymentPrice{
-        display: flex;
-        margin-left: auto; 
-        margin-right: 10px;
-        font-family: 'ABeeZee';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 16px;
-    }
+	.CustomerPaymentPrice {
+		display: flex;
+		margin-left: auto;
+		margin-right: 10px;
+		font-family: "ABeeZee";
+		font-style: normal;
+		font-weight: 400;
+		font-size: 16px;
+		line-height: 16px;
+	}
 }
 
 .Subtotal-Section {
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    width: 100%;
-    margin-bottom: 5px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: row;
+	width: 100%;
+	margin-bottom: 5px;
 
-    .Subtotal{
-        font-family: 'ABeeZee';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 16px;
-        text-align: left;
-        margin-right: auto;
-        margin-left: 10px; 
-    }
+	.Subtotal {
+		font-family: "ABeeZee";
+		font-style: normal;
+		font-weight: 400;
+		font-size: 16px;
+		line-height: 16px;
+		text-align: left;
+		margin-right: auto;
+		margin-left: 10px;
+	}
 
-    .SubtotalPrice{
-        display: flex;
-        margin-left: auto; 
-        margin-right: 10px;
-        font-family: 'ABeeZee';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 16px;
-    }
+	.SubtotalPrice {
+		display: flex;
+		margin-left: auto;
+		margin-right: 10px;
+		font-family: "ABeeZee";
+		font-style: normal;
+		font-weight: 400;
+		font-size: 16px;
+		line-height: 16px;
+	}
 }
 
 .Discounted-Section {
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    width: 100%;
-    margin-bottom: 5px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: row;
+	width: 100%;
+	margin-bottom: 5px;
 
-    .Discount{
-        font-family: 'ABeeZee';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 16px;
-        text-align: left;
-        margin-right: auto;
-        margin-left: 10px; 
-    }
+	.Discount {
+		font-family: "ABeeZee";
+		font-style: normal;
+		font-weight: 400;
+		font-size: 16px;
+		line-height: 16px;
+		text-align: left;
+		margin-right: auto;
+		margin-left: 10px;
+	}
 
-    .DiscountPrice{
-        display: flex;
-        margin-left: auto; 
-        margin-right: 10px;
-        font-family: 'ABeeZee';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 16px;
-    }
+	.DiscountPrice {
+		display: flex;
+		margin-left: auto;
+		margin-right: 10px;
+		font-family: "ABeeZee";
+		font-style: normal;
+		font-weight: 400;
+		font-size: 16px;
+		line-height: 16px;
+	}
 }
 
 .Total-Section {
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    width: 100%;
-    margin-bottom: 5px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: row;
+	width: 100%;
+	margin-bottom: 5px;
 
-    .Total{
-        font-family: 'ABeeZee';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 16px;
-        text-align: left;
-        margin-right: auto;
-        margin-left: 10px; 
-    }
+	.Total {
+		font-family: "ABeeZee";
+		font-style: normal;
+		font-weight: 400;
+		font-size: 16px;
+		line-height: 16px;
+		text-align: left;
+		margin-right: auto;
+		margin-left: 10px;
+	}
 
-    .TotalPrice{
-        display: flex;
-        margin-left: auto; 
-        margin-right: 10px;
-        font-family: 'ABeeZee';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 16px;
-    }
+	.TotalPrice {
+		display: flex;
+		margin-left: auto;
+		margin-right: 10px;
+		font-family: "ABeeZee";
+		font-style: normal;
+		font-weight: 400;
+		font-size: 16px;
+		line-height: 16px;
+	}
 }
 
 .Change-Section {
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    width: 100%;
-    margin-bottom: 5px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: row;
+	width: 100%;
+	margin-bottom: 5px;
 
-    .Change{
-        font-family: 'ABeeZee';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 16px;
-        text-align: left;
-        margin-right: auto;
-        margin-left: 10px; 
-    }
+	.Change {
+		font-family: "ABeeZee";
+		font-style: normal;
+		font-weight: 400;
+		font-size: 16px;
+		line-height: 16px;
+		text-align: left;
+		margin-right: auto;
+		margin-left: 10px;
+	}
 
-    .ChangePrice{
-        display: flex;
-        margin-left: auto; 
-        margin-right: 10px;
-        font-family: 'ABeeZee';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 16px;
-    }
+	.ChangePrice {
+		display: flex;
+		margin-left: auto;
+		margin-right: 10px;
+		font-family: "ABeeZee";
+		font-style: normal;
+		font-weight: 400;
+		font-size: 16px;
+		line-height: 16px;
+	}
 }
 
 .footer {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    button {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        padding: 5px 20px;
-        gap: 10px;
-        width: 65px;
-        height: 24px;
-        background: rgb(0, 168, 0);
-        color: #fafafa;
-        border-radius: 30px;
-    }
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+	button {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		padding: 5px 20px;
+		gap: 10px;
+		width: 65px;
+		height: 24px;
+		background: rgb(0, 168, 0);
+		color: #fafafa;
+		border-radius: 30px;
+	}
 }
 
-.none{
-    display: none;
+.none {
+	display: none;
 }
-
-
-
