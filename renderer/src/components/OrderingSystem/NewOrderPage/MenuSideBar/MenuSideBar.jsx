@@ -3,6 +3,8 @@ import styles from './MenuSideBar.module.scss'
 import Image from "next/image";
 import  MenuSideBarCategory from './MenuSideBarCategory/MenuSideBarCategory.jsx';
 import Link from 'next/link';
+import { Icon } from '@iconify/react';
+import arrowBack from '@iconify/icons-bx/arrow-back';
 
 const MenuSideBar = ({items, categoryOnChange, currentMenuCategory}) => {
 
@@ -12,14 +14,7 @@ const MenuSideBar = ({items, categoryOnChange, currentMenuCategory}) => {
         <div className={styles['back-section']} >
         <Link href = "/OrderingSystem/dashboard"> 
         <button>
-        <Image
-            src="/OrderingSystem/images/arrow-left.svg" 
-            alt="Escobar Logo"
-            width = '24'
-            height = '24'
-            objectFit='contain'
-            draggable = 'false'
-        /> 
+          <Icon icon={arrowBack}  height = "24" width = "24" color = "#003049"/>
         </button>
         </Link>
         <p> Back </p>

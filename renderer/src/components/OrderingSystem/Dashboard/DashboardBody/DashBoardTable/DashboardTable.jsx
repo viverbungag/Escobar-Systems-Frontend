@@ -41,7 +41,7 @@ const DashboardTable = ({ unavailableMenu }) => {
                                 <Button onClick={handleClose} className={styles['Close_Button']}> X </Button>
                                 <div className={styles['Image-Section']}>
                                         <Image
-                                            src="/images/logo.png"
+                                            src="/OrderingSystem/images/logo.png" 
                                             alt="Escobar Logo"
                                             width="40"
                                             height="40"

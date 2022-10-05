@@ -52,5 +52,3 @@ const UnpaidPageBody = ({
 };
 
 export default UnpaidPageBody
-
-

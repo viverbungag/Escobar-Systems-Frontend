@@ -5,6 +5,7 @@ import shortid from 'shortid';
 import {Icon} from '@iconify/react';
 import { printReceipt } from '../../../../../print/printFunctions';
 import { useUser } from "../../../contexts/UserContext";
+import printIcon from '@iconify/icons-bytesize/print';
 
 const PaymentOrderTab = ({orderTabItems, orderCardSelected, orderDiscount, customerPayment, totalPayment}) => {
   const { employeeName } = useUser();
@@ -66,8 +67,9 @@ const PaymentOrderTab = ({orderTabItems, orderCardSelected, orderDiscount, custo
     >
       <div className={styles["orderno-section"]}>
         <h1> Order # {orderCardSelected} </h1>
+
         <Icon
-          icon="bytesize:print"
+          icon={printIcon}
           height="25"
           width="25"
           className={[

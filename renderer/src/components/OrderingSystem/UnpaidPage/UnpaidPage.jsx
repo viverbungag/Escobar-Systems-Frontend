@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import styles from './UnpaidPage.module.scss';
 import Sidebar from "../Sidebar/Sidebar.jsx";
-import UnpaidPageBody from './UnpaidPageBody/UnpaidPageBody';
-import UnpaidOrderTab from './UnpaidOrderTab/UnpaidOrderTab';
+import UnpaidPageBody from './UnpaidPageBody/UnpaidPageBody.jsx';
+import UnpaidOrderTab from './UnpaidOrderTab/UnpaidOrderTab.jsx';
 import Pagination from "../../../model/Pagination";
 
 import Rest from '../../../rest/Rest';
