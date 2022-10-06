@@ -1,23 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import IncomeExpenseChart from '../../../src/components/IncomeAndExpenseSystem/Dashboard/IncomeExpenseChart/IncomeExpenseChart';
-import SideMenu from '../../../src/components/IncomeAndExpenseSystem/Shared/SideMenu/SideMenu';
-import styles from './Dashboard.module.scss';
-import Rest from '../../../src/rest/Rest.tsx';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { TextField } from '@mui/material';
-import dayjs from 'dayjs';
-import TitleBar from '../../../src/components/IncomeAndExpenseSystem/Shared/TitleBar/TitleBar';
+import React, { useState, useEffect } from "react";
+import IncomeExpenseChart from "../../../src/components/IncomeAndExpenseSystem/Dashboard/IncomeExpenseChart/IncomeExpenseChart";
+import SideMenu from "../../../src/components/IncomeAndExpenseSystem/Shared/SideMenu/SideMenu";
+import styles from "./Dashboard.module.scss";
+import Rest from "../../../src/rest/Rest.tsx";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { TextField } from "@mui/material";
+import dayjs from "dayjs";
+import TitleBar from "../../../src/components/IncomeAndExpenseSystem/Shared/TitleBar/TitleBar";
 import { useRouter } from "next/router";
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import OrdersServedTable from '../../../src/components/IncomeAndExpenseSystem/Dashboard/OrdersServedTable/OrdersServedTable';
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import OrdersServedTable from "../../../src/components/IncomeAndExpenseSystem/Dashboard/OrdersServedTable/OrdersServedTable";
 
 const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
 function HomePage() {
-
   const rest = new Rest();
 
   const router = useRouter();
@@ -28,17 +27,19 @@ function HomePage() {
   //     : router.push("/main-employee-dashboard");
   // }
 
-  const [fromDate, setFromDate] = useState(dayjs().date(1).subtract(4, 'month'));
-  const[toDate, setToDate] = useState(dayjs().date(1));
+  const [fromDate, setFromDate] = useState(
+    dayjs().date(1).subtract(4, "month")
+  );
+  const [toDate, setToDate] = useState(dayjs().date(1));
 
   const handleFromDateOnChange = (newDate) => {
     setFromDate(dayjs(newDate));
-  }
+  };
 
   const handleToDateOnChange = (newDate) => {
     setToDate(dayjs(newDate));
-  }
-  
+  };
+
   const [verticalBarGraphData, setVerticalBarGraphData] = useState({
     labels: [],
     datasets: [],
@@ -60,18 +61,18 @@ function HomePage() {
         },
       ],
     });
-  }
-  
+  };
+
   const getVerticalBarGraphData = () => {
     rest.getPost(
       `${INITIAL_URL}/expense/vertical-bar-graph`,
       {
-        toDate: toDate.add(1, 'month').date(0),
-        fromDate: fromDate
+        toDate: toDate.add(1, "month").date(0),
+        fromDate: fromDate,
       },
       getVerticalBarGraphDataOnSuccess
     );
-  }
+  };
 
   const [donutGraphData, setDonutGraphData] = useState({
     labels: [],
@@ -89,23 +90,28 @@ function HomePage() {
         },
       ],
     });
-  }
+  };
 
   const getDonutGraphData = () => {
     rest.getPost(
       `${INITIAL_URL}/expense/donut-graph`,
       {
-        toDate: toDate.add(1, 'month').date(0),
-        fromDate: fromDate
+        toDate: toDate.add(1, "month").date(0),
+        fromDate: fromDate,
       },
       getDonutGraphDataOnSuccess
     );
-  }
+  };
 
-  const [lineGraphData, setLineGraphData] = useState({
+  const [lineOrdersGraphData, setLineOrdersData] = useState({
     labels: [],
-    datasets: []
-  })
+    datasets: [],
+  });
+
+  const [lineIncomeGraphData, setLineGraphData] = useState({
+    labels: [],
+    datasets: [],
+  });
 
   const getLineGraphDataOnSuccess = (data) => {
     setLineGraphData({
@@ -116,6 +122,12 @@ function HomePage() {
           data: data.map((item) => item.hourlyIncome),
           backgroundColor: ["#225560"],
         },
+      ],
+    });
+
+    setLineOrdersData({
+      labels: data.map((item) => item.incomeHour),
+      datasets: [
         {
           label: "Orders For This Hour",
           data: data.map((item) => item.hourlyOrders),
@@ -123,86 +135,113 @@ function HomePage() {
         },
       ],
     });
-  }
+  };
 
   const getLineGraphData = () => {
     rest.getPost(
       `${INITIAL_URL}/expense/line-graph`,
       {
-        toDate: toDate.add(1, 'month').date(0),
-        fromDate: fromDate
+        toDate: toDate.add(1, "month").date(0),
+        fromDate: fromDate,
       },
       getLineGraphDataOnSuccess
     );
-  }
+  };
 
   const [tablesBarGraphData, setTablesBarGraphData] = useState({
     labels: [],
-    datasets: []
-  })
+    datasets: [],
+  });
 
   const getTablesBarGraphDataOnSuccess = (data) => {
     setTablesBarGraphData({
       labels: data.map((item) => item.tableNumber),
       datasets: [
         {
-          label: 'Orders Served', 
+          label: "Orders Served",
           data: data.map((item) => item.totalCount),
           backgroundColor: ["#35b000"],
-        }
-      ]
-    })
-  }
+        },
+      ],
+    });
+  };
 
   const getTablesBarGraphData = () => {
     rest.getPost(
       `${INITIAL_URL}/expense/table-graph`,
       {
-        toDate: toDate.add(1, 'month').date(0),
-        fromDate: fromDate
+        toDate: toDate.add(1, "month").date(0),
+        fromDate: fromDate,
       },
       getTablesBarGraphDataOnSuccess
-    )
-  }
-  
+    );
+  };
+
+  const [servingTypeGraphData, setServingTypeGraphData] = useState({
+    labels: [],
+    datasets: [],
+  });
+
+  const getServingTypeGraphDataOnSuccess = (data) => {
+    console.log(data);
+    setServingTypeGraphData({
+      labels: data.map((item) => item.servingType),
+      datasets: [
+        {
+          label: "Orders Served",
+          data: data.map((item) => item.servingTypeQuantity),
+          backgroundColor: ["#35b000"],
+        },
+      ],
+    });
+  };
+
+  const getServingTypeGraphData = () => {
+    rest.getPost(
+      `${INITIAL_URL}/expense/serving-type-graph`,
+      {
+        toDate: toDate.add(1, "month").date(0),
+        fromDate: fromDate,
+      },
+      getServingTypeGraphDataOnSuccess
+    );
+  };
+
   const [ordersServedData, setOrdersServedData] = useState([]);
 
   const getOrdersServedOnSuccess = (data) => {
     setOrdersServedData(data);
-  }
+  };
 
   const getOrdersServed = () => {
     rest.getPost(
-      `${INITIAL_URL}/expense/orders-served`, 
+      `${INITIAL_URL}/expense/orders-served`,
       {
-        toDate: toDate.add(1, 'month').date(0),
-        fromDate: fromDate
+        toDate: toDate.add(1, "month").date(0),
+        fromDate: fromDate,
       },
       getOrdersServedOnSuccess
-    )
-  }
+    );
+  };
 
-  useEffect(() =>{
+  useEffect(() => {
     // console.log(fromDate);
     getVerticalBarGraphData();
     getDonutGraphData();
     getLineGraphData();
     getTablesBarGraphData();
     getOrdersServed();
-  }, [toDate, fromDate])
-
-  useEffect(() => {
-    getOrdersServed();
-  }, [])
+    getServingTypeGraphData();
+  }, [toDate, fromDate]);
 
   const current = new Date();
-  const currentDate = `${current.getMonth()+1}/${current.getFullYear()}`;
+  const currentDate = `${current.getMonth() + 1}/${current.getFullYear()}`;
 
-  const [type, setType] = useState('charts');
+  const [type, setType] = useState("charts");
 
   const handleToggleChange = (e) => {
     setType(e.target.value);
-  }
+  };
 
   return (
     <div>
@@ -250,24 +289,26 @@ function HomePage() {
                 </ToggleButtonGroup>
               </div>
             </section>
-            { type === 'charts' ? (
+            {type === "charts" ? (
               <div className={styles["home-page__charts"]}>
                 <IncomeExpenseChart
                   verticalBarGraphData={verticalBarGraphData}
                   donutGraphData={donutGraphData}
-                  lineGraphData={lineGraphData}
+                  lineOrdersGraphData={lineOrdersGraphData}
+                  lineIncomeGraphData={lineIncomeGraphData}
                   tablesBarGraphData={tablesBarGraphData}
+                  servingTypeGraphData={servingTypeGraphData}
                 />
               </div>
-            ) : ( 
+            ) : (
               <div className={styles["home-page__orders-served-table"]}>
-                <OrdersServedTable 
+                <OrdersServedTable
                   ordersServed={ordersServedData}
                   fromDate={fromDate}
                   toDate={toDate}
                 />
               </div>
-            ) }
+            )}
           </div>
         </div>
       </div>
@@ -275,4 +316,4 @@ function HomePage() {
   );
 }
 
-export default HomePage
+export default HomePage;
