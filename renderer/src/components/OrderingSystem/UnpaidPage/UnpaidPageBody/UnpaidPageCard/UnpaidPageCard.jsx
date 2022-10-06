@@ -134,6 +134,16 @@ const UnpaidPageCard = ({
 											<h1 className={styles["Percentage"]}> % </h1>
 										</div>
 									</div>
+
+									<div className={styles["Button-Section"]}>
+										<button
+											className={styles["Confirm_Button"]}
+											onClick={() => voidButtonOnClick(ordernum)}
+										>
+											{" "}
+											Confirm{" "}
+										</button>
+									</div>
 								</div>
 								{/* <div className={styles["Button-Section"]}>
      

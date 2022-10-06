@@ -289,13 +289,8 @@ const MenuOrderTab = ({
 								/>
 							</div>
 
-							<div
-								className={[
-									styles["Input-Section--Discount"],
-									pickUpFormat && styles["none-modal"],
-								].join("")}
-							>
-								<h1> Input Discount Value : </h1>
+							<div className={styles["Input-Section--Discount"]}>
+								<p> Input Discount Value : </p>
 								<input
 									// value={discountPayment}
 									// onChange={discountPaymentOnChange}
