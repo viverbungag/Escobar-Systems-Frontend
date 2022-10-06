@@ -53,20 +53,6 @@ export default function IncomeTable() {
     setRows(incomeData);
   };
 
-  // function compare(a, b) {
-  //   // Use toUpperCase() to ignore character casing
-  //   const incomeDateA = a.incomeDate.toUpperCase();
-  //   const incomeDateB = b.incomeDate.toUpperCase();
-  
-  //   let comparison = 0;
-  //   if (incomeDateA > incomeDateB) {
-  //     comparison = 1;
-  //   } else if (incomeDateA < incomeDateB) {
-  //     comparison = -1;
-  //   }
-  //   return comparison;
-  // }
-
   useEffect(() => {
     getIncomeData();
   }, []);

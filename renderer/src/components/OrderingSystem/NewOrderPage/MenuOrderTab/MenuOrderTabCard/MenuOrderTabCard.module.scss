@@ -1,97 +1,87 @@
-
 .MenuOrderTabCard {
-    display: flex;
-    flex-direction: column;
-    width: 320px;
-    height: 100px;
-    background: #FFFFFF;
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
-    user-select: none;
-
+	display: flex;
+	flex-direction: column;
+	width: 320px;
+	height: fit-content;
+	background: #ffffff;
+	box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
+	user-select: none;
 }
-.Txt-Section{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 0px;
-    gap: 5px;
-
+.Txt-Section {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding: 0px;
+	gap: 5px;
 }
-.Title-Section{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 70%;
+.Title-Section {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	width: 70%;
 
-    h2{ 
-        padding-left: 15px;
-        font-family: 'SF Pro Text';
-        font-style: normal;
-        font-weight: 500;
-        font-size: 16px;
-        line-height: 20px;
-        flex-basis: auto;
-        flex-wrap: wrap;
-    }
+	h2 {
+		padding-left: 15px;
+		font-family: "SF Pro Text";
+		font-style: normal;
+		font-weight: 500;
+		font-size: 16px;
+		line-height: 20px;
+		flex-basis: auto;
+		flex-wrap: wrap;
+	}
 
-    .Counter-Section{
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-end;
-        align-items: center;
-        padding: 10px;
-        gap: 5px;
-    }
-    button{
-        background-color: white;
-        border: 1px solid white;
-    }
-    button:active{
-        transform: translateY(-3px);
-    }
-
+	.Counter-Section {
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-end;
+		align-items: center;
+		padding: 10px;
+		gap: 5px;
+	}
+	button {
+		background-color: white;
+		border: 1px solid white;
+	}
+	button:active {
+		transform: translateY(-3px);
+	}
 }
-
-
 
 .Price-Section {
-    display: flex;
-    align-items: flex-end;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 0px;
-    width: 30%;
+	display: flex;
+	align-items: flex-end;
+	flex-direction: column;
+	justify-content: space-between;
+	padding: 0px;
+	width: 30%;
 
+	p {
+		padding-right: 15px;
+		font-family: "SF Pro Text";
+		font-style: normal;
+		font-weight: 700;
+		font-size: 14px;
+		line-height: 17px;
+	}
 
-    p{
-        padding-right: 15px;
-        font-family: 'SF Pro Text';
-        font-style: normal;
-        font-weight: 700;
-        font-size: 14px;
-        line-height: 17px;
-    }
+	.Remove-Section {
+		padding-right: 15px;
 
-    .Remove-Section{
-        padding-right: 15px;
+		display: flex;
+		align-items: flex-end;
+		padding-bottom: 10px;
 
-        display: flex;
-        align-items: flex-end;
-        padding-bottom: 10px;
-
-
-        button{
-            display: flex;
-            background-color: white;
-            border: 1px solid white;
-            border-radius: 50%;
-        }
-        button:active{
-            display: flex;
-            transform: scale(1);    
-            background-color: red;
-
-
-        }
-    }
+		button {
+			display: flex;
+			background-color: white;
+			border: 1px solid white;
+			border-radius: 50%;
+		}
+		button:active {
+			display: flex;
+			transform: scale(1);
+			background-color: red;
+		}
+	}
 }

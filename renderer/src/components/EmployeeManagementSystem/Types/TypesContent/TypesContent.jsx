@@ -35,6 +35,11 @@ export default function TypesContent() {
         handleCloseAddModal();
         reload();
     }
+    // //activate
+    // const activateSuccessAction = () => {
+    //     getActiveTypes();
+    //     getInactiveTypes();
+    //   }
     //reload
     const reload = () => {
         getActiveTypes();

@@ -53,7 +53,7 @@ function IncomeExpenseChart({ verticalBarGraphData, donutGraphData, lineGraphDat
           </div>
         </div>
         <div className={styles.box}>
-          <div className={styles.box_header}>Income Per Hour</div>
+          <div className={styles.box_header}>Income and Number of Orders Per Hour</div>
           <div
             className={[
               styles["box_content"],

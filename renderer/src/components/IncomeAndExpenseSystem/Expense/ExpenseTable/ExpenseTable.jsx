@@ -24,6 +24,7 @@ export default function ExpenseTable({ expenseData }) {
     { field: 'transactionDate', headerName: 'Transaction Date', flex: 2, align: 'left', valueGetter: (params)=> params.row.transactionDate.split(["T"])[0]},
     { field: 'supplyName', headerName: 'Supply Name', flex:2, align: 'left'},
     { field: 'expenseCost', headerName: 'Cost', flex: 1, align: 'left'},
+    { field: 'transactionSupplyQuantity', headerName: 'Quantity', flex: 1, align: 'left'},
     { field: 'icon', headerName: '', flex: 1, align: 'center', renderCell: () => (
       <Tooltip title='View More Information'>
         <InfoIcon className={styles.info_icon} onClick={handleOpenMoreInfoModal} />

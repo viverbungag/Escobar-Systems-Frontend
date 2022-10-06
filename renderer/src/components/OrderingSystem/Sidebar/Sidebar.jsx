@@ -52,7 +52,7 @@ const Sidebar= ({page}) => {
 
         <Link href="/OrderingSystem/payment">
         <div className={styles['wrapper']}>
-        <SidebarCategory isActive = {page==="paymentpage"} Title = 'Payout'/>
+        <SidebarCategory isActive = {page==="paymentpage"} Title = 'Paid'/>
         </div>
         </Link>
 

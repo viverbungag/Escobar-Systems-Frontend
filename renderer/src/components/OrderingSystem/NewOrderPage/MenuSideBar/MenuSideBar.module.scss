@@ -7,8 +7,13 @@
     top: 0;
     left: 0;
     background-color: #fafafa;
-    overflow: auto;
+    overflow-y: scroll;
     filter: drop-shadow(4px 0px 20px rgba(0, 0, 0, 0.02));
+    &__header-container {
+        position: sticky;
+        top: 0;
+        background-color: #fafafa;
+    }
 }
 
 

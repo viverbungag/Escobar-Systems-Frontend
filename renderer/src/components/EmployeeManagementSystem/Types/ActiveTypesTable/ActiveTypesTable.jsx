@@ -121,7 +121,7 @@ export default function ActiveTypesTable({ reload, activeTypes }) {
 
   return (
     <div className={styles.container}>
-      {console.log(activeTypes)}
+      {/* {console.log(activeTypes)} */}
     <div className={styles.header}>
       <div className={styles.left}>
         Active Types
