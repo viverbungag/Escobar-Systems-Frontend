@@ -8,6 +8,7 @@ import MediumButton from '../../Shared/Buttons/MediumButton/MediumButton';
 import InactivateAccountModal from '../InactivateAccountModal/InactivateAccountModal';
 import EditAccount from '../EditAccount/EditAccount';
 import { printPdf } from '../../../../../print/printFunctions';
+import { toast } from "react-toastify";
 
 export default function ActiveAccountsTable({ reload, activeAccounts, activeEmployees }) {
   //for pdf
@@ -32,7 +33,7 @@ export default function ActiveAccountsTable({ reload, activeAccounts, activeEmpl
   //  search
   const [searched, setSearched] = useState("");
   const requestSearch = (searchValue) => {
-    const filteredRows = inactiveAccounts.filter((row) => {
+    const filteredRows = activeAccounts.filter((row) => {
       return row.username.toLowerCase().includes(searchValue.toLowerCase()) || row.employeeTypeName.toLowerCase().includes(searchValue.toLowerCase());
       });
       setRows(filteredRows);
@@ -40,7 +41,7 @@ export default function ActiveAccountsTable({ reload, activeAccounts, activeEmpl
     };
   const cancelSearch = () => {
     setSearched("");
-    setRows(inactiveAccounts);
+    setRows(activeAccounts);
   }
   //selected rows
   const [selected, setSelected] = useState("");
@@ -67,6 +68,7 @@ export default function ActiveAccountsTable({ reload, activeAccounts, activeEmpl
   };
   const handleCloseMoreModal = () => { setopenMoreModal(false) };
   const editSuccessAction = () => {
+    toast.success("Successfully edited employee account");
     handleCloseMoreModal();
     reload();
     setRows(activeCategories);

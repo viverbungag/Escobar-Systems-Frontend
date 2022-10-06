@@ -240,7 +240,6 @@ function HomePage() {
               </div>
               <div className={styles["home-page__toggle-section"]}>
                 <ToggleButtonGroup
-                  className={styles.toggle_group}
                   color="primary"
                   value={type}
                   exclusive

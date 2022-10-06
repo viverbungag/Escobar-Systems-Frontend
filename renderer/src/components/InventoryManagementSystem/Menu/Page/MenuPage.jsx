@@ -140,14 +140,14 @@ const MenuPage = () => {
   };
   const handleCloseEditModal = () => setOpenEditModal(false);
 
-  // const [fileNameAdd, setFileNameAdd] = useState("Drop files here or click to upload");
-  // const [imageAdd, setImageAdd] = useState(null);
-  // const handleImageFileAddOnChange = (event) => {
-  //   // const image = file[0];
-  //   // console.log(event.target.files[0]);
-  //   // setFileNameAdd(image.name)
-  //   setImageAdd(event.target.files[0]);
-  // }
+  const [fileNameAdd, setFileNameAdd] = useState("Drop files here or click to upload");
+  const [imageAdd, setImageAdd] = useState(null);
+  const handleImageFileAddOnChange = (event) => {
+    // const image = file[0];
+    // console.log(event.target.files[0]);
+    // setFileNameAdd(image.name)
+    setImageAdd(event.target.files[0]);
+  }
 
   const resetToDefault = () => {
     setActiveIsSelectAllChecked(false);
@@ -777,7 +777,6 @@ const MenuPage = () => {
         <Navigation page="menu" />
         <section className={styles["menu-page__main-section"]}>
           <section className={styles["menu-page__main-top-section"]}>
-          <progress value={progresspercent} max="100" style={{ width: '100%' }}></progress>
             <InactivateButton
               label="Inactivate"
               onClick={handleInactivateClick}
