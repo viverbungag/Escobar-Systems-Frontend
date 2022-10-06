@@ -42,15 +42,15 @@ const MenuOrderTab = ({
 	const [open, setOpen] = React.useState(false);
 	const [customerPayment, setCustomerPayment] = useState(0);
 	const [discountPayment, setDiscountPayment] = useState(0);
+	const [additionalPayment, setAdditionalPayment] = useState(0);
 	const SubTotal = total;
 	const discountedPrice = total * (discountPayment / 100);
 	const totalPrice = total - total * (discountPayment / 100);
 	const change = customerPayment - (total - discountPayment);
 	const { employeeName } = useUser();
 
-	const [pickUpFormat, setPickUpFormat] = useState(false);
-	const handleTakeOut = () => setPickUpFormat(true);
-	const handleDineIn = () => setPickUpFormat(false);
+	const [pickUpFormat, setPickUpFormat] = useState("DineIn");
+	const handlePickUpFormat = (event) => setPickUpFormat(event.target.value);
 
 	const handleClose = () => {
 		setOpen(false);
@@ -73,6 +73,9 @@ const MenuOrderTab = ({
 	};
 	const discountPaymentOnChange = (e) => {
 		setDiscountPayment(e.target.value);
+	};
+	const additionalPaymentOnChange = (e) => {
+		setAdditionalPayment(e.target.value);
 	};
 
 	const arr = [];
@@ -217,20 +220,20 @@ const MenuOrderTab = ({
 								</FormLabel>
 								<RadioGroup
 									aria-labelledby="demo-radio-buttons-group-label"
-									defaultValue="TakeOut"
+									defaultValue={pickUpFormat}
 									name="radio-buttons-group"
+									onChange={handlePickUpFormat}
 								>
 									<FormControlLabel
 										sx={{ color: "#003049;" }}
 										value="TakeOut"
-										onClick={handleTakeOut}
 										control={
 											<Radio
 												sx={{
 													color: "#003049;",
 													"&.Mui-checked": { color: "#003049;" },
 												}}
-												onClick={handleTakeOut}
+												value="TakeOut"
 											/>
 										}
 										label="Take-Out"
@@ -238,14 +241,13 @@ const MenuOrderTab = ({
 									<FormControlLabel
 										sx={{ color: "#003049;" }}
 										value="DineIn"
-										onClick={handleDineIn}
 										control={
 											<Radio
 												sx={{
 													color: "#003049;",
 													"&.Mui-checked": { color: "#003049;" },
 												}}
-												onClick={handleDineIn}
+												value="DineIn"
 											/>
 										}
 										label="Dine-In"
@@ -253,57 +255,81 @@ const MenuOrderTab = ({
 									{/* <FormControlLabel sx = {{ color: "#003049;"}} value="Delivery" control={<Radio sx = {{ color: "#003049;", '&.Mui-checked': {color: "#003049;",},}}/>}  label="Other" /> */}
 								</RadioGroup>
 							</FormControl>
-
-							<FormControl className={styles["TableNumber"]}>
-								<InputLabel id="demo-simple-select-label">
-									{" "}
-									Select Table Number{" "}
-								</InputLabel>
-								<Select
-									labelId="demo-simple-select-label"
-									id="demo-simple-select"
-									value={selectedOrder}
-									label="Select Order Menu"
-									onChange={handleSelectedOrderOnChange}
-								>
-									{allOrders.map((item) => {
-										return (
-											<MenuItem key={item.orderId} value={item.orderId}>
-												{`Order #${item.orderId}`}{" "}
-											</MenuItem>
-										);
-									})}
-								</Select>
-							</FormControl>
+							{pickUpFormat === "DineIn" && (
+								<FormControl className={styles["TableNumber"]}>
+									<InputLabel id="demo-simple-select-label">
+										{" "}
+										Select Table Number{" "}
+									</InputLabel>
+									<Select
+										labelId="demo-simple-select-label"
+										id="demo-simple-select"
+										value={selectedOrder}
+										label="Select Order Menu"
+										onChange={handleSelectedOrderOnChange}
+									>
+										{allOrders.map((item) => {
+											return (
+												<MenuItem key={item.orderId} value={item.orderId}>
+													{`Order #${item.orderId}`}{" "}
+												</MenuItem>
+											);
+										})}
+									</Select>
+								</FormControl>
+							)}
 						</div>
-						<div className={styles["Input-Section"]}>
-							<div className={styles["Input-Section--Payment"]}>
-								<h1> Please input the Customer Payment : </h1>
-								<input
-									// value={customerPayment}
-									// onChange={customerPaymentOnChange}
-									type="text"
-									id="first"
-									className={styles["Input-Forms--Payment"]}
-									placeholder="Input the money of the customer"
-								/>
-							</div>
+						{pickUpFormat === "TakeOut" && (
+							<div className={styles["Input-Section"]}>
+								<div className={styles["Input-Section--Payment"]}>
+									<h1> Input the Customer Payment : </h1>
+									<input
+										value={customerPayment}
+										onChange={customerPaymentOnChange}
+										type="text"
+										id="first"
+										className={styles["Input-Forms--Payment"]}
+										placeholder="Input the money of the customer"
+									/>
+								</div>
 
-							<div className={styles["Input-Section--Discount"]}>
-								<p> Input Discount Value : </p>
-								<input
-									// value={discountPayment}
-									// onChange={discountPaymentOnChange}
-									type="text"
-									id="first"
-									className={styles["Input-Forms--Discount"]}
-									placeholder="Input Percentage of the Discount"
-								/>
-								<h1 className={styles["Percentage"]}> % </h1>
+								<div className={styles["Input-Section--Discount"]}>
+									<p> Input Discount Value : </p>
+									<input
+										value={discountPayment}
+										onChange={discountPaymentOnChange}
+										type="text"
+										id="first"
+										className={styles["Input-Forms--Discount"]}
+										placeholder="Input Percentage of the Discount"
+									/>
+									<h1 className={styles["Percentage"]}> % </h1>
+								</div>
+
+								<div className={styles["Input-Section--Payment"]}>
+									<h1> Input the Additional Payment : </h1>
+									<input
+										value={additionalPayment}
+										onChange={additionalPaymentOnChange}
+										type="text"
+										id="first"
+										className={styles["Input-Forms--Payment"]}
+										placeholder="Input the money of the customer"
+									/>
+								</div>
 							</div>
-						</div>
+						)}
+
 						<div className={styles["Button-Section"]}>
-							<Button className={styles["Confirm_Button"]}> Hello </Button>
+							<Button
+								onClick={() => {
+									payButtonOnClick(customerPayment, discountPayment);
+								}}
+								className={styles["Confirm_Button"]}
+							>
+								{" "}
+								Confirm{" "}
+							</Button>
 						</div>
 						{/* <ChildModal
                 className={styles["Confirm_Button"]}

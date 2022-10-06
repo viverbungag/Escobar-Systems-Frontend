@@ -5,6 +5,7 @@ import shortid from "shortid";
 import { Icon } from "@iconify/react";
 import { printReceipt } from "../../../../../print/printFunctions";
 import { useUser } from "../../../contexts/UserContext";
+import chevronRight from "@iconify/icons-akar-icons/chevron-right";
 
 const UnpaidOrderTab = ({
 	orderTabItems,
@@ -71,7 +72,7 @@ const UnpaidOrderTab = ({
 		>
 			<div className={styles["orderno-section"]}>
 				<h1> Order # {orderCardSelected} </h1>
-				<Icon
+				{/* <Icon
 					icon="bytesize:print"
 					height="25"
 					width="25"
@@ -90,7 +91,7 @@ const UnpaidOrderTab = ({
 							)
 						// () => console.log(pdfRows)
 					}
-				/>
+				/> */}
 			</div>
 
 			<div className={styles["title-section"]}>
@@ -156,6 +157,15 @@ const UnpaidOrderTab = ({
 					{" "}
 					{(subTotal - subTotal * (orderDiscount / 100)).toFixed(2)}
 				</h2>
+			</div>
+
+			<div className={styles["total-section"]}>
+				<div className={styles["total-section--wrapper"]}>
+					<div className={styles["pay-section"]}>
+						<h2> Pay </h2>
+						<Icon icon={chevronRight} height="16" width="16" color="white" />
+					</div>
+				</div>
 			</div>
 
 			{/* <div
