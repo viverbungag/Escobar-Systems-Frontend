@@ -133,6 +133,18 @@ const UnpaidPageCard = ({
 											/>
 											<h1 className={styles["Percentage"]}> % </h1>
 										</div>
+
+										<div className={styles["Input-Section--Payment"]}>
+											<h1> Input Additional Payment : </h1>
+											<input
+												// value={customerPayment}
+												// onChange={customerPaymentOnChange}
+												type="text"
+												id="first"
+												className={styles["Input-Forms--Payment"]}
+												placeholder="Input the money of the customer"
+											/>
+										</div>
 									</div>
 
 									<div className={styles["Button-Section"]}>
