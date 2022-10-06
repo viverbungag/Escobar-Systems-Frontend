@@ -14,6 +14,12 @@ import Pagination from "src/model/Pagination";
 import Rest from "../../../../rest/Rest.tsx";
 import Menu from "../../../../model/Menu";
 import { useRouter } from "next/router";
+import Image from "next/image";
+import {storage}  from "../../../../firebase/firebase.js";
+import firebase from 'firebase/app';
+import { ref, uploadBytes, getDownloadURL, uploadBytesResumable, listAll, getStorage } from "firebase/storage";
+
+// const storage = getStorage();
 
 const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
@@ -133,6 +139,15 @@ const MenuPage = () => {
     setOpenEditModal(true);
   };
   const handleCloseEditModal = () => setOpenEditModal(false);
+
+  // const [fileNameAdd, setFileNameAdd] = useState("Drop files here or click to upload");
+  // const [imageAdd, setImageAdd] = useState(null);
+  // const handleImageFileAddOnChange = (event) => {
+  //   // const image = file[0];
+  //   // console.log(event.target.files[0]);
+  //   // setFileNameAdd(image.name)
+  //   setImageAdd(event.target.files[0]);
+  // }
 
   const resetToDefault = () => {
     setActiveIsSelectAllChecked(false);
@@ -284,7 +299,49 @@ const MenuPage = () => {
 
   const handleAddModalButtonClicked = () => {
     addMenu();
+    // addImageToFirebase();
   };
+
+  // const [progresspercent, setProgresspercent] = useState(0);
+  // console.log(progresspercent);
+//   const addImageToFirebase = () => {
+//     console.log(addedMenu.menuName);
+
+//     if (imageAdd == null) return;
+//     console.log(imageAdd.name);
+//     const imageRef = ref(storage, imageAdd.name);
+//     // const uploadTask = uploadBytes(imageRef, imageAdd);
+
+//     const task = uploadBytesResumable(imageRef, imageAdd)
+
+//     task.on('state_change',
+
+//     function progress(snapshot) {
+//       setProgresspercent((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
+//     },
+
+//     function error(err) {
+//         alert(error)
+//     },
+
+//     function complete() {
+//         alert('Uploaded to firebase storage successfully!')
+//     }
+// )
+//   }
+
+  // const [imageUrls, setImageUrls] = useState([]);
+  // const imagesListRef = ref(storage, "images/");
+  // useEffect(() => {
+  //   listAll(imagesListRef).then((response) => {
+  //     response.items.forEach((item) => {
+  //       getDownloadURL(item).then((url) => {
+  //         setImageUrls((prev) => [...prev, url]);
+  //       });
+  //     });
+  //   });
+  // }, []);
+  // console.log("imageUrls", imageUrls);
 
   const handleActivePageSizeChange = (event) => {
     setActivePagination(
@@ -665,6 +722,8 @@ const MenuPage = () => {
         onClickAddButton={handleAddModalButtonClicked}
         openAddModal={openAddModal}
         handleCloseAddModal={handleCloseAddModal}
+        fileNameAdd={fileNameAdd}
+        handleImageFileAddOnChange={handleImageFileAddOnChange}
       />
       <InactiveMenuModal
         headers={headers}
@@ -718,6 +777,7 @@ const MenuPage = () => {
         <Navigation page="menu" />
         <section className={styles["menu-page__main-section"]}>
           <section className={styles["menu-page__main-top-section"]}>
+          <progress value={progresspercent} max="100" style={{ width: '100%' }}></progress>
             <InactivateButton
               label="Inactivate"
               onClick={handleInactivateClick}

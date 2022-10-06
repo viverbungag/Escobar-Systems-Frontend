@@ -55,8 +55,6 @@ const NewOrderPage = () => {
 
     const currentSelectedOrder = allOrders.find((order)=> order.orderId === orderId);
     setOrderDiscount(currentSelectedOrder.discount);
-
-
     setSelectedOrder(orderId);
   };
 
@@ -133,9 +131,6 @@ const NewOrderPage = () => {
       // }
       return;
     }
-    // console.log("number of servings left: " + numberOfServingsLeft);
-    // console.log("quantity: " + quantity);
-    // console.log("quantity: " + quantity);
     
   
     const newMenuOnCategory = menuOnCategory.orderMenu.map((currentMenu)=> {
@@ -222,7 +217,10 @@ const NewOrderPage = () => {
       customerFoodOrders,
       customerPayment,
       discountPayment,
-      total
+      total,
+      "UNPAID",
+      "DINE_IN",
+      0
     );
 
     const handleOrderSuccess = () => {

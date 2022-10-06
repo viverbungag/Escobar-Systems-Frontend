@@ -10,6 +10,7 @@ import IngredientsTable from "../IngredientsTable/IngredientsTable";
 import EditIngredientsButton from "../../Shared/Buttons/EditIngredientsButton/EditIngredientsButton";
 import EditIngredientsModal from "../EditIngredientsModal/EditIngredientsModal";
 import MenuIngredients from "src/model/MenuIngredients";
+import InputFile from '../../Shared/InputFile/InputFile';
 
 const AddMenuModal = ({
   activeMenus,
@@ -29,6 +30,8 @@ const AddMenuModal = ({
   onClickAddButton,
   openAddModal,
   handleCloseAddModal,
+  fileNameAdd,
+  handleImageFileAddOnChange
 }) => {
   const [openIngredientModal, setOpenIngredientModal] = useState(false);
   const handleOpenIngredientModal = () => setOpenIngredientModal(true);
@@ -128,6 +131,10 @@ const AddMenuModal = ({
                     }
                     labelPlacement="top"
                   />
+                  {/* <InputFile
+                    fileNameAdd={fileNameAdd}
+                    handleImageFileAddOnChange={handleImageFileAddOnChange}
+                  /> */}
                 </div>
                 <div className={styles["add-menu-modal__save-button"]}>
                   <ModalSaveButton
