@@ -17,10 +17,6 @@ const UnpaidPageCard = ({
 	const handleVoidOpen = () => setVoidOpen(true);
 	const handleVoidClose = () => setVoidOpen(false);
 
-	const [payOpen, setPayOpen] = React.useState(false);
-	const handlePayOpen = () => setPayOpen(true);
-	const handlePayClose = () => setPayOpen(false);
-
 	return (
 		<div
 			className={[
@@ -42,10 +38,10 @@ const UnpaidPageCard = ({
 						Order Time: {orderDate.split("T").join(" – ")}{" "}
 					</h4>
 					<div className={styles["Price-Section"]}>
-						<button onClick={handlePayOpen} className={styles["paybutton"]}>
+						{/* <button onClick={handlePayOpen} className={styles["paybutton"]}>
 							{" "}
 							Pay{" "}
-						</button>
+						</button> */}
 						<button onClick={handleVoidOpen} className={styles["voidbutton"]}>
 							{" "}
 							Void{" "}
@@ -98,70 +94,6 @@ const UnpaidPageCard = ({
 					</div>
 
 					<div>
-						<Modal open={payOpen} onClose={handlePayClose}>
-							<Box className={styles["Paystyle"]}>
-								<Button
-									onClick={handlePayClose}
-									className={styles["Close_Button"]}
-								>
-									{" "}
-									X{" "}
-								</Button>
-								<div className={styles["Wrapper"]}>
-									<div className={styles["Text-Section"]}>
-										<div className={styles["Input-Section--Payment"]}>
-											<h1> Please input the Customer Payment : </h1>
-											<input
-												// value={customerPayment}
-												// onChange={customerPaymentOnChange}
-												type="text"
-												id="first"
-												className={styles["Input-Forms--Payment"]}
-												placeholder="Input the money of the customer"
-											/>
-										</div>
-
-										<div className={styles["Input-Section--Discount"]}>
-											<h1> Input Discount Value : </h1>
-											<input
-												// value={discountPayment}
-												// onChange={discountPaymentOnChange}
-												type="text"
-												id="first"
-												className={styles["Input-Forms--Discount"]}
-												placeholder="Input Percentage of the Discount"
-											/>
-											<h1 className={styles["Percentage"]}> % </h1>
-										</div>
-
-										<div className={styles["Input-Section--Payment"]}>
-											<h1> Input Additional Payment : </h1>
-											<input
-												// value={customerPayment}
-												// onChange={customerPaymentOnChange}
-												type="text"
-												id="first"
-												className={styles["Input-Forms--Payment"]}
-												placeholder="Input the money of the customer"
-											/>
-										</div>
-									</div>
-
-									<div className={styles["Button-Section"]}>
-										<button
-											className={styles["Confirm_Button"]}
-											onClick={() => voidButtonOnClick(ordernum)}
-										>
-											{" "}
-											Confirm{" "}
-										</button>
-									</div>
-								</div>
-								{/* <div className={styles["Button-Section"]}>
-     
-                          </div> */}
-							</Box>
-						</Modal>
 					</div>
 					{/* <Modal open={open} onClose={handleClose}>
         <Box className={styles["style"]}>

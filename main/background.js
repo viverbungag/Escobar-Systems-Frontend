@@ -3,8 +3,8 @@ import serve from "electron-serve";
 import { Logger } from "sass";
 import { createWindow } from "./helpers";
 
-const log = require('electron-log');
-var kill  = require('tree-kill');
+const log = require("electron-log");
+var kill = require("tree-kill");
 const findPidFromPort = require("find-pid-from-port");
 
 const isProd = process.env.NODE_ENV === "production";
@@ -26,29 +26,29 @@ if (isProd) {
   });
 
   if (isProd) {
-
     log.info(`Starting the spring boot app in port ${BACKEND_PORT}`);
     var pid;
-    var jarPath = 'C:\\JarPaths\\escobar-systems\\libs\\escobar-systems-0.0.1-SNAPSHOT.jar';
-    var child = require('child_process').spawn(
-      'java', ['-jar', jarPath, `--server.port=${BACKEND_PORT}`]
-    );
+    var jarPath =
+      "C:\\JarPaths\\escobar-systems\\libs\\escobar-systems-0.0.1-SNAPSHOT.jar";
+    var child = require("child_process").spawn("java", [
+      "-jar",
+      jarPath,
+      `--server.port=${BACKEND_PORT}`,
+    ]);
 
-    while(true){
-      try{
+    while (true) {
+      try {
         pid = await findPidFromPort(BACKEND_PORT);
         break;
-      } catch(error){
-      }
+      } catch (error) {}
     }
 
     await mainWindow.loadURL("app://./home.html");
 
-    mainWindow.on('closed', function () {
+    mainWindow.on("closed", function () {
       log.info("Closing this PID: ", pid.tcp[0]);
       kill(pid.tcp[0]);
     });
-
   } else {
     // log.info(`Starting the spring boot app in port ${BACKEND_PORT}`);
     // var pid;
@@ -66,7 +66,6 @@ if (isProd) {
     //   } catch(error){
     //   }
     // }
-
 
     const port = process.argv[2];
     await mainWindow.loadURL(`http://localhost:${port}/home`);
