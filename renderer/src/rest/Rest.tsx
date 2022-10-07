@@ -28,6 +28,25 @@ class Rest {
     })
 }
 
+  post(
+    url: string,
+    body: Object,
+    handleSuccessAction: Function,
+    successMessage: string
+  ) {
+    axios
+      .post(url, body)
+      .then(function (response) {
+        if (response.status === 200) {
+          handleSuccessAction();
+          toast.success(successMessage);
+        }
+      })
+      .catch(function (error) {
+        toast.error(error?.response?.data?.message);
+      });
+  }
+
   getWithPagination(
     url: string,
     body: Object,

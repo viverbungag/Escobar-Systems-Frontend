@@ -1,0 +1,40 @@
+
+.system-configurations-page{
+    height: 100vh;
+    display: flex;
+    margin-top: 2.5rem;
+    flex-direction: column;
+    gap: 5rem;
+
+    &--header{
+        display: flex;
+        justify-content: center;
+        height: fit-content;
+        padding: 1rem;
+        font-size: 1.5rem;
+    }
+
+
+    &--content-container{
+        display: flex;
+        justify-content: center;
+        // align-items: center;
+        height: 100%;
+    }   
+
+    &--content{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+        padding: 2rem;
+        border: 1px solid #3b3b3b;
+        border-radius: 10px;
+        height: fit-content;
+        min-width: 30rem;
+    }
+
+    &--input-field{
+        width: 25rem;
+    }
+}

@@ -10,6 +10,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import Link from 'next/link';
 import { useUser } from '../../contexts/UserContext';
 import WindowControlBar from '../../Shared/WindowControlBar/WindowControlBar';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 
 const MainAdminDashboardPage = () => {
@@ -31,6 +32,10 @@ const MainAdminDashboardPage = () => {
 
   const handleIncomeAndExpenseSystemButtonOnClick = () => {
     router.push("IncomeAndExpenseSystem/Dashboard/Dashboard");
+  }
+
+  const handleSystemConfigurationsButtonOnClick = () => {
+    router.push("system-configurations");
   }
 
 
@@ -73,6 +78,14 @@ const MainAdminDashboardPage = () => {
             <PaymentsIcon />
             <span>{"Income and Expense System"}</span>
           </button>}
+
+          <button
+            className={styles["main-dashboard-page__card"]}
+            onClick={handleSystemConfigurationsButtonOnClick}
+          >
+            <SettingsIcon />
+            <span>{"System Configurations"}</span>
+          </button>
         </div>
         <footer className={styles["main-dashboard-page__footer"]}>
           <div className={styles["main-dashboard-page__info"]}>
