@@ -346,12 +346,12 @@ const NewOrderPage = () => {
   }
 
   const handleGetUnavailableTableNumbersSuccess = (contents) => {
-    setAvailableTableNumbers(Array.from({ length: 100 }, (_, i) => i+1).filter((number) => !contents.includes(number)))
+    setAvailableTableNumbers(contents);
   }
 
   const getUnavailableTableNumbers = () =>{
     rest.get(
-      `${INITIAL_URL}/orders/unavailable-table-numbers`,
+      `${INITIAL_URL}/orders/available-table-numbers`,
       handleGetUnavailableTableNumbersSuccess
     )
   }
