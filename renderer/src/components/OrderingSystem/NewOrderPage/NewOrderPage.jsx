@@ -349,7 +349,7 @@ const NewOrderPage = () => {
     setAvailableTableNumbers(contents);
   }
 
-  const getUnavailableTableNumbers = () =>{
+  const getAvailableTableNumbers = () =>{
     rest.get(
       `${INITIAL_URL}/orders/available-table-numbers`,
       handleGetUnavailableTableNumbersSuccess
@@ -360,14 +360,14 @@ const NewOrderPage = () => {
     getAllActiveMenuCategories();
     getAllOrders();
     getAllMenus();
-    getUnavailableTableNumbers();
+    getAvailableTableNumbers();
   }, []);
 
   useEffect(() => {
     getAllMenusBasedOnCategory();
     getAllOrders();
     getAllMenus();
-    getUnavailableTableNumbers();
+    getAvailableTableNumbers();
   }, [menuOnCategory]);
 
   useEffect(() => {

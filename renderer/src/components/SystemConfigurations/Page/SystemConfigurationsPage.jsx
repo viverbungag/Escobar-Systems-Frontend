@@ -57,19 +57,18 @@ const SystemConfigurationsPage = () => {
             )
         );
     }
+    const handleSaveConfigurationsButtonOnClick = () => {
+      rest.post(
+          `${INITIAL_URL}/system-configurations/update`,
+          systemConfigurations,
+          ()=>{},
+          "Successfully updated the configuration/s"
+      );
+  }
 
     const handleGetSystemConfigurationsSuccess = (contents) => {
         setSystemConfigurations(
             new SystemConfigurationsModel(contents.voidPassword, contents.numberOfTables)
-        );
-    }
-
-    const handleSaveConfigurationsButtonOnClick = () => {
-        rest.post(
-            `${INITIAL_URL}/system-configurations/update`,
-            systemConfigurations,
-            ()=>{},
-            "Successfully updated the configuration/s"
         );
     }
 
