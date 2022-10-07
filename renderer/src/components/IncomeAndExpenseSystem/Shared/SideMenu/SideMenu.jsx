@@ -14,7 +14,9 @@ function SideMenu({
   const { employeeName } = useUser();
   const router = useRouter();
   const handleLogout = () => {
-    router.push("/main-admin-dashboard");
+    localStorage.getItem("isAdmin") === "true"
+    ? router.push("/main-admin-dashboard")
+    : router.push("/main-employee-dashboard");
   }
 
   return (

@@ -37,6 +37,11 @@ const MenuOrderTab = ({
 	type,
 	handleTypeChange,
 	orderDiscount,
+	selectedTableNumber,
+	handleSelectedTableNumberOnChange,
+	availableTableNumbers,
+	servingType,
+	handleServingTypeOnChange
 }) => {
 	const [total, setTotal] = useState(1);
 	const [open, setOpen] = React.useState(false);
@@ -49,13 +54,14 @@ const MenuOrderTab = ({
 	const change = customerPayment - (total - discountPayment);
 	const { employeeName } = useUser();
 
-	const [pickUpFormat, setPickUpFormat] = useState("DineIn");
-	const handlePickUpFormat = (event) => setPickUpFormat(event.target.value);
+	// const [pickUpFormat, setPickUpFormat] = useState("DineIn");
+	// const handlePickUpFormat = (event) => setPickUpFormat(event.target.value);
 
 	const handleClose = () => {
 		setOpen(false);
 	};
 	const handleOpen = () => {
+
 		if (menuOnCategory.orderMenu.length === 0) {
 			toast.error("There should atleast be 1 menu item");
 			return;
@@ -66,7 +72,11 @@ const MenuOrderTab = ({
 			return;
 		}
 
-		setOpen(true);
+		if (type === "new-user"){
+			setOpen(true);
+		}else{
+			payButtonOnClick(customerPayment, discountPayment, additionalPayment, handleClose);
+		}
 	};
 	const customerPaymentOnChange = (e) => {
 		setCustomerPayment(e.target.value);
@@ -149,8 +159,7 @@ const MenuOrderTab = ({
 				>
 					<FormControl fullWidth>
 						<InputLabel id="demo-simple-select-label">
-							{" "}
-							Select Order Menu{" "}
+							Select Order Menu
 						</InputLabel>
 						<Select
 							labelId="demo-simple-select-label"
@@ -202,8 +211,7 @@ const MenuOrderTab = ({
 			<Modal open={open} onClose={handleClose}>
 				<Box className={styles["style"]}>
 					<Button onClick={handleClose} className={styles["Close_Button"]}>
-						{" "}
-						X{" "}
+						X
 					</Button>
 					<div className={styles["Wrapper"]}>
 						<div className={styles["Text-Section"]}>
@@ -215,39 +223,36 @@ const MenuOrderTab = ({
 									}}
 									id="demo-radio-buttons-group-label"
 								>
-									{" "}
-									Pickup Format{" "}
+									Pickup Format
 								</FormLabel>
 								<RadioGroup
 									aria-labelledby="demo-radio-buttons-group-label"
-									defaultValue={pickUpFormat}
+									defaultValue={servingType}
 									name="radio-buttons-group"
-									onChange={handlePickUpFormat}
+									onChange={handleServingTypeOnChange}
 								>
 									<FormControlLabel
 										sx={{ color: "#003049;" }}
-										value="TakeOut"
 										control={
 											<Radio
 												sx={{
 													color: "#003049;",
 													"&.Mui-checked": { color: "#003049;" },
 												}}
-												value="TakeOut"
+												value="TAKE_OUT"
 											/>
 										}
 										label="Take-Out"
 									/>
 									<FormControlLabel
 										sx={{ color: "#003049;" }}
-										value="DineIn"
 										control={
 											<Radio
 												sx={{
 													color: "#003049;",
 													"&.Mui-checked": { color: "#003049;" },
 												}}
-												value="DineIn"
+												value="DINE_IN"
 											/>
 										}
 										label="Dine-In"
@@ -255,23 +260,24 @@ const MenuOrderTab = ({
 									{/* <FormControlLabel sx = {{ color: "#003049;"}} value="Delivery" control={<Radio sx = {{ color: "#003049;", '&.Mui-checked': {color: "#003049;",},}}/>}  label="Other" /> */}
 								</RadioGroup>
 							</FormControl>
-							{pickUpFormat === "DineIn" && (
+							{servingType === "DINE_IN" && (
 								<FormControl className={styles["TableNumber"]}>
 									<InputLabel id="demo-simple-select-label">
-										{" "}
-										Select Table Number{" "}
+										Select Table Number
 									</InputLabel>
 									<Select
 										labelId="demo-simple-select-label"
 										id="demo-simple-select"
-										value={selectedOrder}
+										value={selectedTableNumber}
+										defaultValue={availableTableNumbers[0]}
 										label="Select Order Menu"
-										onChange={handleSelectedOrderOnChange}
+										onChange={handleSelectedTableNumberOnChange}
 									>
-										{allOrders.map((item) => {
+										{/* {Array.from({ length: 100 }, (_, i) => i+1).filter((number) => unavailableTable.includes(number))} */}
+										{availableTableNumbers.map((number) => {
 											return (
-												<MenuItem key={item.orderId} value={item.orderId}>
-													{`Order #${item.orderId}`}{" "}
+												<MenuItem key={number} value={number}>
+													{`Table #${number}`}
 												</MenuItem>
 											);
 										})}
@@ -279,7 +285,7 @@ const MenuOrderTab = ({
 								</FormControl>
 							)}
 						</div>
-						{pickUpFormat === "TakeOut" && (
+						{servingType === "TAKE_OUT" && (
 							<div className={styles["Input-Section"]}>
 								<div className={styles["Input-Section--Payment"]}>
 									<h1> Input the Customer Payment : </h1>
@@ -323,12 +329,11 @@ const MenuOrderTab = ({
 						<div className={styles["Button-Section"]}>
 							<Button
 								onClick={() => {
-									payButtonOnClick(customerPayment, discountPayment);
+									payButtonOnClick(customerPayment, discountPayment, additionalPayment, handleClose);
 								}}
 								className={styles["Confirm_Button"]}
 							>
-								{" "}
-								Confirm{" "}
+								Confirm
 							</Button>
 						</div>
 						{/* <ChildModal
@@ -352,35 +357,35 @@ const MenuOrderTab = ({
 // function ChildModal({payButtonOnClick, total, customerPayment, handleMainModalClose, discountPayment, menuOnCategory, type, orderDiscount}) {
 //   const [open, setOpen] = React.useState(false);
 //   const handleOpen = () => {
-//     if (isNaN(customerPayment)){
-//       if (customerPayment.substring(0, 1) === "₱"){
-//         toast.error(" Please remove the ₱ Sign ");
-//       }
-//       else{
-//         toast.error(" The Customer Payment must be a number");
-//       }
-//     }
-//     else if (isNaN(discountPayment)){
-//       toast.error("Please Input a Number for the Discount Value");
-//     }
-//     else{
+    // if (isNaN(customerPayment)){
+    //   if (customerPayment.substring(0, 1) === "₱"){
+    //     toast.error(" Please remove the ₱ Sign ");
+    //   }
+    //   else{
+    //     toast.error(" The Customer Payment must be a number");
+    //   }
+    // }
+    // else if (isNaN(discountPayment)){
+    //   toast.error("Please Input a Number for the Discount Value");
+    // }
+    // else{
 
-//       if (total > customerPayment){
-//         toast.error(" The Customer Payment must be higher than the total");
+    //   if (total > customerPayment){
+    //     toast.error(" The Customer Payment must be higher than the total");
 
-//       }
-//       else if (customerPayment < 0){
-//         toast.error(" The Customer Payment should be higher than 0");
-//       }
-//       else{
-//         if (discountPayment < 0) {
-//           toast.error(" Discount should be higher than 0");
-//         }
-//         else{
-//           setOpen(true);
-//         }
-//       }
-//     }
+    //   }
+    //   else if (customerPayment < 0){
+    //     toast.error(" The Customer Payment should be higher than 0");
+    //   }
+    //   else{
+    //     if (discountPayment < 0) {
+    //       toast.error(" Discount should be higher than 0");
+    //     }
+    //     else{
+    //       setOpen(true);
+    //     }
+    //   }
+    // }
 //   };
 
 //   const handleClose = () => {

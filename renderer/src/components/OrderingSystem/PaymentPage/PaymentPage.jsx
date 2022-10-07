@@ -72,7 +72,7 @@ const PaymentPage = () => {
 
   const getAllOrders = () => {
     rest.getWithPagination(
-      `${INITIAL_URL}/orders/paged`,
+      `${INITIAL_URL}/orders/paged/paid`,
       pagination.tojson(),
       handleOrdersLoad,
       handleTotalPagesLoad

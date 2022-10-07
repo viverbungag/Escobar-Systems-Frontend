@@ -8,6 +8,9 @@ class Order {
   payment: number;
   discount: number
   totalCost: number;
+  paymentStatus: string;
+  servingType: string;
+  tableNumber: number;
 
   constructor(
     orderId: number,
@@ -16,7 +19,10 @@ class Order {
     customerFoodOrders: Array<CustomerFoodOrder>,
     payment: number,
     discount: number,
-    totalCost: number
+    totalCost: number,
+    paymentStatus: string,
+    servingType: string,
+    tableNumber: number
   ) {
     this.orderId = orderId;
     this.employeeFullName = employeeFullName;
@@ -25,6 +31,9 @@ class Order {
     this.payment = payment;
     this.discount = discount;
     this.totalCost = totalCost;
+    this.paymentStatus = paymentStatus;
+    this.servingType = servingType;
+    this.tableNumber = tableNumber;
   }
 
   toJson() {
@@ -36,6 +45,9 @@ class Order {
       payment: this.payment,
       discount: this.discount,
       totalCost: this.totalCost,
+      paymentStatus: this.paymentStatus,
+      servingType: this.servingType,
+      tableNumber: this.tableNumber
     };
   }
 }

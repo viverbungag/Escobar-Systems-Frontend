@@ -50,13 +50,18 @@ const NewOrderPage = () => {
 
   const [orderDiscount, setOrderDiscount] = useState('');
 
+  const [selectedTableNumber, setSelectedTableNumber] = useState(1);
+  const handleSelectedTableNumberOnChange = (event) => {
+    setSelectedTableNumber(event.target.value);
+  }
+
+  const [availableTableNumbers, setAvailableTableNumbers] = useState([]);
+
   const handleSelectedOrderOnChange = (event) => {
     const orderId = event.target.value;
 
     const currentSelectedOrder = allOrders.find((order)=> order.orderId === orderId);
     setOrderDiscount(currentSelectedOrder.discount);
-
-
     setSelectedOrder(orderId);
   };
 
@@ -64,6 +69,11 @@ const NewOrderPage = () => {
   const handleTypeChange = (e) => {
     setType(e.target.value);
   }
+
+  const [servingType, setServingType] = useState("DINE_IN");
+  const handleServingTypeOnChange = (event) => {
+    setServingType(event.target.value);
+  };
 
   const handleCartChange = (newMenu) => {
     newMenu.orderMenuQuantity = 1;
@@ -133,9 +143,6 @@ const NewOrderPage = () => {
       // }
       return;
     }
-    // console.log("number of servings left: " + numberOfServingsLeft);
-    // console.log("quantity: " + quantity);
-    // console.log("quantity: " + quantity);
     
   
     const newMenuOnCategory = menuOnCategory.orderMenu.map((currentMenu)=> {
@@ -196,66 +203,139 @@ const NewOrderPage = () => {
     );
   }
 
-  const handlePayButtonOnClick = (customerPayment, discountPayment) => {
+  const handleOrderSuccess = () => {
+    setMenuOnCategory(
+      new MenuOnCategory(
+        menuOnCategory.menuCategoryName,
+        []
+      )
+    );
+  }
 
-    const customerFoodOrders = menuOnCategory.orderMenu.map((orderMenu) => {
-      return (new CustomerFoodOrder(1, new FoodOrder(1, new MenuModel(
-        orderMenu.menuId, 
-        orderMenu.menuName, 
-        orderMenu.menuPrice, 
-        orderMenu.menuCategoryName,
-        orderMenu.ingredients,
-        orderMenu.numberOfServingsLeft,
-        orderMenu.isActive), orderMenu.orderMenuQuantity)))
-    })
-
+  const handlePayButtonOnClick = (
+    customerPayment,
+    discountPayment,
+    additionalPayment,
+    handleClose
+  ) => {
     const total = menuOnCategory.orderMenu.reduce(
       (sum, currentMenu) =>
         sum + currentMenu.menuPrice * currentMenu.orderMenuQuantity,
       0
     );
 
-    const order = new Order(
-      1,
-      employeeName,
-      dayjs().add(8, 'hour'),
-      customerFoodOrders,
-      customerPayment,
-      discountPayment,
-      total
-    );
+    if (servingType === "TAKE_OUT" && type === "new-user") {
+      if (isNaN(customerPayment)) {
+        toast.error(" The Customer Payment must be a number");
+        return;
+      }
 
-    const handleOrderSuccess = () => {
-      setMenuOnCategory(
-        new MenuOnCategory(
-          menuOnCategory.menuCategoryName,
-          []
+      if (isNaN(discountPayment)) {
+        toast.error("Please Input a Number for the Discount Value");
+        return;
+      }
+      // console.log("total: " + total);
+      // console.log("additionalPayment: " + additionalPayment);
+      // console.log("discount: " + (Number(total) + Number(additionalPayment)) * (Number(discountPayment) / 100));
+
+      // console.log(
+      //   Number(total) +
+      //     Number(additionalPayment) -
+      //     (Number(total) + Number(additionalPayment)) *
+      //       (Number(discountPayment) / 100)
+      // );
+      if (
+        Number(total) +
+          Number(additionalPayment) -
+          (Number(total) + Number(additionalPayment)) *
+            (Number(discountPayment) / 100) >
+        customerPayment
+      ) {
+        toast.error(
+          " The Customer Payment must be higher than the total payment"
+        );
+        return;
+      }
+
+      if (customerPayment < 0) {
+        toast.error(" The Customer Payment should be higher than 0");
+        return;
+      }
+
+      if (discountPayment < 0) {
+        toast.error(" Discount should be higher than 0");
+        return;
+      }
+    }
+
+    const customerFoodOrders = menuOnCategory.orderMenu.map((orderMenu) => {
+      return new CustomerFoodOrder(
+        1,
+        new FoodOrder(
+          1,
+          new MenuModel(
+            orderMenu.menuId,
+            orderMenu.menuName,
+            orderMenu.menuPrice,
+            orderMenu.menuCategoryName,
+            orderMenu.ingredients,
+            orderMenu.numberOfServingsLeft,
+            orderMenu.isActive
+          ),
+          orderMenu.orderMenuQuantity
         )
       );
-    }
-    if (type === 'new-user'){
+    });
+
+    const order =
+      servingType === "DINE_IN"
+        ? new Order(
+            1,
+            employeeName,
+            dayjs().add(8, "hour"),
+            customerFoodOrders,
+            0,
+            0,
+            0,
+            "UNPAID",
+            servingType,
+            selectedTableNumber
+          )
+        : new Order(
+            1,
+            employeeName,
+            dayjs().add(8, "hour"),
+            customerFoodOrders,
+            customerPayment,
+            discountPayment,
+            total,
+            serve === "new-user" ? "PAID" : "UNPAID",
+            servingType,
+            0
+          );
+    if (type === "new-user") {
       rest.add(
         `${INITIAL_URL}/orders/add`,
         order,
         handleOrderSuccess,
         "Ordered Successfully"
-      )
+      );
     }
 
-    if (type === 'existing-user'){
-
+    if (type === "existing-user") {
       rest.add(
         `${INITIAL_URL}/orders/add/existing/${selectedOrder}`,
         order,
         handleOrderSuccess,
         "Ordered Successfully"
-      )
+      );
     }
 
-  }
+    handleClose();
+  };
 
   const handleGetAllOrdersSuccess = (contents) => {
-    setAllOrders(contents)
+    setAllOrders(contents);
   }
 
   const getAllOrders = () => {
@@ -265,16 +345,29 @@ const NewOrderPage = () => {
     )
   }
 
+  const handleGetUnavailableTableNumbersSuccess = (contents) => {
+    setAvailableTableNumbers(Array.from({ length: 100 }, (_, i) => i+1).filter((number) => !contents.includes(number)))
+  }
+
+  const getUnavailableTableNumbers = () =>{
+    rest.get(
+      `${INITIAL_URL}/orders/unavailable-table-numbers`,
+      handleGetUnavailableTableNumbersSuccess
+    )
+  }
+
   useEffect(() => {
     getAllActiveMenuCategories();
     getAllOrders();
     getAllMenus();
+    getUnavailableTableNumbers();
   }, []);
 
   useEffect(() => {
     getAllMenusBasedOnCategory();
     getAllOrders();
     getAllMenus();
+    getUnavailableTableNumbers();
   }, [menuOnCategory]);
 
   useEffect(() => {
@@ -308,6 +401,11 @@ const NewOrderPage = () => {
           type={type}
           handleTypeChange={handleTypeChange}
           orderDiscount={orderDiscount}
+          selectedTableNumber={selectedTableNumber}
+          handleSelectedTableNumberOnChange={handleSelectedTableNumberOnChange}
+          availableTableNumbers={availableTableNumbers}
+          servingType={servingType}
+          handleServingTypeOnChange={handleServingTypeOnChange}
         />
       </div>
     </div>
