@@ -131,32 +131,6 @@
   }
 }
 
-// .Text-Section {
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   flex-direction: row;
-//   width: 100%;
-//   margin-bottom: 10px;
-//   .Order-Text {
-//     font-style: normal;
-//     font-weight: 700;
-//     font-size: 20px;
-//     line-height: 20px;
-//     text-align: center;
-//     margin-right: auto;
-//     margin-left: 5px;
-//   }
-//   .Date-Text {
-//     font-style: normal;
-//     font-weight: 700;
-//     font-size: 20px;
-//     line-height: 20px;
-//     text-align: center;
-//     margin-right: 5px;
-//     margin-left: auto;
-//   }
-// }
 .Title-Section {
   display: flex;
   justify-content: center;
@@ -406,7 +380,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: fit-content;
+  width: 30vw;
   height: fit-content;
   display: flex;
   flex-direction: column;
@@ -446,48 +420,41 @@
   .Wrapper {
     display: flex;
     flex-direction: column;
-    .Image-Section {
-      margin-bottom: 25px;
-    }
-
     .Text-Section {
       display: flex;
       flex-direction: column;
+      // align-items: center;
+      justify-content: center;
       width: 100%;
-      padding: 1rem 2rem;
-      gap: 1rem;
-      height: 20vh;
+      padding: 0 2rem;
+      gap: 1.5rem;
+      height: 30vh;
       overflow: auto;
-
-      .Input-Section--Payment {
+      .Input-Section {
         display: flex;
-        flex-direction: row;
-        gap: 30px;
-
-        h1 {
-          font-style: normal;
-          font-weight: 500;
-          font-size: 16px;
-          line-height: 16px;
-          //   text-align: center;
-          //   display: inline-block;
-          white-space: nowrap;
-        }
-        .Input-Forms--Payment {
-          margin-left: auto;
-          margin-right: 0;
-          width: 220px;
-          font-size: 13px;
-          border-radius: 4px;
-          border-color: #ced4da;
-          padding: 5px;
-          margin-right: 10px;
-          ::placeholder {
-            color: #6c757d;
-            opacity: 1;
-          }
-        }
+        align-items: center;
+        justify-content: space-between;
       }
+      // .Input-Section--Payment {
+      //   display: flex;
+      //   flex-direction: row;
+      //   gap: 30px;
+
+      //   .Input-Forms--Payment {
+      //     margin-left: auto;
+      //     margin-right: 0;
+      //     width: 220px;
+      //     font-size: 13px;
+      //     border-radius: 4px;
+      //     border-color: #ced4da;
+      //     padding: 5px;
+      //     margin-right: 10px;
+      //     ::placeholder {
+      //       color: #6c757d;
+      //       opacity: 1;
+      //     }
+      //   }
+      // }
 
       .Input-Section--Discount {
         display: flex;

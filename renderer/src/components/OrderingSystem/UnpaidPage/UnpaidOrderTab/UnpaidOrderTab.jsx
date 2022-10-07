@@ -10,25 +10,34 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Rest from "../../../../rest/Rest";
+import Order from "../../../../model/Order";
+import { toast } from "react-toastify";
+import {
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  TextField,
+} from "@mui/material";
+import PercentIcon from "@mui/icons-material/Percent";
+
+const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
+
+function onlyNumbers(data) {
+  return /^[0-9]+$/.test(data);
+}
 
 const UnpaidOrderTab = ({
   orderTabItems,
   orderCardSelected,
-  orderDiscount,
   customerPayment,
   totalPayment,
 }) => {
   const rest = new Rest();
   const { employeeName } = useUser();
-  const subTotal = orderTabItems.reduce(
-    (sum, currentMenu) =>
-      sum +
-      currentMenu.foodOrder.menu.menuPrice * currentMenu.foodOrder.menuQuantity,
-    0
+  const today = new Date();
+  const [orderValues, setOrderValues] = useState(
+    new Order(orderCardSelected, employeeName, today, [], 0, 0, 0)
   );
-  const discountedPrice = subTotal * (orderDiscount / 100);
-  const totalPrice = subTotal - subTotal * (orderDiscount / 100);
-  const change = customerPayment - (subTotal - orderDiscount);
 
   const arr = [];
   const createNewCols = () => {
@@ -40,36 +49,111 @@ const UnpaidOrderTab = ({
         menuPrice: item.foodOrder.menu.menuPrice,
       });
     });
-    setPdfRows(arr);
+    // setPdfRows(arr);
   };
-
   //for pdf
-  const pdfColumns = [
-    { header: "Item", dataKey: "menuName" },
-    { header: "Quantity", dataKey: "menuQuantity" },
-    { header: "Price", dataKey: "menuPrice" },
-  ];
-  const [pdfRows, setPdfRows] = useState([]);
-  const pdfPaymentColumns = [
-    { header: "", dataKey: "label" },
-    { header: "", dataKey: "data" },
-  ];
-  const pdfPaymentRows = [
-    { label: "Customer Payment", data: customerPayment },
-    { label: "SubTotal", data: subTotal },
-    { label: "Discounted Price", data: discountedPrice },
-    { label: "Total", data: totalPrice },
-    { label: "Change", data: change },
-    { label: "Cashier", data: employeeName },
-  ];
+  // const pdfColumns = [
+  //   { header: "Item", dataKey: "menuName" },
+  //   { header: "Quantity", dataKey: "menuQuantity" },
+  //   { header: "Price", dataKey: "menuPrice" },
+  // ];
+  // const [pdfRows, setPdfRows] = useState([]);
+  // const pdfPaymentColumns = [
+  //   { header: "", dataKey: "label" },
+  //   { header: "", dataKey: "data" },
+  // ];
+  // const pdfPaymentRows = [
+  //   { label: "Customer Payment", data: payment },
+  //   { label: "Total", data: total },
+  //   { label: "Discounted Price", data: inputValues.discount },
+  //   { label: "Total", data: totalPrice },
+  //   { label: "Cashier", data: employeeName },
+  // ];
   //
   const [payOpen, setPayOpen] = React.useState(false);
   const handlePayOpen = () => setPayOpen(true);
   const handlePayClose = () => setPayOpen(false);
-  //
-  const payButtonOnClick = (orderTabItems) => {
-    console.log(orderTabItems);
+  //input
+  // const [customerPaymentErrorText, setCustomerPaymentErrorText] = useState("");
+  // const [discountPaymentErrorText, setDiscountPaymentErrorText] = useState("");
+  // const [additionalPaymentErrorText, setAdditionalPaymentErrorText] =
+  //   useState("");
+  // useState("");
+
+  //set values
+  const subTotal = orderTabItems
+    .reduce(
+      (sum, currentMenu) =>
+        sum +
+        currentMenu.foodOrder.menu.menuPrice *
+          currentMenu.foodOrder.menuQuantity,
+      0
+    )
+    .toFixed(2);
+  const [totalCost, setTotalCost] = useState(0);
+  const [inputValues, setInputValues] = useState({
+    payment: 0,
+    discount: 0,
+    additional: 0,
+  });
+  const handleInputChange = (e) => {
+    // if (e.target.name == "customerPayment") {
+    //   if (onlyNumbers(e.target.value)) {
+    //     setInputValues({ ...inputValues, [e.target.name]: e.target.values });
+    //     setCustomerPaymentErrorText("");
+    //   } else if (e.target.value == "") {
+    //     setCustomerPaymentErrorText("Customer Payment cannot be empty.");
+    //   } else {
+    //     setCustomerPaymentErrorText("Please input numbers only.");
+    //   }
+    // }
+    // if (e.target.name == "discountPayment") {
+    //   if (onlyNumbers(e.target.value)) {
+    //     setInputValues({ ...inputValues, [e.target.name]: e.target.values });
+    //     setDiscountPaymentErrorText("");
+    //   } else if (e.target.value == "") {
+    //     setInputValues({ ...inputValues, [e.target.name]: e.target.values });
+    //     setDiscountPaymentErrorText("");
+    //   } else {
+    //     setDiscountPaymentErrorText("Please input numbers only.");
+    //   }
+    // }
+    // if (e.target.name == "additionalPayment") {
+    //   if (onlyNumbers(e.target.value)) {
+    //     setInputValues({ ...inputValues, [e.target.name]: e.target.values });
+    //     setAdditionalPaymentErrorText("");
+    //   } else if (e.target.value == "") {
+    //     setInputValues({ ...inputValues, [e.target.name]: e.target.values });
+    //     setAdditionalPaymentErrorText();
+    //   } else {
+    //     setAdditionalPaymentErrorText("Please input numbers only.");
+    //   }
+    // }
+    if (e.target.name == "discount") {
+      if (onlyNumbers(e.target.value)) {
+        setTotalCost((subTotal - subTotal * (e.target.value / 100)).toFixed(2));
+      } else {
+        setTotalCost(subTotal);
+      }
+    }
+    console.log(e.target.value);
+    setInputValues({ ...inputValues, [e.target.name]: e.target.values });
   };
+  //submit
+  const payButtonOnClick = () => {
+    setOrderValues({
+      ...orderValues,
+      [Object.keys(inputValues).map((item) => item)]: Object.values(
+        inputValues
+      ).map((item) => item),
+    });
+    console.log(inputValues);
+    // rest.update(`$`);
+  };
+
+  useEffect(() => {
+    setTotalCost(subTotal);
+  }, [subTotal]);
 
   useEffect(() => {
     createNewCols();
@@ -126,16 +210,6 @@ const UnpaidOrderTab = ({
         })}
       </div>
 
-      {/* <div
-        className={[
-          styles["CustomerPayment-Section"],
-          !orderCardSelected && styles["none"],
-        ].join(" ")}
-      >
-        <h2 className={styles["CustomerPayment"]}> Customer Payment </h2>
-        <h2 className={styles["CustomerPaymentPrice"]}> {customerPayment} </h2>
-      </div> */}
-
       <div
         className={[
           styles["Subtotal-Section"],
@@ -147,29 +221,14 @@ const UnpaidOrderTab = ({
       </div>
 
       {/* <div
-				className={[
-					styles["Discounted-Section"],
-					!orderCardSelected && styles["none"],
-				].join(" ")}
-			>
-				<h2 className={styles["Discount"]}> Discounted Price </h2>
-				<h2 className={styles["DiscountPrice"]}>
-					{(subTotal * (orderDiscount / 100)).toFixed(2)}
-				</h2>
-			</div> */}
-
-      <div
         className={[
           styles["Total-Section"],
           !orderCardSelected && styles["none"],
         ].join(" ")}
       >
         <h2 className={styles["Total"]}> Total </h2>
-        <h2 className={styles["TotalPrice"]}>
-          {" "}
-          {(subTotal - subTotal * (orderDiscount / 100)).toFixed(2)}
-        </h2>
-      </div>
+        <h2 className={styles["TotalPrice"]}>{totalCost}</h2>
+      </div> */}
 
       <div className={styles["total-section"]} onClick={handlePayOpen}>
         <div className={styles["total-section--wrapper"]}>
@@ -193,57 +252,71 @@ const UnpaidOrderTab = ({
           </div>
           <div className={styles["Wrapper"]}>
             <div className={styles["Text-Section"]}>
-              <div className={styles["Input-Section--Payment"]}>
-                <h1> Please input the Customer Payment : </h1>
-                <input
-                  // value={customerPayment}
-                  // onChange={customerPaymentOnChange}
-                  type="text"
-                  id="first"
-                  className={styles["Input-Forms--Payment"]}
-                  placeholder="Input the money of the customer"
+              <div className={styles["Input-Section"]}>
+                <TextField
+                  variant="outlined"
+                  size="small"
+                  label="Discount"
+                  name="discount"
+                  value={inputValues.discount}
+                  onChange={handleInputChange}
+                  // helperText={discountPaymentErrorText}
+                  // error={discountPaymentErrorText}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <PercentIcon />
+                      </InputAdornment>
+                    ),
+                  }}
+                  fullWidth
                 />
               </div>
 
-              <div className={styles["Input-Section--Discount"]}>
-                <h1> Input Discount Value : </h1>
-                <input
-                  // value={discountPayment}
-                  // onChange={discountPaymentOnChange}
-                  type="text"
-                  id="first"
-                  className={styles["Input-Forms--Discount"]}
-                  placeholder="Input Percentage of the Discount"
+              <div className={styles["Input-Section"]}>
+                <TextField
+                  variant="outlined"
+                  size="small"
+                  label="Customer Payment "
+                  name="payment"
+                  value={inputValues.payment}
+                  onChange={handleInputChange}
+                  // helperText={customerPaymentErrorText}
+                  // error={customerPaymentErrorText}
+                  fullWidth
                 />
-                <h1 className={styles["Percentage"]}> % </h1>
               </div>
 
-              <div className={styles["Input-Section--Payment"]}>
-                <h1> Input Additional Payment : </h1>
-                <input
-                  // value={customerPayment}
-                  // onChange={customerPaymentOnChange}
-                  type="text"
-                  id="first"
-                  className={styles["Input-Forms--Payment"]}
-                  placeholder="Input the money of the customer"
+              <div className={styles["Input-Section"]}>
+                <TextField
+                  variant="outlined"
+                  size="small"
+                  label="Additional Payment"
+                  name="additional"
+                  value={inputValues.additional}
+                  onChange={handleInputChange}
+                  // helperText={additionalPaymentErrorText}
+                  // error={additionalPaymentErrorText}
+                  fullWidth
                 />
+              </div>
+
+              <div className={styles["Input-Section"]}>
+                Current Total:
+                {totalCost}
               </div>
             </div>
 
             <div className={styles["Button-Section"]}>
               <button
                 className={styles["Confirm_Button"]}
-                onClick={() => payButtonOnClick(orderTabItems)}
+                onClick={() => payButtonOnClick()}
               >
                 {" "}
                 Confirm{" "}
               </button>
             </div>
           </div>
-          {/* <div className={styles["Button-Section"]}>
-     
-                          </div> */}
         </Box>
       </Modal>
     </div>
