@@ -3,7 +3,6 @@ import styles from './PaymentPageBody.module.scss';
 import PaymentPageCard  from "./PaymentPageCard/PaymentPageCard.jsx";
 import {TablePagination}  from "@mui/material";
 import shortid from 'shortid';
-import AdminPasswordModal from '../../../Shared/AdminPasswordModal/AdminPasswordModal';
 
 
 const PaymentPageBody = ({

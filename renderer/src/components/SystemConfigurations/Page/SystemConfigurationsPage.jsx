@@ -12,6 +12,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
+import { toast } from 'react-toastify';
 
 
 const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
@@ -57,7 +58,19 @@ const SystemConfigurationsPage = () => {
             )
         );
     }
+
     const handleSaveConfigurationsButtonOnClick = () => {
+
+      if(String(systemConfigurations.numberOfTables).indexOf(".") !== -1){
+        toast.error("Number of Tables cannot be a decimal")
+        return;
+      }
+
+      if (systemConfigurations.numberOfTables < 0){
+        toast.error("Number of Tables cannot be negative")
+        return;
+      }
+
       rest.post(
           `${INITIAL_URL}/system-configurations/update`,
           systemConfigurations,
