@@ -1,62 +1,67 @@
-import React, { useEffect, useState } from 'react'
-import styles from './PaymentOrderTab.module.scss';
+import React, { useEffect, useState } from "react";
+import styles from "./PaymentOrderTab.module.scss";
 import PaymentOrderTabCard from "./PaymentOrderTabCard/PaymentOrderTabCard";
-import shortid from 'shortid';
-import {Icon} from '@iconify/react';
-import { printReceipt } from '../../../../../print/printFunctions';
+import shortid from "shortid";
+import { Icon } from "@iconify/react";
+import { printReceipt } from "../../../../../print/printFunctions";
 import { useUser } from "../../../contexts/UserContext";
-import printIcon from '@iconify/icons-bytesize/print';
+import printIcon from "@iconify/icons-bytesize/print";
 
-const PaymentOrderTab = ({orderTabItems, orderCardSelected, orderDiscount, customerPayment, totalPayment}) => {
+const PaymentOrderTab = ({
+  orderTabItems,
+  orderCardSelected,
+  orderDiscount,
+  customerPayment,
+  totalPayment,
+}) => {
   const { employeeName } = useUser();
   const subTotal = orderTabItems.reduce(
     (sum, currentMenu) =>
-      sum + currentMenu.foodOrder.menu.menuPrice * currentMenu.foodOrder.menuQuantity,
+      sum +
+      currentMenu.foodOrder.menu.menuPrice * currentMenu.foodOrder.menuQuantity,
     0
   );
-  const discountedPrice = subTotal * (orderDiscount / 100)
+  const discountedPrice = subTotal * (orderDiscount / 100);
   const totalPrice = subTotal - subTotal * (orderDiscount / 100);
   const change = customerPayment - (subTotal - orderDiscount);
-  
+
   const arr = [];
   const createNewCols = () => {
     orderTabItems.map((item) => {
-      console.log(item.foodOrder.menu)
-      arr.push(
-        {
-          menuName: item.foodOrder.menu.menuName,
-          menuQuantity: item.foodOrder.menuQuantity,
-          menuPrice: item.foodOrder.menu.menuPrice
-        }
-      )
-    })
+      console.log(item.foodOrder.menu);
+      arr.push({
+        menuName: item.foodOrder.menu.menuName,
+        menuQuantity: item.foodOrder.menuQuantity,
+        menuPrice: item.foodOrder.menu.menuPrice,
+      });
+    });
     setPdfRows(arr);
-  }
+  };
 
   //for pdf
   const pdfColumns = [
-    { header:"Item", dataKey: 'menuName' },
-    { header:"Quantity", dataKey: 'menuQuantity' },
-    { header:"Price", dataKey: 'menuPrice' }
-  ]
+    { header: "Item", dataKey: "menuName" },
+    { header: "Quantity", dataKey: "menuQuantity" },
+    { header: "Price", dataKey: "menuPrice" },
+  ];
   const [pdfRows, setPdfRows] = useState([]);
   const pdfPaymentColumns = [
-    { header: '', dataKey: 'label' },
-    { header: '', dataKey: 'data' }
-  ]
+    { header: "", dataKey: "label" },
+    { header: "", dataKey: "data" },
+  ];
   const pdfPaymentRows = [
-    { label: 'Customer Payment', data: customerPayment },
-    { label: 'SubTotal', data: subTotal },
-    { label: 'Discounted Price', data: discountedPrice },
-    { label: 'Total', data: totalPrice },
-    { label: 'Change', data: change },
-    { label: 'Cashier', data: employeeName }
-  ]
+    { label: "Customer Payment", data: customerPayment },
+    { label: "SubTotal", data: subTotal },
+    { label: "Discounted Price", data: discountedPrice },
+    { label: "Total", data: totalPrice },
+    { label: "Change", data: change },
+    { label: "Cashier", data: employeeName },
+  ];
   //
 
   useEffect(() => {
     createNewCols();
-  }, [orderTabItems])
+  }, [orderTabItems]);
 
   return (
     <div
@@ -77,7 +82,14 @@ const PaymentOrderTab = ({orderTabItems, orderCardSelected, orderDiscount, custo
             !orderCardSelected && styles["print-none"],
           ].join(" ")}
           onClick={
-            () => printReceipt(orderCardSelected, pdfRows, pdfColumns, pdfPaymentRows, pdfPaymentColumns)
+            () =>
+              printReceipt(
+                orderCardSelected,
+                pdfRows,
+                pdfColumns,
+                pdfPaymentRows,
+                pdfPaymentColumns
+              )
             // () => console.log(pdfRows)
           }
         />
@@ -156,12 +168,14 @@ const PaymentOrderTab = ({orderTabItems, orderCardSelected, orderDiscount, custo
       >
         <h2 className={styles["Change"]}> Change </h2>
         <h2 className={styles["ChangePrice"]}>
-          {(customerPayment - (subTotal - orderDiscount)).toFixed(2)}
+          {(
+            customerPayment -
+            (subTotal - subTotal * (orderDiscount / 100))
+          ).toFixed(2)}
         </h2>
       </div>
     </div>
   );
-}
+};
 
-export default PaymentOrderTab
-
+export default PaymentOrderTab;

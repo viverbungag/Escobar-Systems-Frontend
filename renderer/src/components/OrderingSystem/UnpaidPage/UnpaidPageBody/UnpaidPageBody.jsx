@@ -1,9 +1,8 @@
-import React from 'react';
-import styles from './UnpaidPageBody.module.scss';
-import UnpaidPageCard  from "./UnpaidPageCard/UnpaidPageCard.jsx";
-import {TablePagination}  from "@mui/material";
-import shortid from 'shortid';
-
+import React from "react";
+import styles from "./UnpaidPageBody.module.scss";
+import UnpaidPageCard from "./UnpaidPageCard/UnpaidPageCard.jsx";
+import { TablePagination } from "@mui/material";
+import shortid from "shortid";
 
 const UnpaidPageBody = ({
   totalPages,
@@ -14,10 +13,8 @@ const UnpaidPageBody = ({
   items,
   orderCardOnClick,
   orderCardSelected,
-  voidButtonOnClick
+  voidButtonOnClick,
 }) => {
-
-
   return (
     <div className={styles["UnpaidPageBody"]}>
       <div className={styles["UnpaidPageBody__pagination-container"]}>
@@ -34,7 +31,18 @@ const UnpaidPageBody = ({
       <div className={styles["UnpaidPageBody__cards-container"]}>
         {items.map((item) => {
           return (
-            <div key={shortid.generate()} onClick={()=>{orderCardOnClick(item.customerFoodOrders, item.orderId, item.discount, item.payment, item.totalCost)}}>
+            <div
+              key={shortid.generate()}
+              onClick={() => {
+                orderCardOnClick(
+                  item.customerFoodOrders,
+                  item.orderId,
+                  item.discount,
+                  item.payment,
+                  item.totalCost
+                );
+              }}
+            >
               <UnpaidPageCard
                 ordernum={item.orderId}
                 quantity={item.customerFoodOrders.length}
@@ -51,4 +59,4 @@ const UnpaidPageBody = ({
   );
 };
 
-export default UnpaidPageBody
+export default UnpaidPageBody;

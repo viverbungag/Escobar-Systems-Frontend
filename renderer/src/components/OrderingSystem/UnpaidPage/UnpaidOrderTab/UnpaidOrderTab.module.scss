@@ -391,12 +391,6 @@
   user-select: none;
   justify-content: space-between;
 
-  .Header {
-    padding: 1rem;
-    &__text {
-    }
-  }
-
   .Close_Button {
     position: absolute;
     top: 0;
@@ -420,11 +414,17 @@
   .Wrapper {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    .Header {
+      padding: 1rem;
+    }
     .Text-Section {
       display: flex;
       flex-direction: column;
       // align-items: center;
-      justify-content: center;
+      // justify-content: center;
       width: 100%;
       padding: 0 2rem;
       gap: 1.5rem;
@@ -433,28 +433,16 @@
       .Input-Section {
         display: flex;
         align-items: center;
-        justify-content: space-between;
       }
-      // .Input-Section--Payment {
-      //   display: flex;
-      //   flex-direction: row;
-      //   gap: 30px;
-
-      //   .Input-Forms--Payment {
-      //     margin-left: auto;
-      //     margin-right: 0;
-      //     width: 220px;
-      //     font-size: 13px;
-      //     border-radius: 4px;
-      //     border-color: #ced4da;
-      //     padding: 5px;
-      //     margin-right: 10px;
-      //     ::placeholder {
-      //       color: #6c757d;
-      //       opacity: 1;
-      //     }
-      //   }
-      // }
+      .Output-Section {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        &__label {
+          text-transform: capitalize;
+          color: #000000;
+        }
+      }
 
       .Input-Section--Discount {
         display: flex;
