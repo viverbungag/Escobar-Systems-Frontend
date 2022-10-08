@@ -14,7 +14,8 @@ const PaymentPageBody = ({
   items,
   orderCardOnClick,
   orderCardSelected,
-  voidButtonOnClick
+  voidButtonOnClick,
+  voidPassword,
 }) => {
 
 
@@ -42,6 +43,7 @@ const PaymentPageBody = ({
                 orderDate={item.orderTime}
                 isSelected={orderCardSelected === item.orderId}
                 voidButtonOnClick={voidButtonOnClick}
+                voidPassword={voidPassword}
               />
             </div>
           );

@@ -19,7 +19,7 @@ const PaymentPage = () => {
   const [orderCardSelected, setOrderCardSelected] = useState(null);
   const [orderDiscount, setOrderDiscount] = useState(0);
   const [customerPayment, setOrderCustomerPayment] = useState(0);
-  const [totalPayment, setTotalPayment] = useState(0); 
+  const [totalPayment, setTotalPayment] = useState(0);
 
   const rest = new Rest();
 
@@ -89,8 +89,23 @@ const PaymentPage = () => {
       handleVoidOrderSuccess,
       "Successfully voided the order"
     )
-
   }
+
+  const [systemConfigurations, setSystemConfigurations] = useState(null);
+
+  const handleGetSystemConfigurationsSuccess = (contents) => {
+    setSystemConfigurations(contents);
+}
+const getSystemConfigurations = () => {
+    rest.get(
+        `${INITIAL_URL}/system-configurations`,
+        handleGetSystemConfigurationsSuccess
+    )
+}
+
+  useEffect(()=>{
+    getSystemConfigurations();
+  },[])
 
   useEffect(() => {
     // console.log("contents: ");
@@ -111,13 +126,14 @@ const PaymentPage = () => {
           pageSizeOnChange={handlePageSizeOnChange}
           orderCardOnClick={handleOrderCardOnClick}
           voidButtonOnClick={handleVoidButtonOnClick}
+          voidPassword={systemConfigurations?.voidPassword}
         />
         <PaymentOrderTab 
-        orderTabItems={orderTabItems} 
-        orderCardSelected={orderCardSelected}
-        orderDiscount={orderDiscount}
-        customerPayment={customerPayment}
-        totalPayment={totalPayment}
+          orderTabItems={orderTabItems} 
+          orderCardSelected={orderCardSelected}
+          orderDiscount={orderDiscount}
+          customerPayment={customerPayment}
+          totalPayment={totalPayment}
         />
       </div>
     </div>
