@@ -297,9 +297,10 @@ const UnpaidOrderTab = ({
         !orderCardSelected && styles["none"],
       ].join(" ")}
     >
-      <div className={styles["orderno-section"]}>
-        <h1> Order # {orderCardSelected} </h1>
-        {/* <Icon
+      <div className={styles["header-section"]}>
+        <div className={styles["orderno-section"]}>
+          <h1> Order # {orderCardSelected} </h1>
+          {/* <Icon
 					icon="bytesize:print"
 					height="25"
 					width="25"
@@ -319,12 +320,13 @@ const UnpaidOrderTab = ({
 						// () => console.log(pdfRows)
 					}
 				/> */}
-      </div>
+        </div>
 
-      <div className={styles["title-section"]}>
-        <p className={styles["Quantity"]}> Item Title </p>
-        <p className={styles["Quantity"]}> Quantity </p>
-        <p className={styles["Quantity"]}> Price </p>
+        <div className={styles["title-section"]}>
+          <diuv className={styles["title-section__text"]}> Item Title </diuv>
+          <diuv className={styles["title-section__text"]}> Quantity </diuv>
+          <diuv className={styles["title-section__text"]}> Price </diuv>
+        </div>
       </div>
 
       <div className={styles["component-section"]}>
@@ -341,20 +343,19 @@ const UnpaidOrderTab = ({
         })}
       </div>
 
-      <div
-        className={[
-          styles["Subtotal-Section"],
-          !orderCardSelected && styles["none"],
-        ].join(" ")}
-      >
-        <h2 className={styles["Subtotal"]}> SubTotal </h2>
-        <h2 className={styles["SubtotalPrice"]}> {subTotal} </h2>
-      </div>
-
-      <div className={styles["total-section"]} onClick={handlePayOpen}>
-        <div className={styles["total-section--wrapper"]}>
-          <div className={styles["pay-section"]}>
-            <h2> Pay </h2>
+      <div className={styles["footer-section"]}>
+        <div
+          className={[
+            styles["Subtotal-Section"],
+            !orderCardSelected && styles["none"],
+          ].join(" ")}
+        >
+          <h2 className={styles["Subtotal"]}> SubTotal </h2>
+          <h2 className={styles["SubtotalPrice"]}> {subTotal} </h2>
+        </div>
+        <div className={styles["pay-button"]} onClick={handlePayOpen}>
+          <div className={styles["pay-button__content"]}>
+            <h2> Proceed to Payment </h2>
             <Icon icon={chevronRight} height="16" width="16" color="white" />
           </div>
         </div>

@@ -1,15 +1,16 @@
-import React from 'react'
-import styles from './UnpaidOrderTabCard.module.scss';
+import React from "react";
+import styles from "./UnpaidOrderTabCard.module.scss";
 
-const UnpaidOrderTabCard = ({title, quantity, price}) => {
+const UnpaidOrderTabCard = ({ title, quantity, price }) => {
   return (
-    <div className={styles['UnpaidOrderTabCard']}>
-        <h2 className={styles['UnpaidOrderTabCard__row']}> {title} </h2>
-        <h2 className={styles['UnpaidOrderTabCard__row']}>  {quantity} </h2>
-        <h2 className={styles['UnpaidOrderTabCard__row']}>  {quantity * price} </h2>
+    <div className={styles["UnpaidOrderTabCard"]}>
+      <div className={styles["UnpaidOrderTabCard__data"]}> {title} </div>
+      <div className={styles["UnpaidOrderTabCard__data"]}> {quantity} </div>
+      <div className={styles["UnpaidOrderTabCard__data"]}>
+        {quantity * price}
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default UnpaidOrderTabCard
-
+export default UnpaidOrderTabCard;

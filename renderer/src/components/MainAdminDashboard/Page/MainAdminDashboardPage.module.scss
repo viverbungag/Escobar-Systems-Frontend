@@ -1,121 +1,125 @@
-
 $hover-color: #fdb530;
 
-.main-dashboard-page{
+.main-dashboard-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow-y: auto;
+
+  &__header {
+    padding-top: 5rem;
+    text-align: center;
+
+    h3 {
+      font-size: 2rem;
+    }
+
+    h2 {
+      font-size: 3rem;
+    }
+  }
+
+  &__main-content {
+    padding: 5rem 5rem 0;
+    flex: 2;
+    flex-wrap: wrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+    // padding: 8rem 10rem;
+    // justify-content: center;
+    // flex-grow: 1;
+    // overflow: auto;
+  }
+
+  &__card {
+    // flex: 1;
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    overflow-y: scroll;
+    align-items: center;
+    // justify-content: start;
+    padding: 2rem;
+    width: 20rem;
+    // max-width: 20rem;
+    height: 20rem;
+    background-color: #ffffff;
+    border: 2px solid #000000;
+    border-radius: 10px;
+    transition: transform 0.2s;
 
-    &__header{
-        padding-top: 5rem;
-        text-align: center;
-
-        h3{
-            font-size: 2rem;
-        }
-
-        h2{
-            font-size: 3rem;
-        }
+    svg {
+      font-size: 5rem;
+      transition: transform 0.2s;
     }
 
-    &__main-content{
-        display: flex;
-        gap: 3rem;
-        padding: 8rem 10rem;
-        // align-items: center;
-        justify-content: center;
-        flex-grow: 1;
+    span {
+      font-family: "Poppins";
+      margin: auto;
+      font-size: 1.5rem;
+      font-weight: 600;
+      transition: transform 0.2s;
     }
 
-    &__card {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: start;
-        padding: 2rem;
-        width: 20rem;
-        max-width: 20rem;
-        height: 20rem;
-        background-color: #ffffff;
-        border: 2px solid #000000;
-        border-radius: 10px;
-        transition: transform 0.2s;
+    &:hover {
+      cursor: pointer;
+      border: 2px solid $hover-color;
+      transform: scale(1.1);
 
-        svg{
-            font-size: 5rem;
-            transition: transform 0.2s;
-        }
+      svg,
+      span {
+        color: $hover-color;
+        transform: scale(1.1);
+      }
+    }
+  }
 
-        span{
-            font-family: 'Poppins';
-            margin: auto;
-            font-size: 1.5rem;
-            font-weight: 600;
-            transition: transform 0.2s;
-        }
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem;
+    width: 100%;
+  }
 
-        &:hover{
-            cursor: pointer;
-            border: 2px solid $hover-color;
-            transform: scale(1.1);
+  &__info {
+    font-family: "Open Sans", sans-serif;
+    display: flex;
+    flex-direction: column;
+  }
 
-            svg, span{
-                color: $hover-color;
-                transform: scale(1.1);
-            }
-        }
+  &__top-text {
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: 1rem;
+  }
+
+  &__bottom-text {
+    text-transform: capitalize;
+    letter-spacing: 0.1rem;
+    font-weight: 500;
+    font-size: 1rem;
+  }
+
+  &__logout-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.5rem;
+    width: fit-content;
+    cursor: pointer;
+    transition: transform 0.2s;
+
+    svg {
+      font-size: 1.8rem;
     }
 
-    &__footer{
-        display: flex;
-        justify-content: space-between;
-        padding: 2rem;
-        width: 100%;
+    span {
+      font-size: 1.3rem;
+      font-weight: 600;
     }
 
-    &__info{
-        font-family: 'Open Sans', sans-serif;
-        display: flex;
-        flex-direction: column;
+    &:hover {
+      transform: scale(1.2);
     }
-
-    &__top-text {
-        text-transform: uppercase;
-        font-weight: 900;
-        font-size: 1rem;
-    }
-
-    &__bottom-text {
-        text-transform: capitalize;
-        letter-spacing: 0.1rem;
-        font-weight: 500;
-        font-size: 1rem;
-    }
-
-    &__logout-container{
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        gap: 0.5rem;
-        width: fit-content;
-        cursor: pointer;
-        transition: transform 0.2s;
-
-        svg{
-            font-size: 1.8rem;
-        }
-
-        span{
-            font-size: 1.3rem;
-            font-weight: 600;
-        }
-
-        &:hover{
-            transform: scale(1.2);
-        }
-
-    }
-
+  }
 }
