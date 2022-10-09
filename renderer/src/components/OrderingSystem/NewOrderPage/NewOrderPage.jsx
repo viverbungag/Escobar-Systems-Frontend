@@ -224,6 +224,13 @@ const NewOrderPage = () => {
       0
     );
 
+    if (servingType === "DINE_IN" && type === "new-user"){
+      if (!availableTableNumbers.includes(selectedTableNumber)){
+        toast.error("Invalid table number");
+        return;
+      }
+    }
+
     if (servingType === "TAKE_OUT" && type === "new-user") {
       if (isNaN(customerPayment)) {
         toast.error(" The Customer Payment must be a number");
@@ -234,16 +241,7 @@ const NewOrderPage = () => {
         toast.error("Please Input a Number for the Discount Value");
         return;
       }
-      // console.log("total: " + total);
-      // console.log("additionalPayment: " + additionalPayment);
-      // console.log("discount: " + (Number(total) + Number(additionalPayment)) * (Number(discountPayment) / 100));
 
-      // console.log(
-      //   Number(total) +
-      //     Number(additionalPayment) -
-      //     (Number(total) + Number(additionalPayment)) *
-      //       (Number(discountPayment) / 100)
-      // );
       if (
         Number(total) +
           Number(additionalPayment) -
@@ -263,6 +261,11 @@ const NewOrderPage = () => {
       }
 
       if (discountPayment < 0) {
+        toast.error(" Discount should be higher than 0");
+        return;
+      }
+
+      if (additionalPayment < 0) {
         toast.error(" Discount should be higher than 0");
         return;
       }
@@ -299,19 +302,21 @@ const NewOrderPage = () => {
             0,
             "UNPAID",
             servingType,
-            selectedTableNumber
+            Number(selectedTableNumber),
+            0
           )
         : new Order(
             1,
             employeeName,
             dayjs().add(8, "hour"),
             customerFoodOrders,
-            customerPayment,
-            discountPayment,
-            total,
-            serve === "new-user" ? "PAID" : "UNPAID",
+            Number(customerPayment),
+            Number(discountPayment),
+            Number(total),
+            type === "new-user" ? "PAID" : "UNPAID",
             servingType,
-            0
+            0,
+            Number(additionalPayment)
           );
     if (type === "new-user") {
       rest.add(

@@ -49,6 +49,7 @@ const UnpaidPageBody = ({
                 price={item.payment}
                 orderDate={item.orderTime}
                 isSelected={orderCardSelected === item.orderId}
+                tableNumber={item.tableNumber}
                 voidButtonOnClick={voidButtonOnClick}
               />
             </div>

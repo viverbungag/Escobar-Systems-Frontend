@@ -20,6 +20,7 @@ const PaymentPage = () => {
   const [orderDiscount, setOrderDiscount] = useState(0);
   const [customerPayment, setOrderCustomerPayment] = useState(0);
   const [totalPayment, setTotalPayment] = useState(0);
+  const [additionalPayment, setAdditionalPayment] = useState(0);
 
   const rest = new Rest();
 
@@ -53,12 +54,13 @@ const PaymentPage = () => {
     );
   }
 
-  const handleOrderCardOnClick = (items, orderId, discount, customerPayment, totalCost) => {
+  const handleOrderCardOnClick = (items, orderId, discount, customerPayment, totalCost, additionalPayment) => {
     setOrderTabItems(items);
     setOrderCardSelected(orderId);
     setOrderDiscount(discount);
     setOrderCustomerPayment(customerPayment);
     setTotalPayment(totalCost);
+    setAdditionalPayment(additionalPayment);
   }
 
   const handleOrdersLoad = (contents) => {
@@ -134,6 +136,7 @@ const getSystemConfigurations = () => {
           orderDiscount={orderDiscount}
           customerPayment={customerPayment}
           totalPayment={totalPayment}
+          additionalPayment={additionalPayment}
         />
       </div>
     </div>

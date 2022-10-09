@@ -13,6 +13,7 @@ const PaymentOrderTab = ({
   orderDiscount,
   customerPayment,
   totalPayment,
+  additionalPayment
 }) => {
   const { employeeName } = useUser();
   const subTotal = orderTabItems.reduce(
@@ -21,9 +22,9 @@ const PaymentOrderTab = ({
       currentMenu.foodOrder.menu.menuPrice * currentMenu.foodOrder.menuQuantity,
     0
   );
-  const discountedPrice = subTotal * (orderDiscount / 100);
-  const totalPrice = subTotal - subTotal * (orderDiscount / 100);
-  const change = customerPayment - (subTotal - orderDiscount);
+  const discountedPrice = (subTotal + additionalPayment)  * (orderDiscount / 100);
+  const totalPrice = subTotal + additionalPayment - discountedPrice;
+  const change = customerPayment - totalPrice;
   //for pdf
   const arr = [];
   const createNewCols = () => {
@@ -128,9 +129,14 @@ const PaymentOrderTab = ({
         </div>
 
         <div className={styles["footer-section__row"]}>
+          <h2 className={styles["footer-section__text"]}> Additional Cost </h2>
+          <h2 className={styles["footer-section__text"]}> {additionalPayment} </h2>
+        </div>
+
+        <div className={styles["footer-section__row"]}>
           <h2 className={styles["footer-section__text"]}> Discounted Price </h2>
           <h2 className={styles["footer-section__text"]}>
-            {(subTotal * (orderDiscount / 100)).toFixed(2)}
+            {discountedPrice.toFixed(2)}
           </h2>
         </div>
 
@@ -138,17 +144,14 @@ const PaymentOrderTab = ({
           <h2 className={styles["footer-section__text"]}> Total </h2>
           <h2 className={styles["footer-section__text"]}>
             {" "}
-            {(subTotal - subTotal * (orderDiscount / 100)).toFixed(2)}
+            {totalPrice.toFixed(2)}
           </h2>
         </div>
 
         <div className={styles["footer-section__row"]}>
           <h2 className={styles["footer-section__text"]}> Change </h2>
           <h2 className={styles["footer-section__text"]}>
-            {(
-              customerPayment -
-              (subTotal - subTotal * (orderDiscount / 100))
-            ).toFixed(2)}
+            {change.toFixed(2)}
           </h2>
         </div>
       </div>

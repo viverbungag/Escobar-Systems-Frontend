@@ -1,67 +1,62 @@
-
 .MenuSideBar {
-    height: 100%;
-    width: 175px;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: #fafafa;
-    overflow-y: scroll;
-    filter: drop-shadow(4px 0px 20px rgba(0, 0, 0, 0.02));
-    &__header-container {
-        position: sticky;
-        top: 0;
-        background-color: #fafafa;
-    }
+	height: 100%;
+	width: 175px;
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	background-color: white;
+	overflow-y: scroll;
+	filter: drop-shadow(4px 0px 20px rgba(0, 0, 0, 0.02));
+	&__header-container {
+		position: relative;
+		top: 0;
+		background-color: white;
+	}
 }
 
-
 .wrapper {
-    z-index: 1;
-    padding: 30px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    padding-bottom: 1rem;
-
+	z-index: 1;
+	padding: 30px;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	padding-bottom: 1rem;
 }
 
 .back-section {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 0px;
-    gap: 10px;
-    padding-bottom: 20px;
-    padding-top: 20px;
-    padding-left: 20px;
-    p{
-        font-family: SF Pro Text;
-        font-style: Medium;
-        font-weight: 500;
-        font-size: 18px;
-        line-height: 100%;
-        margin-left: 10px;
-        margin-bottom: 5px;
-    }
-    button{
-        background-color: #fafafa;
-        border: 1px solid #fafafa;   
-         
-    }
-    button:active{
-        transform: translateX(-3px);
-        border-radius: 40%;
-        background-color: #cbcbcb;
-
-    }
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding: 0px;
+	gap: 10px;
+	padding-bottom: 20px;
+	padding-top: 20px;
+	padding-left: 20px;
+	p {
+		font-family: SF Pro Text;
+		font-style: Medium;
+		font-weight: 500;
+		font-size: 18px;
+		line-height: 100%;
+		margin-left: 10px;
+		margin-bottom: 5px;
+	}
+	button {
+		background-color: white;
+		border: 1px solid white;
+	}
+	button:active {
+		transform: translateX(-3px);
+		border-radius: 40%;
+		background-color: #cbcbcb;
+	}
 }
 
 .img-section {
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 1rem;
-    align-items: center;
-    justify-content: center;
+	display: flex;
+	flex-direction: column;
+	padding-bottom: 1rem;
+	align-items: center;
+	justify-content: center;
 }

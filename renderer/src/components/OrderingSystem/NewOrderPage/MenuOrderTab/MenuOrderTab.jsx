@@ -24,6 +24,15 @@ import { FormLabel } from "@mui/material";
 import { FormControlLabel } from "@mui/material";
 import { RadioGroup } from "@mui/material";
 import { Radio } from "@mui/material";
+import { InputAdornment, TextField } from "@mui/material";
+
+function capitalizeFirstLetter(string) {
+	return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function validIntegerDecimal(data) {
+	return /^[0-9]\d*(\.\d+)?$/.test(data);
+}
 
 const MenuOrderTab = ({
 	menuOnCategory,
@@ -43,21 +52,27 @@ const MenuOrderTab = ({
 	servingType,
 	handleServingTypeOnChange,
 }) => {
-	const [total, setTotal] = useState(1);
+	const [total, setTotal] = useState(0);
 	const [open, setOpen] = React.useState(false);
 	const [customerPayment, setCustomerPayment] = useState(0);
 	const [discountPayment, setDiscountPayment] = useState(0);
 	const [additionalPayment, setAdditionalPayment] = useState(0);
-	const SubTotal = total;
-	const discountedPrice = total * (discountPayment / 100);
-	const totalPrice = total - total * (discountPayment / 100);
-	const change = customerPayment - (total - discountPayment);
-	const { employeeName } = useUser();
+	const [subTotal, setSubTotal] = useState(0);
+	// const discountedPrice = total * (discountPayment / 100);
+	// const totalPrice = total - total * (discountPayment / 100);
+	// const { employeeName } = useUser();
 
 	// const [pickUpFormat, setPickUpFormat] = useState("DineIn");
 	// const handlePickUpFormat = (event) => setPickUpFormat(event.target.value);
 
+	const resetTextFieldValues = () => {
+		setCustomerPayment(0);
+		setDiscountPayment(0);
+		setAdditionalPayment(0);
+	};
+
 	const handleClose = () => {
+		resetTextFieldValues();
 		setOpen(false);
 	};
 	const handleOpen = () => {
@@ -82,6 +97,22 @@ const MenuOrderTab = ({
 			);
 		}
 	};
+	const [orderValues, setOrderValues] = useState([]);
+	const [change, setChange] = useState(0);
+
+	const [discountError, setDiscountError] = useState("");
+	const [paymentError, setPaymentError] = useState("");
+	const [additionalError, setAdditionalError] = useState("");
+
+	const getChange = () => {
+		const beforeCheckChange = (orderValues.payment - total).toFixed(2);
+		if (beforeCheckChange >= 0) {
+			setChange(beforeCheckChange);
+		} else if (beforeCheckChange < 0) {
+			setChange(0);
+		}
+	};
+
 	const customerPaymentOnChange = (e) => {
 		setCustomerPayment(e.target.value);
 	};
@@ -90,6 +121,115 @@ const MenuOrderTab = ({
 	};
 	const additionalPaymentOnChange = (e) => {
 		setAdditionalPayment(e.target.value);
+	};
+
+	const handleInputChange = (e) => {
+		if (e.target.name === "discount") {
+			if (e.target.value == 0 || e.target.value == "") {
+				setDiscountError("");
+				setTotal((subTotal - subTotal * (e.target.value / 100)).toFixed(2));
+				getChange();
+				setDiscountPayment(orderValues.discount);
+			} else if (validIntegerDecimal(e.target.value)) {
+				if (e.target.value > 100 || e.target.value < 0) {
+					setDiscountError("Input must be 0-100 only.");
+				} else {
+					setDiscountError("");
+					setTotal((subTotal - subTotal * (e.target.value / 100)).toFixed(2));
+					getChange();
+				}
+			} else if (!validIntegerDecimal(e.target.value)) {
+				setDiscountError("Input digits only.");
+			}
+		}
+		setOrderValues({
+			...orderValues,
+			[e.target.name]: e.target.value,
+		});
+	};
+
+	const payButton = () => {
+		console.log(orderValues);
+		const discountFloat = 0.0;
+		const paymentFloat = 0.0;
+		const additionalFloat = 0.0;
+		const DiscountChecker = false;
+		const PaymentChecker = false;
+		const AdditionalChecker = false;
+
+		if (orderValues.discount != 0 || orderValues.discount != "") {
+			if (validIntegerDecimal(orderValues.discount)) {
+				discountFloat = parseFloat(orderValues.discount).toFixed(2);
+				if (discountFloat > 100 || discountFloat < 0) {
+					setDiscountError("Input must be 0-100 only.");
+					return;
+				} else {
+					setDiscountError("");
+					setOrderValues({ ...orderValues, discount: discountFloat });
+					DiscountChecker = true;
+					setDiscountPayment(orderValues.discount);
+				}
+			} else {
+				setDiscountError("Input digits only.");
+				return;
+			}
+		} else {
+			setDiscountError("");
+			setOrderValues({ ...orderValues, discount: discountFloat });
+		}
+
+		if (orderValues.payment == "") {
+			setPaymentError("Input cannot be empty.");
+			return;
+		} else if (!validIntegerDecimal(orderValues.payment)) {
+			setPaymentError("Input must be digits.");
+			return;
+		} else if (validIntegerDecimal(orderValues.payment)) {
+			paymentFloat = parseFloat(orderValues.payment).toFixed(2);
+			if (paymentFloat - orderValues.totalCost < 0) {
+				setPaymentError("Payment must be greater than total cost.");
+				return;
+			} else {
+				setPaymentError("");
+				setOrderValues({ ...orderValues, payment: paymentFloat });
+				PaymentChecker = true;
+				setCustomerPayment(orderValues.payment);
+			}
+		} else {
+			setPaymentError("");
+			setOrderValues({ ...orderValues, payment: paymentFloat });
+		}
+
+		if (
+			orderValues.additionalPayment != 0 ||
+			orderValues.additionalPayment != ""
+		) {
+			if (validIntegerDecimal(orderValues.additionalPayment)) {
+				additionalFloat = parseFloat(orderValues.discount).toFixed(2);
+				setOrderValues({ ...orderValues, additionalPayment: additionalFloat });
+				setAdditionalError("");
+				AdditionalChecker = true;
+				setAdditionalPayment(orderValues.additional0Payment);
+			} else {
+				setAdditionalError("Input must be 0 and above only.");
+				return;
+			}
+		} else {
+			setAdditionalError("");
+			setOrderValues({ ...orderValues, additionalPayment: additionalFloat });
+		}
+		if (
+			DiscountChecker === true &&
+			PaymentChecker === true &&
+			AdditionalChecker === true
+		) {
+			payButtonOnClick(
+				customerPayment,
+				discountPayment,
+				additionalPayment,
+				handleClose
+			);
+		}
 	};
 
 	// const arr = [];
@@ -106,25 +246,25 @@ const MenuOrderTab = ({
 	// };
 
 	// const pdfColumns = [
-	//   { header: "Item", dataKey: "menuName" },
-	//   { header: "Quantity", dataKey: "menuQuantity" },
-	//   { header: "Price", dataKey: "menuPrice" },
+	// 	{ header: "Item", dataKey: "menuName" },
+	// 	{ header: "Quantity", dataKey: "menuQuantity" },
+	// 	{ header: "Price", dataKey: "menuPrice" },
 	// ];
 	// const [pdfRows, setPdfRows] = useState([]);
 	// const pdfPaymentColumns = [
-	//   { header: "", dataKey: "label" },
-	//   { header: "", dataKey: "data" },
+	// 	{ header: "", dataKey: "label" },
+	// 	{ header: "", dataKey: "data" },
 	// ];
 	// const pdfPaymentRows = [
-	//   { label: "Customer Payment", data: customerPayment.toFixed(2) },
-	//   { label: "Discount", data: `${discountedPrice}%` },
-	//   { label: "Total", data: totalPrice.toFixed(2) },
-	//   { label: "Change", data: change.toFixed(2) },
-	//   { label: "Cashier", data: employeeName },
+	// 	{ label: "Customer Payment", data: customerPayment.toFixed(2) },
+	// 	{ label: "Discount", data: `${discountedPrice}%` },
+	// 	{ label: "Total", data: totalPrice.toFixed(2) },
+	// 	{ label: "Change", data: change.toFixed(2) },
+	// 	{ label: "Cashier", data: employeeName },
 	// ];
 
 	useEffect(() => {
-		setTotal(
+		setSubTotal(
 			menuOnCategory.orderMenu.reduce(
 				(sum, currentMenu) =>
 					sum + currentMenu.menuPrice * currentMenu.orderMenuQuantity,
@@ -204,7 +344,7 @@ const MenuOrderTab = ({
 			</div>
 			<div className={styles["total-section"]} onClick={handleOpen}>
 				<div className={styles["total-section--wrapper"]}>
-					<h1> ₱ {total}</h1>
+					<h1> ₱ {subTotal}</h1>
 					<div className={styles["pay-section"]}>
 						<h2> Pay </h2>
 						<Icon icon={chevronRight} height="16" width="16" color="white" />
@@ -290,42 +430,88 @@ const MenuOrderTab = ({
 							)}
 						</div>
 						{servingType === "TAKE_OUT" && (
-							<div className={styles["Input-Section"]}>
-								<div className={styles["Input-Section--Payment"]}>
-									<h1> Input the Customer Payment : </h1>
-									<input
-										value={customerPayment}
-										onChange={customerPaymentOnChange}
-										type="text"
-										id="first"
-										className={styles["Input-Forms--Payment"]}
-										placeholder="Input the money of the customer"
+							<div className={styles["Input-Text-Section"]}>
+								<div className={styles["Input-Section"]}>
+									<TextField
+										variant="outlined"
+										size="small"
+										label="Discount"
+										name="discount"
+										helperText={discountError}
+										error={discountError != ""}
+										onChange={handleInputChange}
+										InputProps={{
+											endAdornment: (
+												<InputAdornment position="end">
+													<Icon icon="bi:percent" />
+												</InputAdornment>
+											),
+										}}
+										fullWidth
 									/>
 								</div>
 
-								<div className={styles["Input-Section--Discount"]}>
-									<p> Input Discount Value : </p>
-									<input
-										value={discountPayment}
-										onChange={discountPaymentOnChange}
-										type="text"
-										id="first"
-										className={styles["Input-Forms--Discount"]}
-										placeholder="Input Percentage of the Discount"
+								<div className={styles["Input-Section"]}>
+									<TextField
+										variant="outlined"
+										size="small"
+										label="Customer Payment "
+										name="payment"
+										helperText={paymentError}
+										error={paymentError != ""}
+										onChange={handleInputChange}
+										InputProps={{
+											startAdornment: (
+												<InputAdornment position="end">
+													<Icon icon="clarity:peso-line" />
+												</InputAdornment>
+											),
+										}}
+										fullWidth
 									/>
-									<h1 className={styles["Percentage"]}> % </h1>
 								</div>
 
-								<div className={styles["Input-Section--Payment"]}>
-									<h1> Input the Additional Payment : </h1>
-									<input
-										value={additionalPayment}
-										onChange={additionalPaymentOnChange}
-										type="text"
-										id="first"
-										className={styles["Input-Forms--Payment"]}
-										placeholder="Input the money of the customer"
+								<div className={styles["Input-Section"]}>
+									<TextField
+										variant="outlined"
+										size="small"
+										label="Additional Payment"
+										name="additionalPayment"
+										helperText={additionalError}
+										error={additionalError != ""}
+										onChange={handleInputChange}
+										InputProps={{
+											startAdornment: (
+												<InputAdornment position="end">
+													<Icon icon="clarity:peso-line" />
+												</InputAdornment>
+											),
+										}}
+										fullWidth
 									/>
+								</div>
+
+								<div className={styles["Output-Section"]}>
+									<div className={styles["Output-Section__label"]}>
+										<div className={styles["Output-Section__label-text"]}>
+											Change
+										</div>
+										<div className={styles["Output-Section__label-subtext"]}>
+											excluding additional payment
+										</div>
+									</div>
+									<div className={styles["Output-Section__label"]}>
+										₱{parseFloat(change).toFixed(2)}
+									</div>
+								</div>
+
+								<div className={styles["Output-Section"]}>
+									<div className={styles["Output-Section__label"]}>
+										Current Total
+									</div>
+									<div className={styles["Output-Section__label"]}>
+										₱{total}
+									</div>
 								</div>
 							</div>
 						)}
@@ -333,147 +519,18 @@ const MenuOrderTab = ({
 						<div className={styles["Button-Section"]}>
 							<Button
 								onClick={() => {
-									payButtonOnClick(
-										customerPayment,
-										discountPayment,
-										additionalPayment,
-										handleClose
-									);
+									payButton();
 								}}
 								className={styles["Confirm_Button"]}
 							>
 								Confirm
 							</Button>
 						</div>
-						{/* <ChildModal
-                className={styles["Confirm_Button"]}
-                payButtonOnClick={payButtonOnClick}
-                total={total}
-                customerPayment={customerPayment}
-                handleMainModalClose={handleClose}
-                discountPayment={discountPayment}
-                menuOnCategory={menuOnCategory}
-                type={type}
-                orderDiscount={orderDiscount}
-              /> */}
 					</div>
 				</Box>
 			</Modal>
 		</div>
 	);
 };
-
-// function ChildModal({payButtonOnClick, total, customerPayment, handleMainModalClose, discountPayment, menuOnCategory, type, orderDiscount}) {
-//   const [open, setOpen] = React.useState(false);
-//   const handleOpen = () => {
-// if (isNaN(customerPayment)){
-//   if (customerPayment.substring(0, 1) === "₱"){
-//     toast.error(" Please remove the ₱ Sign ");
-//   }
-//   else{
-//     toast.error(" The Customer Payment must be a number");
-//   }
-// }
-// else if (isNaN(discountPayment)){
-//   toast.error("Please Input a Number for the Discount Value");
-// }
-// else{
-
-//   if (total > customerPayment){
-//     toast.error(" The Customer Payment must be higher than the total");
-
-//   }
-//   else if (customerPayment < 0){
-//     toast.error(" The Customer Payment should be higher than 0");
-//   }
-//   else{
-//     if (discountPayment < 0) {
-//       toast.error(" Discount should be higher than 0");
-//     }
-//     else{
-//       setOpen(true);
-//     }
-//   }
-// }
-//   };
-
-//   const handleClose = () => {
-//     setOpen(false);
-//     payButtonOnClick(customerPayment, discountPayment)
-//     handleMainModalClose()
-
-//   };
-
-//   return (
-//     <React.Fragment>
-//       <Button className={styles['Confirm_Button']} onClick={handleOpen}>Confirm</Button>
-
-//       <Modal hideBackdrop open={open} onClose={handleClose}>
-//         <Box className={styles['child-style']}>
-//           <div className={styles['Image-Section']}>
-//             <Image
-//                 src="/OrderingSystem/images/logo.png"
-//                 alt="Escobar Logo"
-//                 width="40"
-//                 height="40"
-//                 objectFit="contain"
-//             />
-//           </div>
-//         <Button onClick={handleClose} className={styles['Close_Button']}> X </Button>
-
-//           <div className={styles['Wrapper']}>
-
-//                 <div className={styles['Text-Section']}>
-//                   <h1 className={styles['Order-Text']}>{dayjs().format('YYYY / MM / DD – HH:MM')}</h1>
-//                   {/* <h1  className={styles['Date-Text']}> {`${new Date().getFullYear()} / ${new Date().getMonth()} / ${new Date().getDate()}`} </h1> */}
-//                 </div>
-
-//                 <div className={styles['Title-Section']}>
-//                   <h2 className={styles['Qty-Text']}> Qty </h2>
-//                   <h2  className={styles['Title-Text']}> Item Title  </h2>
-//                   <h2 className={styles['Price-Text']}> Price  </h2>
-//                 </div>
-
-//                 {menuOnCategory.orderMenu.map((item) => {
-//                   return (
-//                     <div className={styles["Component-Section"]} key={shortid.generate()}>
-//                       <h6 className={styles['Quantity-Component']}>{item.orderMenuQuantity} </h6>
-//                       <h6 className={styles['Menuname-Component']}>{item.menuName}</h6>
-//                       <h6 className={styles['Price-Component']}> {item.menuPrice}</h6>
-//                     </div>
-//                   );
-//                 })}
-
-//                 <div className={styles['CustomerPayment-Section']}>
-//                   <h2 className={styles['CustomerPayment']}> Customer Payment </h2>
-//                   <h2 className={styles['CustomerPaymentPrice']}> ₱ {(customerPayment)}  </h2>
-//                 </div>
-
-//                 <div className={styles['Subtotal-Section']}>
-//                   <h2 className={styles['Subtotal']}> SubTotal </h2>
-//                   <h2  className={styles['SubtotalPrice']}> ₱ {(total)}  </h2>
-//                 </div>
-
-//                 <div className={styles['Discounted-Section']}>
-//                   <h2 className={styles['Discount']}> Discounted Price </h2>
-//                   <h2  className={styles['DiscountPrice']}> ₱ {type === "new-user" ? (total * (discountPayment/100)).toFixed(2) : (total * (orderDiscount/100)).toFixed(2)}  </h2>
-//                 </div>
-
-//                 <div className={styles['Total-Section']}>
-//                   <h2 className={styles['Total']}> Total </h2>
-//                   <h2  className={styles['TotalPrice']}> ₱ {type === "new-user" ? (total - (total * (discountPayment/100))).toFixed(2): (total - (total * (orderDiscount/100))).toFixed(2)}  </h2>
-//                 </div>
-
-//                 <div className={styles['Change-Section']}>
-//                   <h2 className={styles['Change']}> Change </h2>
-//                   <h2  className={styles['ChangePrice']}> ₱ {(customerPayment - (total - discountPayment)).toFixed(2)}  </h2>
-//                 </div>
-
-//             </div>
-//         </Box>
-//       </Modal>
-//     </React.Fragment>
-//   );
-// }
 
 export default MenuOrderTab;

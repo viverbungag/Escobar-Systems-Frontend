@@ -18,6 +18,7 @@
 		margin-left: 2000px;
 	}
 }
+
 .none {
 	display: none;
 }
@@ -188,72 +189,101 @@
 			padding: 1rem 2rem;
 			justify-self: center;
 			gap: 1rem;
+		}
+		// 	.Input-Section--Payment {
+		// 		display: flex;
+		// 		flex-direction: row;
+		// 		gap: 30px;
 
-			.Input-Section--Payment {
+		// 		h1 {
+		// 			font-style: normal;
+		// 			font-weight: 500;
+		// 			font-size: 16px;
+		// 			line-height: 16px;
+		// 			text-align: center;
+		// 			display: inline-block;
+		// 			white-space: nowrap;
+		// 		}
+		// 		.Input-Forms--Payment {
+		// 			margin-left: auto;
+		// 			margin-right: 0;
+		// 			width: 220px;
+		// 			font-size: 13px;
+		// 			border-radius: 4px;
+		// 			border-color: #ced4da;
+		// 			padding: 5px;
+		// 			margin-right: 10px;
+		// 			::placeholder {
+		// 				color: #6c757d;
+		// 				opacity: 1;
+		// 			}
+		// 		}
+		// 	}
+
+		// 	.Input-Section--Discount {
+		// 		display: flex;
+		// 		flex-direction: row;
+		// 		gap: 5px;
+
+		// 		h1 {
+		// 			font-style: normal;
+		// 			font-weight: 500;
+		// 			font-size: 16px;
+		// 			line-height: 16px;
+		// 			text-align: center;
+		// 			display: inline-block;
+		// 			white-space: nowrap;
+		// 		}
+
+		// 		.Input-Forms--Discount {
+		// 			margin-left: auto;
+		// 			margin-right: 0;
+		// 			width: 200px;
+		// 			font-size: 12.5px;
+
+		// 			border-radius: 4px;
+		// 			border-color: #ced4da;
+		// 			padding: 5px;
+		// 			::placeholder {
+		// 				color: #6c757d;
+		// 				opacity: 1;
+		// 				font-size: 12px;
+		// 			}
+		// 		}
+		// 		.Percentage {
+		// 			font-size: 16px;
+		// 			display: flex;
+		// 			align-items: center;
+		// 			margin-right: 10px;
+		// 		}
+		// 	}
+		// }
+		.Input-Text-Section {
+			display: flex;
+			flex-direction: column;
+			width: 100%;
+			padding: 0 2rem;
+			gap: 1.5rem;
+			height: 30vh;
+			overflow: auto;
+			.Input-Section {
 				display: flex;
-				flex-direction: row;
-				gap: 30px;
-
-				h1 {
-					font-style: normal;
-					font-weight: 500;
-					font-size: 16px;
-					line-height: 16px;
-					text-align: center;
-					display: inline-block;
-					white-space: nowrap;
-				}
-				.Input-Forms--Payment {
-					margin-left: auto;
-					margin-right: 0;
-					width: 220px;
-					font-size: 13px;
-					border-radius: 4px;
-					border-color: #ced4da;
-					padding: 5px;
-					margin-right: 10px;
-					::placeholder {
-						color: #6c757d;
-						opacity: 1;
-					}
-				}
+				align-items: center;
 			}
-
-			.Input-Section--Discount {
+			.Output-Section {
 				display: flex;
-				flex-direction: row;
-				gap: 5px;
-
-				h1 {
-					font-style: normal;
-					font-weight: 500;
-					font-size: 16px;
-					line-height: 16px;
-					text-align: center;
-					display: inline-block;
-					white-space: nowrap;
-				}
-
-				.Input-Forms--Discount {
-					margin-left: auto;
-					margin-right: 0;
-					width: 200px;
-					font-size: 12.5px;
-
-					border-radius: 4px;
-					border-color: #ced4da;
-					padding: 5px;
-					::placeholder {
-						color: #6c757d;
-						opacity: 1;
-						font-size: 12px;
-					}
-				}
-				.Percentage {
-					font-size: 16px;
+				width: 100%;
+				justify-content: space-between;
+				&__label {
 					display: flex;
-					align-items: center;
-					margin-right: 10px;
+					flex-direction: column;
+					justify-content: center;
+					text-transform: capitalize;
+					color: #000000;
+					&-subtext {
+						color: #6b6b6b;
+						font-size: 0.8rem;
+					}
 				}
 			}
 		}
