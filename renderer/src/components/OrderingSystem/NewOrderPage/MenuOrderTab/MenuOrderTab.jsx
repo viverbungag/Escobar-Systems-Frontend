@@ -57,7 +57,14 @@ const MenuOrderTab = ({
   // const [pickUpFormat, setPickUpFormat] = useState("DineIn");
   // const handlePickUpFormat = (event) => setPickUpFormat(event.target.value);
 
+  const resetTextFieldValues = () => {
+    setCustomerPayment(0);
+    setDiscountPayment(0);
+    setAdditionalPayment(0);
+  }
+
   const handleClose = () => {
+    resetTextFieldValues();
     setOpen(false);
   };
   const handleOpen = () => {
@@ -67,7 +74,7 @@ const MenuOrderTab = ({
     }
 
     if (type === "existing-user" && selectedOrder === "") {
-      toast.error("Please select from the existing orders");
+      toast.error("Please select from the existing table numbers");
       return;
     }
 
@@ -115,13 +122,13 @@ const MenuOrderTab = ({
     { header: "", dataKey: "label" },
     { header: "", dataKey: "data" },
   ];
-  const pdfPaymentRows = [
-    { label: "Customer Payment", data: customerPayment.toFixed(2) },
-    { label: "Discount", data: `${discountedPrice}%` },
-    { label: "Total", data: totalPrice.toFixed(2) },
-    { label: "Change", data: change.toFixed(2) },
-    { label: "Cashier", data: employeeName },
-  ];
+  // const pdfPaymentRows = [
+  //   { label: "Customer Payment", data: customerPayment.toFixed(2) },
+  //   { label: "Discount", data: `${discountedPrice}%` },
+  //   { label: "Total", data: totalPrice.toFixed(2) },
+  //   { label: "Change", data: change.toFixed(2) },
+  //   { label: "Cashier", data: employeeName },
+  // ];
 
   useEffect(() => {
     setTotal(
@@ -163,7 +170,7 @@ const MenuOrderTab = ({
         >
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">
-              Select Order Menu
+              Select Table Number
             </InputLabel>
             <Select
               labelId="demo-simple-select-label"
@@ -175,7 +182,7 @@ const MenuOrderTab = ({
               {allOrders.map((item) => {
                 return (
                   <MenuItem key={item.orderId} value={item.orderId}>
-                    {`Order #${item.orderId}`}{" "}
+                    {`Table #${item.tableNumber}`}
                   </MenuItem>
                 );
               })}

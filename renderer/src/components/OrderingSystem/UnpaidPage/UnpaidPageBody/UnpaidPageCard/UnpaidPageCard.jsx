@@ -12,6 +12,7 @@ const UnpaidPageCard = ({
 	isSelected,
 	voidButtonOnClick,
 	orderDate,
+	tableNumber
 }) => {
 	const [voidOpen, setVoidOpen] = React.useState(false);
 	const handleVoidOpen = () => setVoidOpen(true);
@@ -26,7 +27,8 @@ const UnpaidPageCard = ({
 		>
 			<div className={styles["Section"]}>
 				<div className={styles["First-Section"]}>
-					<h3> Order # {ordernum} </h3>
+					{/* <h3> Order # {ordernum} </h3> */}
+					<h3> Table # {tableNumber} </h3>
 					<div className={styles["Quantity-Section"]}>
 						<h3> Number of Items: {quantity} </h3>
 					</div>
@@ -34,8 +36,7 @@ const UnpaidPageCard = ({
 
 				<div className={styles["Second-Section"]}>
 					<h4 className={styles["Order-Time"]}>
-						{" "}
-						Order Time: {orderDate.split("T").join(" – ")}{" "}
+						Order Time: {orderDate.split("T").join(" – ")}
 					</h4>
 					<div className={styles["Price-Section"]}>
 						{/* <button onClick={handlePayOpen} className={styles["paybutton"]}>

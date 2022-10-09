@@ -40,7 +40,8 @@ const PaymentPageBody = ({
                   item.orderId,
                   item.discount,
                   item.payment,
-                  item.totalCost
+                  item.totalCost,
+                  item.additionalPayment
                 );
               }}
             >
