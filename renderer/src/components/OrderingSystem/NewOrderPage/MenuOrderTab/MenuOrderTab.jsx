@@ -52,7 +52,7 @@ const MenuOrderTab = ({
 	servingType,
 	handleServingTypeOnChange,
 }) => {
-	const [arrChangeDiscountedPrice, setArrChangeDiscountedPrice] = useState([]);
+	// const [arrChangeDiscountedPrice, setArrChangeDiscountedPrice] = useState([]);
 	const [total, setTotal] = useState(0);
 	const [open, setOpen] = React.useState(false);
 	const [customerPayment, setCustomerPayment] = useState(0);
@@ -81,9 +81,10 @@ const MenuOrderTab = ({
 	};
 
 	const handleClose = () => {
-		resetTextFieldValues();
 		setOpen(false);
+		resetTextFieldValues();
 	};
+
 	const handleOpen = () => {
 		if (menuOnCategory.orderMenu.length === 0) {
 			toast.error("There should atleast be 1 menu item");
@@ -99,7 +100,7 @@ const MenuOrderTab = ({
 			setOpen(true);
 			setTotal(parseFloat(subTotal).toFixed(2));
 		} else {
-			payButtonOnClick(payButton());
+			payButton();
 		}
 	};
 	const [orderValues, setOrderValues] = useState([]);
@@ -109,10 +110,15 @@ const MenuOrderTab = ({
 	const [additionalError, setAdditionalError] = useState("");
 
 	const getChange = () => {
-		const beforeCheckChange = (orderValues.payment - total).toFixed(2);
-		if (beforeCheckChange > 0) {
+		const beforeCheckChange = 0;
+		if (discountedPrice != 0) {
+			beforeCheckChange = (orderValues.payment - discountedPrice).toFixed(2);
+		} else {
+			beforeCheckChange = (orderValues.payment - total).toFixed(2);
+		}
+		if (beforeCheckChange >= 0) {
 			setChange(beforeCheckChange);
-		} else if (beforeCheckChange <= 0) {
+		} else if (beforeCheckChange < 0) {
 			setChange(0);
 		}
 	};
@@ -214,6 +220,7 @@ const MenuOrderTab = ({
 				getChange();
 			}
 		}
+
 		if (e.target.name === "additionalPayment") {
 			if (e.target.value == 0 || e.target.value == "") {
 				getChange();
@@ -263,94 +270,35 @@ const MenuOrderTab = ({
 			[e.target.name]: e.target.value,
 		});
 
-		setArrChangeDiscountedPrice({
-			change: change,
-			discountedPrice: discountedPrice,
-		});
+		// setArrChangeDiscountedPrice({
+		// 	change: change,
+		// 	discountedPrice: discountedPrice,
+		// });
 	};
 
 	const payButton = () => {
-		console.log(orderValues);
-		const discountFloat = 0.0;
-		const paymentFloat = 0.0;
-		const additionalFloat = 0.0;
-		const DiscountChecker = false;
-		const PaymentChecker = false;
-		const AdditionalChecker = false;
-
-		if (orderValues.discount != 0 || orderValues.discount != "") {
-			if (validIntegerDecimal(orderValues.discount)) {
-				discountFloat = parseFloat(orderValues.discount).toFixed(2);
-				if (discountFloat > 100 || discountFloat < 0) {
-					setDiscountError("Input must be 0-100 only.");
-					return;
-				} else {
-					setDiscountError("");
-					setOrderValues({ ...orderValues, discount: discountFloat });
-					DiscountChecker = true;
-					setDiscountPayment(orderValues.discount);
-				}
-			} else {
-				setDiscountError("Input digits only.");
-				return;
-			}
-		} else {
-			setDiscountError("");
-			setOrderValues({ ...orderValues, discount: discountFloat });
-		}
-
-		if (orderValues.payment == "") {
+		if (orderValues.payment === "" || orderValues.payment === 0) {
 			setPaymentError("Input cannot be empty.");
 			return;
-		} else if (!validIntegerDecimal(orderValues.payment)) {
-			setPaymentError("Input must be digits.");
+		}
+		if (additionalError != "" || discountError != "" || paymentError != "") {
 			return;
-		} else if (validIntegerDecimal(orderValues.payment)) {
-			paymentFloat = parseFloat(orderValues.payment).toFixed(2);
-			if (paymentFloat - total < 0) {
-				setPaymentError("Payment must be greater than total cost.");
-				return;
-			} else {
-				setPaymentError("");
-				setOrderValues({ ...orderValues, payment: paymentFloat });
-				PaymentChecker = true;
-				setCustomerPayment(orderValues.payment);
-			}
-		} else {
-			setPaymentError("");
-			setOrderValues({ ...orderValues, payment: paymentFloat });
 		}
 
-		if (
-			orderValues.additionalPayment != 0 ||
-			orderValues.additionalPayment != ""
-		) {
-			if (validIntegerDecimal(orderValues.additionalPayment)) {
-				additionalFloat = parseFloat(orderValues.discount).toFixed(2);
-				setOrderValues({ ...orderValues, additionalPayment: additionalFloat });
-				setAdditionalError("");
-				AdditionalChecker = true;
-				setAdditionalPayment(orderValues.additionalPayment);
-			} else {
-				setAdditionalError("Input must be 0 and above only.");
-				return;
-			}
-		} else {
-			setAdditionalError("");
-			setOrderValues({ ...orderValues, additionalPayment: additionalFloat });
-		}
-		if (
-			DiscountChecker == true &&
-			PaymentChecker == true &&
-			AdditionalChecker == true
-		) {
-			payButtonOnClick(
-				customerPayment,
-				discountPayment,
-				additionalPayment,
-				handleClose
-			);
-		}
+		setCustomerPayment(Number(orderValues.payment));
+		setDiscountPayment(Number(orderValues.discount));
+		setAdditionalPayment(Number(orderValues.additionalPayment));
+
+		setCustomerPayment(Number(customerPayment));
+		setDiscountPayment(Number(discountPayment));
+		setAdditionalPayment(Number(additionalPayment));
+
+		payButtonOnClick(
+			customerPayment,
+			discountPayment,
+			additionalPayment,
+			handleClose
+		);
 	};
 
 	// const arr = [];
@@ -497,7 +445,6 @@ const MenuOrderTab = ({
 									onChange={handleServingTypeOnChange}
 								>
 									<FormControlLabel
-										sx={{ color: "#003049;" }}
 										control={
 											<Radio
 												sx={{
