@@ -1,18 +1,19 @@
 .UnpaidOrderTabCard {
-  background: #fafafa;
-  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  font-family: "SF Pro Text";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 15px;
-  &__data {
-    display: flex;
-    flex: 1;
-    justify-content: center;
-    text-align: center;
-  }
+	border: 1px solid;
+	padding: 10px;
+	box-shadow: 5px 10px red;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	font-family: "SF Pro Text";
+	font-style: normal;
+	font-weight: 500;
+	font-size: 15px;
+	&__data {
+		display: flex;
+		flex: 1;
+		justify-content: center;
+		text-align: center;
+	}
 }
