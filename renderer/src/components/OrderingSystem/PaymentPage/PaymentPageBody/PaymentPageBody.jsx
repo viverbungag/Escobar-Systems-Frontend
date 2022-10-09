@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import styles from './PaymentPageBody.module.scss';
-import PaymentPageCard  from "./PaymentPageCard/PaymentPageCard.jsx";
-import {TablePagination}  from "@mui/material";
-import shortid from 'shortid';
-
+import React, { useState, useEffect } from "react";
+import styles from "./PaymentPageBody.module.scss";
+import PaymentPageCard from "./PaymentPageCard/PaymentPageCard.jsx";
+import { TablePagination } from "@mui/material";
+import shortid from "shortid";
 
 const PaymentPageBody = ({
   totalPages,
@@ -17,8 +16,6 @@ const PaymentPageBody = ({
   voidButtonOnClick,
   voidPassword,
 }) => {
-
-
   return (
     <div className={styles["PaymentPageBody"]}>
       <div className={styles["PaymentPageBody__pagination-container"]}>
@@ -35,7 +32,18 @@ const PaymentPageBody = ({
       <div className={styles["PaymentPageBody__cards-container"]}>
         {items.map((item) => {
           return (
-            <div key={shortid.generate()} onClick={()=>{orderCardOnClick(item.customerFoodOrders, item.orderId, item.discount, item.payment, item.totalCost)}}>
+            <div
+              key={shortid.generate()}
+              onClick={() => {
+                orderCardOnClick(
+                  item.customerFoodOrders,
+                  item.orderId,
+                  item.discount,
+                  item.payment,
+                  item.totalCost
+                );
+              }}
+            >
               <PaymentPageCard
                 ordernum={item.orderId}
                 quantity={item.customerFoodOrders.length}
@@ -53,6 +61,4 @@ const PaymentPageBody = ({
   );
 };
 
-export default PaymentPageBody
-
-
+export default PaymentPageBody;

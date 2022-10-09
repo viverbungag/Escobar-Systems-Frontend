@@ -24,7 +24,7 @@ const PaymentOrderTab = ({
   const discountedPrice = subTotal * (orderDiscount / 100);
   const totalPrice = subTotal - subTotal * (orderDiscount / 100);
   const change = customerPayment - (subTotal - orderDiscount);
-
+  //for pdf
   const arr = [];
   const createNewCols = () => {
     orderTabItems.map((item) => {
@@ -37,8 +37,6 @@ const PaymentOrderTab = ({
     });
     setPdfRows(arr);
   };
-
-  //for pdf
   const pdfColumns = [
     { header: "Item", dataKey: "menuName" },
     { header: "Quantity", dataKey: "menuQuantity" },
@@ -50,11 +48,11 @@ const PaymentOrderTab = ({
     { header: "", dataKey: "data" },
   ];
   const pdfPaymentRows = [
-    { label: "Customer Payment", data: customerPayment },
-    { label: "SubTotal", data: subTotal },
-    { label: "Discounted Price", data: discountedPrice },
-    { label: "Total", data: totalPrice },
-    { label: "Change", data: change },
+    { label: "Customer Payment", data: customerPayment.toFixed(2) },
+    { label: "SubTotal", data: subTotal.toFixed(2) },
+    { label: "Discount", data: `${discountedPrice.toFixed(2)}%` },
+    { label: "Total", data: totalPrice.toFixed(2) },
+    { label: "Change", data: change.toFixed(2) },
     { label: "Cashier", data: employeeName },
   ];
   //
@@ -67,22 +65,22 @@ const PaymentOrderTab = ({
     <div
       className={[
         styles["PaymentOrderTab"],
-        !orderCardSelected && styles["none"],
+        !orderCardSelected && styles["PaymentOrderTab--hidden"],
       ].join(" ")}
     >
-      <div className={styles["orderno-section"]}>
-        <h1> Order # {orderCardSelected} </h1>
+      <div className={styles["header-section"]}>
+        <div className={styles["orderno-section"]}>
+          <h1> Order # {orderCardSelected} </h1>
 
-        <Icon
-          icon={printIcon}
-          height="25"
-          width="25"
-          className={[
-            styles["print-icon"],
-            !orderCardSelected && styles["print-none"],
-          ].join(" ")}
-          onClick={
-            () =>
+          <Icon
+            icon={printIcon}
+            height="25"
+            width="25"
+            className={[
+              styles["print-icon"],
+              !orderCardSelected && styles["print-none"],
+            ].join(" ")}
+            onClick={() =>
               printReceipt(
                 orderCardSelected,
                 pdfRows,
@@ -90,15 +88,15 @@ const PaymentOrderTab = ({
                 pdfPaymentRows,
                 pdfPaymentColumns
               )
-            // () => console.log(pdfRows)
-          }
-        />
-      </div>
+            }
+          />
+        </div>
 
-      <div className={styles["title-section"]}>
-        <p className={styles["Quantity"]}> Item Title </p>
-        <p className={styles["Quantity"]}> Quantity </p>
-        <p className={styles["Quantity"]}> Price </p>
+        <div className={styles["title-section"]}>
+          <diuv className={styles["title-section__text"]}> Item Title </diuv>
+          <diuv className={styles["title-section__text"]}> Quantity </diuv>
+          <diuv className={styles["title-section__text"]}> Price </diuv>
+        </div>
       </div>
 
       <div className={styles["component-section"]}>
@@ -115,64 +113,44 @@ const PaymentOrderTab = ({
         })}
       </div>
 
-      <div
-        className={[
-          styles["CustomerPayment-Section"],
-          !orderCardSelected && styles["none"],
-        ].join(" ")}
-      >
-        <h2 className={styles["CustomerPayment"]}> Customer Payment </h2>
-        <h2 className={styles["CustomerPaymentPrice"]}> {customerPayment} </h2>
-      </div>
+      <div className={styles["footer-section"]}>
+        <div className={styles["footer-section__row"]}>
+          <h2 className={styles["footer-section__text"]}> Customer Payment </h2>
+          <h2 className={styles["footer-section__text"]}>
+            {" "}
+            {customerPayment}{" "}
+          </h2>
+        </div>
 
-      <div
-        className={[
-          styles["Subtotal-Section"],
-          !orderCardSelected && styles["none"],
-        ].join(" ")}
-      >
-        <h2 className={styles["Subtotal"]}> SubTotal </h2>
-        <h2 className={styles["SubtotalPrice"]}> {subTotal} </h2>
-      </div>
+        <div className={styles["footer-section__row"]}>
+          <h2 className={styles["footer-section__text"]}> SubTotal </h2>
+          <h2 className={styles["footer-section__text"]}> {subTotal} </h2>
+        </div>
 
-      <div
-        className={[
-          styles["Discounted-Section"],
-          !orderCardSelected && styles["none"],
-        ].join(" ")}
-      >
-        <h2 className={styles["Discount"]}> Discounted Price </h2>
-        <h2 className={styles["DiscountPrice"]}>
-          {(subTotal * (orderDiscount / 100)).toFixed(2)}
-        </h2>
-      </div>
+        <div className={styles["footer-section__row"]}>
+          <h2 className={styles["footer-section__text"]}> Discounted Price </h2>
+          <h2 className={styles["footer-section__text"]}>
+            {(subTotal * (orderDiscount / 100)).toFixed(2)}
+          </h2>
+        </div>
 
-      <div
-        className={[
-          styles["Total-Section"],
-          !orderCardSelected && styles["none"],
-        ].join(" ")}
-      >
-        <h2 className={styles["Total"]}> Total </h2>
-        <h2 className={styles["TotalPrice"]}>
-          {" "}
-          {(subTotal - subTotal * (orderDiscount / 100)).toFixed(2)}
-        </h2>
-      </div>
+        <div className={styles["footer-section__row"]}>
+          <h2 className={styles["footer-section__text"]}> Total </h2>
+          <h2 className={styles["footer-section__text"]}>
+            {" "}
+            {(subTotal - subTotal * (orderDiscount / 100)).toFixed(2)}
+          </h2>
+        </div>
 
-      <div
-        className={[
-          styles["Change-Section"],
-          !orderCardSelected && styles["none"],
-        ].join(" ")}
-      >
-        <h2 className={styles["Change"]}> Change </h2>
-        <h2 className={styles["ChangePrice"]}>
-          {(
-            customerPayment -
-            (subTotal - subTotal * (orderDiscount / 100))
-          ).toFixed(2)}
-        </h2>
+        <div className={styles["footer-section__row"]}>
+          <h2 className={styles["footer-section__text"]}> Change </h2>
+          <h2 className={styles["footer-section__text"]}>
+            {(
+              customerPayment -
+              (subTotal - subTotal * (orderDiscount / 100))
+            ).toFixed(2)}
+          </h2>
+        </div>
       </div>
     </div>
   );

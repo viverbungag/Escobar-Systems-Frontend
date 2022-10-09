@@ -3,11 +3,13 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  // padding: 10px 10px 20px;
   padding: 0 0.6rem;
   gap: 1rem;
   width: 450px;
   background-color: #fafafa;
+  &--hidden {
+    display: none;
+  }
 }
 
 .pay-button {
@@ -92,33 +94,6 @@
   width: 100%;
   gap: 1rem;
   overflow: auto;
-
-  .Quantity-Component {
-    font-family: "ABeeZee";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 20px;
-    margin-right: auto;
-    margin-left: 30px;
-  }
-  .Menuname-Component {
-    font-family: "ABeeZee";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 20px;
-    margin-left: 10px;
-  }
-  .Price-Component {
-    font-family: "ABeeZee";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 20px;
-    margin-right: 10px;
-    margin-left: auto;
-  }
 }
 
 .footer-section {
@@ -129,185 +104,25 @@
   position: sticky;
   bottom: 0;
   background-color: #fafafa;
-  .Subtotal-Section {
+  margin-top: 1rem;
+  &__row {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     flex-direction: row;
     width: 100%;
-
-    .Subtotal {
-      font-family: "ABeeZee";
-      font-style: normal;
-      font-weight: 400;
-      font-size: 16px;
-      line-height: 16px;
-      text-align: left;
-      margin-right: auto;
-      margin-left: 10px;
-    }
-
-    .SubtotalPrice {
-      display: flex;
-      margin-left: auto;
-      margin-right: 10px;
-      font-family: "ABeeZee";
-      font-style: normal;
-      font-weight: 400;
-      font-size: 16px;
-      line-height: 16px;
-    }
+    padding: 0 0.5rem;
+  }
+  &__text {
+    font-family: "ABeeZee";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    text-align: center;
   }
 }
 
-.CustomerPayment-Section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  width: 100%;
-  margin-bottom: 5px;
-
-  .CustomerPayment {
-    font-family: "ABeeZee";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 16px;
-    text-align: left;
-    margin-right: auto;
-    margin-left: 10px;
-  }
-
-  .CustomerPaymentPrice {
-    display: flex;
-    margin-left: auto;
-    margin-right: 10px;
-    font-family: "ABeeZee";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 16px;
-  }
-}
-
-.Discounted-Section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  width: 100%;
-  margin-bottom: 5px;
-
-  .Discount {
-    font-family: "ABeeZee";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 16px;
-    text-align: left;
-    margin-right: auto;
-    margin-left: 10px;
-  }
-
-  .DiscountPrice {
-    display: flex;
-    margin-left: auto;
-    margin-right: 10px;
-    font-family: "ABeeZee";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 16px;
-  }
-}
-
-.Total-Section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  width: 100%;
-  margin-bottom: 5px;
-
-  .Total {
-    font-family: "ABeeZee";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 16px;
-    text-align: left;
-    margin-right: auto;
-    margin-left: 10px;
-  }
-
-  .TotalPrice {
-    display: flex;
-    margin-left: auto;
-    margin-right: 10px;
-    font-family: "ABeeZee";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 16px;
-  }
-}
-
-.Change-Section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  width: 100%;
-  margin-bottom: 5px;
-
-  .Change {
-    font-family: "ABeeZee";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 16px;
-    text-align: left;
-    margin-right: auto;
-    margin-left: 10px;
-  }
-
-  .ChangePrice {
-    display: flex;
-    margin-left: auto;
-    margin-right: 10px;
-    font-family: "ABeeZee";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 16px;
-  }
-}
-
-.footer {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  button {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding: 5px 20px;
-    gap: 10px;
-    width: 65px;
-    height: 24px;
-    background: rgb(0, 168, 0);
-    color: #fafafa;
-    border-radius: 30px;
-  }
-}
-
-.none {
-  display: none;
-}
-
-.Paystyle {
+.modal {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -323,40 +138,26 @@
   user-select: none;
   justify-content: space-between;
 
-  .Close_Button {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background-color: red;
-    color: white;
-    border: 3px solid #000000;
-  }
-  .Close_Button:active {
-    box-shadow: 0 5px #666;
-    transform: translate(2px);
-    background-color: #f80707bc;
-  }
-  .TableNumber {
-    width: 60%;
-  }
   .Radio {
     color: #003049;
   }
 
-  .Wrapper {
+  &__title-bar {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  &__container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 1rem;
-    .Header {
-      padding: 1rem;
-    }
+    gap: 1rem;
     .Text-Section {
       display: flex;
       flex-direction: column;
-      // align-items: center;
-      // justify-content: center;
       width: 100%;
       padding: 0 2rem;
       gap: 1.5rem;
@@ -371,8 +172,15 @@
         width: 100%;
         justify-content: space-between;
         &__label {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
           text-transform: capitalize;
           color: #000000;
+          &-subtext {
+            color: #6b6b6b;
+            font-size: 0.8rem;
+          }
         }
       }
 
@@ -437,5 +245,31 @@
         line-height: 30px;
       }
     }
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 1rem;
+  }
+
+  &__header-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #000000;
+  }
+}
+
+.close-button {
+  background-color: red;
+  color: white;
+  border: 3px solid #000000;
+  transition: transform 0.2s;
+  &:hover {
+    // box-shadow: 0 5px #666;
+    transform: translateY(2px);
+    background-color: #ff0000;
   }
 }

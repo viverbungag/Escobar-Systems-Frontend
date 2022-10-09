@@ -12,6 +12,8 @@ import Button from "@mui/material/Button";
 import Rest from "../../../../rest/Rest";
 import Order from "../../../../model/Order";
 import { InputAdornment, TextField } from "@mui/material";
+import printIcon from "@iconify/icons-bytesize/print";
+import { printReceipt } from "../../../../../print/printFunctions";
 
 const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
@@ -52,37 +54,41 @@ const UnpaidOrderTab = ({
   };
   const rest = new Rest();
   const [orderValues, setOrderValues] = useState([]);
+
+  //for pdf
   const arr = [];
   const createNewCols = () => {
     orderTabItems.map((item) => {
-      //   console.log(item.foodOrder.menu);
       arr.push({
         menuName: item.foodOrder.menu.menuName,
         menuQuantity: item.foodOrder.menuQuantity,
         menuPrice: item.foodOrder.menu.menuPrice,
       });
     });
-    // setPdfRows(arr);
+    setPdfRows(arr);
   };
-  //for pdf
-  // const pdfColumns = [
-  //   { header: "Item", dataKey: "menuName" },
-  //   { header: "Quantity", dataKey: "menuQuantity" },
-  //   { header: "Price", dataKey: "menuPrice" },
-  // ];
-  // const [pdfRows, setPdfRows] = useState([]);
-  // const pdfPaymentColumns = [
-  //   { header: "", dataKey: "label" },
-  //   { header: "", dataKey: "data" },
-  // ];
-  // const pdfPaymentRows = [
-  //   { label: "Customer Payment", data: payment },
-  //   { label: "Total", data: total },
-  //   { label: "Discounted Price", data: inputValues.discount },
-  //   { label: "Total", data: totalPrice },
-  //   { label: "Cashier", data: employeeName },
-  // ];
-  //
+  const pdfColumns = [
+    { header: "Item", dataKey: "menuName" },
+    { header: "Quantity", dataKey: "menuQuantity" },
+    { header: "Price", dataKey: "menuPrice" },
+  ];
+  const [pdfRows, setPdfRows] = useState([]);
+  const pdfPaymentColumns = [
+    { header: "", dataKey: "label" },
+    { header: "", dataKey: "data" },
+  ];
+  const pdfPaymentRows = [
+    { label: "Total", data: orderValues.totalCost },
+    { label: "Customer Payment", data: orderValues.payment },
+    { label: "Discount", data: `${orderValues.discount}%` },
+    { label: "Additional", data: orderValues.additionalPayment },
+    {
+      label: "Change",
+      data: (orderValues.payment - orderValues.totalCost).toFixed(2),
+    },
+    { label: "Cashier", data: orderValues.employeeFullName },
+  ];
+  //modal
   const [payOpen, setPayOpen] = useState(false);
   const handlePayOpen = () => {
     setPayOpen(true);
@@ -132,36 +138,6 @@ const UnpaidOrderTab = ({
         setDiscountError("Input digits only.");
       }
     }
-
-    // if (e.target.name === "payment") {
-    //   if (e.target.value == "") {
-    //     setPaymentError("Payment cannot be empty.");
-    //     setTotalCost(totalCost);
-    //     getChange();
-    //   } else if (validIntegerDecimal(e.target.value)) {
-    //     if (e.target.value - totalCost < 0) {
-    //       setPaymentError("Payment must be greater than total cost.");
-    //       setTotalCost(totalCost);
-    //       return;
-    //     } else {
-    //       setPaymentError("");
-    //       getChange();
-    //     }
-    //   } else if (!validIntegerDecimal(e.target.value)) {
-    //     setTotalCost(totalCost);
-    //     setPaymentError("Input digits only.");
-    //   }
-    // }
-
-    // if (e.target.name === "additional") {
-    //   if (e.target.value == 0 || e.target.value == "") {
-    //     setPaymentError("");
-    //   } else if (validIntegerDecimal(e.target.value)) {
-    //     setPaymentError("");
-    //   } else if (!validIntegerDecimal(e.target.value)) {
-    //     setPaymentError("Input digits only.");
-    //   }
-    // }
     setOrderValues({
       ...orderValues,
       [e.target.name]: e.target.value,
@@ -230,12 +206,20 @@ const UnpaidOrderTab = ({
       setOrderValues({ ...orderValues, additionalPayment: additionalFloat });
     }
 
-    rest.add(
-      `${INITIAL_URL}/orders/pay/${orderValues.orderId}`,
-      orderValues,
-      addSuccessAction,
-      `Successful order transaction for ${orderValues.orderId} for Table ${orderValues.tableNumber}..`
+    printReceipt(
+      orderCardSelected,
+      pdfRows,
+      pdfColumns,
+      pdfPaymentRows,
+      pdfPaymentColumns
     );
+
+    // rest.add(
+    //   `${INITIAL_URL}/orders/pay/${orderValues.orderId}`,
+    //   orderValues,
+    //   addSuccessAction,
+    //   `Successful order transaction for ${orderValues.orderId} for Table ${orderValues.tableNumber}..`
+    // );
   };
   //success
   const addSuccessAction = () => {
@@ -294,32 +278,12 @@ const UnpaidOrderTab = ({
     <div
       className={[
         styles["UnpaidOrderTab"],
-        !orderCardSelected && styles["none"],
+        !orderCardSelected && styles["UnpaidOrderTab--hidden"],
       ].join(" ")}
     >
       <div className={styles["header-section"]}>
         <div className={styles["orderno-section"]}>
           <h1> Order # {orderCardSelected} </h1>
-          {/* <Icon
-					icon="bytesize:print"
-					height="25"
-					width="25"
-					className={[
-						styles["print-icon"],
-						!orderCardSelected && styles["print-none"],
-					].join(" ")}
-					onClick={
-						() =>
-							printReceipt(
-								orderCardSelected,
-								pdfRows,
-								pdfColumns,
-								pdfPaymentRows,
-								pdfPaymentColumns
-							)
-						// () => console.log(pdfRows)
-					}
-				/> */}
         </div>
 
         <div className={styles["title-section"]}>
@@ -344,14 +308,9 @@ const UnpaidOrderTab = ({
       </div>
 
       <div className={styles["footer-section"]}>
-        <div
-          className={[
-            styles["Subtotal-Section"],
-            !orderCardSelected && styles["none"],
-          ].join(" ")}
-        >
-          <h2 className={styles["Subtotal"]}> SubTotal </h2>
-          <h2 className={styles["SubtotalPrice"]}> {subTotal} </h2>
+        <div className={styles["footer-section__row"]}>
+          <h2 className={styles["footer-section__text"]}> SubTotal </h2>
+          <h2 className={styles["footer-section__text"]}> {subTotal} </h2>
         </div>
         <div className={styles["pay-button"]} onClick={handlePayOpen}>
           <div className={styles["pay-button__content"]}>
@@ -362,16 +321,39 @@ const UnpaidOrderTab = ({
       </div>
 
       <Modal open={payOpen} onClose={handlePayClose}>
-        <Box className={styles["Paystyle"]}>
-          <Button onClick={handlePayClose} className={styles["Close_Button"]}>
-            {" "}
-            X{" "}
-          </Button>
-          <div className={styles["Wrapper"]}>
-            <div className={styles["Header"]}>
-              <h2 className={styles["Header__Text"]}>
+        <Box className={styles["modal"]}>
+          <div className={styles["modal__title-bar"]}>
+            <Button onClick={handlePayClose} className={styles["close-button"]}>
+              {" "}
+              X{" "}
+            </Button>
+          </div>
+          <div className={styles["modal__container"]}>
+            <div className={styles["modal__header"]}>
+              <div className={styles["modal__header-text"]}>
                 Order #{orderCardSelected}
-              </h2>
+              </div>
+              <div className={styles["modal__header-text"]}>
+                Table #{orderValues.tableNumber}
+              </div>
+              {/* <Icon
+                icon={printIcon}
+                height="25"
+                width="25"
+                className={[
+                  styles["print-icon"],
+                  !orderCardSelected && styles["print-none"],
+                ].join(" ")}
+                onClick={() =>
+                  printReceipt(
+                    orderCardSelected,
+                    pdfRows,
+                    pdfColumns,
+                    pdfPaymentRows,
+                    pdfPaymentColumns
+                  )
+                }
+              ></Icon> */}
             </div>
             <div className={styles["Text-Section"]}>
               <div className={styles["Input-Section"]}>
@@ -435,7 +417,14 @@ const UnpaidOrderTab = ({
               </div>
 
               <div className={styles["Output-Section"]}>
-                <div className={styles["Output-Section__label"]}>Change</div>
+                <div className={styles["Output-Section__label"]}>
+                  <div className={styles["Output-Section__label-text"]}>
+                    Change
+                  </div>
+                  <div className={styles["Output-Section__label-subtext"]}>
+                    excluding additional payment
+                  </div>
+                </div>
                 <div className={styles["Output-Section__label"]}>
                   ₱{parseFloat(change).toFixed(2)}
                 </div>
