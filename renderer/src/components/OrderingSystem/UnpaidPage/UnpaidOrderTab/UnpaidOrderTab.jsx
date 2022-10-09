@@ -14,6 +14,7 @@ import Order from "../../../../model/Order";
 import { InputAdornment, TextField } from "@mui/material";
 import printIcon from "@iconify/icons-bytesize/print";
 import { printReceipt } from "../../../../../print/printFunctions";
+import { toast } from "react-toastify";
 
 const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
@@ -31,27 +32,27 @@ const UnpaidOrderTab = ({
 	orderCardSelected,
 	reload,
 }) => {
-	// const getValues = () => {
-	//   items.map((item) => {
-	//     if (item.orderId == orderCardSelected) {
-	//       setOrderValues(
-	//         new Order(
-	//           item.orderId,
-	//           item.employeeFullName,
-	//           item.orderTime,
-	//           item.customerFoodOrders,
-	//           0,
-	//           0,
-	//           totalCost,
-	//           "PAID",
-	//           item.servingType,
-	//           item.tableNumber,
-	//           0
-	//         )
-	//       );
-	//     }
-	//   });
-	// };
+	const getValues = () => {
+		items.map((item) => {
+			if (item.orderId == orderCardSelected) {
+				setOrderValues(
+					new Order(
+						item.orderId,
+						item.employeeFullName,
+						item.orderTime,
+						item.customerFoodOrders,
+						0,
+						0,
+						totalCost,
+						"PAID",
+						item.servingType,
+						item.tableNumber,
+						0
+					)
+				);
+			}
+		});
+	};
 	const rest = new Rest();
 	const [orderValues, setOrderValues] = useState([]);
 
@@ -78,13 +79,16 @@ const UnpaidOrderTab = ({
 		{ header: "", dataKey: "data" },
 	];
 	const pdfPaymentRows = [
-		{ label: "Total", data: orderValues.totalCost },
+		{ label: "Additional Cost", data: orderValues.additionalPayment },
+		{ label: "Total Cost", data: orderValues.totalCost },
+		{
+			label: "Discounted Price",
+			data: 0,
+		},
 		{ label: "Customer Payment", data: orderValues.payment },
-		{ label: "Discount", data: `${orderValues.discount}%` },
-		{ label: "Additional", data: orderValues.additionalPayment },
 		{
 			label: "Change",
-			data: (orderValues.payment - orderValues.totalCost).toFixed(2),
+			data: 0,
 		},
 		{ label: "Cashier", data: orderValues.employeeFullName },
 	];
@@ -95,12 +99,11 @@ const UnpaidOrderTab = ({
 		setInitialValues();
 	};
 	const handlePayClose = () => setPayOpen(false);
-	//input
-	// const [customerPaymentErrorText, setCustomerPaymentErrorText] = useState("");
-	// const [discountPaymentErrorText, setDiscountPaymentErrorText] = useState("");
-	// const [additionalPaymentErrorText, setAdditionalPaymentErrorText] =
-	//   useState("");
-	// useState("");
+	const [customerPaymentErrorText, setCustomerPaymentErrorText] = useState("");
+	const [discountPaymentErrorText, setDiscountPaymentErrorText] = useState("");
+	const [additionalPaymentErrorText, setAdditionalPaymentErrorText] =
+		useState("");
+	useState("");
 
 	//set values
 	const [subTotal, setSubTotal] = useState(
@@ -115,6 +118,7 @@ const UnpaidOrderTab = ({
 			.toFixed(2)
 	);
 	const [totalCost, setTotalCost] = useState(subTotal);
+	const [discountedPrice, setDiscountedPrice] = useState(0.0);
 	const [discountError, setDiscountError] = useState("");
 	const [paymentError, setPaymentError] = useState("");
 	const [additionalError, setAdditionalError] = useState("");
@@ -122,88 +126,144 @@ const UnpaidOrderTab = ({
 		if (e.target.name === "discount") {
 			if (e.target.value == 0 || e.target.value == "") {
 				setDiscountError("");
-				setTotalCost((subTotal - subTotal * (e.target.value / 100)).toFixed(2));
+				setDiscountedPrice(parseFloat(0).toFixed(2));
 				getChange();
+				if (orderValues.payment - totalCost < 0) {
+					setPaymentError(
+						"Payment must be greater than or equal to total cost."
+					);
+				} else {
+					setPaymentError("");
+				}
 			} else if (validIntegerDecimal(e.target.value)) {
 				if (e.target.value > 100 || e.target.value < 0) {
 					setDiscountError("Input must be 0-100 only.");
 				} else {
-					setDiscountError("");
-					setTotalCost(
-						(subTotal - subTotal * (e.target.value / 100)).toFixed(2)
+					setDiscountedPrice(
+						(
+							parseFloat(orderValues.totalCost) -
+							parseFloat(orderValues.totalCost) *
+								(parseFloat(e.target.value) / 100)
+						).toFixed(2)
 					);
-					getChange();
+					if (
+						orderValues.payment -
+							(
+								parseFloat(orderValues.totalCost) -
+								parseFloat(orderValues.totalCost) *
+									(parseFloat(e.target.value) / 100)
+							).toFixed(2) >=
+						0
+					) {
+						setDiscountError("");
+						setPaymentError("");
+						getChange();
+					} else {
+						setPaymentError(
+							"Payment must be greater than or equal to discounted cost."
+						);
+					}
 				}
 			} else if (!validIntegerDecimal(e.target.value)) {
 				setDiscountError("Input digits only.");
 			}
 		}
+		if (e.target.name === "payment") {
+			if (e.target.value === "" || e.target.value === 0) {
+				setPaymentError("Input cannot be empty.");
+			} else if (!validIntegerDecimal(e.target.value)) {
+				setPaymentError("Input must be digits.");
+			} else if (validIntegerDecimal(e.target.value)) {
+				if (
+					parseFloat(discountedPrice) > 0 ||
+					parseFloat(orderValues.discount) > 0
+				) {
+					if (parseFloat(e.target.value) < discountedPrice) {
+						setPaymentError(
+							"Payment must be greater or equal the discounted cost."
+						);
+					} else {
+						setPaymentError("");
+						getChange();
+					}
+				} else if (parseFloat(totalCost) > 0) {
+					if (parseFloat(e.target.value) - totalCost < 0) {
+						setPaymentError("Payment must be greater or equal the total cost.");
+					} else {
+						setPaymentError("");
+						getChange();
+					}
+				}
+			} else {
+				setPaymentError("");
+				getChange();
+			}
+		}
+		if (e.target.name === "additionalPayment") {
+			if (e.target.value == 0 || e.target.value == "") {
+				setAdditionalError("");
+				setTotalCost(parseFloat(subTotal).toFixed(2));
+				getChange();
+			} else if (validIntegerDecimal(e.target.value)) {
+				setTotalCost(
+					(parseFloat(e.target.value) + parseFloat(subTotal)).toFixed(2)
+				);
+				if (discountedPrice != 0 || discountedPrice != "") {
+					if (orderValues.payment - discountedPrice >= 0) {
+						setAdditionalError("");
+						setPaymentError("");
+					} else {
+						setPaymentError(
+							"Payment must be greater than or equal to discounted price."
+						);
+					}
+				} else if (
+					(parseFloat(e.target.value) + parseFloat(subTotal)).toFixed(2) -
+						parseFloat(subTotal) !=
+					0
+				) {
+					if (
+						orderValues.payment -
+							(parseFloat(e.target.value) + parseFloat(subTotal)).toFixed(2) >=
+						0
+					) {
+						setAdditionalError("");
+						setPaymentError("");
+					} else {
+						setPaymentError(
+							"Payment must be greater than or equal to total price."
+						);
+					}
+				}
+			} else if (!validIntegerDecimal(e.target.value)) {
+				setChange(0);
+				setAdditionalError("Input digits only.");
+			}
+		}
+
 		setOrderValues({
 			...orderValues,
 			[e.target.name]: e.target.value,
 		});
+
+		setArrChangeDiscountedPrice({
+			change: change,
+			discountedPrice: discountedPrice,
+		});
 	};
 	//submit
-	const payButton = () => {
-		console.log(orderValues);
-		const discountFloat = 0.0;
-		const paymentFloat = 0.0;
-		const additionalFloat = 0.0;
+	const [arrChangeDiscountedPrice, setArrChangeDiscountedPrice] = useState([]);
+	const payButtonOnClick = () => {
+		// console.log(change);
+		// console.log(arrChangeDiscountedPrice.discountedPrice);
 
-		if (orderValues.discount != 0 || orderValues.discount != "") {
-			if (validIntegerDecimal(orderValues.discount)) {
-				discountFloat = parseFloat(orderValues.discount).toFixed(2);
-				if (discountFloat > 100 || discountFloat < 0) {
-					setDiscountError("Input must be 0-100 only.");
-					return;
-				} else {
-					setDiscountError("");
-					setOrderValues({ ...orderValues, discount: discountFloat });
-				}
-			} else {
-				setDiscountError("Input digits only.");
-				return;
-			}
-		} else {
-			setDiscountError("");
-			setOrderValues({ ...orderValues, discount: discountFloat });
-		}
-
-		if (orderValues.payment == "") {
+		if (orderValues.payment === "" || orderValues.payment === 0) {
 			setPaymentError("Input cannot be empty.");
 			return;
-		} else if (!validIntegerDecimal(orderValues.payment)) {
-			setPaymentError("Input must be digits.");
-			return;
-		} else if (validIntegerDecimal(orderValues.payment)) {
-			paymentFloat = parseFloat(orderValues.payment).toFixed(2);
-			if (paymentFloat - orderValues.totalCost < 0) {
-				setPaymentError("Payment must be greater than total cost.");
-				return;
-			} else {
-				setPaymentError("");
-				setOrderValues({ ...orderValues, payment: paymentFloat });
-			}
-		} else {
-			setPaymentError("");
-			setOrderValues({ ...orderValues, payment: paymentFloat });
 		}
 
-		if (
-			orderValues.additionalPayment != 0 ||
-			orderValues.additionalPayment != ""
-		) {
-			if (validIntegerDecimal(orderValues.additionalPayment)) {
-				additionalFloat = parseFloat(orderValues.discount).toFixed(2);
-				setOrderValues({ ...orderValues, additionalPayment: additionalFloat });
-				setAdditionalError("");
-			} else {
-				setAdditionalError("Input must be 0 and above only.");
-				return;
-			}
-		} else {
-			setAdditionalError("");
-			setOrderValues({ ...orderValues, additionalPayment: additionalFloat });
+		if (additionalError != "" || discountError != "" || paymentError != "") {
+			return;
 		}
 
 		printReceipt(
@@ -226,7 +286,7 @@ const UnpaidOrderTab = ({
 		handlePayClose();
 		reload();
 	};
-	const [change, setChange] = useState(0);
+	const [change, setChange] = useState(0.0);
 	const getChange = () => {
 		const beforeCheckChange = (orderValues.payment - totalCost).toFixed(2);
 		if (beforeCheckChange >= 0) {
@@ -242,7 +302,20 @@ const UnpaidOrderTab = ({
 		setDiscountError("");
 		setPaymentError("");
 		setAdditionalError("");
+		setDiscountedPrice(0);
 	};
+
+	useEffect(() => {
+		if (orderValues.discount != 0 || orderValues.discount != "") {
+			setDiscountedPrice(
+				parseFloat(totalCost) -
+					(
+						(parseFloat(totalCost) * parseFloat(orderValues.discount)) /
+						100
+					).toFixed(2)
+			);
+		}
+	}, [totalCost]);
 
 	useEffect(() => {
 		getChange();
@@ -372,6 +445,7 @@ const UnpaidOrderTab = ({
 											</InputAdornment>
 										),
 									}}
+									InputLabelProps={{ shrink: true }}
 									fullWidth
 								/>
 							</div>
@@ -400,7 +474,7 @@ const UnpaidOrderTab = ({
 								<TextField
 									variant="outlined"
 									size="small"
-									label="Additional Payment"
+									label="Additional Cost"
 									name="additionalPayment"
 									helperText={additionalError}
 									error={additionalError != ""}
@@ -417,14 +491,7 @@ const UnpaidOrderTab = ({
 							</div>
 
 							<div className={styles["Output-Section"]}>
-								<div className={styles["Output-Section__label"]}>
-									<div className={styles["Output-Section__label-text"]}>
-										Change
-									</div>
-									<div className={styles["Output-Section__label-subtext"]}>
-										excluding additional payment
-									</div>
-								</div>
+								<div className={styles["Output-Section__label"]}>Change</div>
 								<div className={styles["Output-Section__label"]}>
 									₱{parseFloat(change).toFixed(2)}
 								</div>
@@ -432,22 +499,30 @@ const UnpaidOrderTab = ({
 
 							<div className={styles["Output-Section"]}>
 								<div className={styles["Output-Section__label"]}>
-									Current Total
+									Discounted Price
+								</div>
+								<div className={styles["Output-Section__label"]}>
+									₱{parseFloat(discountedPrice).toFixed(2)}
+								</div>
+							</div>
+
+							<div className={styles["Output-Section"]}>
+								<div className={styles["Output-Section__label"]}>
+									Total Price
 								</div>
 								<div className={styles["Output-Section__label"]}>
 									₱{totalCost}
 								</div>
 							</div>
 						</div>
-
-						<div className={styles["Button-Section"]}>
-							<button
-								className={styles["Confirm_Button"]}
-								onClick={() => payButtonOnClick()}
-							>
-								Confirm
-							</button>
-						</div>
+					</div>
+					<div className={styles["modal__footer"]}>
+						<button
+							className={styles["Confirm_Button"]}
+							onClick={() => payButtonOnClick()}
+						>
+							Confirm
+						</button>
 					</div>
 				</Box>
 			</Modal>

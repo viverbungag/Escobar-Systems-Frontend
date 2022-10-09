@@ -146,26 +146,30 @@
 		display: flex;
 		width: 100%;
 		justify-content: flex-end;
+		padding: 1rem 0.4rem;
 	}
 
 	&__container {
 		display: flex;
 		flex-direction: column;
-		align-items: center;
+		// align-items: center;
 		justify-content: center;
 		padding: 1rem;
 		gap: 1rem;
+		height: 40vh;
+		overflow: auto;
 		.Text-Section {
 			display: flex;
 			flex-direction: column;
 			width: 100%;
 			padding: 0 2rem;
 			gap: 1.5rem;
-			height: 30vh;
-			overflow: auto;
+			height: fit-content;
+			margin-top: 1rem;
 			.Input-Section {
 				display: flex;
 				align-items: center;
+				height: fit-content;
 			}
 			.Output-Section {
 				display: flex;
@@ -177,10 +181,6 @@
 					justify-content: center;
 					text-transform: capitalize;
 					color: #000000;
-					&-subtext {
-						color: #6b6b6b;
-						font-size: 0.8rem;
-					}
 				}
 			}
 
@@ -222,29 +222,6 @@
 				}
 			}
 		}
-		.Button-Section {
-			margin-top: 20px;
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			align-items: center;
-			gap: 30px;
-
-			.Confirm_Button {
-				width: 128px;
-				height: 45.84px;
-				box-sizing: border-box;
-				background: #36cd1d;
-				border: 3px solid #000000;
-				color: white;
-				justify-content: center;
-
-				font-style: normal;
-				font-weight: 400;
-				font-size: 20px;
-				line-height: 30px;
-			}
-		}
 	}
 
 	&__header {
@@ -260,6 +237,13 @@
 		text-transform: uppercase;
 		color: #000000;
 	}
+
+	&__footer {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 1rem 0;
+	}
 }
 
 .close-button {
@@ -272,4 +256,19 @@
 		transform: translateY(2px);
 		background-color: #ff0000;
 	}
+}
+
+.Confirm_Button {
+	width: 128px;
+	height: 45.84px;
+	box-sizing: border-box;
+	background: #36cd1d;
+	border: 3px solid #000000;
+	color: white;
+	justify-content: center;
+
+	font-style: normal;
+	font-weight: 400;
+	font-size: 20px;
+	line-height: 30px;
 }
