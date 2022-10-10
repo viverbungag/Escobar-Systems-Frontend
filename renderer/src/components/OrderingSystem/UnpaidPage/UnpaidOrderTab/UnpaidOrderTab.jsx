@@ -15,6 +15,7 @@ import { InputAdornment, TextField } from "@mui/material";
 import printIcon from "@iconify/icons-bytesize/print";
 import { printReceipt } from "../../../../../print/printFunctions";
 import { toast } from "react-toastify";
+import set from "date-fns/set";
 
 const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
@@ -79,9 +80,6 @@ const UnpaidOrderTab = ({
     { header: "", dataKey: "data" },
   ];
   const [pdfPaymentRows, setPdfPaymentRows] = useState([]);
-  // const createNewPdfPaymentRows = () => {
-
-  // };
   //modal
   const [payOpen, setPayOpen] = useState(false);
   const handlePayOpen = () => {
@@ -90,176 +88,88 @@ const UnpaidOrderTab = ({
   };
   const handlePayClose = () => setPayOpen(false);
   //set values
-  const [subTotal, setSubTotal] = useState(
-    orderTabItems
-      .reduce(
-        (sum, currentMenu) =>
-          sum +
-          currentMenu.foodOrder.menu.menuPrice *
-            currentMenu.foodOrder.menuQuantity,
-        0
-      )
-      .toFixed(2)
-  );
+  const [subTotal, setSubTotal] = useState();
   const [totalCost, setTotalCost] = useState(subTotal);
-  const [discountedPrice, setDiscountedPrice] = useState(0.0);
-  const [discountError, setDiscountError] = useState("");
-  const [paymentError, setPaymentError] = useState("");
-  const [additionalError, setAdditionalError] = useState("");
-  const handleInputChange = (e) => {
-    if (e.target.name === "discount") {
-      if (e.target.value == 0 || e.target.value == "") {
-        setDiscountError("");
-        setDiscountedPrice(parseFloat(0).toFixed(2));
-        // getChange();
-        if (orderValues.payment - totalCost < 0) {
-          setPaymentError(
-            "Payment must be greater than or equal to total cost."
-          );
-        } else {
-          setPaymentError("");
-        }
-      } else if (validIntegerDecimal(e.target.value)) {
-        if (e.target.value > 100 || e.target.value < 0) {
-          setDiscountError("Input must be 0-100 only.");
-        } else {
-          setDiscountedPrice(
-            (
-              parseFloat(orderValues.totalCost) -
-              parseFloat(orderValues.totalCost) *
-                (parseFloat(e.target.value) / 100)
-            ).toFixed(2)
-          );
-          if (
-            orderValues.payment -
-              (
-                parseFloat(orderValues.totalCost) -
-                parseFloat(orderValues.totalCost) *
-                  (parseFloat(e.target.value) / 100)
-              ).toFixed(2) >=
-            0
-          ) {
-            setDiscountError("");
-            setPaymentError("");
-            // getChange();
-          } else {
-            setPaymentError(
-              "Payment must be greater than or equal to discounted cost."
-            );
-          }
-        }
-      } else if (!validIntegerDecimal(e.target.value)) {
-        setDiscountError("Input digits only.");
-      }
+  const [discountedPrice, setDiscountedPrice] = useState(
+    Number(parseFloat(0).toFixed(2))
+  );
+  const [additionalCost, setAdditionalCost] = useState();
+  const [customerPayment, setCustomerPayment] = useState(
+    Number(parseFloat(0).toFixed(2))
+  );
+  const [discount, setDiscount] = useState(Number(parseFloat(0).toFixed(2)));
+  //on change
+  const handleAdditionalCostOnChange = (e) => {
+    setAdditionalCost(e.target.value);
+    if (e.target.value != 0 || e.target.value != "") {
+      setTotalCost(
+        (parseFloat(subTotal) + parseFloat(e.target.value)).toFixed(2)
+      );
+    } else {
+      setTotalCost(subTotal);
     }
-    if (e.target.name === "payment") {
-      if (e.target.value === "" || e.target.value === 0) {
-        setPaymentError("Input cannot be empty.");
-      } else if (!validIntegerDecimal(e.target.value)) {
-        setPaymentError("Input must be digits.");
-      } else if (validIntegerDecimal(e.target.value)) {
-        if (
-          parseFloat(discountedPrice) > 0 ||
-          parseFloat(orderValues.discount) > 0
-        ) {
-          if (parseFloat(e.target.value) < discountedPrice) {
-            setPaymentError(
-              "Payment must be greater or equal the discounted cost."
-            );
-          } else {
-            setPaymentError("");
-            // getChange();
-          }
-        } else if (parseFloat(totalCost) > 0) {
-          if (parseFloat(e.target.value) - totalCost < 0) {
-            setPaymentError("Payment must be greater or equal the total cost.");
-          } else {
-            setPaymentError("");
-            // getChange();
-          }
-        }
-      } else {
-        setPaymentError("");
-        // getChange();
-      }
-    }
-    if (e.target.name === "additionalPayment") {
-      if (e.target.value == 0 || e.target.value == "") {
-        setAdditionalError("");
-        setTotalCost(parseFloat(subTotal).toFixed(2));
-        // getChange();
-      } else if (validIntegerDecimal(e.target.value)) {
-        setTotalCost(
-          (parseFloat(e.target.value) + parseFloat(subTotal)).toFixed(2)
-        );
-        if (discountedPrice != 0 || discountedPrice != "") {
-          if (orderValues.payment >= discountedPrice) {
-            setAdditionalError("");
-            setPaymentError("");
-            setTotalCost(
-              (parseFloat(e.target.value) + parseFloat(subTotal)).toFixed(2)
-            );
-          } else {
-            setPaymentError(
-              "Payment must be greater than or equal to discounted price."
-            );
-          }
-        } else if (
-          parseFloat(e.target.value) +
-            parseFloat(subTotal) -
-            parseFloat(subTotal) !=
-          0
-        ) {
-          if (
-            orderValues.payment -
-              (parseFloat(e.target.value) + parseFloat(subTotal)).toFixed(2) >=
-            0
-          ) {
-            setAdditionalError("");
-            setPaymentError("");
-            setTotalCost(
-              (parseFloat(e.target.value) + parseFloat(subTotal)).toFixed(2)
-            );
-          } else {
-            setPaymentError(
-              "Payment must be greater than or equal to total price."
-            );
-          }
-        }
-      } else if (!validIntegerDecimal(e.target.value)) {
-        setChange(0);
-        setAdditionalError("Input digits only.");
-      }
-    }
-
-    setOrderValues({
-      ...orderValues,
-      [e.target.name]: e.target.value,
-    });
+  };
+  const handleCustomerPaymentOnChange = (e) => {
+    setCustomerPayment(e.target.value);
+  };
+  const handleDiscountOnChange = (e) => {
+    setDiscount(e.target.value);
   };
   //submit
-  const payButtonOnClick = () => {
-    if (orderValues.payment === "" || orderValues.payment === 0) {
-      setPaymentError("Input cannot be empty.");
-      return;
-    }
+  const payButtonOnClick = () =>
+    // additionalCost,
+    // customerPayment,
+    // discount,
+    // discountedPrice,
+    // totalCost
+    {
+      const total = 0;
 
-    if (additionalError != "" || discountError != "" || paymentError != "") {
-      return;
-    }
+      if (parseFloat(discount) > 0) {
+        total = parseFloat(discountedPrice).toFixed(2);
+      } else {
+        total = parseFloat(totalCost).toFixed(2);
+      }
 
-    addSuccessAction();
+      if (discountedPrice != 0) {
+        if (Number(customerPayment) < Number(discountedPrice)) {
+          toast.error(
+            " Customer Payment cannot be less than the discounted price."
+          );
+          return;
+        }
+      } else {
+        if (Number(customerPayment) < Number(totalCost)) {
+          toast.error(" Customer Payment cannot be less than the total price.");
+          return;
+        }
+      }
 
-    // rest.add(
-    //   `${INITIAL_URL}/orders/pay/${orderValues.orderId}`,
-    //   orderValues,
-    //   addSuccessAction,
-    //   `Successful order transaction for ${orderValues.orderId} for Table ${orderValues.tableNumber}.`
-    // );
-  };
+      if (additionalCost == "" || additionalCost < 0) {
+        toast.error("Additional Payment must be valid digits.");
+        return;
+      }
+
+      if (discount < 0 || discount > 100) {
+        toast.error("Discount must be 0-100.");
+        return;
+      }
+
+      if (discount == "") {
+        toast.error("Discount must be valid digits.");
+        return;
+      }
+
+      rest.add(
+        `${INITIAL_URL}/orders/pay/${orderValues.orderId}`,
+        orderValues,
+        addSuccessAction,
+        `Successful order transaction for ${orderValues.orderId} for Table ${orderValues.tableNumber}.`
+      );
+    };
   //success
   const addSuccessAction = () => {
-    console.log(pdfPaymentRows);
+    // console.log(pdfPaymentRows);
     printReceipt(
       orderCardSelected,
       pdfRows,
@@ -271,12 +181,12 @@ const UnpaidOrderTab = ({
     reload();
   };
   const [change, setChange] = useState(0.0);
-  const getChange = () => {
+  const getChange = (discountedPrice, totalCost) => {
     const beforeCheckChange = 0;
     if (discountedPrice != 0) {
-      beforeCheckChange = (orderValues.payment - discountedPrice).toFixed(2);
+      beforeCheckChange = (customerPayment - discountedPrice).toFixed(2);
     } else {
-      beforeCheckChange = (orderValues.payment - totalCost).toFixed(2);
+      beforeCheckChange = (customerPayment - totalCost).toFixed(2);
     }
     if (beforeCheckChange >= 0) {
       setChange(beforeCheckChange);
@@ -287,62 +197,11 @@ const UnpaidOrderTab = ({
   const setInitialValues = () => {
     setTotalCost(subTotal);
     getValues();
-    setChange(0);
-    setDiscountError("");
-    setPaymentError("");
-    setAdditionalError("");
-    setDiscountedPrice(0);
-  };
-
-  useEffect(() => {
-    setPdfPaymentRows([
-      {
-        label: "Additional Cost",
-        data: parseFloat(orderValues.additionalPayment).toFixed(2),
-      },
-      { label: "Total Cost", data: orderValues.totalCost },
-      {
-        label: "Discounted Price",
-        data: discountedPrice,
-      },
-      { label: "Customer Payment", data: orderValues.payment },
-      {
-        label: "Change",
-        data: change,
-      },
-      { label: "Cashier", data: orderValues.employeeFullName },
-    ]);
-  }, [orderValues]);
-
-  useEffect(() => {
-    getChange();
-  }, [orderValues]);
-
-  useEffect(() => {
-    if (orderValues.discount != 0 || orderValues.discount != "") {
-      setDiscountedPrice(
-        parseFloat(totalCost) -
-          (
-            (parseFloat(totalCost) * parseFloat(orderValues.discount)) /
-            100
-          ).toFixed(2)
-      );
-    }
-  }, [totalCost]);
-
-  useEffect(() => {
-    setTotalCost(subTotal);
-  }, [subTotal]);
-
-  useEffect(() => {
-    setOrderValues({
-      ...orderValues,
-      totalCost: parseFloat(totalCost).toFixed(2),
-    });
-  }, [totalCost]);
-
-  useEffect(() => {
-    createNewCols();
+    setChange(0.0);
+    setAdditionalCost("");
+    setCustomerPayment("");
+    setDiscount("");
+    setDiscountedPrice(0.0);
     setSubTotal(
       orderTabItems
         .reduce(
@@ -354,7 +213,81 @@ const UnpaidOrderTab = ({
         )
         .toFixed(2)
     );
+  };
+
+  useEffect(() => {
+    createNewCols();
   }, [orderTabItems]);
+
+  useEffect(() => {
+    setTotalCost(subTotal);
+  }, [subTotal]);
+
+  useEffect(() => {
+    if (
+      (discount != 0 || discount != "") &&
+      Number(
+        (
+          parseFloat(totalCost) -
+          parseFloat(totalCost) * (discount / 100)
+        ).toFixed(2)
+      ) != totalCost
+    ) {
+      setDiscountedPrice(
+        Number(
+          (
+            parseFloat(totalCost) -
+            parseFloat(totalCost) * (discount / 100)
+          ).toFixed(2)
+        )
+      );
+    } else if (discount == 0) {
+      setDiscountedPrice(Number(0.0));
+    }
+  }, [discount, additionalCost]);
+
+  useEffect(() => {
+    getChange(discountedPrice, totalCost, customerPayment);
+  }, [discountedPrice, totalCost, customerPayment]);
+
+  useEffect(() => {
+    setOrderValues({
+      ...orderValues,
+      payment: Number(parseFloat(customerPayment).toFixed(2)),
+      discount: Number(parseFloat(discount).toFixed(2)),
+      totalCost: Number(parseFloat(totalCost).toFixed(2)),
+      additionalPayment: Number(parseFloat(additionalCost).toFixed(2)),
+    });
+  }, [additionalCost, customerPayment, discount]);
+
+  useEffect(() => {
+    setPdfPaymentRows([
+      {
+        label: "Additional Cost",
+        data: parseFloat(orderValues.additionalPayment).toFixed(2),
+      },
+      {
+        label: "Total Cost",
+        data: parseFloat(orderValues.totalCost).toFixed(2),
+      },
+      {
+        label: "Discounted Price",
+        data: parseFloat(discountedPrice).toFixed(2),
+      },
+      {
+        label: "Customer Payment",
+        data: parseFloat(orderValues.payment).toFixed(2),
+      },
+      {
+        label: "Change",
+        data: change,
+      },
+      {
+        label: "Cashier",
+        data: orderValues.employeeFullName,
+      },
+    ]);
+  }, [orderValues]);
 
   return (
     <div
@@ -418,35 +351,51 @@ const UnpaidOrderTab = ({
               <div className={styles["modal__header-text"]}>
                 Table #{orderValues.tableNumber}
               </div>
-              {/* <Icon
-                icon={printIcon}
-                height="25"
-                width="25"
-                className={[
-                  styles["print-icon"],
-                  !orderCardSelected && styles["print-none"],
-                ].join(" ")}
-                onClick={() =>
-                  printReceipt(
-                    orderCardSelected,
-                    pdfRows,
-                    pdfColumns,
-                    pdfPaymentRows,
-                    pdfPaymentColumns
-                  )
-                }
-              ></Icon> */}
             </div>
             <div className={styles["Text-Section"]}>
               <div className={styles["Input-Section"]}>
                 <TextField
                   variant="outlined"
                   size="small"
+                  label="Additional Cost"
+                  value={additionalCost}
+                  onChange={handleAdditionalCostOnChange}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="end">
+                        <Icon icon="clarity:peso-line" />
+                      </InputAdornment>
+                    ),
+                  }}
+                  fullWidth
+                  type="number"
+                />
+              </div>
+              <div className={styles["Input-Section"]}>
+                <TextField
+                  variant="outlined"
+                  size="small"
+                  label="Customer Payment "
+                  value={customerPayment}
+                  onChange={handleCustomerPaymentOnChange}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="end">
+                        <Icon icon="clarity:peso-line" />
+                      </InputAdornment>
+                    ),
+                  }}
+                  fullWidth
+                  type="number"
+                />
+              </div>
+              <div className={styles["Input-Section"]}>
+                <TextField
+                  variant="outlined"
+                  size="small"
                   label="Discount"
-                  name="discount"
-                  helperText={discountError}
-                  error={discountError != ""}
-                  onChange={handleInputChange}
+                  value={discount}
+                  onChange={handleDiscountOnChange}
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
@@ -456,56 +405,21 @@ const UnpaidOrderTab = ({
                   }}
                   InputLabelProps={{ shrink: true }}
                   fullWidth
+                  type="number"
                 />
               </div>
-
-              <div className={styles["Input-Section"]}>
-                <TextField
-                  variant="outlined"
-                  size="small"
-                  label="Customer Payment "
-                  name="payment"
-                  helperText={paymentError}
-                  error={paymentError != ""}
-                  onChange={handleInputChange}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="end">
-                        <Icon icon="clarity:peso-line" />
-                      </InputAdornment>
-                    ),
-                  }}
-                  fullWidth
-                />
-              </div>
-
-              <div className={styles["Input-Section"]}>
-                <TextField
-                  variant="outlined"
-                  size="small"
-                  label="Additional Cost"
-                  name="additionalPayment"
-                  helperText={additionalError}
-                  error={additionalError != ""}
-                  onChange={handleInputChange}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="end">
-                        <Icon icon="clarity:peso-line" />
-                      </InputAdornment>
-                    ),
-                  }}
-                  fullWidth
-                />
-              </div>
-
               <div className={styles["Output-Section"]}>
-                <div className={styles["Output-Section__label"]}>Change</div>
+                <div className={styles["Output-Section__label"]}>Subtotal</div>
                 <div className={styles["Output-Section__label"]}>
-                  ₱{parseFloat(change).toFixed(2)}
+                  ₱{subTotal}
                 </div>
               </div>
-
+              <div className={styles["Output-Section"]}>
+                <div className={styles["Output-Section__label"]}>Total</div>
+                <div className={styles["Output-Section__label"]}>
+                  ₱{totalCost}
+                </div>
+              </div>
               <div className={styles["Output-Section"]}>
                 <div className={styles["Output-Section__label"]}>
                   Discounted Price
@@ -514,13 +428,10 @@ const UnpaidOrderTab = ({
                   ₱{parseFloat(discountedPrice).toFixed(2)}
                 </div>
               </div>
-
               <div className={styles["Output-Section"]}>
+                <div className={styles["Output-Section__label"]}>Change</div>
                 <div className={styles["Output-Section__label"]}>
-                  Total Price
-                </div>
-                <div className={styles["Output-Section__label"]}>
-                  ₱{totalCost}
+                  ₱{parseFloat(change).toFixed(2)}
                 </div>
               </div>
             </div>
@@ -528,7 +439,14 @@ const UnpaidOrderTab = ({
           <div className={styles["modal__footer"]}>
             <button
               className={styles["Confirm_Button"]}
-              onClick={() => payButtonOnClick()}
+              onClick={() =>
+                // additionalCost,
+                // customerPayment,
+                // discount,
+                // discountedPrice,
+                // totalCost
+                payButtonOnClick()
+              }
             >
               Confirm
             </button>
