@@ -52,29 +52,39 @@ const MenuOrderTab = ({
 	servingType,
 	handleServingTypeOnChange,
 }) => {
+	// const [arrChangeDiscountedPrice, setArrChangeDiscountedPrice] = useState([]);
 	const [total, setTotal] = useState(0);
 	const [open, setOpen] = React.useState(false);
 	const [customerPayment, setCustomerPayment] = useState(0);
 	const [discountPayment, setDiscountPayment] = useState(0);
 	const [additionalPayment, setAdditionalPayment] = useState(0);
 	const [subTotal, setSubTotal] = useState(0);
-	// const discountedPrice = total * (discountPayment / 100);
-	// const totalPrice = total - total * (discountPayment / 100);
-	// const { employeeName } = useUser();
+	const [discountedPrice, setDiscountedPrice] = useState(0.0);
 
-	// const [pickUpFormat, setPickUpFormat] = useState("DineIn");
-	// const handlePickUpFormat = (event) => setPickUpFormat(event.target.value);
+	// const [discountedPrice, setDiscountedPrice] = useState(0);
+	// // const totalPrice = total - total * (discountPayment / 100);
+	const { employeeName } = useUser();
+
+	const [pickUpFormat, setPickUpFormat] = useState("DineIn");
+	const handlePickUpFormat = (event) => setPickUpFormat(event.target.value);
 
 	const resetTextFieldValues = () => {
 		setCustomerPayment(0);
 		setDiscountPayment(0);
 		setAdditionalPayment(0);
+		setTotal(0);
+		setDiscountedPrice(0);
+		setChange(0);
+		orderValues.payment = 0;
+		orderValues.discount = 0;
+		orderValues.additionalPayment = 0;
 	};
 
 	const handleClose = () => {
-		resetTextFieldValues();
 		setOpen(false);
+		resetTextFieldValues();
 	};
+
 	const handleOpen = () => {
 		if (menuOnCategory.orderMenu.length === 0) {
 			toast.error("There should atleast be 1 menu item");
@@ -88,24 +98,24 @@ const MenuOrderTab = ({
 
 		if (type === "new-user") {
 			setOpen(true);
+			setTotal(parseFloat(subTotal).toFixed(2));
 		} else {
-			payButtonOnClick(
-				customerPayment,
-				discountPayment,
-				additionalPayment,
-				handleClose
-			);
+			payButton();
 		}
 	};
 	const [orderValues, setOrderValues] = useState([]);
 	const [change, setChange] = useState(0);
-
 	const [discountError, setDiscountError] = useState("");
 	const [paymentError, setPaymentError] = useState("");
 	const [additionalError, setAdditionalError] = useState("");
 
 	const getChange = () => {
-		const beforeCheckChange = (orderValues.payment - total).toFixed(2);
+		const beforeCheckChange = 0;
+		if (discountedPrice != 0) {
+			beforeCheckChange = (orderValues.payment - discountedPrice).toFixed(2);
+		} else {
+			beforeCheckChange = (orderValues.payment - total).toFixed(2);
+		}
 		if (beforeCheckChange >= 0) {
 			setChange(beforeCheckChange);
 		} else if (beforeCheckChange < 0) {
@@ -113,123 +123,175 @@ const MenuOrderTab = ({
 		}
 	};
 
-	const customerPaymentOnChange = (e) => {
-		setCustomerPayment(e.target.value);
-	};
-	const discountPaymentOnChange = (e) => {
-		setDiscountPayment(e.target.value);
-	};
-	const additionalPaymentOnChange = (e) => {
-		setAdditionalPayment(e.target.value);
+	const addvalues = () => {
+		setCustomerPayment(orderValues.payment);
+		setDiscountPayment(orderValues.discount);
+		setAdditionalPayment(orderValues.additionalPayment);
 	};
 
 	const handleInputChange = (e) => {
 		if (e.target.name === "discount") {
 			if (e.target.value == 0 || e.target.value == "") {
 				setDiscountError("");
-				setTotal((subTotal - subTotal * (e.target.value / 100)).toFixed(2));
+				setDiscountedPrice(parseFloat(0).toFixed(2));
 				getChange();
-				setDiscountPayment(orderValues.discount);
+
+				if (orderValues.payment - total < 0) {
+					setPaymentError(
+						"Payment must be greater than or equal to total cost."
+					);
+				} else {
+					setPaymentError("");
+				}
 			} else if (validIntegerDecimal(e.target.value)) {
 				if (e.target.value > 100 || e.target.value < 0) {
 					setDiscountError("Input must be 0-100 only.");
 				} else {
-					setDiscountError("");
-					setTotal((subTotal - subTotal * (e.target.value / 100)).toFixed(2));
 					getChange();
+					setDiscountedPrice(
+						(
+							parseFloat(total) -
+							parseFloat(total) * (parseFloat(e.target.value) / 100)
+						).toFixed(2)
+					);
+					getChange();
+
+					if (
+						orderValues.payment -
+							(
+								parseFloat(total) -
+								parseFloat(total) * (parseFloat(e.target.value) / 100)
+							).toFixed(2) >=
+						0
+					) {
+						setDiscountError("");
+						setPaymentError("");
+						setDiscountedPrice(
+							(
+								parseFloat(total) -
+								parseFloat(total) * (parseFloat(e.target.value) / 100)
+							).toFixed(2)
+						);
+						getChange();
+					} else {
+						setPaymentError(
+							"Payment must be greater than or equal to discounted cost."
+						);
+					}
 				}
 			} else if (!validIntegerDecimal(e.target.value)) {
 				setDiscountError("Input digits only.");
 			}
 		}
+		if (e.target.name === "payment") {
+			if (e.target.value === "" || e.target.value === 0) {
+				setPaymentError("Input cannot be empty.");
+			} else if (!validIntegerDecimal(e.target.value)) {
+				setPaymentError("Input must be digits.");
+			} else if (validIntegerDecimal(e.target.value)) {
+				if (
+					parseFloat(discountedPrice) > 0 ||
+					parseFloat(orderValues.discount) > 0
+				) {
+					if (parseFloat(e.target.value) < discountedPrice) {
+						setPaymentError(
+							"Payment must be greater or equal the discounted cost."
+						);
+					} else {
+						setTotal(total);
+						getChange();
+						setPaymentError("");
+					}
+				} else if (parseFloat(total) > 0) {
+					if (parseFloat(e.target.value) - total < 0) {
+						setPaymentError("Payment must be greater or equal the total cost.");
+					} else {
+						setTotal(total);
+						getChange();
+						setPaymentError("");
+					}
+				}
+			} else {
+				setPaymentError("");
+				getChange();
+			}
+		}
+
+		if (e.target.name === "additionalPayment") {
+			if (e.target.value == 0 || e.target.value == "") {
+				getChange();
+				setAdditionalError("");
+			} else if (validIntegerDecimal(e.target.value)) {
+				setTotal(
+					(parseFloat(e.target.value) + parseFloat(subTotal)).toFixed(2)
+				);
+				getChange();
+
+				if (discountedPrice != 0 || discountedPrice != "") {
+					if (orderValues.payment - discountedPrice >= 0) {
+						setAdditionalError("");
+						setPaymentError("");
+					} else {
+						setPaymentError(
+							"Payment must be greater than or equal to discounted price."
+						);
+					}
+				} else if (
+					(parseFloat(e.target.value) + parseFloat(subTotal)).toFixed(2) -
+						parseFloat(subTotal) !=
+					0
+				) {
+					if (
+						orderValues.payment -
+							(parseFloat(e.target.value) + parseFloat(subTotal)).toFixed(2) >=
+						0
+					) {
+						setAdditionalError("");
+						setPaymentError("");
+						getChange();
+					} else {
+						setPaymentError(
+							"Payment must be greater than or equal to total price."
+						);
+					}
+				}
+			} else if (!validIntegerDecimal(e.target.value)) {
+				setChange(0);
+				setAdditionalError("Input digits only.");
+			}
+		}
+		addvalues();
+
 		setOrderValues({
 			...orderValues,
 			[e.target.name]: e.target.value,
 		});
+
+		// setArrChangeDiscountedPrice({
+		// 	change: change,
+		// 	discountedPrice: discountedPrice,
+		// });
 	};
 
 	const payButton = () => {
-		console.log(orderValues);
-		const discountFloat = 0.0;
-		const paymentFloat = 0.0;
-		const additionalFloat = 0.0;
-		const DiscountChecker = false;
-		const PaymentChecker = false;
-		const AdditionalChecker = false;
-
-		if (orderValues.discount != 0 || orderValues.discount != "") {
-			if (validIntegerDecimal(orderValues.discount)) {
-				discountFloat = parseFloat(orderValues.discount).toFixed(2);
-				if (discountFloat > 100 || discountFloat < 0) {
-					setDiscountError("Input must be 0-100 only.");
-					return;
-				} else {
-					setDiscountError("");
-					setOrderValues({ ...orderValues, discount: discountFloat });
-					DiscountChecker = true;
-					setDiscountPayment(orderValues.discount);
-				}
-			} else {
-				setDiscountError("Input digits only.");
-				return;
-			}
-		} else {
-			setDiscountError("");
-			setOrderValues({ ...orderValues, discount: discountFloat });
-		}
-
-		if (orderValues.payment == "") {
+		if (orderValues.payment === "" || orderValues.payment === 0) {
 			setPaymentError("Input cannot be empty.");
 			return;
-		} else if (!validIntegerDecimal(orderValues.payment)) {
-			setPaymentError("Input must be digits.");
+		}
+		if (additionalError != "" || discountError != "" || paymentError != "") {
 			return;
-		} else if (validIntegerDecimal(orderValues.payment)) {
-			paymentFloat = parseFloat(orderValues.payment).toFixed(2);
-			if (paymentFloat - orderValues.totalCost < 0) {
-				setPaymentError("Payment must be greater than total cost.");
-				return;
-			} else {
-				setPaymentError("");
-				setOrderValues({ ...orderValues, payment: paymentFloat });
-				PaymentChecker = true;
-				setCustomerPayment(orderValues.payment);
-			}
-		} else {
-			setPaymentError("");
-			setOrderValues({ ...orderValues, payment: paymentFloat });
 		}
 
-		if (
-			orderValues.additionalPayment != 0 ||
-			orderValues.additionalPayment != ""
-		) {
-			if (validIntegerDecimal(orderValues.additionalPayment)) {
-				additionalFloat = parseFloat(orderValues.discount).toFixed(2);
-				setOrderValues({ ...orderValues, additionalPayment: additionalFloat });
-				setAdditionalError("");
-				AdditionalChecker = true;
-				setAdditionalPayment(orderValues.additional0Payment);
-			} else {
-				setAdditionalError("Input must be 0 and above only.");
-				return;
-			}
-		} else {
-			setAdditionalError("");
-			setOrderValues({ ...orderValues, additionalPayment: additionalFloat });
-		}
-		if (
-			DiscountChecker === true &&
-			PaymentChecker === true &&
-			AdditionalChecker === true
-		) {
-			payButtonOnClick(
-				customerPayment,
-				discountPayment,
-				additionalPayment,
-				handleClose
-			);
-		}
+		setCustomerPayment(Number(customerPayment));
+		setDiscountPayment(Number(discountPayment));
+		setAdditionalPayment(Number(additionalPayment));
+
+		payButtonOnClick(
+			customerPayment,
+			discountPayment,
+			additionalPayment,
+			handleClose
+		);
 	};
 
 	// const arr = [];
@@ -376,7 +438,6 @@ const MenuOrderTab = ({
 									onChange={handleServingTypeOnChange}
 								>
 									<FormControlLabel
-										sx={{ color: "#003049;" }}
 										control={
 											<Radio
 												sx={{
@@ -492,16 +553,18 @@ const MenuOrderTab = ({
 								</div>
 
 								<div className={styles["Output-Section"]}>
-									<div className={styles["Output-Section__label"]}>
-										<div className={styles["Output-Section__label-text"]}>
-											Change
-										</div>
-										<div className={styles["Output-Section__label-subtext"]}>
-											excluding additional payment
-										</div>
-									</div>
+									<div className={styles["Output-Section__label"]}>Change</div>
 									<div className={styles["Output-Section__label"]}>
 										₱{parseFloat(change).toFixed(2)}
+									</div>
+								</div>
+
+								<div className={styles["Output-Section"]}>
+									<div className={styles["Output-Section__label"]}>
+										Discounted Price
+									</div>
+									<div className={styles["Output-Section__label"]}>
+										₱{parseFloat(discountedPrice).toFixed(2)}
 									</div>
 								</div>
 
