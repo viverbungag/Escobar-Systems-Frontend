@@ -1,24 +1,26 @@
-@import '../../../src/styles/variables.scss';
+@import "../../../src/styles/variables.scss";
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap");
 
 .title_bar {
-    width: 100%;
-    position: sticky;
-    top: 0;
-    height: fit-content;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  height: fit-content;
 }
 
 .section {
-    margin-left: 20rem;
-    button {
-        border: none;
-        background: none;
-    }
-    .content {
-        display: flex;
-        height: 90vh;
-        // flex-direction: column;
-        justify-content: center;
-        width: 100%;
-        flex: 1;
-    }
+  margin-left: 20rem;
+  font-family: "Roboto", sans-serif;
+  button {
+    border: none;
+    background: none;
+  }
+  .content {
+    display: flex;
+    height: 90vh;
+    // flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    flex: 1;
+  }
 }

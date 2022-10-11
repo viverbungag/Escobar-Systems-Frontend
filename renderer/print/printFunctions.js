@@ -2,6 +2,37 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 
 export function printPdf(title, headCells, rows) {
+  const arr = [];
+  rows.map((item) => {
+    arr.push(item);
+  });
+
+  if (title === "Escobar - Employee Attendance Data") {
+    rows = arr.sort(
+      (a, b) => new Date(b.attendanceTime) - new Date(a.attendanceTime)
+    );
+  } else if (title === "Escobar - Active Employees Data") {
+    rows = arr.sort(
+      (a, b) => new Date(b.dateEmployed) - new Date(a.dateEmployed)
+    );
+  } else if (title === "Escobar - Inactive Employees Data") {
+    rows = arr.sort(
+      (a, b) => new Date(b.dateEmployed) - new Date(a.dateEmployed)
+    );
+  } else if (title === "Escobar - Expense Transactions Data") {
+    rows = arr.sort(
+      (a, b) => new Date(b.expenseDate) - new Date(a.expenseDate)
+    );
+  } else if (title === "Escobar - Stock-In Transactions Data") {
+    rows = arr.sort(
+      (a, b) => new Date(b.transactionDate) - new Date(a.transactionDate)
+    );
+  } else if (title === "Escobar - Income Data") {
+    rows = arr.sort((a, b) => new Date(b.incomeDate) - new Date(a.incomeDate));
+  } else {
+    rows = arr.sort((a, b) => new Date(b.orderTime) - new Date(a.orderTime));
+  }
+
   const doc = new jsPDF();
   var img = new Image();
   img.src = "/images/forPDF/logo.png";
@@ -44,9 +75,9 @@ export function printPdf(title, headCells, rows) {
     doc.putTotalPages(totalPagesExp);
   }
 
-  doc.save(`${title}.pdf`);
-  // doc.autoPrint();
-  // window.open(doc.output('bloburl'), '_blank');
+  // doc.save(`${title}.pdf`);
+  doc.autoPrint();
+  window.open(doc.output("bloburl"), "_blank");
 }
 
 export function printReceipt(

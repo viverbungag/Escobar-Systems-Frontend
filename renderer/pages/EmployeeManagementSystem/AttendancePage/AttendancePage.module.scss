@@ -1,11 +1,12 @@
-@import '../../../src/styles/variables.scss';
+@import "../../../src/styles/variables.scss";
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap");
 
 .section {
-    // height: 100vh;
-    margin-left: 20rem;
-    .content {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-    }
+  margin-left: 20rem;
+  font-family: "Roboto", sans-serif;
+  .content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
 }
