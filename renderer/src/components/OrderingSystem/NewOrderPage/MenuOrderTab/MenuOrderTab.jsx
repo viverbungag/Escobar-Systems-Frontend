@@ -133,6 +133,11 @@ const MenuOrderTab = ({
 	// 	setAdditionalPayment(e.target.value);
 	// };
 
+	const handleCustomerPaymentOnChange = (event) => {
+		setCustomerPayment(event.target.value);
+	}
+
+
 	const handleInputChange = (e) => {
 		if (e.target.name === "discount") {
 			if (e.target.value == 0 || e.target.value == "") {
@@ -188,6 +193,7 @@ const MenuOrderTab = ({
 			}
 		}
 		if (e.target.name === "payment") {
+			setCustomerPayment(e.target.value);
 			if (e.target.value === "" || e.target.value === 0) {
 				setPaymentError("Input cannot be empty.");
 			} else if (!validIntegerDecimal(e.target.value)) {
@@ -277,6 +283,7 @@ const MenuOrderTab = ({
 	};
 
 	const payButton = () => {
+		
 		if (orderValues.payment === "" || orderValues.payment === 0) {
 			setPaymentError("Input cannot be empty.");
 			return;
@@ -285,13 +292,14 @@ const MenuOrderTab = ({
 			return;
 		}
 
-		setCustomerPayment(Number(orderValues.payment));
-		setDiscountPayment(Number(orderValues.discount));
-		setAdditionalPayment(Number(orderValues.additionalPayment));
+		// setCustomerPayment(Number(orderValues.payment));
+		// setDiscountPayment(Number(orderValues.discount));
+		// setAdditionalPayment(Number(orderValues.additionalPayment));
 
-		setCustomerPayment(Number(customerPayment));
-		setDiscountPayment(Number(discountPayment));
-		setAdditionalPayment(Number(additionalPayment));
+		// setCustomerPayment(Number(customerPayment));
+		// setDiscountPayment(Number(discountPayment));
+		// setAdditionalPayment(Number(additionalPayment));
+		// console.log(customerPayment);
 
 		payButtonOnClick(
 			customerPayment,
@@ -505,6 +513,7 @@ const MenuOrderTab = ({
 										size="small"
 										label="Discount"
 										name="discount"
+										type="number"
 										helperText={discountError}
 										error={discountError != ""}
 										onChange={handleInputChange}
@@ -525,9 +534,11 @@ const MenuOrderTab = ({
 										size="small"
 										label="Customer Payment "
 										name="payment"
+										type="number"
+										value={customerPayment}
 										helperText={paymentError}
 										error={paymentError != ""}
-										onChange={handleInputChange}
+										onChange={handleCustomerPaymentOnChange}
 										InputProps={{
 											startAdornment: (
 												<InputAdornment position="end">
@@ -545,6 +556,7 @@ const MenuOrderTab = ({
 										size="small"
 										label="Additional Payment"
 										name="additionalPayment"
+										type="number"
 										helperText={additionalError}
 										error={additionalError != ""}
 										onChange={handleInputChange}
@@ -588,9 +600,9 @@ const MenuOrderTab = ({
 
 						<div className={styles["Button-Section"]}>
 							<Button
-								onClick={() => {
-									payButtonOnClick();
-								}}
+								onClick={
+									payButton
+								}
 								className={styles["Confirm_Button"]}
 							>
 								Confirm

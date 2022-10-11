@@ -204,6 +204,8 @@ const NewOrderPage = () => {
 		additionalPayment,
 		handleClose
 	) => {
+		console.log(customerPayment);
+
 		const total = menuOnCategory.orderMenu.reduce(
 			(sum, currentMenu) =>
 				sum + currentMenu.menuPrice * currentMenu.orderMenuQuantity,

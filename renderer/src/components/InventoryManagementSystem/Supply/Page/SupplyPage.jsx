@@ -749,7 +749,7 @@ const SupplyPage = () => {
 
   return (
     <div className={styles["supply-page"]}>
-      <Toast />
+      {/* <Toast /> */}
       <AddSupplyModal
         allSuppliers={activeSuppliers}
         allUnitOfMeasurements={activeUnitOfMeasurements}

@@ -43,7 +43,7 @@ const LoginPage = () => {
 
   return (
     <div className={styles["login-page"]}>
-      <Toast />
+      {/* <Toast /> */}
       <WindowControlBar />
       <div className={styles["login-page__container"]}>
         <div className={styles["login-page__title"]}>LOGIN</div>
