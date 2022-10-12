@@ -1,10 +1,11 @@
 $hover-color: #fdb530;
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap");
 
 .main-dashboard-page {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  overflow-y: auto;
+  overflow: auto;
 
   &__header {
     padding-top: 5rem;
@@ -20,17 +21,14 @@ $hover-color: #fdb530;
   }
 
   &__main-content {
-    padding: 5rem 5rem 0;
+    padding: 0 5rem;
     flex: 2;
     flex-wrap: wrap;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 2.5rem;
-    // padding: 8rem 10rem;
-    // justify-content: center;
-    // flex-grow: 1;
-    // overflow: auto;
+    margin: 3rem 0;
   }
 
   &__card {
@@ -77,12 +75,15 @@ $hover-color: #fdb530;
   &__footer {
     display: flex;
     justify-content: space-between;
-    padding: 2rem;
+    padding: 0.8rem 2rem;
     width: 100%;
+    position: sticky;
+    bottom: 0;
+    background-color: #e2e2e2;
   }
 
   &__info {
-    font-family: "Open Sans", sans-serif;
+    font-family: "Roboto", sans-serif;
     display: flex;
     flex-direction: column;
   }
@@ -96,8 +97,8 @@ $hover-color: #fdb530;
   &__bottom-text {
     text-transform: capitalize;
     letter-spacing: 0.1rem;
-    font-weight: 500;
-    font-size: 1rem;
+    font-weight: 400;
+    font-size: 0.95rem;
   }
 
   &__logout-container {

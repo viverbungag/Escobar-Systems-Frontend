@@ -1,20 +1,22 @@
-@import '../../../src/styles/variables.scss';
+@import "../../../src/styles/variables.scss";
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap");
 
 .title_bar {
-    width: 100%;
-    position: sticky;
-    top: 0;
-    height: fit-content;
-    background-color: white;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  height: fit-content;
+  background-color: white;
 }
 
 .section {
-    margin-left: 20rem;
-    .content {
-        display: flex;
-        height: 90vh;
-        justify-content: center;
-        width: 100%;
-        flex: 1;
-    }
+  margin-left: 20rem;
+  font-family: "Roboto", sans-serif;
+  .content {
+    display: flex;
+    height: 90vh;
+    justify-content: center;
+    width: 100%;
+    flex: 1;
+  }
 }

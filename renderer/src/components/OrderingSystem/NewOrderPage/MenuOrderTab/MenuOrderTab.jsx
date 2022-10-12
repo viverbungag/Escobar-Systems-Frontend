@@ -123,15 +123,11 @@ const MenuOrderTab = ({
 		}
 	};
 
-	// const customerPaymentOnChange = (e) => {
-	// 	setCustomerPayment(e.target.value);
-	// };
-	// const discountPaymentOnChange = (e) => {
-	// 	setDiscountPayment(e.target.value);
-	// };
-	// const additionalPaymentOnChange = (e) => {
-	// 	setAdditionalPayment(e.target.value);
-	// };
+	const addvalues = () => {
+		setCustomerPayment(orderValues.payment);
+		setDiscountPayment(orderValues.discount);
+		setAdditionalPayment(orderValues.additionalPayment);
+	};
 
 	const handleCustomerPaymentOnChange = (event) => {
 		setCustomerPayment(event.target.value);
@@ -270,6 +266,7 @@ const MenuOrderTab = ({
 				setAdditionalError("Input digits only.");
 			}
 		}
+		addvalues();
 
 		setOrderValues({
 			...orderValues,
@@ -292,14 +289,9 @@ const MenuOrderTab = ({
 			return;
 		}
 
-		// setCustomerPayment(Number(orderValues.payment));
-		// setDiscountPayment(Number(orderValues.discount));
-		// setAdditionalPayment(Number(orderValues.additionalPayment));
-
 		// setCustomerPayment(Number(customerPayment));
 		// setDiscountPayment(Number(discountPayment));
 		// setAdditionalPayment(Number(additionalPayment));
-		// console.log(customerPayment);
 
 		payButtonOnClick(
 			customerPayment,

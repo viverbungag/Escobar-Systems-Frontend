@@ -1,92 +1,111 @@
-import React, { useState, useEffect } from 'react';
-import styles from './ActiveAccountsTable.module.scss';
-import { IconButton, Modal, Tooltip } from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid';
-import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
-import SearchBar from 'material-ui-search-bar';
-import MediumButton from '../../Shared/Buttons/MediumButton/MediumButton';
-import InactivateAccountModal from '../InactivateAccountModal/InactivateAccountModal';
-import EditAccount from '../EditAccount/EditAccount';
-import { printPdf } from '../../../../../print/printFunctions';
+import React, { useState, useEffect } from "react";
+import styles from "./ActiveAccountsTable.module.scss";
+import { IconButton, Modal, Tooltip } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
+import LocalPrintshopIcon from "@mui/icons-material/LocalPrintshop";
+import SearchBar from "material-ui-search-bar";
+import MediumButton from "../../Shared/Buttons/MediumButton/MediumButton";
+import InactivateAccountModal from "../InactivateAccountModal/InactivateAccountModal";
+import EditAccount from "../EditAccount/EditAccount";
+import { printPdf } from "../../../../../print/printFunctions";
 import { toast } from "react-toastify";
 
-export default function ActiveAccountsTable({ reload, activeAccounts, activeEmployees }) {
+export default function ActiveAccountsTable({
+  reload,
+  activeAccounts,
+  activeEmployees,
+}) {
   //for pdf
-  const title = 'Escobar - Active Accounts Data';
+  const title = "Escobar - Active Accounts Data";
   const pdfColumns = [
-    { header:"ID", dataKey: 'accountId' },
-    { header:"Username", dataKey: 'accountUsername' },
-    { header:"Name", dataKey: 'employeeName' },
-    { header:"IMS", dataKey: 'accessInventoryManagementSystem' },
-    { header:"EMS", dataKey: 'accessEmployeeManagementSystem' },
-    { header:"IES", dataKey: 'accessIncomeAndExpenseSystem' },
-    { header:"OS", dataKey: 'accessOrderingSystem' }
-  ]
+    { header: "Username", dataKey: "accountUsername" },
+    { header: "Name", dataKey: "employeeName" },
+    { header: "IMS", dataKey: "accessInventoryManagementSystem" },
+    { header: "EMS", dataKey: "accessEmployeeManagementSystem" },
+    { header: "IES", dataKey: "accessIncomeAndExpenseSystem" },
+    { header: "OS", dataKey: "accessOrderingSystem" },
+  ];
   const [pdfRows, setPdfRows] = useState([]);
   //
   //columns
   const headCells = [
-    { field: 'accountUsername', headerName: 'Username', flex: 1, align: 'left'},
-    { field: 'employeeName', headerName: 'Name', flex: 1, align: 'left'}
+    {
+      field: "accountUsername",
+      headerName: "Username",
+      flex: 1,
+      align: "left",
+    },
+    { field: "employeeName", headerName: "Name", flex: 1, align: "left" },
   ];
   const [rows, setRows] = useState([]);
   //  search
   const [searched, setSearched] = useState("");
   const requestSearch = (searchValue) => {
     const filteredRows = activeAccounts.filter((row) => {
-      return row.username.toLowerCase().includes(searchValue.toLowerCase()) || row.employeeTypeName.toLowerCase().includes(searchValue.toLowerCase());
-      });
-      setRows(filteredRows);
-      setPdfRows(activeAccounts);
-    };
+      return (
+        String(row.accountUsername)
+          .toLowerCase()
+          .includes(searchValue.toLowerCase()) ||
+        String(row.employeeName)
+          .toLowerCase()
+          .includes(searchValue.toLowerCase())
+      );
+    });
+    setRows(filteredRows);
+    setPdfRows(activeAccounts);
+  };
   const cancelSearch = () => {
     setSearched("");
     setRows(activeAccounts);
-  }
+  };
   //selected rows
   const [selected, setSelected] = useState("");
   const handleSelect = (ids) => {
     setSelected(ids);
-  }
+  };
   const [selectedValues, setSelectedValues] = useState([]);
   const handleSelectedValues = () => {
     const arr = [];
-    for(let i=0; i < selected.length; i++){
+    for (let i = 0; i < selected.length; i++) {
       rows.map((item) => {
-        if(item.accountId == selected[i]){
+        if (item.accountId == selected[i]) {
           arr.push(item);
         }
-      })
+      });
     }
     setSelectedValues(arr);
-  }
+  };
   //edit
   const [openMoreModal, setopenMoreModal] = useState(false);
-  const handleOpenMoreModal = () => { 
+  const handleOpenMoreModal = () => {
     handleSelectedValues();
-    setopenMoreModal(true); 
+    setopenMoreModal(true);
   };
-  const handleCloseMoreModal = () => { setopenMoreModal(false) };
+  const handleCloseMoreModal = () => {
+    setopenMoreModal(false);
+  };
   const editSuccessAction = () => {
     toast.success("Successfully edited employee account");
     handleCloseMoreModal();
     reload();
     setRows(activeCategories);
-  }
+  };
   //inactivate modal
   const [openInactivateModal, setOpenInactivateModal] = useState(false);
   const handleOpenInactivateModal = () => {
-    handleSelectedValues(); 
-    setOpenInactivateModal(true); 
+    handleSelectedValues();
+    setOpenInactivateModal(true);
   };
-  const handleCloseInactivateModal = () => { setOpenInactivateModal(false); };
+  const handleCloseInactivateModal = () => {
+    setOpenInactivateModal(false);
+  };
   const inactivateSuccessAction = () => {
     handleCloseInactivateModal();
     reload();
-  }
+  };
   //get shown buttons
   function showButtons() {
-    if(selected.length == 1 ){
+    if (selected.length == 1) {
       return (
         <>
           <Tooltip title="Edit/More Info">
@@ -100,8 +119,8 @@ export default function ActiveAccountsTable({ reload, activeAccounts, activeEmpl
             </IconButton>
           </Tooltip>
         </>
-      )
-    }else if(selected.length > 1){
+      );
+    } else if (selected.length > 1) {
       return (
         <>
           <Tooltip title="Edit/More Info">
@@ -115,8 +134,8 @@ export default function ActiveAccountsTable({ reload, activeAccounts, activeEmpl
             </IconButton>
           </Tooltip>
         </>
-      )
-    }else if(selected.length == 0){
+      );
+    } else if (selected.length == 0) {
       return (
         <>
           <Tooltip title="Edit/More Info">
@@ -130,35 +149,36 @@ export default function ActiveAccountsTable({ reload, activeAccounts, activeEmpl
             </IconButton>
           </Tooltip>
         </>
-      )
+      );
     }
-  };
+  }
 
   useEffect(() => {
     handleSelectedValues();
-  }, [selected])
+  }, [selected]);
 
   useEffect(() => {
     setRows(activeAccounts);
     setPdfRows(activeAccounts);
-  }, [activeAccounts])
+  }, [activeAccounts]);
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <div className={styles.left}>
           Active Accounts
-          <Tooltip title='Print Active Accounts'>
-            <LocalPrintshopIcon className={styles.print_btn} onClick={() => printPdf(title, pdfColumns, pdfRows)} />
+          <Tooltip title="Print Active Accounts">
+            <LocalPrintshopIcon
+              className={styles.print_btn}
+              onClick={() => printPdf(title, pdfColumns, pdfRows)}
+            />
           </Tooltip>
         </div>
-        <div className={styles.right}>
-          {showButtons()}
-        </div>
+        <div className={styles.right}>{showButtons()}</div>
       </div>
       <div className={styles.sub_header}>
         <div className={styles.left}>
-          <SearchBar 
+          <SearchBar
             placeholder="Search Active Accounts Table"
             value={searched}
             onChange={(searchValue) => requestSearch(searchValue)}
@@ -176,23 +196,23 @@ export default function ActiveAccountsTable({ reload, activeAccounts, activeEmpl
           checkboxSelection
         />
       </div>
-        <Modal open={openMoreModal} onClose={handleCloseMoreModal}>
-            <div className={styles.modal}>
-              <EditAccount
-              activeEmployees={activeEmployees}
-              editSuccessAction={editSuccessAction}
-              selectedValues={selectedValues[0]}
-              />
-            </div>
-        </Modal>
-        <Modal open={openInactivateModal} onClose={handleCloseInactivateModal}>
-            <div className={styles.modal}>
-                <InactivateAccountModal
-                inactivateSuccessAction={inactivateSuccessAction}
-                selectedValues={selectedValues}
-                />
-            </div>
-        </Modal>
+      <Modal open={openMoreModal} onClose={handleCloseMoreModal}>
+        <div className={styles.modal}>
+          <EditAccount
+            activeEmployees={activeEmployees}
+            editSuccessAction={editSuccessAction}
+            selectedValues={selectedValues[0]}
+          />
+        </div>
+      </Modal>
+      <Modal open={openInactivateModal} onClose={handleCloseInactivateModal}>
+        <div className={styles.modal}>
+          <InactivateAccountModal
+            inactivateSuccessAction={inactivateSuccessAction}
+            selectedValues={selectedValues}
+          />
+        </div>
+      </Modal>
     </div>
-  )
+  );
 }
