@@ -47,7 +47,7 @@
           width: 100%;
           color: grey;
           border-bottom: 1px solid rgba(128, 128, 128, 0.192);
-          -webkit-user-select: none;
+          user-select: none;
         }
         .sidebar_item {
           border-radius: 1rem;
