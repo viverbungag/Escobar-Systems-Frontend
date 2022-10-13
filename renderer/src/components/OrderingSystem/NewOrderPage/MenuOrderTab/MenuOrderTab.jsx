@@ -88,27 +88,27 @@ const MenuOrderTab = ({
   };
 
   const handleOpen = () => {
-	if (menuOnCategory.orderMenu.length === 0) {
-		toast.error("There should atleast be 1 menu item");
-		return;
-	}
+    if (menuOnCategory.orderMenu.length === 0) {
+      toast.error("There should atleast be 1 menu item");
+      return;
+    }
 
-	if (type === "existing-user" && selectedOrder === "") {
-		toast.error("Please select from the existing orders");
-		return;
-	}
+    if (type === "existing-user" && selectedOrder === "") {
+      toast.error("Please select from the existing orders");
+      return;
+    }
 
-	if (type === "new-user") {
-		setOpen(true);
-		setTotal(parseFloat(subTotal).toFixed(2));
-	} else {
-		payButtonOnClick(
-			customerPayment,
-			discountPayment,
-			additionalPayment,
-			handleClose
-		);
-	}
+    if (type === "new-user") {
+      setOpen(true);
+      setTotal(parseFloat(subTotal).toFixed(2));
+    } else {
+      payButtonOnClick(
+        customerPayment,
+        discountPayment,
+        additionalPayment,
+        handleClose
+      );
+    }
   };
 
   const [change, setChange] = useState(0);

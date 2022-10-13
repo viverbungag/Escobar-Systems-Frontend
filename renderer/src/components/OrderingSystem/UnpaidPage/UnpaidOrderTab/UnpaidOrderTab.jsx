@@ -94,10 +94,8 @@ const UnpaidOrderTab = ({
     Number(parseFloat(0).toFixed(2))
   );
   const [additionalCost, setAdditionalCost] = useState();
-  const [customerPayment, setCustomerPayment] = useState(
-    Number(parseFloat(0).toFixed(2))
-  );
-  const [discount, setDiscount] = useState(Number(parseFloat(0).toFixed(2)));
+  const [customerPayment, setCustomerPayment] = useState("");
+  const [discount, setDiscount] = useState("");
   const handleAdditionalCostOnChange = (e) => {
     setAdditionalCost(e.target.value);
     if (e.target.value != 0 || e.target.value != "") {
@@ -196,6 +194,10 @@ const UnpaidOrderTab = ({
     setCustomerPayment("");
     setDiscount("");
     setDiscountedPrice(0.0);
+  };
+
+  useEffect(() => {
+    createNewCols();
     setSubTotal(
       orderTabItems
         .reduce(
@@ -207,10 +209,6 @@ const UnpaidOrderTab = ({
         )
         .toFixed(2)
     );
-  };
-
-  useEffect(() => {
-    createNewCols();
   }, [orderTabItems]);
 
   useEffect(() => {
