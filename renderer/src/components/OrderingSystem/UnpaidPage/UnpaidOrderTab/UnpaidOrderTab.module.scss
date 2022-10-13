@@ -137,6 +137,11 @@
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
   user-select: none;
   justify-content: space-between;
+  button {
+    &:hover {
+      cursor: pointer;
+    }
+  }
 
   &__title-bar {
     display: flex;
@@ -148,9 +153,9 @@
   &__container {
     display: flex;
     flex-direction: column;
-    // align-items: center;
-    justify-content: center;
-    padding: 1rem;
+    align-items: center;
+    // justify-content: center;
+    padding: 0 1rem;
     gap: 1rem;
     height: 50vh;
     overflow: auto;
@@ -183,10 +188,16 @@
   }
 
   &__header {
-    display: flex;
-    justify-content: space-between;
+    background-color: rgb(255, 255, 255);
+    position: sticky;
+    z-index: 99;
+    top: 0;
     width: 100%;
-    padding: 0 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    padding: 0.5rem 1.2rem;
   }
 
   &__header-text {
@@ -194,6 +205,31 @@
     font-weight: 600;
     text-transform: uppercase;
     color: #000000;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    gap: 1rem;
+  }
+
+  &__textfield {
+  }
+
+  &__data {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    &__label {
+      max-width: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-transform: capitalize;
+      color: #000000;
+      overflow: auto;
+    }
   }
 
   &__footer {
@@ -210,13 +246,13 @@
   border: 3px solid #000000;
   transition: transform 0.2s;
   &:hover {
-    // box-shadow: 0 5px #666;
     transform: translateY(2px);
+    box-shadow: 0 5px #666;
     background-color: #ff0000;
   }
 }
 
-.Confirm_Button {
+.confirm-button {
   width: 128px;
   height: 45.84px;
   box-sizing: border-box;
@@ -224,9 +260,12 @@
   border: 3px solid #000000;
   color: white;
   justify-content: center;
-
   font-style: normal;
   font-weight: 400;
   font-size: 20px;
   line-height: 30px;
+  transition: 0.32s;
+  &:hover {
+    transform: scale(1.1);
+  }
 }

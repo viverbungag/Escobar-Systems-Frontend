@@ -27,584 +27,452 @@ import { Radio } from "@mui/material";
 import { InputAdornment, TextField } from "@mui/material";
 
 function capitalizeFirstLetter(string) {
-	return string.charAt(0).toUpperCase() + string.slice(1);
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 function validIntegerDecimal(data) {
-	return /^[0-9]\d*(\.\d+)?$/.test(data);
+  return /^[0-9]\d*(\.\d+)?$/.test(data);
 }
 
 const MenuOrderTab = ({
-	menuOnCategory,
-	handleQuantityOnChange,
-	handleDeleteItemButtonOnClick,
-	deleteAllItemOnClick,
-	payButtonOnClick,
-	allOrders,
-	selectedOrder,
-	handleSelectedOrderOnChange,
-	type,
-	handleTypeChange,
-	orderDiscount,
-	selectedTableNumber,
-	handleSelectedTableNumberOnChange,
-	availableTableNumbers,
-	servingType,
-	handleServingTypeOnChange,
+  menuOnCategory,
+  handleQuantityOnChange,
+  handleDeleteItemButtonOnClick,
+  deleteAllItemOnClick,
+  payButtonOnClick,
+  allOrders,
+  selectedOrder,
+  handleSelectedOrderOnChange,
+  type,
+  handleTypeChange,
+  orderDiscount,
+  selectedTableNumber,
+  handleSelectedTableNumberOnChange,
+  availableTableNumbers,
+  servingType,
+  handleServingTypeOnChange,
 }) => {
-	// const [arrChangeDiscountedPrice, setArrChangeDiscountedPrice] = useState([]);
-	const [total, setTotal] = useState(0);
-	const [open, setOpen] = React.useState(false);
-	const [customerPayment, setCustomerPayment] = useState(0);
-	const [discountPayment, setDiscountPayment] = useState(0);
-	const [additionalPayment, setAdditionalPayment] = useState(0);
-	const [subTotal, setSubTotal] = useState(0);
-	const [discountedPrice, setDiscountedPrice] = useState(0.0);
+  // const [arrChangeDiscountedPrice, setArrChangeDiscountedPrice] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [open, setOpen] = useState(false);
+  const [customerPayment, setCustomerPayment] = useState("");
+  const [discountPayment, setDiscountPayment] = useState("");
+  const [additionalPayment, setAdditionalPayment] = useState("");
+  const [subTotal, setSubTotal] = useState(0);
+  const [discountedPrice, setDiscountedPrice] = useState("");
 
-	// const [discountedPrice, setDiscountedPrice] = useState(0);
-	// // const totalPrice = total - total * (discountPayment / 100);
-	const { employeeName } = useUser();
+  const { employeeName } = useUser();
 
-	const [pickUpFormat, setPickUpFormat] = useState("DineIn");
-	const handlePickUpFormat = (event) => setPickUpFormat(event.target.value);
+  const [pickUpFormat, setPickUpFormat] = useState("DineIn");
+  const handlePickUpFormat = (event) => setPickUpFormat(event.target.value);
 
-	const resetTextFieldValues = () => {
-		setCustomerPayment(0);
-		setDiscountPayment(0);
-		setAdditionalPayment(0);
-		setTotal(0);
-		setDiscountedPrice(0);
-		setChange(0);
-		orderValues.payment = 0;
-		orderValues.discount = 0;
-		orderValues.additionalPayment = 0;
-	};
+  const setInitialValues = () => {
+    setTotal(subTotal);
+    setChange(0.0);
+    setAdditionalPayment("");
+    setCustomerPayment("");
+    setDiscountPayment("");
+    setDiscountedPrice(0.0);
+    setSubTotal(
+      menuOnCategory.orderMenu.reduce(
+        (sum, currentMenu) =>
+          sum + currentMenu.menuPrice * currentMenu.orderMenuQuantity,
+        0
+      )
+    );
+  };
 
-	const handleClose = () => {
-		setOpen(false);
-		resetTextFieldValues();
-	};
+  const handleClose = () => {
+    setOpen(false);
+    setInitialValues();
+  };
 
-	const handleOpen = () => {
-		if (menuOnCategory.orderMenu.length === 0) {
-			toast.error("There should atleast be 1 menu item");
-			return;
-		}
+  const handleOpen = () => {
+    if (menuOnCategory.orderMenu.length === 0) {
+      toast.error("There should atleast be 1 menu item");
+      return;
+    }
 
-		if (type === "existing-user" && selectedOrder === "") {
-			toast.error("Please select from the existing orders");
-			return;
-		}
+    if (type === "existing-user" && selectedOrder === "") {
+      toast.error("Please select from the existing orders");
+      return;
+    }
 
-		if (type === "new-user") {
-			setOpen(true);
-			setTotal(parseFloat(subTotal).toFixed(2));
-		} else {
-			payButton();
-		}
-	};
-	const [orderValues, setOrderValues] = useState([]);
-	const [change, setChange] = useState(0);
-	const [discountError, setDiscountError] = useState("");
-	const [paymentError, setPaymentError] = useState("");
-	const [additionalError, setAdditionalError] = useState("");
+    if (type === "new-user") {
+      setOpen(true);
+      setTotal(parseFloat(subTotal).toFixed(2));
+    } else {
+      payButton();
+    }
+  };
 
-	const getChange = () => {
-		const beforeCheckChange = 0;
-		if (discountedPrice != 0) {
-			beforeCheckChange = (orderValues.payment - discountedPrice).toFixed(2);
-		} else {
-			beforeCheckChange = (orderValues.payment - total).toFixed(2);
-		}
-		if (beforeCheckChange >= 0) {
-			setChange(beforeCheckChange);
-		} else if (beforeCheckChange < 0) {
-			setChange(0);
-		}
-	};
+  const [change, setChange] = useState(0);
 
-	const addvalues = () => {
-		setCustomerPayment(orderValues.payment);
-		setDiscountPayment(orderValues.discount);
-		setAdditionalPayment(orderValues.additionalPayment);
-	};
+  const getChange = () => {
+    const beforeCheckChange = 0;
+    if (discountedPrice != 0) {
+      beforeCheckChange = (customerPayment - discountedPrice).toFixed(2);
+    } else {
+      beforeCheckChange = (customerPayment - total).toFixed(2);
+    }
+    if (beforeCheckChange >= 0) {
+      setChange(beforeCheckChange);
+    } else if (beforeCheckChange < 0) {
+      setChange(0);
+    }
+  };
 
-	const handleCustomerPaymentOnChange = (event) => {
-		setCustomerPayment(event.target.value);
-	}
+  const handleAdditionalPaymentOnChange = (e) => {
+    setAdditionalPayment(e.target.value);
+    if (e.target.value != 0 || e.target.value != "") {
+      setTotal((parseFloat(subTotal) + parseFloat(e.target.value)).toFixed(2));
+    } else {
+      setTotal(subTotal);
+    }
+  };
+  const handleCustomerPaymentOnChange = (e) => {
+    setCustomerPayment(e.target.value);
+  };
+  const handleDiscountOnChange = (e) => {
+    setDiscountPayment(e.target.value);
+  };
 
+  // const arr = [];
+  // const createNewCols = () => {
+  //   menuOnCategory.orderMenu.map((item) => {
+  //     console.log(item);
+  //     arr.push({
+  //       menuName: item.menuName,
+  //       menuQuantity: item.menuQuantity,
+  //       menuPrice: item.menuPrice,
+  //     });
+  //   });
+  //   setPdfRows(arr);
+  // };
 
-	const handleInputChange = (e) => {
-		if (e.target.name === "discount") {
-			if (e.target.value == 0 || e.target.value == "") {
-				setDiscountError("");
-				setDiscountedPrice(parseFloat(0).toFixed(2));
-				getChange();
+  // const pdfColumns = [
+  // 	{ header: "Item", dataKey: "menuName" },
+  // 	{ header: "Quantity", dataKey: "menuQuantity" },
+  // 	{ header: "Price", dataKey: "menuPrice" },
+  // ];
+  // const [pdfRows, setPdfRows] = useState([]);
+  // const pdfPaymentColumns = [
+  // 	{ header: "", dataKey: "label" },
+  // 	{ header: "", dataKey: "data" },
+  // ];
+  // const pdfPaymentRows = [
+  // 	{ label: "Customer Payment", data: customerPayment.toFixed(2) },
+  // 	{ label: "Discount", data: `${discountedPrice}%` },
+  // 	{ label: "Total", data: totalPrice.toFixed(2) },
+  // 	{ label: "Change", data: change.toFixed(2) },
+  // 	{ label: "Cashier", data: employeeName },
+  // ];
 
-				if (orderValues.payment - total < 0) {
-					setPaymentError(
-						"Payment must be greater than or equal to total cost."
-					);
-				} else {
-					setPaymentError("");
-				}
-			} else if (validIntegerDecimal(e.target.value)) {
-				if (e.target.value > 100 || e.target.value < 0) {
-					setDiscountError("Input must be 0-100 only.");
-				} else {
-					getChange();
-					setDiscountedPrice(
-						(
-							parseFloat(total) -
-							parseFloat(total) * (parseFloat(e.target.value) / 100)
-						).toFixed(2)
-					);
-					getChange();
+  useEffect(() => {
+    setSubTotal(
+      menuOnCategory.orderMenu.reduce(
+        (sum, currentMenu) =>
+          sum + currentMenu.menuPrice * currentMenu.orderMenuQuantity,
+        0
+      )
+    );
+  }, [menuOnCategory]);
 
-					if (
-						orderValues.payment -
-							(
-								parseFloat(total) -
-								parseFloat(total) * (parseFloat(e.target.value) / 100)
-							).toFixed(2) >=
-						0
-					) {
-						setDiscountError("");
-						setPaymentError("");
-						setDiscountedPrice(
-							(
-								parseFloat(total) -
-								parseFloat(total) * (parseFloat(e.target.value) / 100)
-							).toFixed(2)
-						);
-						getChange();
-					} else {
-						setPaymentError(
-							"Payment must be greater than or equal to discounted cost."
-						);
-					}
-				}
-			} else if (!validIntegerDecimal(e.target.value)) {
-				setDiscountError("Input digits only.");
-			}
-		}
-		if (e.target.name === "payment") {
-			setCustomerPayment(e.target.value);
-			if (e.target.value === "" || e.target.value === 0) {
-				setPaymentError("Input cannot be empty.");
-			} else if (!validIntegerDecimal(e.target.value)) {
-				setPaymentError("Input must be digits.");
-			} else if (validIntegerDecimal(e.target.value)) {
-				if (
-					parseFloat(discountedPrice) > 0 ||
-					parseFloat(orderValues.discount) > 0
-				) {
-					if (parseFloat(e.target.value) < discountedPrice) {
-						setPaymentError(
-							"Payment must be greater or equal the discounted cost."
-						);
-					} else {
-						setTotal(total);
-						getChange();
-						setPaymentError("");
-					}
-				} else if (parseFloat(total) > 0) {
-					if (parseFloat(e.target.value) - total < 0) {
-						setPaymentError("Payment must be greater or equal the total cost.");
-					} else {
-						setTotal(total);
-						getChange();
-						setPaymentError("");
-					}
-				}
-			} else {
-				setPaymentError("");
-				getChange();
-			}
-		}
+  useEffect(() => {
+    if (
+      (discountPayment != 0 || discountPayment != "") &&
+      Number(
+        (
+          parseFloat(total) -
+          parseFloat(total) * (discountPayment / 100)
+        ).toFixed(2)
+      ) != total
+    ) {
+      setDiscountedPrice(
+        Number(
+          (
+            parseFloat(total) -
+            parseFloat(total) * (discountPayment / 100)
+          ).toFixed(2)
+        )
+      );
+    } else if (discountPayment == 0) {
+      setDiscountedPrice(Number(0.0));
+    }
+  }, [discountPayment, additionalPayment]);
 
-		if (e.target.name === "additionalPayment") {
-			if (e.target.value == 0 || e.target.value == "") {
-				getChange();
-				setAdditionalError("");
-			} else if (validIntegerDecimal(e.target.value)) {
-				setTotal(
-					(parseFloat(e.target.value) + parseFloat(subTotal)).toFixed(2)
-				);
-				getChange();
+  useEffect(() => {
+    getChange(discountedPrice, total, customerPayment);
+  }, [discountedPrice, total, customerPayment]);
 
-				if (discountedPrice != 0 || discountedPrice != "") {
-					if (orderValues.payment - discountedPrice >= 0) {
-						setAdditionalError("");
-						setPaymentError("");
-					} else {
-						setPaymentError(
-							"Payment must be greater than or equal to discounted price."
-						);
-					}
-				} else if (
-					(parseFloat(e.target.value) + parseFloat(subTotal)).toFixed(2) -
-						parseFloat(subTotal) !=
-					0
-				) {
-					if (
-						orderValues.payment -
-							(parseFloat(e.target.value) + parseFloat(subTotal)).toFixed(2) >=
-						0
-					) {
-						setAdditionalError("");
-						setPaymentError("");
-						getChange();
-					} else {
-						setPaymentError(
-							"Payment must be greater than or equal to total price."
-						);
-					}
-				}
-			} else if (!validIntegerDecimal(e.target.value)) {
-				setChange(0);
-				setAdditionalError("Input digits only.");
-			}
-		}
-		addvalues();
+  // useEffect(() => {
+  // 	createNewCols();
+  // }, [menuOnCategory.orderMenu]);
+  return (
+    <div className={styles["MenuOrderTab"]}>
+      <div className={styles["txt-section"]}>
+        <div className={styles["txt-section__top"]}>
+          <ToggleButtonGroup
+            className={"toggle_group"}
+            value={type}
+            exclusive
+            onChange={handleTypeChange}
+          >
+            <ToggleButton value="new-user">New Order</ToggleButton>
+            <ToggleButton value="existing-user">Existing Order</ToggleButton>
+          </ToggleButtonGroup>
+          <button onClick={deleteAllItemOnClick}>
+            <Icon icon={trashCan} height="24" width="24" />
+          </button>
+        </div>
+        <Box
+          sx={{ minWidth: 120, padding: 1 }}
+          className={[
+            styles["InputLabel"],
+            type === "new-user" && styles["none"],
+          ].join(" ")}
+        >
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">
+              Select Order Menu
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={selectedOrder}
+              label="Select Order Menu"
+              onChange={handleSelectedOrderOnChange}
+            >
+              {allOrders.map((item) => {
+                return (
+                  <MenuItem key={item.orderId} value={item.orderId}>
+                    {`Order #${item.orderId}`}{" "}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
+        </Box>
+      </div>
 
-		setOrderValues({
-			...orderValues,
-			[e.target.name]: e.target.value,
-		});
+      <div className={styles["container"]}>
+        {menuOnCategory.orderMenu.map((item) => {
+          return (
+            <div
+              className={styles["container-section"]}
+              key={shortid.generate()}
+            >
+              <MenuOrderTabCard
+                title={item.menuName}
+                price={item.menuPrice}
+                quantity={item.orderMenuQuantity}
+                quantityOnChange={handleQuantityOnChange}
+                handleDeleteItemButtonOnClick={handleDeleteItemButtonOnClick}
+              />
+            </div>
+          );
+        })}
+      </div>
+      <div className={styles["total-section"]} onClick={handleOpen}>
+        <div className={styles["total-section--wrapper"]}>
+          <h1> ₱ {subTotal}</h1>
+          <div className={styles["pay-section"]}>
+            <h2> Pay </h2>
+            <Icon icon={chevronRight} height="16" width="16" color="white" />
+          </div>
+        </div>
+      </div>
 
-		// setArrChangeDiscountedPrice({
-		// 	change: change,
-		// 	discountedPrice: discountedPrice,
-		// });
-	};
+      <Modal open={open} onClose={handleClose}>
+        <Box className={styles["modal"]}>
+          <div className={styles["modal__title-bar"]}>
+            <Button onClick={handleClose} className={styles["close-button"]}>
+              {" "}
+              X{" "}
+            </Button>
+          </div>
+          <div className={styles["modal__container"]}>
+            <FormControl className={styles["radio"]}>
+              <FormLabel
+                sx={{
+                  color: "#003049",
+                  "&.Mui-checked": { color: "#003049;" },
+                }}
+                id="demo-radio-buttons-group-label"
+              >
+                Pickup Format
+              </FormLabel>
+              <RadioGroup
+                className={styles["radio-container"]}
+                aria-labelledby="demo-radio-buttons-group-label"
+                defaultValue={servingType}
+                name="radio-buttons-group"
+                onChange={handleServingTypeOnChange}
+              >
+                <FormControlLabel
+                  control={
+                    <Radio
+                      sx={{
+                        color: "#003049;",
+                        "&.Mui-checked": { color: "#003049;" },
+                      }}
+                      value="TAKE_OUT"
+                    />
+                  }
+                  label="Take-Out"
+                />
+                <FormControlLabel
+                  sx={{ color: "#003049;" }}
+                  control={
+                    <Radio
+                      sx={{
+                        color: "#003049;",
+                        "&.Mui-checked": { color: "#003049;" },
+                      }}
+                      value="DINE_IN"
+                    />
+                  }
+                  label="Dine-In"
+                />
+                {/* <FormControlLabel sx = {{ color: "#003049;"}} value="Delivery" control={<Radio sx = {{ color: "#003049;", '&.Mui-checked': {color: "#003049;",},}}/>}  label="Other" /> */}
+              </RadioGroup>
+            </FormControl>
+            {servingType === "DINE_IN" && (
+              <FormControl className={styles["modal__select"]}>
+                <InputLabel id="demo-simple-select-label">
+                  Select Table Number
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={selectedTableNumber}
+                  defaultValue={availableTableNumbers[0]}
+                  label="Select Order Menu"
+                  onChange={handleSelectedTableNumberOnChange}
+                >
+                  {availableTableNumbers.map((number) => {
+                    return (
+                      <MenuItem key={number} value={number}>
+                        {`Table #${number}`}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            )}
+            {servingType === "TAKE_OUT" && (
+              <div className={styles["modal__form"]}>
+                <div className={styles["modal__textfield"]}>
+                  <TextField
+                    variant="outlined"
+                    size="small"
+                    label="Discount"
+                    type="number"
+                    value={discountPayment}
+                    onChange={handleDiscountOnChange}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <Icon icon="bi:percent" />
+                        </InputAdornment>
+                      ),
+                    }}
+                    fullWidth
+                  />
+                </div>
 
-	const payButton = () => {
-		
-		if (orderValues.payment === "" || orderValues.payment === 0) {
-			setPaymentError("Input cannot be empty.");
-			return;
-		}
-		if (additionalError != "" || discountError != "" || paymentError != "") {
-			return;
-		}
+                <div className={styles["modal__textfield"]}>
+                  <TextField
+                    variant="outlined"
+                    size="small"
+                    label="Customer Payment "
+                    name="payment"
+                    type="number"
+                    value={customerPayment}
+                    onChange={handleCustomerPaymentOnChange}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="end">
+                          <Icon icon="clarity:peso-line" />
+                        </InputAdornment>
+                      ),
+                    }}
+                    fullWidth
+                  />
+                </div>
 
-		// setCustomerPayment(Number(customerPayment));
-		// setDiscountPayment(Number(discountPayment));
-		// setAdditionalPayment(Number(additionalPayment));
+                <div className={styles["modal__textfield"]}>
+                  <TextField
+                    variant="outlined"
+                    size="small"
+                    label="Additional Cost"
+                    type="number"
+                    value={additionalPayment}
+                    onChange={handleAdditionalPaymentOnChange}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="end">
+                          <Icon icon="clarity:peso-line" />
+                        </InputAdornment>
+                      ),
+                    }}
+                    fullWidth
+                  />
+                </div>
 
-		payButtonOnClick(
-			customerPayment,
-			discountPayment,
-			additionalPayment,
-			handleClose
-		);
-	};
+                <div className={styles["modal__data"]}>
+                  <div className={styles["modal__data__label"]}>Subtotal</div>
+                  <div className={styles["modal__data__label"]}>
+                    ₱{parseFloat(subTotal).toFixed(2)}
+                  </div>
+                </div>
 
-	// const arr = [];
-	// const createNewCols = () => {
-	//   menuOnCategory.orderMenu.map((item) => {
-	//     console.log(item);
-	//     arr.push({
-	//       menuName: item.menuName,
-	//       menuQuantity: item.menuQuantity,
-	//       menuPrice: item.menuPrice,
-	//     });
-	//   });
-	//   setPdfRows(arr);
-	// };
+                <div className={styles["modal__data"]}>
+                  <div className={styles["modal__data__label"]}>
+                    Discounted Price
+                  </div>
+                  <div className={styles["modal__data__label"]}>
+                    ₱{parseFloat(discountedPrice).toFixed(2)}
+                  </div>
+                </div>
 
-	// const pdfColumns = [
-	// 	{ header: "Item", dataKey: "menuName" },
-	// 	{ header: "Quantity", dataKey: "menuQuantity" },
-	// 	{ header: "Price", dataKey: "menuPrice" },
-	// ];
-	// const [pdfRows, setPdfRows] = useState([]);
-	// const pdfPaymentColumns = [
-	// 	{ header: "", dataKey: "label" },
-	// 	{ header: "", dataKey: "data" },
-	// ];
-	// const pdfPaymentRows = [
-	// 	{ label: "Customer Payment", data: customerPayment.toFixed(2) },
-	// 	{ label: "Discount", data: `${discountedPrice}%` },
-	// 	{ label: "Total", data: totalPrice.toFixed(2) },
-	// 	{ label: "Change", data: change.toFixed(2) },
-	// 	{ label: "Cashier", data: employeeName },
-	// ];
+                <div className={styles["modal__data"]}>
+                  <div className={styles["modal__data__label"]}>
+                    Current Total
+                  </div>
+                  <div className={styles["modal__data__label"]}>₱{total}</div>
+                </div>
 
-	useEffect(() => {
-		setSubTotal(
-			menuOnCategory.orderMenu.reduce(
-				(sum, currentMenu) =>
-					sum + currentMenu.menuPrice * currentMenu.orderMenuQuantity,
-				0
-			)
-		);
-	}, [menuOnCategory]);
-
-	// useEffect(() => {
-	// 	createNewCols();
-	// }, [menuOnCategory.orderMenu]);
-
-	return (
-		<div className={styles["MenuOrderTab"]}>
-			<div className={styles["txt-section"]}>
-				<div className={styles["txt-section__top"]}>
-					<ToggleButtonGroup
-						className={"toggle_group"}
-						value={type}
-						exclusive
-						onChange={handleTypeChange}
-					>
-						<ToggleButton value="new-user">New Order</ToggleButton>
-						<ToggleButton value="existing-user">Existing Order</ToggleButton>
-					</ToggleButtonGroup>
-					<button onClick={deleteAllItemOnClick}>
-						<Icon icon={trashCan} height="24" width="24" />
-					</button>
-				</div>
-				<Box
-					sx={{ minWidth: 120, padding: 1 }}
-					className={[
-						styles["InputLabel"],
-						type === "new-user" && styles["none"],
-					].join(" ")}
-				>
-					<FormControl fullWidth>
-						<InputLabel id="demo-simple-select-label">
-							Select Order Menu
-						</InputLabel>
-						<Select
-							labelId="demo-simple-select-label"
-							id="demo-simple-select"
-							value={selectedOrder}
-							label="Select Order Menu"
-							onChange={handleSelectedOrderOnChange}
-						>
-							{allOrders.map((item) => {
-								return (
-									<MenuItem key={item.orderId} value={item.orderId}>
-										{`Order #${item.orderId}`}{" "}
-									</MenuItem>
-								);
-							})}
-						</Select>
-					</FormControl>
-				</Box>
-			</div>
-
-			<div className={styles["container"]}>
-				{menuOnCategory.orderMenu.map((item) => {
-					return (
-						<div
-							className={styles["container-section"]}
-							key={shortid.generate()}
-						>
-							<MenuOrderTabCard
-								title={item.menuName}
-								price={item.menuPrice}
-								quantity={item.orderMenuQuantity}
-								quantityOnChange={handleQuantityOnChange}
-								handleDeleteItemButtonOnClick={handleDeleteItemButtonOnClick}
-							/>
-						</div>
-					);
-				})}
-			</div>
-			<div className={styles["total-section"]} onClick={handleOpen}>
-				<div className={styles["total-section--wrapper"]}>
-					<h1> ₱ {subTotal}</h1>
-					<div className={styles["pay-section"]}>
-						<h2> Pay </h2>
-						<Icon icon={chevronRight} height="16" width="16" color="white" />
-					</div>
-				</div>
-			</div>
-
-			<Modal open={open} onClose={handleClose}>
-				<Box className={styles["style"]}>
-					<Button onClick={handleClose} className={styles["Close_Button"]}>
-						X
-					</Button>
-					<div className={styles["Wrapper"]}>
-						<div className={styles["Text-Section"]}>
-							<FormControl className={styles["Radio"]}>
-								<FormLabel
-									sx={{
-										color: "#003049",
-										"&.Mui-checked": { color: "#003049;" },
-									}}
-									id="demo-radio-buttons-group-label"
-								>
-									Pickup Format
-								</FormLabel>
-								<RadioGroup
-									aria-labelledby="demo-radio-buttons-group-label"
-									defaultValue={servingType}
-									name="radio-buttons-group"
-									onChange={handleServingTypeOnChange}
-								>
-									<FormControlLabel
-										control={
-											<Radio
-												sx={{
-													color: "#003049;",
-													"&.Mui-checked": { color: "#003049;" },
-												}}
-												value="TAKE_OUT"
-											/>
-										}
-										label="Take-Out"
-									/>
-									<FormControlLabel
-										sx={{ color: "#003049;" }}
-										control={
-											<Radio
-												sx={{
-													color: "#003049;",
-													"&.Mui-checked": { color: "#003049;" },
-												}}
-												value="DINE_IN"
-											/>
-										}
-										label="Dine-In"
-									/>
-									{/* <FormControlLabel sx = {{ color: "#003049;"}} value="Delivery" control={<Radio sx = {{ color: "#003049;", '&.Mui-checked': {color: "#003049;",},}}/>}  label="Other" /> */}
-								</RadioGroup>
-							</FormControl>
-							{servingType === "DINE_IN" && (
-								<FormControl className={styles["TableNumber"]}>
-									<InputLabel id="demo-simple-select-label">
-										Select Table Number
-									</InputLabel>
-									<Select
-										labelId="demo-simple-select-label"
-										id="demo-simple-select"
-										value={selectedTableNumber}
-										defaultValue={availableTableNumbers[0]}
-										label="Select Order Menu"
-										onChange={handleSelectedTableNumberOnChange}
-									>
-										{/* {Array.from({ length: 100 }, (_, i) => i+1).filter((number) => unavailableTable.includes(number))} */}
-										{availableTableNumbers.map((number) => {
-											return (
-												<MenuItem key={number} value={number}>
-													{`Table #${number}`}
-												</MenuItem>
-											);
-										})}
-									</Select>
-								</FormControl>
-							)}
-						</div>
-						{servingType === "TAKE_OUT" && (
-							<div className={styles["Input-Text-Section"]}>
-								<div className={styles["Input-Section"]}>
-									<TextField
-										variant="outlined"
-										size="small"
-										label="Discount"
-										name="discount"
-										type="number"
-										helperText={discountError}
-										error={discountError != ""}
-										onChange={handleInputChange}
-										InputProps={{
-											endAdornment: (
-												<InputAdornment position="end">
-													<Icon icon="bi:percent" />
-												</InputAdornment>
-											),
-										}}
-										fullWidth
-									/>
-								</div>
-
-								<div className={styles["Input-Section"]}>
-									<TextField
-										variant="outlined"
-										size="small"
-										label="Customer Payment "
-										name="payment"
-										type="number"
-										value={customerPayment}
-										helperText={paymentError}
-										error={paymentError != ""}
-										onChange={handleCustomerPaymentOnChange}
-										InputProps={{
-											startAdornment: (
-												<InputAdornment position="end">
-													<Icon icon="clarity:peso-line" />
-												</InputAdornment>
-											),
-										}}
-										fullWidth
-									/>
-								</div>
-
-								<div className={styles["Input-Section"]}>
-									<TextField
-										variant="outlined"
-										size="small"
-										label="Additional Payment"
-										name="additionalPayment"
-										type="number"
-										helperText={additionalError}
-										error={additionalError != ""}
-										onChange={handleInputChange}
-										InputProps={{
-											startAdornment: (
-												<InputAdornment position="end">
-													<Icon icon="clarity:peso-line" />
-												</InputAdornment>
-											),
-										}}
-										fullWidth
-									/>
-								</div>
-
-								<div className={styles["Output-Section"]}>
-									<div className={styles["Output-Section__label"]}>Change</div>
-									<div className={styles["Output-Section__label"]}>
-										₱{parseFloat(change).toFixed(2)}
-									</div>
-								</div>
-
-								<div className={styles["Output-Section"]}>
-									<div className={styles["Output-Section__label"]}>
-										Discounted Price
-									</div>
-									<div className={styles["Output-Section__label"]}>
-										₱{parseFloat(discountedPrice).toFixed(2)}
-									</div>
-								</div>
-
-								<div className={styles["Output-Section"]}>
-									<div className={styles["Output-Section__label"]}>
-										Current Total
-									</div>
-									<div className={styles["Output-Section__label"]}>
-										₱{total}
-									</div>
-								</div>
-							</div>
-						)}
-
-						<div className={styles["Button-Section"]}>
-							<Button
-								onClick={
-									payButton
-								}
-								className={styles["Confirm_Button"]}
-							>
-								Confirm
-							</Button>
-						</div>
-					</div>
-				</Box>
-			</Modal>
-		</div>
-	);
+                <div className={styles["modal__data"]}>
+                  <div className={styles["modal__data__label"]}>Change</div>
+                  <div className={styles["modal__data__label"]}>
+                    ₱{parseFloat(change).toFixed(2)}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+          <div className={styles["modal__footer"]}>
+            <Button
+              onClick={
+                () =>
+                  payButtonOnClick(
+                    customerPayment,
+                    discountPayment,
+                    additionalPayment,
+                    handleClose
+                  )
+                // () => console.log(discountPayment)
+              }
+              className={styles["confirm-button"]}
+            >
+              Confirm
+            </Button>
+          </div>
+        </Box>
+      </Modal>
+    </div>
+  );
 };
 
 export default MenuOrderTab;
