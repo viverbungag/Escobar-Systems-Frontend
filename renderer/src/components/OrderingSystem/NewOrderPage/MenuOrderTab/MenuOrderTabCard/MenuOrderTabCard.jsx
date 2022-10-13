@@ -15,6 +15,14 @@ const MenuOrderTabCard = ({
 }) => {
   return (
     <div className={styles["MenuOrderTabCard"]}>
+      <div className={styles["Remove-Section"]}>
+        <button
+          className={styles["remove-button"]}
+          onClick={() => handleDeleteItemButtonOnClick(title)}
+        >
+          <Icon icon={circleX} />
+        </button>
+      </div>
       <div className={styles["Txt-Section"]}>
         <div className={styles["Title-Section"]}>
           <h2> {title}</h2>
@@ -27,7 +35,9 @@ const MenuOrderTabCard = ({
                 color="#003049"
               />
             </button>
-            <h2> {quantity} </h2>
+            <div className={styles["Counter-Section__quantity"]}>
+              {quantity}
+            </div>
             <button onClick={() => quantityOnChange(title, quantity, 1)}>
               <Icon
                 icon={addCircle24Filled}
@@ -40,12 +50,7 @@ const MenuOrderTabCard = ({
         </div>
 
         <div className={styles["Price-Section"]}>
-          <p> ₱ {price * quantity}</p>
-          <div className={styles["Remove-Section"]}>
-            <button onClick={() => handleDeleteItemButtonOnClick(title)}>
-              <Icon icon={circleX} />
-            </button>
-          </div>
+          <p> ₱{price * quantity}</p>
         </div>
       </div>
     </div>
