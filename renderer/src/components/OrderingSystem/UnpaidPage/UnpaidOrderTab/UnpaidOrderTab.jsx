@@ -87,7 +87,7 @@ const UnpaidOrderTab = ({
     setInitialValues();
   };
   const handlePayClose = () => setPayOpen(false);
-  //set values
+
   const [subTotal, setSubTotal] = useState();
   const [totalCost, setTotalCost] = useState(subTotal);
   const [discountedPrice, setDiscountedPrice] = useState(
@@ -98,7 +98,6 @@ const UnpaidOrderTab = ({
     Number(parseFloat(0).toFixed(2))
   );
   const [discount, setDiscount] = useState(Number(parseFloat(0).toFixed(2)));
-  //on change
   const handleAdditionalCostOnChange = (e) => {
     setAdditionalCost(e.target.value);
     if (e.target.value != 0 || e.target.value != "") {
@@ -115,61 +114,54 @@ const UnpaidOrderTab = ({
   const handleDiscountOnChange = (e) => {
     setDiscount(e.target.value);
   };
-  //submit
-  const payButtonOnClick = () =>
-    // additionalCost,
-    // customerPayment,
-    // discount,
-    // discountedPrice,
-    // totalCost
-    {
-      const total = 0;
 
-      if (parseFloat(discount) > 0) {
-        total = parseFloat(discountedPrice).toFixed(2);
-      } else {
-        total = parseFloat(totalCost).toFixed(2);
-      }
+  const payButtonOnClick = () => {
+    const total = 0;
 
-      if (discountedPrice != 0) {
-        if (Number(customerPayment) < Number(discountedPrice)) {
-          toast.error(
-            " Customer Payment cannot be less than the discounted price."
-          );
-          return;
-        }
-      } else {
-        if (Number(customerPayment) < Number(totalCost)) {
-          toast.error(" Customer Payment cannot be less than the total price.");
-          return;
-        }
-      }
+    if (parseFloat(discount) > 0) {
+      total = parseFloat(discountedPrice).toFixed(2);
+    } else {
+      total = parseFloat(totalCost).toFixed(2);
+    }
 
-      if (additionalCost == "" || additionalCost < 0) {
-        toast.error("Additional Payment must be valid digits.");
+    if (discountedPrice != 0) {
+      if (Number(customerPayment) < Number(discountedPrice)) {
+        toast.error(
+          "Customer Payment cannot be less than the discounted price."
+        );
         return;
       }
-
-      if (discount < 0 || discount > 100) {
-        toast.error("Discount must be 0-100.");
+    } else {
+      if (Number(customerPayment) < Number(totalCost)) {
+        toast.error("Customer Payment cannot be less than the total price.");
         return;
       }
+    }
 
-      if (discount == "") {
-        toast.error("Discount must be valid digits.");
-        return;
-      }
+    if (additionalCost == "" || additionalCost < 0) {
+      toast.error("Additional Payment must be valid digits.");
+      return;
+    }
 
-      rest.add(
-        `${INITIAL_URL}/orders/pay/${orderValues.orderId}`,
-        orderValues,
-        addSuccessAction,
-        `Successful order transaction for ${orderValues.orderId} for Table ${orderValues.tableNumber}.`
-      );
-    };
-  //success
+    if (discount < 0 || discount > 100) {
+      toast.error("Discount must be 0-100.");
+      return;
+    }
+
+    if (discount == "") {
+      toast.error("Discount must be valid digits.");
+      return;
+    }
+
+    rest.add(
+      `${INITIAL_URL}/orders/pay/${orderValues.orderId}`,
+      orderValues,
+      addSuccessAction,
+      `Successful order transaction for ${orderValues.orderId} for Table ${orderValues.tableNumber}.`
+    );
+  };
+
   const addSuccessAction = () => {
-    // console.log(pdfPaymentRows);
     printReceipt(
       orderCardSelected,
       pdfRows,
@@ -180,6 +172,7 @@ const UnpaidOrderTab = ({
     handlePayClose();
     reload();
   };
+
   const [change, setChange] = useState(0.0);
   const getChange = (discountedPrice, totalCost) => {
     const beforeCheckChange = 0;
@@ -194,6 +187,7 @@ const UnpaidOrderTab = ({
       setChange(0);
     }
   };
+
   const setInitialValues = () => {
     setTotalCost(subTotal);
     getValues();
@@ -352,8 +346,8 @@ const UnpaidOrderTab = ({
                 Table #{orderValues.tableNumber}
               </div>
             </div>
-            <div className={styles["Text-Section"]}>
-              <div className={styles["Input-Section"]}>
+            <div className={styles["modal__form"]}>
+              <div className={styles["modal__textfield"]}>
                 <TextField
                   variant="outlined"
                   size="small"
@@ -371,7 +365,7 @@ const UnpaidOrderTab = ({
                   type="number"
                 />
               </div>
-              <div className={styles["Input-Section"]}>
+              <div className={styles["modal__textfield"]}>
                 <TextField
                   variant="outlined"
                   size="small"
@@ -389,7 +383,7 @@ const UnpaidOrderTab = ({
                   type="number"
                 />
               </div>
-              <div className={styles["Input-Section"]}>
+              <div className={styles["modal__textfield"]}>
                 <TextField
                   variant="outlined"
                   size="small"
@@ -408,29 +402,25 @@ const UnpaidOrderTab = ({
                   type="number"
                 />
               </div>
-              <div className={styles["Output-Section"]}>
-                <div className={styles["Output-Section__label"]}>Subtotal</div>
-                <div className={styles["Output-Section__label"]}>
-                  ₱{subTotal}
-                </div>
+              <div className={styles["modal__data"]}>
+                <div className={styles["modal__data__label"]}>Subtotal</div>
+                <div className={styles["modal__data__label"]}>₱{subTotal}</div>
               </div>
-              <div className={styles["Output-Section"]}>
-                <div className={styles["Output-Section__label"]}>Total</div>
-                <div className={styles["Output-Section__label"]}>
-                  ₱{totalCost}
-                </div>
+              <div className={styles["modal__data"]}>
+                <div className={styles["modal__data__label"]}>Total</div>
+                <div className={styles["modal__data__label"]}>₱{totalCost}</div>
               </div>
-              <div className={styles["Output-Section"]}>
-                <div className={styles["Output-Section__label"]}>
+              <div className={styles["modal__data"]}>
+                <div className={styles["modal__data__label"]}>
                   Discounted Price
                 </div>
-                <div className={styles["Output-Section__label"]}>
+                <div className={styles["modal__data__label"]}>
                   ₱{parseFloat(discountedPrice).toFixed(2)}
                 </div>
               </div>
-              <div className={styles["Output-Section"]}>
-                <div className={styles["Output-Section__label"]}>Change</div>
-                <div className={styles["Output-Section__label"]}>
+              <div className={styles["modal__data"]}>
+                <div className={styles["modal__data__label"]}>Change</div>
+                <div className={styles["modal__data__label"]}>
                   ₱{parseFloat(change).toFixed(2)}
                 </div>
               </div>
@@ -438,15 +428,8 @@ const UnpaidOrderTab = ({
           </div>
           <div className={styles["modal__footer"]}>
             <button
-              className={styles["Confirm_Button"]}
-              onClick={() =>
-                // additionalCost,
-                // customerPayment,
-                // discount,
-                // discountedPrice,
-                // totalCost
-                payButtonOnClick()
-              }
+              className={styles["confirm-button"]}
+              onClick={() => payButtonOnClick()}
             >
               Confirm
             </button>
