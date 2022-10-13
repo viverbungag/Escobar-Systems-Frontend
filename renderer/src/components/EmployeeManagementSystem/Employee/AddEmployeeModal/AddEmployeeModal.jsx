@@ -113,7 +113,6 @@ export default function EditEmployeeModal({
     getActiveTypes();
     handleSuperiorOptions();
   }, []);
-
   return (
     <div className={styles.container}>
       <div className={styles.header}>Add Employee</div>

@@ -76,19 +76,18 @@ export default function InactiveEmployeeModal({
   const [selected, setSelected] = useState("");
   const handleSelect = (ids) => {
     setSelected(ids);
-  };
-  const [selectedValues, setSelectedValues] = useState([]);
-  const handleSelectedValues = () => {
     const arr = [];
-    for (let i = 0; i < selected.length; i++) {
+    for (let i = 0; i < ids.length; i++) {
       rows.map((item) => {
-        if (item.employeeId == selected[i]) {
+        if (item.employeeId == ids[i]) {
           arr.push(item);
         }
       });
     }
     setSelectedValues(arr);
   };
+  const [selectedValues, setSelectedValues] = useState([]);
+
   //set active
   const onActivate = () => {
     rest.activate(
@@ -98,10 +97,6 @@ export default function InactiveEmployeeModal({
       `Successfully activated ${selectedValues.length} employee/s`
     );
   };
-
-  useEffect(() => {
-    handleSelectedValues();
-  }, [handleSelect]);
 
   useEffect(() => {
     setRows(inactiveEmployees);
