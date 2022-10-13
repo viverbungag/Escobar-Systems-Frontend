@@ -135,9 +135,11 @@ export default function ExpenseEditableTable({
       return (
         <>
           <Tooltip title="Edit/More Info">
-            <IconButton disabled onClick={handleOpenMoreModal}>
-              <MediumButton label="More" />
-            </IconButton>
+            <span>
+              <IconButton disabled onClick={handleOpenMoreModal}>
+                <MediumButton label="More" />
+              </IconButton>
+            </span>
           </Tooltip>
           <Tooltip title="Inactivate Employee Position/s">
             <IconButton onClick={handleOpenDeleteModal}>
@@ -150,14 +152,18 @@ export default function ExpenseEditableTable({
       return (
         <>
           <Tooltip title="Edit/More Info">
-            <IconButton disabled onClick={handleOpenMoreModal}>
-              <MediumButton label="More" />
-            </IconButton>
+            <span>
+              <IconButton disabled onClick={handleOpenMoreModal}>
+                <MediumButton label="More" />
+              </IconButton>
+            </span>
           </Tooltip>
           <Tooltip title="Inactivate Expense Categories">
-            <IconButton disabled onClick={handleOpenDeleteModal}>
-              <MediumButton label="Delete" />
-            </IconButton>
+            <span>
+              <IconButton disabled onClick={handleOpenDeleteModal}>
+                <MediumButton label="Delete" />
+              </IconButton>
+            </span>
           </Tooltip>
         </>
       );

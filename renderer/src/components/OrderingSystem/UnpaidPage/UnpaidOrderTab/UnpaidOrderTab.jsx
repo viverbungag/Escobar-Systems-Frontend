@@ -352,6 +352,25 @@ const UnpaidOrderTab = ({
                 <TextField
                   variant="outlined"
                   size="small"
+                  label="Discount"
+                  value={discount}
+                  onChange={handleDiscountOnChange}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <Icon icon="bi:percent" />
+                      </InputAdornment>
+                    ),
+                  }}
+                  InputLabelProps={{ shrink: true }}
+                  fullWidth
+                  type="number"
+                />
+              </div>
+              <div className={styles["modal__textfield"]}>
+                <TextField
+                  variant="outlined"
+                  size="small"
                   label="Additional Cost"
                   value={additionalCost}
                   onChange={handleAdditionalCostOnChange}
@@ -384,32 +403,15 @@ const UnpaidOrderTab = ({
                   type="number"
                 />
               </div>
-              <div className={styles["modal__textfield"]}>
-                <TextField
-                  variant="outlined"
-                  size="small"
-                  label="Discount"
-                  value={discount}
-                  onChange={handleDiscountOnChange}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <Icon icon="bi:percent" />
-                      </InputAdornment>
-                    ),
-                  }}
-                  InputLabelProps={{ shrink: true }}
-                  fullWidth
-                  type="number"
-                />
-              </div>
               <div className={styles["modal__data"]}>
                 <div className={styles["modal__data__label"]}>Subtotal</div>
                 <div className={styles["modal__data__label"]}>₱{subTotal}</div>
               </div>
               <div className={styles["modal__data"]}>
                 <div className={styles["modal__data__label"]}>Total</div>
-                <div className={styles["modal__data__label"]}>₱{totalCost}</div>
+                <div className={styles["modal__data__label"]}>
+                  ₱{parseFloat(totalCost).toFixed(2)}
+                </div>
               </div>
               <div className={styles["modal__data"]}>
                 <div className={styles["modal__data__label"]}>

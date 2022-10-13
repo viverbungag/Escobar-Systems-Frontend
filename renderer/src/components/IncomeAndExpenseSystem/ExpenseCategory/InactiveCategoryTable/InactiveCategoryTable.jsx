@@ -83,9 +83,11 @@ export default function InactiveCategoryTable({ reload, inactiveCategories }) {
       return (
         <>
           <Tooltip title="Inactivate Expense Categories">
-            <IconButton disabled onClick={handleActivateOnClick}>
-              <MediumButton label="Activate" />
-            </IconButton>
+            <span>
+              <IconButton disabled onClick={handleActivateOnClick}>
+                <MediumButton label="Activate" />
+              </IconButton>
+            </span>
           </Tooltip>
         </>
       );
