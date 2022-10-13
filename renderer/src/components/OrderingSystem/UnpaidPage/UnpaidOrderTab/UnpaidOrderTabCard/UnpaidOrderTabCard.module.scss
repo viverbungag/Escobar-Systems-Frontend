@@ -17,13 +17,15 @@
     display: flex;
     width: 100%;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
+    gap: 1rem;
   }
   &__data {
     display: flex;
-    flex: 1;
-    justify-content: center;
+    // flex: 1;
+    width: 100px;
     text-align: center;
+    overflow: auto;
   }
 }
 

@@ -18,10 +18,10 @@ const UnpaidOrderTabCard = ({ title, quantity, price }) => {
         </button>
       </div>
       <div className={styles["UnpaidOrderTabCard__content"]}>
-        <div className={styles["UnpaidOrderTabCard__data"]}> {title} </div>
-        <div className={styles["UnpaidOrderTabCard__data"]}> {quantity} </div>
+        <div className={styles["UnpaidOrderTabCard__data"]}>{title}</div>
+        <div className={styles["UnpaidOrderTabCard__data"]}>{quantity}</div>
         <div className={styles["UnpaidOrderTabCard__data"]}>
-          {quantity * price}
+          ₱{quantity * price}
         </div>
       </div>
     </div>
