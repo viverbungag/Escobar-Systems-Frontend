@@ -334,7 +334,7 @@ const ViewTransactionPage = () => {
 
   return (
     <div className={styles["supply-page"]}>
-      <Toast />
+      {/* <Toast /> */}
       <FilterTransactionModal
         paginationFilter={paginationFilter}
         supplies={supplies}

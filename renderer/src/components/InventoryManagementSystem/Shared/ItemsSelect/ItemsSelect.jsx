@@ -12,6 +12,7 @@ const ItemsSelect = ({ label, items, selectedItem, itemOnChange }) => {
         <InputLabel id="demo-simple-select-standard-label">{label}</InputLabel>
         <Select
           id="demo-simple-select-standard"
+          defaultValue={items[0]}
           value={selectedItem}
           onChange={itemOnChange}
           label={label}

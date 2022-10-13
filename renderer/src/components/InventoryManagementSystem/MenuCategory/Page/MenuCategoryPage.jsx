@@ -498,7 +498,7 @@ const MenuCategoryPage = () => {
 
   return (
     <div className={styles["menu-category-page"]}>
-      <Toast />
+      {/* <Toast /> */}
       <AddMenuCategoryModal
         name={addedMenuCategory.menuCategoryName}
         isActiveAdd={addedMenuCategory.isActive}

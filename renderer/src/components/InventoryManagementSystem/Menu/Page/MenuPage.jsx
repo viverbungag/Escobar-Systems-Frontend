@@ -703,7 +703,7 @@ const MenuPage = () => {
 
   return (
     <div className={styles["menu-page"]}>
-      <Toast />
+      {/* <Toast /> */}
       <AddMenuModal
         activeMenus={activeMenus}
         inactiveMenus={inactiveMenus}

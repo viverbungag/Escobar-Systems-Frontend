@@ -616,7 +616,7 @@ const SupplierPage = () => {
 
   return (
     <div className={styles["supplier-page"]}>
-      <Toast />
+      {/* <Toast /> */}
       <AddSupplierModal
         name={addedSupplier.supplierName}
         isActiveAdd={addedSupplier.isActive}

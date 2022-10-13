@@ -549,7 +549,7 @@ const UnitOfMeasurementPage = () => {
 
   return (
     <div className={styles["unit-of-measurement-page"]}>
-      <Toast />
+      {/* <Toast /> */}
       <AddUnitOfMeasurementModal
         name={addedUnitOfMeasurement.unitOfMeasurementName}
         isActiveAdd={addedUnitOfMeasurement.isActive}
