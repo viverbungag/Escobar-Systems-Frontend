@@ -52,7 +52,6 @@ const MenuOrderTab = ({
   servingType,
   handleServingTypeOnChange,
 }) => {
-  // const [arrChangeDiscountedPrice, setArrChangeDiscountedPrice] = useState([]);
   const [total, setTotal] = useState(0);
   const [open, setOpen] = useState(false);
   const [customerPayment, setCustomerPayment] = useState("");
@@ -63,8 +62,8 @@ const MenuOrderTab = ({
 
   const { employeeName } = useUser();
 
-  const [pickUpFormat, setPickUpFormat] = useState("DineIn");
-  const handlePickUpFormat = (event) => setPickUpFormat(event.target.value);
+  // const [pickUpFormat, setPickUpFormat] = useState("DineIn");
+  // const handlePickUpFormat = (event) => setPickUpFormat(event.target.value);
 
   const setInitialValues = () => {
     setTotal(subTotal);
@@ -142,36 +141,30 @@ const MenuOrderTab = ({
     setDiscountPayment(e.target.value);
   };
 
-  // const arr = [];
-  // const createNewCols = () => {
-  //   menuOnCategory.orderMenu.map((item) => {
-  //     console.log(item);
-  //     arr.push({
-  //       menuName: item.menuName,
-  //       menuQuantity: item.menuQuantity,
-  //       menuPrice: item.menuPrice,
-  //     });
-  //   });
-  //   setPdfRows(arr);
-  // };
+  const arr = [];
+  const createNewCols = () => {
+    menuOnCategory.orderMenu.map((item) => {
+      console.log(item);
+      arr.push({
+        menuName: item.menuName,
+        menuQuantity: item.menuQuantity,
+        menuPrice: item.menuPrice,
+      });
+    });
+    setPdfRows(arr);
+  };
 
-  // const pdfColumns = [
-  // 	{ header: "Item", dataKey: "menuName" },
-  // 	{ header: "Quantity", dataKey: "menuQuantity" },
-  // 	{ header: "Price", dataKey: "menuPrice" },
-  // ];
-  // const [pdfRows, setPdfRows] = useState([]);
-  // const pdfPaymentColumns = [
-  // 	{ header: "", dataKey: "label" },
-  // 	{ header: "", dataKey: "data" },
-  // ];
-  // const pdfPaymentRows = [
-  // 	{ label: "Customer Payment", data: customerPayment.toFixed(2) },
-  // 	{ label: "Discount", data: `${discountedPrice}%` },
-  // 	{ label: "Total", data: totalPrice.toFixed(2) },
-  // 	{ label: "Change", data: change.toFixed(2) },
-  // 	{ label: "Cashier", data: employeeName },
-  // ];
+  const pdfColumns = [
+    { header: "Item", dataKey: "menuName" },
+    { header: "Quantity", dataKey: "menuQuantity" },
+    { header: "Price", dataKey: "menuPrice" },
+  ];
+  const [pdfRows, setPdfRows] = useState([]);
+  const pdfPaymentColumns = [
+    { header: "", dataKey: "label" },
+    { header: "", dataKey: "data" },
+  ];
+  const [pdfPaymentRows, setPdfPaymentRows] = useState([]);
 
   useEffect(() => {
     setSubTotal(
@@ -210,9 +203,35 @@ const MenuOrderTab = ({
     getChange(discountedPrice, total, customerPayment);
   }, [discountedPrice, total, customerPayment]);
 
-  // useEffect(() => {
-  // 	createNewCols();
-  // }, [menuOnCategory.orderMenu]);
+  useEffect(() => {
+    createNewCols();
+  }, [menuOnCategory]);
+
+  useEffect(() => {
+    setPdfPaymentRows([
+      {
+        label: "Subtotal",
+        data: parseFloat(subTotal).toFixed(2),
+      },
+      {
+        label: "Additional Cost",
+        data: parseFloat(additionalPayment).toFixed(2),
+      },
+      { label: "Total Price", data: parseFloat(total).toFixed(2) },
+      {
+        label: "Discounted Price",
+        data: parseFloat(discountedPrice).toFixed(2),
+      },
+      {
+        label: "Customer Payment",
+        data: parseFloat(customerPayment).toFixed(2),
+      },
+      { label: "Change", data: parseFloat(change).toFixed(2) },
+      { label: "Serving Type", data: servingType },
+      { label: "Cashier", data: employeeName },
+    ]);
+  }, [discountPayment, additionalPayment, customerPayment, change]);
+
   return (
     <div className={styles["MenuOrderTab"]}>
       <div className={styles["txt-section"]}>
@@ -459,15 +478,18 @@ const MenuOrderTab = ({
           </div>
           <div className={styles["modal__footer"]}>
             <Button
-              onClick={
-                () =>
-                  payButtonOnClick(
-                    customerPayment,
-                    discountPayment,
-                    additionalPayment,
-                    handleClose
-                  )
-                // () => console.log(discountPayment)
+              onClick={() =>
+                payButtonOnClick(
+                  pdfRows,
+                  pdfColumns,
+                  pdfPaymentRows,
+                  pdfPaymentColumns,
+                  servingType,
+                  customerPayment,
+                  discountPayment,
+                  additionalPayment,
+                  handleClose
+                )
               }
               className={styles["confirm-button"]}
             >

@@ -3,7 +3,6 @@ import styles from "./UnpaidOrderTab.module.scss";
 import UnpaidOrderTabCard from "./UnpaidOrderTabCard/UnpaidOrderTabCard";
 import shortid from "shortid";
 import { Icon } from "@iconify/react";
-// import { printReceipt } from "../../../../../print/printFunctions";
 import { useUser } from "../../../contexts/UserContext";
 import chevronRight from "@iconify/icons-akar-icons/chevron-right";
 import Modal from "@mui/material/Modal";
@@ -255,6 +254,10 @@ const UnpaidOrderTab = ({
   useEffect(() => {
     setPdfPaymentRows([
       {
+        label: "Subtotal",
+        data: parseFloat(subTotal).toFixed(2),
+      },
+      {
         label: "Additional Cost",
         data: parseFloat(orderValues.additionalPayment).toFixed(2),
       },
@@ -279,7 +282,7 @@ const UnpaidOrderTab = ({
         data: orderValues.employeeFullName,
       },
     ]);
-  }, [orderValues]);
+  }, [orderValues, subTotal]);
 
   return (
     <div

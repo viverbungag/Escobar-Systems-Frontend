@@ -15,8 +15,8 @@ import { useRouter } from "next/router";
 import WindowControlBar from "../../Shared/WindowControlBar/WindowControlBar";
 import dayjs from "dayjs";
 import { toast } from "react-toastify";
+import { printReceipt } from "../../../../print/printFunctions";
 
-// import { MenuData } from "../../data/DataIndex";
 const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
 const NewOrderPage = () => {
@@ -41,7 +41,7 @@ const NewOrderPage = () => {
     new MenuOnCategory("", [])
   );
 
-	const [allUnpaidOrders, setAllUnpaidOrders] = useState([]);
+  const [allUnpaidOrders, setAllUnpaidOrders] = useState([]);
 
   const [allMenus, setAllMenus] = useState([]);
 
@@ -58,10 +58,10 @@ const NewOrderPage = () => {
 
   const [availableTableNumbers, setAvailableTableNumbers] = useState([]);
 
-	const handleSelectedOrderOnChange = (event) => {
-		const orderId = event.target.value;
-		setSelectedOrder(orderId);
-	};
+  const handleSelectedOrderOnChange = (event) => {
+    const orderId = event.target.value;
+    setSelectedOrder(orderId);
+  };
 
   const [type, setType] = useState("new-user");
   const handleTypeChange = (e) => {
@@ -194,12 +194,17 @@ const NewOrderPage = () => {
   };
 
   const handlePayButtonOnClick = (
+    pdfRows,
+    pdfColumns,
+    pdfPaymentRows,
+    pdfPaymentColumns,
+    servingType,
     customerPayment,
     discountPayment,
     additionalPayment,
     handleClose
   ) => {
-    console.log(customerPayment);
+    // console.log(pdfPaymentRows);
 
     const total = menuOnCategory.orderMenu.reduce(
       (sum, currentMenu) =>
@@ -301,6 +306,7 @@ const NewOrderPage = () => {
             0,
             Number(additionalPayment)
           );
+
     if (type === "new-user") {
       rest.add(
         `${INITIAL_URL}/orders/add`,
@@ -319,17 +325,28 @@ const NewOrderPage = () => {
       );
     }
 
+    if (servingType === "TAKE_OUT") {
+      console.log(order);
+      printReceipt(
+        order.orderId,
+        pdfRows,
+        pdfColumns,
+        pdfPaymentRows,
+        pdfPaymentColumns
+      );
+    }
+
     getAllOrders();
     handleClose();
   };
 
-	const handleGetAllOrdersSuccess = (contents) => {
-		setAllUnpaidOrders(contents);
-	};
+  const handleGetAllOrdersSuccess = (contents) => {
+    setAllUnpaidOrders(contents);
+  };
 
-	const getAllOrders = () => {
-		rest.get(`${INITIAL_URL}/orders/unpaid`, handleGetAllOrdersSuccess);
-	};
+  const getAllOrders = () => {
+    rest.get(`${INITIAL_URL}/orders/unpaid`, handleGetAllOrdersSuccess);
+  };
 
   const handleGetUnavailableTableNumbersSuccess = (contents) => {
     setAvailableTableNumbers(contents);
@@ -370,28 +387,28 @@ const NewOrderPage = () => {
         currentMenuCategory={currentMenuCategory}
       />
 
-			<div className={styles["Component"]}>
-				<Menu menus={menusBasedOnCategory} cartOnChange={handleCartChange} />
-				<MenuOrderTab
-					menuOnCategory={menuOnCategory}
-					handleQuantityOnChange={handleQuantityOnChange}
-					handleDeleteItemButtonOnClick={handleDeleteItemButtonOnClick}
-					deleteAllItemOnClick={deleteAllItemOnClick}
-					payButtonOnClick={handlePayButtonOnClick}
-					allUnpaidOrders={allUnpaidOrders}
-					selectedOrder={selectedOrder}
-					handleSelectedOrderOnChange={handleSelectedOrderOnChange}
-					type={type}
-					handleTypeChange={handleTypeChange}
-					selectedTableNumber={selectedTableNumber}
-					handleSelectedTableNumberOnChange={handleSelectedTableNumberOnChange}
-					availableTableNumbers={availableTableNumbers}
-					servingType={servingType}
-					handleServingTypeOnChange={handleServingTypeOnChange}
-				/>
-			</div>
-		</div>
-	);
+      <div className={styles["Component"]}>
+        <Menu menus={menusBasedOnCategory} cartOnChange={handleCartChange} />
+        <MenuOrderTab
+          menuOnCategory={menuOnCategory}
+          handleQuantityOnChange={handleQuantityOnChange}
+          handleDeleteItemButtonOnClick={handleDeleteItemButtonOnClick}
+          deleteAllItemOnClick={deleteAllItemOnClick}
+          payButtonOnClick={handlePayButtonOnClick}
+          allUnpaidOrders={allUnpaidOrders}
+          selectedOrder={selectedOrder}
+          handleSelectedOrderOnChange={handleSelectedOrderOnChange}
+          type={type}
+          handleTypeChange={handleTypeChange}
+          selectedTableNumber={selectedTableNumber}
+          handleSelectedTableNumberOnChange={handleSelectedTableNumberOnChange}
+          availableTableNumbers={availableTableNumbers}
+          servingType={servingType}
+          handleServingTypeOnChange={handleServingTypeOnChange}
+        />
+      </div>
+    </div>
+  );
 };
 
 export default NewOrderPage;
