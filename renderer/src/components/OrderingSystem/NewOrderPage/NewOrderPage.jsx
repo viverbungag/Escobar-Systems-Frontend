@@ -41,7 +41,7 @@ const NewOrderPage = () => {
 		new MenuOnCategory("", [])
 	);
 
-	const [allOrders, setAllOrders] = useState([]);
+	const [allUnpaidOrders, setAllUnpaidOrders] = useState([]);
 
 	const [allMenus, setAllMenus] = useState([]);
 
@@ -60,11 +60,6 @@ const NewOrderPage = () => {
 
 	const handleSelectedOrderOnChange = (event) => {
 		const orderId = event.target.value;
-
-		const currentSelectedOrder = allOrders.find(
-			(order) => order.orderId === orderId
-		);
-		setOrderDiscount(currentSelectedOrder.discount);
 		setSelectedOrder(orderId);
 	};
 
@@ -328,11 +323,11 @@ const NewOrderPage = () => {
 	};
 
 	const handleGetAllOrdersSuccess = (contents) => {
-		setAllOrders(contents);
+		setAllUnpaidOrders(contents);
 	};
 
 	const getAllOrders = () => {
-		rest.get(`${INITIAL_URL}/orders/today`, handleGetAllOrdersSuccess);
+		rest.get(`${INITIAL_URL}/orders/unpaid`, handleGetAllOrdersSuccess);
 	};
 
 	const handleGetUnavailableTableNumbersSuccess = (contents) => {
@@ -382,12 +377,11 @@ const NewOrderPage = () => {
 					handleDeleteItemButtonOnClick={handleDeleteItemButtonOnClick}
 					deleteAllItemOnClick={deleteAllItemOnClick}
 					payButtonOnClick={handlePayButtonOnClick}
-					allOrders={allOrders}
+					allUnpaidOrders={allUnpaidOrders}
 					selectedOrder={selectedOrder}
 					handleSelectedOrderOnChange={handleSelectedOrderOnChange}
 					type={type}
 					handleTypeChange={handleTypeChange}
-					orderDiscount={orderDiscount}
 					selectedTableNumber={selectedTableNumber}
 					handleSelectedTableNumberOnChange={handleSelectedTableNumberOnChange}
 					availableTableNumbers={availableTableNumbers}

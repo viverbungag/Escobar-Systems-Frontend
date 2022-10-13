@@ -40,12 +40,11 @@ const MenuOrderTab = ({
 	handleDeleteItemButtonOnClick,
 	deleteAllItemOnClick,
 	payButtonOnClick,
-	allOrders,
+	allUnpaidOrders,
 	selectedOrder,
 	handleSelectedOrderOnChange,
 	type,
 	handleTypeChange,
-	orderDiscount,
 	selectedTableNumber,
 	handleSelectedTableNumberOnChange,
 	availableTableNumbers,
@@ -100,7 +99,12 @@ const MenuOrderTab = ({
 			setOpen(true);
 			setTotal(parseFloat(subTotal).toFixed(2));
 		} else {
-			payButton();
+			payButtonOnClick(
+				customerPayment,
+				discountPayment,
+				additionalPayment,
+				handleClose
+			);
 		}
 	};
 	const [orderValues, setOrderValues] = useState([]);
@@ -280,25 +284,25 @@ const MenuOrderTab = ({
 	};
 
 	const payButton = () => {
-		
-		if (orderValues.payment === "" || orderValues.payment === 0) {
-			setPaymentError("Input cannot be empty.");
-			return;
-		}
-		if (additionalError != "" || discountError != "" || paymentError != "") {
-			return;
-		}
+
+		// if (orderValues.payment === "" || orderValues.payment === 0) {
+		// 	setPaymentError("Input cannot be empty.");
+		// 	return;
+		// }
+		// if (additionalError !== "" || discountError !== "" || paymentError !== "") {
+		// 	return;
+		// }
 
 		// setCustomerPayment(Number(customerPayment));
 		// setDiscountPayment(Number(discountPayment));
 		// setAdditionalPayment(Number(additionalPayment));
 
-		payButtonOnClick(
-			customerPayment,
-			discountPayment,
-			additionalPayment,
-			handleClose
-		);
+		// payButtonOnClick(
+		// 	customerPayment,
+		// 	discountPayment,
+		// 	additionalPayment,
+		// 	handleClose
+		// );
 	};
 
 	// const arr = [];
@@ -347,264 +351,269 @@ const MenuOrderTab = ({
 	// }, [menuOnCategory.orderMenu]);
 
 	return (
-		<div className={styles["MenuOrderTab"]}>
-			<div className={styles["txt-section"]}>
-				<div className={styles["txt-section__top"]}>
-					<ToggleButtonGroup
-						className={"toggle_group"}
-						value={type}
-						exclusive
-						onChange={handleTypeChange}
-					>
-						<ToggleButton value="new-user">New Order</ToggleButton>
-						<ToggleButton value="existing-user">Existing Order</ToggleButton>
-					</ToggleButtonGroup>
-					<button onClick={deleteAllItemOnClick}>
-						<Icon icon={trashCan} height="24" width="24" />
-					</button>
-				</div>
-				<Box
-					sx={{ minWidth: 120, padding: 1 }}
-					className={[
-						styles["InputLabel"],
-						type === "new-user" && styles["none"],
-					].join(" ")}
-				>
-					<FormControl fullWidth>
-						<InputLabel id="demo-simple-select-label">
-							Select Order Menu
-						</InputLabel>
-						<Select
-							labelId="demo-simple-select-label"
-							id="demo-simple-select"
-							value={selectedOrder}
-							label="Select Order Menu"
-							onChange={handleSelectedOrderOnChange}
-						>
-							{allOrders.map((item) => {
-								return (
-									<MenuItem key={item.orderId} value={item.orderId}>
-										{`Order #${item.orderId}`}{" "}
-									</MenuItem>
-								);
-							})}
-						</Select>
-					</FormControl>
-				</Box>
-			</div>
+    <div className={styles["MenuOrderTab"]}>
+      <div className={styles["txt-section"]}>
+        <div className={styles["txt-section__top"]}>
+          <ToggleButtonGroup
+            className={"toggle_group"}
+            value={type}
+            exclusive
+            onChange={handleTypeChange}
+          >
+            <ToggleButton value="new-user">New Order</ToggleButton>
+            <ToggleButton value="existing-user">Existing Order</ToggleButton>
+          </ToggleButtonGroup>
+          <button onClick={deleteAllItemOnClick}>
+            <Icon icon={trashCan} height="24" width="24" />
+          </button>
+        </div>
+        <Box
+          sx={{ minWidth: 120, padding: 1 }}
+          className={[
+            styles["InputLabel"],
+            type === "new-user" && styles["none"],
+          ].join(" ")}
+        >
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">
+              Select Table number
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={selectedOrder}
+              label="Select Table number"
+              onChange={handleSelectedOrderOnChange}
+            >
+              {allUnpaidOrders.map((item) => {
+                return (
+                  <MenuItem key={item.orderId} value={item.orderId}>
+                    {`Table #${item.tableNumber}`}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
+        </Box>
+      </div>
 
-			<div className={styles["container"]}>
-				{menuOnCategory.orderMenu.map((item) => {
-					return (
-						<div
-							className={styles["container-section"]}
-							key={shortid.generate()}
-						>
-							<MenuOrderTabCard
-								title={item.menuName}
-								price={item.menuPrice}
-								quantity={item.orderMenuQuantity}
-								quantityOnChange={handleQuantityOnChange}
-								handleDeleteItemButtonOnClick={handleDeleteItemButtonOnClick}
-							/>
-						</div>
-					);
-				})}
-			</div>
-			<div className={styles["total-section"]} onClick={handleOpen}>
-				<div className={styles["total-section--wrapper"]}>
-					<h1> ₱ {subTotal}</h1>
-					<div className={styles["pay-section"]}>
-						<h2> Pay </h2>
-						<Icon icon={chevronRight} height="16" width="16" color="white" />
-					</div>
-				</div>
-			</div>
+      <div className={styles["container"]}>
+        {menuOnCategory.orderMenu.map((item) => {
+          return (
+            <div
+              className={styles["container-section"]}
+              key={shortid.generate()}
+            >
+              <MenuOrderTabCard
+                title={item.menuName}
+                price={item.menuPrice}
+                quantity={item.orderMenuQuantity}
+                quantityOnChange={handleQuantityOnChange}
+                handleDeleteItemButtonOnClick={handleDeleteItemButtonOnClick}
+              />
+            </div>
+          );
+        })}
+      </div>
+      <div className={styles["total-section"]} onClick={handleOpen}>
+        <div className={styles["total-section--wrapper"]}>
+          <h1> ₱ {subTotal}</h1>
+          <div className={styles["pay-section"]}>
+            <h2> Pay </h2>
+            <Icon icon={chevronRight} height="16" width="16" color="white" />
+          </div>
+        </div>
+      </div>
 
-			<Modal open={open} onClose={handleClose}>
-				<Box className={styles["style"]}>
-					<Button onClick={handleClose} className={styles["Close_Button"]}>
-						X
-					</Button>
-					<div className={styles["Wrapper"]}>
-						<div className={styles["Text-Section"]}>
-							<FormControl className={styles["Radio"]}>
-								<FormLabel
-									sx={{
-										color: "#003049",
-										"&.Mui-checked": { color: "#003049;" },
-									}}
-									id="demo-radio-buttons-group-label"
-								>
-									Pickup Format
-								</FormLabel>
-								<RadioGroup
-									aria-labelledby="demo-radio-buttons-group-label"
-									defaultValue={servingType}
-									name="radio-buttons-group"
-									onChange={handleServingTypeOnChange}
-								>
-									<FormControlLabel
-										control={
-											<Radio
-												sx={{
-													color: "#003049;",
-													"&.Mui-checked": { color: "#003049;" },
-												}}
-												value="TAKE_OUT"
-											/>
-										}
-										label="Take-Out"
-									/>
-									<FormControlLabel
-										sx={{ color: "#003049;" }}
-										control={
-											<Radio
-												sx={{
-													color: "#003049;",
-													"&.Mui-checked": { color: "#003049;" },
-												}}
-												value="DINE_IN"
-											/>
-										}
-										label="Dine-In"
-									/>
-									{/* <FormControlLabel sx = {{ color: "#003049;"}} value="Delivery" control={<Radio sx = {{ color: "#003049;", '&.Mui-checked': {color: "#003049;",},}}/>}  label="Other" /> */}
-								</RadioGroup>
-							</FormControl>
-							{servingType === "DINE_IN" && (
-								<FormControl className={styles["TableNumber"]}>
-									<InputLabel id="demo-simple-select-label">
-										Select Table Number
-									</InputLabel>
-									<Select
-										labelId="demo-simple-select-label"
-										id="demo-simple-select"
-										value={selectedTableNumber}
-										defaultValue={availableTableNumbers[0]}
-										label="Select Order Menu"
-										onChange={handleSelectedTableNumberOnChange}
-									>
-										{/* {Array.from({ length: 100 }, (_, i) => i+1).filter((number) => unavailableTable.includes(number))} */}
-										{availableTableNumbers.map((number) => {
-											return (
-												<MenuItem key={number} value={number}>
-													{`Table #${number}`}
-												</MenuItem>
-											);
-										})}
-									</Select>
-								</FormControl>
-							)}
-						</div>
-						{servingType === "TAKE_OUT" && (
-							<div className={styles["Input-Text-Section"]}>
-								<div className={styles["Input-Section"]}>
-									<TextField
-										variant="outlined"
-										size="small"
-										label="Discount"
-										name="discount"
-										type="number"
-										helperText={discountError}
-										error={discountError != ""}
-										onChange={handleInputChange}
-										InputProps={{
-											endAdornment: (
-												<InputAdornment position="end">
-													<Icon icon="bi:percent" />
-												</InputAdornment>
-											),
-										}}
-										fullWidth
-									/>
-								</div>
+      <Modal open={open} onClose={handleClose}>
+        <Box className={styles["style"]}>
+          <Button onClick={handleClose} className={styles["Close_Button"]}>
+            X
+          </Button>
+          <div className={styles["Wrapper"]}>
+            <div className={styles["Text-Section"]}>
+              <FormControl className={styles["Radio"]}>
+                <FormLabel
+                  sx={{
+                    color: "#003049",
+                    "&.Mui-checked": { color: "#003049;" },
+                  }}
+                  id="demo-radio-buttons-group-label"
+                >
+                  Pickup Format
+                </FormLabel>
+                <RadioGroup
+                  aria-labelledby="demo-radio-buttons-group-label"
+                  defaultValue={servingType}
+                  name="radio-buttons-group"
+                  onChange={handleServingTypeOnChange}
+                >
+                  <FormControlLabel
+                    control={
+                      <Radio
+                        sx={{
+                          color: "#003049;",
+                          "&.Mui-checked": { color: "#003049;" },
+                        }}
+                        value="TAKE_OUT"
+                      />
+                    }
+                    label="Take-Out"
+                  />
+                  <FormControlLabel
+                    sx={{ color: "#003049;" }}
+                    control={
+                      <Radio
+                        sx={{
+                          color: "#003049;",
+                          "&.Mui-checked": { color: "#003049;" },
+                        }}
+                        value="DINE_IN"
+                      />
+                    }
+                    label="Dine-In"
+                  />
+                  {/* <FormControlLabel sx = {{ color: "#003049;"}} value="Delivery" control={<Radio sx = {{ color: "#003049;", '&.Mui-checked': {color: "#003049;",},}}/>}  label="Other" /> */}
+                </RadioGroup>
+              </FormControl>
+              {servingType === "DINE_IN" && (
+                <FormControl className={styles["TableNumber"]}>
+                  <InputLabel id="demo-simple-select-label">
+                    Select Table Number
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={selectedTableNumber}
+                    defaultValue={availableTableNumbers[0]}
+                    label="Select Order Menu"
+                    onChange={handleSelectedTableNumberOnChange}
+                  >
+                    {/* {Array.from({ length: 100 }, (_, i) => i+1).filter((number) => unavailableTable.includes(number))} */}
+                    {availableTableNumbers.map((number) => {
+                      return (
+                        <MenuItem key={number} value={number}>
+                          {`Table #${number}`}
+                        </MenuItem>
+                      );
+                    })}
+                  </Select>
+                </FormControl>
+              )}
+            </div>
+            {servingType === "TAKE_OUT" && (
+              <div className={styles["Input-Text-Section"]}>
+                <div className={styles["Input-Section"]}>
+                  <TextField
+                    variant="outlined"
+                    size="small"
+                    label="Discount"
+                    name="discount"
+                    type="number"
+                    helperText={discountError}
+                    error={discountError != ""}
+                    onChange={handleInputChange}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <Icon icon="bi:percent" />
+                        </InputAdornment>
+                      ),
+                    }}
+                    fullWidth
+                  />
+                </div>
 
-								<div className={styles["Input-Section"]}>
-									<TextField
-										variant="outlined"
-										size="small"
-										label="Customer Payment "
-										name="payment"
-										type="number"
-										value={customerPayment}
-										helperText={paymentError}
-										error={paymentError != ""}
-										onChange={handleCustomerPaymentOnChange}
-										InputProps={{
-											startAdornment: (
-												<InputAdornment position="end">
-													<Icon icon="clarity:peso-line" />
-												</InputAdornment>
-											),
-										}}
-										fullWidth
-									/>
-								</div>
+                <div className={styles["Input-Section"]}>
+                  <TextField
+                    variant="outlined"
+                    size="small"
+                    label="Customer Payment "
+                    name="payment"
+                    type="number"
+                    value={customerPayment}
+                    helperText={paymentError}
+                    error={paymentError != ""}
+                    onChange={handleCustomerPaymentOnChange}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="end">
+                          <Icon icon="clarity:peso-line" />
+                        </InputAdornment>
+                      ),
+                    }}
+                    fullWidth
+                  />
+                </div>
 
-								<div className={styles["Input-Section"]}>
-									<TextField
-										variant="outlined"
-										size="small"
-										label="Additional Payment"
-										name="additionalPayment"
-										type="number"
-										helperText={additionalError}
-										error={additionalError != ""}
-										onChange={handleInputChange}
-										InputProps={{
-											startAdornment: (
-												<InputAdornment position="end">
-													<Icon icon="clarity:peso-line" />
-												</InputAdornment>
-											),
-										}}
-										fullWidth
-									/>
-								</div>
+                <div className={styles["Input-Section"]}>
+                  <TextField
+                    variant="outlined"
+                    size="small"
+                    label="Additional Payment"
+                    name="additionalPayment"
+                    type="number"
+                    helperText={additionalError}
+                    error={additionalError != ""}
+                    onChange={handleInputChange}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="end">
+                          <Icon icon="clarity:peso-line" />
+                        </InputAdornment>
+                      ),
+                    }}
+                    fullWidth
+                  />
+                </div>
 
-								<div className={styles["Output-Section"]}>
-									<div className={styles["Output-Section__label"]}>Change</div>
-									<div className={styles["Output-Section__label"]}>
-										₱{parseFloat(change).toFixed(2)}
-									</div>
-								</div>
+                <div className={styles["Output-Section"]}>
+                  <div className={styles["Output-Section__label"]}>Change</div>
+                  <div className={styles["Output-Section__label"]}>
+                    ₱{parseFloat(change).toFixed(2)}
+                  </div>
+                </div>
 
-								<div className={styles["Output-Section"]}>
-									<div className={styles["Output-Section__label"]}>
-										Discounted Price
-									</div>
-									<div className={styles["Output-Section__label"]}>
-										₱{parseFloat(discountedPrice).toFixed(2)}
-									</div>
-								</div>
+                <div className={styles["Output-Section"]}>
+                  <div className={styles["Output-Section__label"]}>
+                    Discounted Price
+                  </div>
+                  <div className={styles["Output-Section__label"]}>
+                    ₱{parseFloat(discountedPrice).toFixed(2)}
+                  </div>
+                </div>
 
-								<div className={styles["Output-Section"]}>
-									<div className={styles["Output-Section__label"]}>
-										Current Total
-									</div>
-									<div className={styles["Output-Section__label"]}>
-										₱{total}
-									</div>
-								</div>
-							</div>
-						)}
+                <div className={styles["Output-Section"]}>
+                  <div className={styles["Output-Section__label"]}>
+                    Current Total
+                  </div>
+                  <div className={styles["Output-Section__label"]}>
+                    ₱{total}
+                  </div>
+                </div>
+              </div>
+            )}
 
-						<div className={styles["Button-Section"]}>
-							<Button
-								onClick={
-									payButton
-								}
-								className={styles["Confirm_Button"]}
-							>
-								Confirm
-							</Button>
-						</div>
-					</div>
-				</Box>
-			</Modal>
-		</div>
-	);
+            <div className={styles["Button-Section"]}>
+              <Button
+                onClick={() =>
+                  payButtonOnClick (
+                    customerPayment,
+                    discountPayment,
+                    additionalPayment,
+                    handleClose
+                  )
+                }
+                className={styles["Confirm_Button"]}
+              >
+                Confirm
+              </Button>
+            </div>
+          </div>
+        </Box>
+      </Modal>
+    </div>
+  );
 };
 
 export default MenuOrderTab;

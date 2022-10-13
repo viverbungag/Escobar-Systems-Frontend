@@ -302,9 +302,9 @@ const UnpaidOrderTab = ({
         </div>
 
         <div className={styles["title-section"]}>
-          <diuv className={styles["title-section__text"]}> Item Title </diuv>
-          <diuv className={styles["title-section__text"]}> Quantity </diuv>
-          <diuv className={styles["title-section__text"]}> Price </diuv>
+          <div className={styles["title-section__text"]}> Item Title </div>
+          <div className={styles["title-section__text"]}> Quantity </div>
+          <div className={styles["title-section__text"]}> Price </div>
         </div>
       </div>
 
