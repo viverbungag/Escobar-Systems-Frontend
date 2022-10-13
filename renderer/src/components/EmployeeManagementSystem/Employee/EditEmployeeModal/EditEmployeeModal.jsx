@@ -189,13 +189,30 @@ export default function EditEmployeeModal({
                       Superior
                     </div>
                     <Select
-                      placeholder={selectedEmployee.superiorEmployeeName}
-                      defaultValue={selectedEmployee.superiorEmployeeName}
-                      options={activeEmployees.map((item) => {
+                      placeholder={
+                        selectedEmployee.superiorEmployeeName
+                          ? selectedEmployee.superiorEmployeeName
+                          : "None"
+                      }
+                      defaultValue={{
+                        label: selectedEmployee.superiorEmployeeName
+                          ? selectedEmployee.superiorEmployeeName
+                          : "None",
+                        value: selectedEmployee.superiorEmployeeName
+                          ? selectedEmployee.superiorEmployeeName
+                          : null,
+                      }}
+                      options={[null, ...activeEmployees].map((item) => {
+                        const value = item
+                          ? `${item.employeeLastName}, ${item.employeeFirstName}`
+                          : null;
+                        const label = item
+                          ? `${item.employeeLastName}, ${item.employeeFirstName}`
+                          : "None";
                         return {
                           key: "superiorEmployeeName",
-                          value: `${item.employeeLastName}, ${item.employeeFirstName}`,
-                          label: `${item.employeeLastName}, ${item.employeeFirstName}`,
+                          value: value,
+                          label: label,
                         };
                       })}
                       onChange={onChange}
@@ -207,7 +224,10 @@ export default function EditEmployeeModal({
                     </div>
                     <Select
                       placeholder={selectedEmployee.employeePositionName}
-                      defaultValue={selectedEmployee.employeePositionName}
+                      defaultValue={{
+                        label: selectedEmployee.employeePositionName,
+                        value: selectedEmployee.employeePositionName,
+                      }}
                       options={activePositions.map((item) => {
                         return {
                           key: "employeePositionName",
@@ -224,7 +244,7 @@ export default function EditEmployeeModal({
                     </div>
                     <Select
                       placeholder={selectedEmployee.employeeTypeName}
-                      defaultValue={selectedEmployee.employeeTypeName}
+                      defaultValue={{label: selectedEmployee.employeeTypeName, value: selectedEmployee.employeeTypeName}}
                       options={activeTypes.map((item) => {
                         return {
                           key: "employeeTypeName",
@@ -298,7 +318,9 @@ export default function EditEmployeeModal({
                     <div className={styles.group_textfields_select_label}>
                       Superior
                     </div>
-                    {selectedEmployee.superiorEmployeeName}
+                    {selectedEmployee.superiorEmployeeName
+                      ? selectedEmployee.superiorEmployeeName
+                      : "None"}
                   </div>
                   <div className={styles.group_textfields_select}>
                     <div className={styles.group_textfields_select_label}>
