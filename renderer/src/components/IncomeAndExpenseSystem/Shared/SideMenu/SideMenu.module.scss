@@ -33,21 +33,24 @@
     flex: 1;
     display: flex;
     padding: 1rem;
+    overflow: auto;
     ul {
       flex: 1;
       list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
       li {
         font-weight: $bodyFontWeight;
         font-size: $bodyFontSize;
         display: flex;
         flex-direction: column;
-        padding: 0.5rem 0;
         gap: 0.5rem;
         .label {
           width: 100%;
           color: grey;
           border-bottom: 1px solid rgba(128, 128, 128, 0.192);
-          -webkit-user-select: none;
+          user-select: none;
         }
         .sidebar_item {
           border-radius: 1rem;

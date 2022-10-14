@@ -33,9 +33,13 @@
     flex: 1;
     display: flex;
     padding: 1rem;
+    overflow: auto;
     ul {
       flex: 1;
       list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
       li {
         font-weight: $bodyFontWeight;
         font-size: $bodyFontSize;
