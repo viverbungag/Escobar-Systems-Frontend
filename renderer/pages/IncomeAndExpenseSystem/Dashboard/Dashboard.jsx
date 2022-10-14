@@ -50,7 +50,7 @@ function HomePage() {
       labels: data.map((item) => item.expenseMonth),
       datasets: [
         {
-          label: "Income",
+          label: "Gross Income",
           data: data.map((data) => data.monthlyIncome),
           backgroundColor: ["#35b000"],
         },
@@ -81,7 +81,7 @@ function HomePage() {
 
   const getDonutGraphDataOnSuccess = (data) => {
     setDonutGraphData({
-      labels: data.map((item) => item.donutLabel),
+      labels: ["Expenses", "Gross Income"],
       datasets: [
         {
           label: "Monthly",
@@ -118,7 +118,7 @@ function HomePage() {
       labels: data.map((item) => item.incomeHour),
       datasets: [
         {
-          label: "Income For This Hour",
+          label: "Gross Income For This Hour",
           data: data.map((item) => item.hourlyIncome),
           backgroundColor: ["#225560"],
         },

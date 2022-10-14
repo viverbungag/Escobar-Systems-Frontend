@@ -56,7 +56,7 @@ function SideMenu({
                     styles.sidebar_item,
                   ].join(" ")}
                 >
-                  View Income
+                  View Gross Income
                 </div>
               </Tooltip>
             </Link>
