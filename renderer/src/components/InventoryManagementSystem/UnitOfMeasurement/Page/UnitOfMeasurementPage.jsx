@@ -81,9 +81,9 @@ const UnitOfMeasurementPage = () => {
 
   const handleBackButtonOnClick = () => {
     localStorage.getItem("isAdmin") === "true"
-    ? router.push("/main-admin-dashboard")
-    : router.push("/main-employee-dashboard");
-  }
+      ? router.push("/main-admin-dashboard")
+      : router.push("/main-employee-dashboard");
+  };
 
   const handleOpenAddModal = () => {
     setOpenAddModal(true);
@@ -598,7 +598,7 @@ const UnitOfMeasurementPage = () => {
       />
 
       <section className={styles["unit-of-measurement-page__upper-section"]}>
-        <WindowControlBar handleBackButtonOnClick={handleBackButtonOnClick}/>
+        <WindowControlBar handleBackButtonOnClick={handleBackButtonOnClick} />
       </section>
 
       <section className={styles["unit-of-measurement-page__lower-section"]}>
@@ -642,17 +642,17 @@ const UnitOfMeasurementPage = () => {
               handleOpenEditModal={handleOpenEditModal}
               selectedItemsCount={selectedActiveItemsCount}
             />
-            <div
-              className={
-                styles["unit-of-measurement-page__view-inactive-items-buton"]
-              }
-            >
-              <InactiveItemsButton
-                label="View Inactive Unit of Measurements"
-                onClick={handleOpenViewInactiveModal}
-              />
-            </div>
           </section>
+          <div
+            className={
+              styles["unit-of-measurement-page__view-inactive-items-buton"]
+            }
+          >
+            <InactiveItemsButton
+              label="View Inactive Unit of Measurements"
+              onClick={handleOpenViewInactiveModal}
+            />
+          </div>
         </section>
       </section>
     </div>

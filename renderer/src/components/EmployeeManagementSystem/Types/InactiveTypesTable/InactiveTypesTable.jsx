@@ -61,7 +61,7 @@ export default function InactiveTypes({ reload, inactiveTypes }) {
       `${INITIAL_URL}/employee-type/activate`,
       { employeeTypeListDto: selectedValues },
       activateSuccessAction,
-      `Successfully activated ${selectedValues.length} expense category.`
+      `Successfully activated ${selectedValues.length} employee type/s.`
     );
   };
   //get shown buttons
@@ -69,7 +69,7 @@ export default function InactiveTypes({ reload, inactiveTypes }) {
     if (selected.length == 1) {
       return (
         <>
-          <Tooltip title="Activate Employee Type/s">
+          <Tooltip title="Activate employee types">
             <IconButton onClick={handleActivateOnClick}>
               <MediumButton label="Activate" />
             </IconButton>
@@ -79,7 +79,7 @@ export default function InactiveTypes({ reload, inactiveTypes }) {
     } else if (selected.length > 1) {
       return (
         <>
-          <Tooltip title="Activate Employee Type/s">
+          <Tooltip title="Activate employee types">
             <IconButton onClick={handleActivateOnClick}>
               <MediumButton label="Activate" />
             </IconButton>
@@ -89,7 +89,7 @@ export default function InactiveTypes({ reload, inactiveTypes }) {
     } else if (selected.length == 0) {
       return (
         <>
-          <Tooltip title="Activate Employee Type/s">
+          <Tooltip title="Activate employee types">
             <IconButton disabled onClick={handleActivateOnClick}>
               <MediumButton label="Activate" />
             </IconButton>

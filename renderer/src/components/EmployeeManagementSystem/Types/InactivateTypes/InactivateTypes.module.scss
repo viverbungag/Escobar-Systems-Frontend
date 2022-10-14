@@ -5,7 +5,7 @@
   flex-direction: column;
   justify-content: space-between;
   height: 30vh;
-  width: 100%;
+  width: 30vw;
   .header {
     text-align: center;
     font-size: $h5FontSize;
@@ -24,6 +24,11 @@
     .content_row {
       display: flex;
       gap: 2rem;
+    }
+    .details {
+      display: flex;
+      align-items: flex-end;
+      gap: 0.5rem;
     }
   }
   .footer {

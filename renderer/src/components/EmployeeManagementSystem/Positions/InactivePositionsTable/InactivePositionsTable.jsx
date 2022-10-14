@@ -58,7 +58,7 @@ export default function InactivePositionsTable({
       `${INITIAL_URL}/employee-position/activate`,
       { employeePositionListDto: selectedPositions },
       activateSuccessAction,
-      "Successfully activated the selected position/s."
+      `Successfully activated ${selectedPositions.length} employee position/s.`
     );
   };
 
@@ -71,7 +71,7 @@ export default function InactivePositionsTable({
     if (selected.length > 0) {
       return (
         <>
-          <Tooltip title="Activate Employee Position">
+          <Tooltip title="Activate employee positions">
             <IconButton onClick={handleActivateOnClick}>
               <MediumButton label="Activate" />
             </IconButton>
@@ -81,7 +81,7 @@ export default function InactivePositionsTable({
     } else {
       return (
         <>
-          <Tooltip title="Activate Employee Position">
+          <Tooltip title="Activate employee positions">
             <IconButton disabled onClick={handleActivateOnClick}>
               <MediumButton label="Activate" />
             </IconButton>

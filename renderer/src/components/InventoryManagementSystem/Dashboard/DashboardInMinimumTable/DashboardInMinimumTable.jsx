@@ -2,7 +2,7 @@ import styles from "./DashboardInMinimumTable.module.scss";
 import { TablePagination } from "@mui/material";
 import SortSelect from "../../Shared/SortSelect/SortSelect";
 import SortOrderRadioGroup from "../../Shared/SortOrderRadioGroup/SortOrderRadioGroup";
-import shortid from 'shortid';
+import shortid from "shortid";
 
 export default function DashboardInMinimumTable({
   headers,
@@ -66,6 +66,6 @@ export default function DashboardInMinimumTable({
           })}
         </tbody>
       </table>
-      </div>
+    </div>
   );
 }

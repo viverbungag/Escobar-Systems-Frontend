@@ -1,38 +1,53 @@
-@import '../../../../styles/variables.scss';
+@import "../../../../styles/variables.scss";
 
 .container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 30vw;
+  height: 30vh;
+  .form {
+    flex: 1;
+    width: 100%;
     display: flex;
-    align-items: center;
     flex-direction: column;
-    .form {
-        flex: 1;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        .header {
-            font-size: $h5FontSize;
-            text-align: center;
-            background-color: black;
-            color: white;
-            padding: 1rem;
-            text-transform: capitalize;
-        }
-        .content {
-            // margin: 2rem 0;
-            padding: 1rem;
-            font-size: $bodyFontSize;
-            .content_header {
-                font-weight: $h3FontWeight;
-            }
-        }
-        .footer {
-            display: flex;
-            align-self: flex-end;
-            padding: 1rem;
-            button {
-                border: none;
-            }
-        }
+    justify-content: space-between;
+    // overflow: auto;
+    .header {
+      position: sticky;
+      top: 0;
+      font-size: $h5FontSize;
+      font-weight: $h3FontWeight;
+      text-align: center;
+      background-color: black;
+      color: white;
+      padding: 1rem;
+      text-transform: capitalize;
     }
+    .content {
+      // margin: 2rem 0;
+      padding: 1rem;
+      font-size: $bodyFontSize;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 16vh;
+      overflow: auto;
+      .content_header {
+        font-weight: $h3FontWeight;
+      }
+    }
+    .footer {
+      position: sticky;
+      bottom: 0;
+      display: flex;
+      justify-content: flex-end;
+      padding: 1rem;
+      background-color: rgb(255, 255, 255);
+      width: 100%;
+      button {
+        border: none;
+      }
+    }
+  }
 }

@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./InactivateTypes.module.scss";
 import MediumButton from "../../Shared/Buttons/MediumButton/MediumButton";
 import Rest from "../../../../rest/Rest.tsx";
+import InfoIcon from "@mui/icons-material/Info";
 
 const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
@@ -15,7 +16,7 @@ export default function InactivateTypes({
       `${INITIAL_URL}/employee-type/inactivate`,
       { employeeTypeListDto: selectedValues },
       inactivateSuccessAction,
-      `Successfully inactivated ${selectedValues.length} expense category.`
+      `Successfully inactivated ${selectedValues.length} employee type/s.`
     );
   };
 
@@ -26,9 +27,9 @@ export default function InactivateTypes({
         {selectedValues.map((item) => {
           return (
             <div className={styles.content_row} key={item.employeeTypeId}>
-              <div className={styles.details}>ID: {item.employeeTypeId}</div>
               <div className={styles.details}>
-                Employee Type Name: {item.employeeTypeName}
+                <InfoIcon />
+                {item.employeeTypeName}
               </div>
             </div>
           );

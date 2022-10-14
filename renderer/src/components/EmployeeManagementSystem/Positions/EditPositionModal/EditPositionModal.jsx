@@ -1,58 +1,75 @@
-import TextField from '@mui/material/TextField';
-import React, { useState } from 'react';
-import MediumButton from '../../Shared/Buttons/MediumButton/MediumButton';
-import styles from './EditPositionModal.module.scss';
+import TextField from "@mui/material/TextField";
+import React, { useState } from "react";
+import MediumButton from "../../Shared/Buttons/MediumButton/MediumButton";
+import styles from "./EditPositionModal.module.scss";
 import Rest from "../../../../rest/Rest.tsx";
-import Position from '../../../../model/Position.tsx';
+import Position from "../../../../model/Position.tsx";
+import { toast } from "react-toastify";
 
 const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
-function capitalizeData(data){
-  var separateWord = data.toLowerCase().split(' ');
-    for (var i = 0; i < separateWord.length; i++) {
-        separateWord[i] = separateWord[i].charAt(0).toUpperCase() +
-        separateWord[i].substring(1);
-    }
-    return separateWord.join(' ');
+// function onlyLetters(data) {
+//   return /^[a-zA-Z\s]+$/.test(data);
+// }
+
+function capitalizeData(data) {
+  var separateWord = data.toLowerCase().split(" ");
+  for (var i = 0; i < separateWord.length; i++) {
+    separateWord[i] =
+      separateWord[i].charAt(0).toUpperCase() + separateWord[i].substring(1);
+  }
+  return separateWord.join(" ");
 }
 
-export default function EditPositionModal({ editSuccessAction, employeePositionId, employeePositionName }) {
+export default function EditPositionModal({
+  editSuccessAction,
+  employeePositionId,
+  employeePositionName,
+}) {
   const rest = new Rest();
 
-  const [newEmployeeValues, setNewEmployeeValues] = useState(
-    new Position(
-      employeePositionId[0],
-      employeePositionName,
-      true,
-    )
-  )
+  const [positionName, setPositionName] = useState(employeePositionName[0]);
+  const handlePositionNameOnChange = (e) => {
+    setPositionName(capitalizeData(e.target.value));
+  };
 
-  const handleChange = (e) => {
-    setNewEmployeeValues({...newEmployeeValues, [e.target.name]:capitalizeData(e.target.value)});
-  }
-  
+  const [positionNameError, setPositionNameError] = useState(false);
   const handleSubmit = () => {
-    rest.update(
-      `${INITIAL_URL}/employee-position/update/${newEmployeeValues.employeePositionId}`, 
-      newEmployeeValues,
-      editSuccessAction,
-      `Successfully edited ${newEmployeeValues.employeePositionName}`
+    if (positionName == "") {
+      toast.error("Position name cannot be empty.");
+      setPositionNameError(true);
+      return;
+    } else {
+      setPositionNameError(false);
+    }
+
+    const newPositionValues = new Position(
+      employeePositionId[0],
+      positionName,
+      true
     );
-  }
+
+    rest.update(
+      `${INITIAL_URL}/employee-position/update/${newPositionValues.employeePositionId}`,
+      newPositionValues,
+      editSuccessAction,
+      `Successfully edited ${newPositionValues.employeePositionName}`
+    );
+  };
 
   return (
     <div className={styles.container}>
       <div className={styles.form}>
-        <div className={styles.header}>
-            Editing employee position: <span style={{ fontWeight: 700, textTransform: "uppercase"}}>{employeePositionName}</span>
-        </div>
+        <div className={styles.header}>Edit employee position</div>
         <div className={styles.content}>
-          <div className={styles.content_header}>
-              Position ID: {employeePositionId}
-            </div>
-            <div className={styles.textfield}>
-              <TextField onChange={handleChange} name="employeePositionName" label="Employee Position Name" variant="standard" fullWidth />
-          </div>
+          <TextField
+            onChange={handlePositionNameOnChange}
+            label="Employee Position Name"
+            value={positionName}
+            variant="standard"
+            error={positionNameError == true}
+            fullWidth
+          />
         </div>
         <div className={styles.footer}>
           <button onClick={handleSubmit}>
@@ -61,5 +78,5 @@ export default function EditPositionModal({ editSuccessAction, employeePositionI
         </div>
       </div>
     </div>
-  )
+  );
 }

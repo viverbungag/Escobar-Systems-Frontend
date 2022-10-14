@@ -95,9 +95,9 @@ const SupplierPage = () => {
 
   const handleBackButtonOnClick = () => {
     localStorage.getItem("isAdmin") === "true"
-    ? router.push("/main-admin-dashboard")
-    : router.push("/main-employee-dashboard");
-  }
+      ? router.push("/main-admin-dashboard")
+      : router.push("/main-employee-dashboard");
+  };
 
   const handleOpenAddModal = () => {
     setOpenAddModal(true);
@@ -673,7 +673,7 @@ const SupplierPage = () => {
       />
 
       <section className={styles["supplier-page__upper-section"]}>
-        <WindowControlBar handleBackButtonOnClick={handleBackButtonOnClick}/>
+        <WindowControlBar handleBackButtonOnClick={handleBackButtonOnClick} />
       </section>
 
       <section className={styles["supplier-page__lower-section"]}>
@@ -710,13 +710,13 @@ const SupplierPage = () => {
               handleOpenEditModal={handleOpenEditModal}
               selectedItemsCount={selectedActiveItemsCount}
             />
-            <div className={styles["supplier-page__view-inactive-items-buton"]}>
-              <InactiveItemsButton
-                label="View Inactive Suppliers"
-                onClick={handleOpenViewInactiveModal}
-              />
-            </div>
           </section>
+          <div className={styles["supplier-page__view-inactive-items-buton"]}>
+            <InactiveItemsButton
+              label="View Inactive Suppliers"
+              onClick={handleOpenViewInactiveModal}
+            />
+          </div>
         </section>
       </section>
     </div>

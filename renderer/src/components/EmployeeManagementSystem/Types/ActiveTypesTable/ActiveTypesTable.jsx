@@ -6,6 +6,7 @@ import SearchBar from "material-ui-search-bar";
 import MediumButton from "../../Shared/Buttons/MediumButton/MediumButton";
 import InactivateTypes from "../InactivateTypes/InactivateTypes";
 import EditTypes from "../EditTypes/EditTypes";
+import { toast } from "react-toastify";
 
 export default function ActiveTypesTable({ reload, activeTypes }) {
   //columns
@@ -59,6 +60,7 @@ export default function ActiveTypesTable({ reload, activeTypes }) {
     setOpenEditModal(false);
   };
   const editSuccessAction = () => {
+    toast.success("Successfully edited employee type.");
     handleCloseEditModal();
     reload();
     setRows(activeCategories);
@@ -81,12 +83,12 @@ export default function ActiveTypesTable({ reload, activeTypes }) {
     if (selected.length == 1) {
       return (
         <>
-          <Tooltip title="Edit Employee Position">
+          <Tooltip title="Edit employee type">
             <IconButton onClick={handleOpenEditModal}>
               <MediumButton label="Edit" />
             </IconButton>
           </Tooltip>
-          <Tooltip title="Inactivate Employee Position/s">
+          <Tooltip title="Inactivate employee types">
             <IconButton onClick={handleOpenInactivateModal}>
               <MediumButton label="Inactivate" />
             </IconButton>
@@ -96,12 +98,12 @@ export default function ActiveTypesTable({ reload, activeTypes }) {
     } else if (selected.length > 1) {
       return (
         <>
-          <Tooltip title="Edit Employee Position">
+          <Tooltip title="Edit employee type">
             <IconButton disabled onClick={handleOpenEditModal}>
               <MediumButton label="Edit" />
             </IconButton>
           </Tooltip>
-          <Tooltip title="Inactivate Employee Position/s">
+          <Tooltip title="Inactivate employee types">
             <IconButton onClick={handleOpenInactivateModal}>
               <MediumButton label="Inactivate" />
             </IconButton>
@@ -111,12 +113,12 @@ export default function ActiveTypesTable({ reload, activeTypes }) {
     } else if (selected.length == 0) {
       return (
         <>
-          <Tooltip title="Edit Expense Category">
+          <Tooltip title="Edit employee type">
             <IconButton disabled onClick={handleOpenEditModal}>
               <MediumButton label="Edit" />
             </IconButton>
           </Tooltip>
-          <Tooltip title="Inactivate Expense Categories">
+          <Tooltip title="Inactivate employee types">
             <IconButton disabled onClick={handleOpenInactivateModal}>
               <MediumButton label="Inactivate" />
             </IconButton>

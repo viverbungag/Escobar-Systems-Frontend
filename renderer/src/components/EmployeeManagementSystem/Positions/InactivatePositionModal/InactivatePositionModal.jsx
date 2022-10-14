@@ -2,6 +2,7 @@ import React from "react";
 import MediumButton from "../../Shared/Buttons/MediumButton/MediumButton";
 import styles from "./InactivatePositionModal.module.scss";
 import Rest from "../../../../rest/Rest.tsx";
+import InfoIcon from "@mui/icons-material/Info";
 
 const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
@@ -15,7 +16,7 @@ export default function InactivatePositionModal({
       `${INITIAL_URL}/employee-position/inactivate`,
       { employeePositionListDto: selectedValues },
       inactivateSuccessAction,
-      "Successfully inactivated the selected position/s."
+      `Successfully inactivated ${selectedValues.length} employee position/s.`
     );
   };
 
@@ -27,10 +28,8 @@ export default function InactivatePositionModal({
           return (
             <div className={styles.content_row} key={item.employeePositionId}>
               <div className={styles.details}>
-                ID: {item.employeePositionId}
-              </div>
-              <div className={styles.details}>
-                Employee Position Name: {item.employeePositionName}
+                <InfoIcon />
+                {item.employeePositionName}
               </div>
             </div>
           );

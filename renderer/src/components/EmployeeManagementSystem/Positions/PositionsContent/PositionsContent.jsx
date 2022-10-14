@@ -125,12 +125,12 @@ export default function PositionsContent() {
     if (selected.length == 1) {
       return (
         <>
-          <Tooltip title="Edit Employee Position">
+          <Tooltip title="Edit employee position">
             <IconButton onClick={handleOpenEditModal}>
               <MediumButton label="Edit" />
             </IconButton>
           </Tooltip>
-          <Tooltip title="Inactivate Employee Position/s">
+          <Tooltip title="Inactivate employee positions">
             <IconButton onClick={handleOpenInactivateModal}>
               <MediumButton label="Inactivate" />
             </IconButton>
@@ -140,12 +140,12 @@ export default function PositionsContent() {
     } else if (selected.length > 1) {
       return (
         <>
-          <Tooltip title="Edit Employee Position">
+          <Tooltip title="Edit employee position">
             <IconButton disabled onClick={handleOpenEditModal}>
               <MediumButton label="Edit" />
             </IconButton>
           </Tooltip>
-          <Tooltip title="Inactivate Employee Position/s">
+          <Tooltip title="Inactivate employee positions">
             <IconButton onClick={handleOpenInactivateModal}>
               <MediumButton label="Inactivate" />
             </IconButton>
@@ -155,12 +155,12 @@ export default function PositionsContent() {
     } else if (selected.length == 0) {
       return (
         <>
-          <Tooltip title="Edit Employee Position">
+          <Tooltip title="Edit employee position">
             <IconButton disabled onClick={handleOpenEditModal}>
               <MediumButton label="Edit" />
             </IconButton>
           </Tooltip>
-          <Tooltip title="Inactivate Employee Position/s">
+          <Tooltip title="Inactivate employee positions">
             <IconButton disabled onClick={handleOpenInactivateModal}>
               <MediumButton label="Inactivate" />
             </IconButton>
@@ -198,9 +198,11 @@ export default function PositionsContent() {
     <div className={styles.container}>
       <div className={styles.content}>
         <div className={styles.header}>
-          <button onClick={handleOpenAddModal}>
-            <MediumButton label="Add Employee Position" />
-          </button>
+          <Tooltip title="Add employee position">
+            <button onClick={handleOpenAddModal}>
+              <MediumButton label="Add Employee Position" />
+            </button>
+          </Tooltip>
         </div>
         <div className={styles.tables}>
           <div className={styles.active_table}>

@@ -71,9 +71,9 @@ const MenuCategoryPage = () => {
 
   const handleBackButtonOnClick = () => {
     localStorage.getItem("isAdmin") === "true"
-    ? router.push("/main-admin-dashboard")
-    : router.push("/main-employee-dashboard");
-  }
+      ? router.push("/main-admin-dashboard")
+      : router.push("/main-employee-dashboard");
+  };
 
   const handleOpenAddModal = () => {
     setOpenAddModal(true);
@@ -543,7 +543,7 @@ const MenuCategoryPage = () => {
       />
 
       <section className={styles["menu-category-page__upper-section"]}>
-        <WindowControlBar handleBackButtonOnClick={handleBackButtonOnClick}/>
+        <WindowControlBar handleBackButtonOnClick={handleBackButtonOnClick} />
       </section>
 
       <section className={styles["menu-category-page__lower-section"]}>
@@ -585,17 +585,15 @@ const MenuCategoryPage = () => {
               handleOpenEditModal={handleOpenEditModal}
               selectedItemsCount={selectedActiveItemsCount}
             />
-            <div
-              className={
-                styles["menu-category-page__view-inactive-items-buton"]
-              }
-            >
-              <InactiveItemsButton
-                label="View Inactive Menu Categories"
-                onClick={handleOpenViewInactiveModal}
-              />
-            </div>
           </section>
+          <div
+            className={styles["menu-category-page__view-inactive-items-buton"]}
+          >
+            <InactiveItemsButton
+              label="View Inactive Menu Categories"
+              onClick={handleOpenViewInactiveModal}
+            />
+          </div>
         </section>
       </section>
     </div>

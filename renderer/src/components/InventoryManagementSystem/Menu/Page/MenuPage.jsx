@@ -15,9 +15,16 @@ import Rest from "../../../../rest/Rest.tsx";
 import Menu from "../../../../model/Menu";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import {storage}  from "../../../../firebase/firebase.js";
-import firebase from 'firebase/app';
-import { ref, uploadBytes, getDownloadURL, uploadBytesResumable, listAll, getStorage } from "firebase/storage";
+import { storage } from "../../../../firebase/firebase.js";
+import firebase from "firebase/app";
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  uploadBytesResumable,
+  listAll,
+  getStorage,
+} from "firebase/storage";
 
 // const storage = getStorage();
 
@@ -55,7 +62,7 @@ const sortItems = [
   },
   {
     label: "Menu Category",
-  }
+  },
 ];
 
 const MenuPage = () => {
@@ -103,9 +110,9 @@ const MenuPage = () => {
 
   const handleBackButtonOnClick = () => {
     localStorage.getItem("isAdmin") === "true"
-    ? router.push("/main-admin-dashboard")
-    : router.push("/main-employee-dashboard");
-  }
+      ? router.push("/main-admin-dashboard")
+      : router.push("/main-employee-dashboard");
+  };
 
   const handleOpenAddModal = () => {
     setAddedMenu(new Menu(1, "", 0, activeMenuCategories[0], [], 0, true));
@@ -140,14 +147,16 @@ const MenuPage = () => {
   };
   const handleCloseEditModal = () => setOpenEditModal(false);
 
-  const [fileNameAdd, setFileNameAdd] = useState("Drop files here or click to upload");
+  const [fileNameAdd, setFileNameAdd] = useState(
+    "Drop files here or click to upload"
+  );
   const [imageAdd, setImageAdd] = useState(null);
   const handleImageFileAddOnChange = (event) => {
     // const image = file[0];
     // console.log(event.target.files[0]);
     // setFileNameAdd(image.name)
     setImageAdd(event.target.files[0]);
-  }
+  };
 
   const resetToDefault = () => {
     setActiveIsSelectAllChecked(false);
@@ -304,31 +313,31 @@ const MenuPage = () => {
 
   // const [progresspercent, setProgresspercent] = useState(0);
   // console.log(progresspercent);
-//   const addImageToFirebase = () => {
-//     console.log(addedMenu.menuName);
+  //   const addImageToFirebase = () => {
+  //     console.log(addedMenu.menuName);
 
-//     if (imageAdd == null) return;
-//     console.log(imageAdd.name);
-//     const imageRef = ref(storage, imageAdd.name);
-//     // const uploadTask = uploadBytes(imageRef, imageAdd);
+  //     if (imageAdd == null) return;
+  //     console.log(imageAdd.name);
+  //     const imageRef = ref(storage, imageAdd.name);
+  //     // const uploadTask = uploadBytes(imageRef, imageAdd);
 
-//     const task = uploadBytesResumable(imageRef, imageAdd)
+  //     const task = uploadBytesResumable(imageRef, imageAdd)
 
-//     task.on('state_change',
+  //     task.on('state_change',
 
-//     function progress(snapshot) {
-//       setProgresspercent((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
-//     },
+  //     function progress(snapshot) {
+  //       setProgresspercent((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
+  //     },
 
-//     function error(err) {
-//         alert(error)
-//     },
+  //     function error(err) {
+  //         alert(error)
+  //     },
 
-//     function complete() {
-//         alert('Uploaded to firebase storage successfully!')
-//     }
-// )
-//   }
+  //     function complete() {
+  //         alert('Uploaded to firebase storage successfully!')
+  //     }
+  // )
+  //   }
 
   // const [imageUrls, setImageUrls] = useState([]);
   // const imagesListRef = ref(storage, "images/");
@@ -770,7 +779,7 @@ const MenuPage = () => {
       />
 
       <section className={styles["menu-page__upper-section"]}>
-        <WindowControlBar handleBackButtonOnClick={handleBackButtonOnClick}/>
+        <WindowControlBar handleBackButtonOnClick={handleBackButtonOnClick} />
       </section>
 
       <section className={styles["menu-page__lower-section"]}>
@@ -807,13 +816,14 @@ const MenuPage = () => {
               handleOpenEditModal={handleOpenEditModal}
               selectedItemsCount={selectedActiveItemsCount}
             />
-            <div className={styles["menu-page__view-inactive-items-buton"]}>
-              <InactiveItemsButton
-                label="View Inactive Menu"
-                onClick={handleOpenViewInactiveModal}
-              />
-            </div>
           </section>
+
+          <div className={styles["menu-page__view-inactive-items-buton"]}>
+            <InactiveItemsButton
+              label="View Inactive Menu"
+              onClick={handleOpenViewInactiveModal}
+            />
+          </div>
         </section>
       </section>
     </div>

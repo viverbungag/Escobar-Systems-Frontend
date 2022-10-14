@@ -7,6 +7,8 @@ import { TextField } from "@mui/material";
 import MediumButton from "../../Shared/Buttons/MediumButton/MediumButton";
 import EditIcon from "@mui/icons-material/Edit";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import { toast } from "react-toastify";
+import dateFormat from "dateformat";
 
 const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
@@ -14,18 +16,18 @@ function onlyLetters(data) {
   return /^[a-zA-Z\s]+$/.test(data);
 }
 
-function superiorNameValid(data) {
-  //last, first
-  return /^[a-zA-Z\s]+\,\s[a-zA-Z\s]+$/.test(data);
-}
+// function superiorNameValid(data) {
+//   //last, first
+//   return /^[a-zA-Z\s]+\,\s[a-zA-Z\s]+$/.test(data);
+// }
 
-function onlyLettersNumbers(data) {
-  return /^[a-zA-Z0-9\s]+$/.test(data);
-}
+// function onlyLettersNumbers(data) {
+//   return /^[a-zA-Z0-9\s]+$/.test(data);
+// }
 
-function validNumber(data) {
-  return /^0\d{10}$/.test(data);
-}
+// function validNumber(data) {
+//   return /^0\d{10}$/.test(data);
+// }
 
 function capitalizeData(data) {
   // data = data.charAt(0).toUpperCase() + data.slice(1).toLowerCase();
@@ -35,7 +37,6 @@ function capitalizeData(data) {
     separateWord[i] =
       separateWord[i].charAt(0).toUpperCase() + separateWord[i].substring(1);
   }
-  console.log(separateWord.join(" "));
   return separateWord.join(" ");
 }
 
@@ -86,8 +87,42 @@ export default function EditEmployeeModal({
       setValues({ ...values, [e.target.name]: capitalizeData(e.target.value) });
     }
   };
+  const [lastNameError, setLastNameError] = useState(false);
+  const [firstNameError, setFirstNameError] = useState(false);
   //submit
   const handleSubmit = () => {
+    if (values.employeeLastName == "") {
+      toast.error("Last name must not be empty.");
+      setLastNameError(true);
+      return;
+    } else {
+      setLastNameError(false);
+    }
+
+    if (!onlyLetters(values.employeeLastName)) {
+      toast.error("Last name must not have numbers or special characters.");
+      setLastNameError(true);
+      return;
+    } else {
+      setLastNameError(false);
+    }
+
+    if (values.employeeFirstName == "") {
+      toast.error("First name must not be empty.");
+      setFirstNameError(true);
+      return;
+    } else {
+      setLastNameError(false);
+    }
+
+    if (!onlyLetters(values.employeeFirstName)) {
+      toast.error("First name must not have numbers or special characters.");
+      setFirstNameError(true);
+      return;
+    } else {
+      setLastNameError(false);
+    }
+
     rest.update(
       `${INITIAL_URL}/employee/update/${selectedEmployee.employeeId}`,
       values,
@@ -140,6 +175,7 @@ export default function EditEmployeeModal({
                     label="Last"
                     defaultValue={selectedEmployee.employeeLastName}
                     variant="standard"
+                    error={lastNameError == true}
                     fullWidth
                   />
                 </div>
@@ -150,6 +186,7 @@ export default function EditEmployeeModal({
                     label="First"
                     defaultValue={selectedEmployee.employeeFirstName}
                     variant="standard"
+                    error={firstNameError == true}
                     fullWidth
                   />
                 </div>
@@ -244,7 +281,10 @@ export default function EditEmployeeModal({
                     </div>
                     <Select
                       placeholder={selectedEmployee.employeeTypeName}
-                      defaultValue={{label: selectedEmployee.employeeTypeName, value: selectedEmployee.employeeTypeName}}
+                      defaultValue={{
+                        label: selectedEmployee.employeeTypeName,
+                        value: selectedEmployee.employeeTypeName,
+                      }}
                       options={activeTypes.map((item) => {
                         return {
                           key: "employeeTypeName",
@@ -268,71 +308,70 @@ export default function EditEmployeeModal({
       ) : (
         <>
           <div className={styles.content}>
-            <div className={styles.group}>
-              <div className={styles.group_label}>Name</div>
-              <div className={styles.group_textfields}>
-                <div className={styles.group_textfields_row}>
-                  <div className={styles.group_texfields_column}>
-                    <div className={styles.group_textfields_row_label}>
-                      Last
-                    </div>
+            <div className={styles.content__row}>
+              <div className={styles.content__top}>Name</div>
+              <div className={styles.content__bottom}>
+                <div className={styles.content__group}>
+                  <div className={styles.content__label}>Last</div>
+                  <div className={styles.content__data}>
                     {selectedEmployee.employeeLastName}
                   </div>
                 </div>
-                <div className={styles.group_textfields_row}>
-                  <div className={styles.group_texfields_column}>
-                    <div className={styles.group_textfields_row_label}>
-                      Last
-                    </div>
+                <div className={styles.content__group}>
+                  <div className={styles.content__label}>First</div>
+                  <div className={styles.content__data}>
                     {selectedEmployee.employeeFirstName}
                   </div>
                 </div>
               </div>
             </div>
-            <div className={styles.group}>
-              <div className={styles.group_label}>Personal Details</div>
-              <div className={styles.group_textfields}>
-                <div className={styles.group_textfields_row}>
-                  <div className={styles.group_texfields_column}>
-                    <div className={styles.group_textfields_row_label}>
-                      Address
-                    </div>
+            <div className={styles.content__row}>
+              <div className={styles.content__top}>Personal Details</div>
+              <div className={styles.content__bottom}>
+                <div className={styles.content__group}>
+                  <div className={styles.content__label}>Address</div>
+                  <div className={styles.content__data}>
                     {selectedEmployee.employeeAddress}
                   </div>
                 </div>
-                <div className={styles.group_textfields_row}>
-                  <div className={styles.group_texfields_column}>
-                    <div className={styles.group_textfields_row_label}>
-                      Contact Number
-                    </div>
+                <div className={styles.content__group}>
+                  <div className={styles.content__label}>Contact Number</div>
+                  <div className={styles.content__data}>
                     {selectedEmployee.employeeContactNumber}
                   </div>
                 </div>
               </div>
             </div>
-            <div className={styles.group}>
-              <div className={styles.group_label}>Work Details</div>
-              <div className={styles.group_textfields}>
-                <div className={styles.group_textfields_row}>
-                  <div className={styles.group_textfields_select}>
-                    <div className={styles.group_textfields_select_label}>
-                      Superior
-                    </div>
-                    {selectedEmployee.superiorEmployeeName
-                      ? selectedEmployee.superiorEmployeeName
-                      : "None"}
+            <div className={styles.content__row}>
+              <div className={styles.content__top}>Work Details</div>
+              <div className={styles.content__bottom}>
+                <div className={styles.content__group}>
+                  <div className={styles.content__label}>Superior</div>
+                  <div className={styles.content__data}>
+                    {selectedEmployee.superiorEmployeeName}
                   </div>
-                  <div className={styles.group_textfields_select}>
-                    <div className={styles.group_textfields_select_label}>
-                      Position
-                    </div>
+                </div>
+                <div className={styles.content__group}>
+                  <div className={styles.content__label}>Position</div>
+                  <div className={styles.content__data}>
                     {selectedEmployee.employeePositionName}
                   </div>
-                  <div className={styles.group_textfields_select}>
-                    <div className={styles.group_textfields_select_label}>
-                      Type
-                    </div>
+                </div>
+              </div>
+            </div>
+            <div className={styles.content__row}>
+              {/* <div className={styles.content__top}>Work Details</div> */}
+              <div className={styles.content__bottom}>
+                <div className={styles.content__group}>
+                  <div className={styles.content__label}>Type</div>
+                  <div className={styles.content__data}>
                     {selectedEmployee.employeeTypeName}
+                  </div>
+                </div>
+                <div className={styles.content__group}>
+                  <div className={styles.content__label}>Date Employed</div>
+                  <div className={styles.content__data}>
+                    {dateFormat(selectedEmployee.dateEmployed, "mmmm d, yyyy")}
                   </div>
                 </div>
               </div>

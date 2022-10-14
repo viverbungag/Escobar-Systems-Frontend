@@ -86,7 +86,7 @@ export default function InactiveAccountsTable({ reload, inactiveAccounts }) {
     if (selected.length > 0) {
       return (
         <>
-          <Tooltip title="Activate Employee Account/s">
+          <Tooltip title="Activate accounts">
             <IconButton onClick={handleOpenActivateModal}>
               <MediumButton label="Activate" />
             </IconButton>
@@ -96,7 +96,7 @@ export default function InactiveAccountsTable({ reload, inactiveAccounts }) {
     } else if (selected.length == 0) {
       return (
         <>
-          <Tooltip title="Activate Expense Categories">
+          <Tooltip title="Activate accounts">
             <IconButton disabled onClick={handleOpenActivateModal}>
               <MediumButton label="Activate" />
             </IconButton>

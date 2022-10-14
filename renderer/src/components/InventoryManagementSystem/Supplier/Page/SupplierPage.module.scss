@@ -18,7 +18,7 @@
     display: flex;
     flex-direction: column;
     padding: 3rem 2rem;
-    gap: 3rem;
+    gap: 1rem;
     width: 100%;
   }
 
@@ -32,9 +32,13 @@
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    height: 75vh;
+    overflow: auto;
   }
 
   &__view-inactive-items-buton {
+    position: sticky;
+    bottom: 0;
     align-self: flex-end;
     padding-right: 1rem;
   }

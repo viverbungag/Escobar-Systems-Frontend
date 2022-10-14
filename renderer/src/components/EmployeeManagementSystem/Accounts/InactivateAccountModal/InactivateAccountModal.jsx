@@ -2,6 +2,7 @@ import React from "react";
 import MediumButton from "../../Shared/Buttons/MediumButton/MediumButton";
 import styles from "./InactivateAccountModal.module.scss";
 import Rest from "../../../../rest/Rest.tsx";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 
 const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
@@ -27,9 +28,9 @@ export default function InactivateAccountModal({
         {selectedValues.map((item) => {
           return (
             <div className={styles.content_row} key={item.accountId}>
-              <div className={styles.details}>ID: {item.accountId}</div>
               <div className={styles.details}>
-                Employee Name: {item.employeeName}
+                <PersonOutlineIcon />
+                {item.employeeName}
               </div>
             </div>
           );

@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import styles from './AccountsContent.module.scss';
+import React, { useState, useEffect } from "react";
+import styles from "./AccountsContent.module.scss";
 import Rest from "../../../../rest/Rest.tsx";
-import { Modal } from '@mui/material';
-import MediumButton from '../../Shared/Buttons/MediumButton/MediumButton';
-import InactiveAccountsTable from '../InactiveAccountsTable/InactiveAccountsTable';
-import ActiveAccountsTable from '../ActiveAccountsTable/ActiveAccountsTable';
-import AddAccountModal from '../AddAccountModal/AddAccountModal';
+import { Modal, Tooltip } from "@mui/material";
+import MediumButton from "../../Shared/Buttons/MediumButton/MediumButton";
+import InactiveAccountsTable from "../InactiveAccountsTable/InactiveAccountsTable";
+import ActiveAccountsTable from "../ActiveAccountsTable/ActiveAccountsTable";
+import AddAccountModal from "../AddAccountModal/AddAccountModal";
 
 const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
@@ -14,40 +14,44 @@ export default function AccountsContent() {
   //get active employee data
   const [activeEmployees, setActiveEmployees] = useState([]);
   const handleActiveEmployees = (data) => {
-    setActiveEmployees(data)
-  }
+    setActiveEmployees(data);
+  };
   const getActiveEmployees = () => {
-    rest.get(`${INITIAL_URL}/employee/active`, handleActiveEmployees)
-  }
+    rest.get(`${INITIAL_URL}/employee/active`, handleActiveEmployees);
+  };
   //get active accounts data
   const [activeAccounts, setActiveAccounts] = useState([]);
   const handleActiveAccounts = (data) => {
-    setActiveAccounts(data)
-  }
+    setActiveAccounts(data);
+  };
   const getActiveAccounts = () => {
-    rest.get(`${INITIAL_URL}/account/active`, handleActiveAccounts)
-  }
+    rest.get(`${INITIAL_URL}/account/active`, handleActiveAccounts);
+  };
   //get inactive accounts data
   const [inactiveAccounts, setInactiveAccounts] = useState([]);
   const handleInactiveAccounts = (data) => {
-    setInactiveAccounts(data)
-  }
+    setInactiveAccounts(data);
+  };
   const getInactiveAccounts = () => {
-    rest.get(`${INITIAL_URL}/account/inactive`, handleInactiveAccounts)
-  }
+    rest.get(`${INITIAL_URL}/account/inactive`, handleInactiveAccounts);
+  };
   //add account modal
   const [openAddModal, setOpenAddModal] = useState(false);
-  const handleOpenAddModal = () => { setOpenAddModal(true) };
-  const handleCloseAddModal = () => { setOpenAddModal(false) };
+  const handleOpenAddModal = () => {
+    setOpenAddModal(true);
+  };
+  const handleCloseAddModal = () => {
+    setOpenAddModal(false);
+  };
   const addSuccessAction = () => {
     handleCloseAddModal();
     reload();
-  }
+  };
   //reload
   const reload = () => {
     getActiveAccounts();
     getInactiveAccounts();
-  }
+  };
 
   useEffect(() => {
     getActiveAccounts();
@@ -59,22 +63,24 @@ export default function AccountsContent() {
     <div className={styles.container}>
       <div className={styles.content}>
         <div className={styles.header}>
-          <button onClick={handleOpenAddModal}>
-            <MediumButton label="Add Employee Account" />
-          </button>
+          <Tooltip title="Add account">
+            <button onClick={handleOpenAddModal}>
+              <MediumButton label="Add Account" />
+            </button>
+          </Tooltip>
         </div>
         <div className={styles.tables}>
           <div className={styles.active_table}>
             <ActiveAccountsTable
-            reload={reload}
-            activeAccounts={activeAccounts}
-            activeEmployees={activeEmployees}
+              reload={reload}
+              activeAccounts={activeAccounts}
+              activeEmployees={activeEmployees}
             />
           </div>
           <div className={styles.inactive_table}>
             <InactiveAccountsTable
-            reload={reload}
-            inactiveAccounts={inactiveAccounts}
+              reload={reload}
+              inactiveAccounts={inactiveAccounts}
             />
           </div>
         </div>
@@ -82,11 +88,11 @@ export default function AccountsContent() {
       <Modal open={openAddModal} onClose={handleCloseAddModal}>
         <div className={styles.modal}>
           <AddAccountModal
-          addSuccessAction={addSuccessAction}
-          activeEmployees={activeEmployees}
+            addSuccessAction={addSuccessAction}
+            activeEmployees={activeEmployees}
           />
         </div>
       </Modal>
     </div>
-  ) 
+  );
 }

@@ -45,6 +45,7 @@ export function printPdf(title, headCells, rows) {
     },
     headStyles: {
       fillColor: [207, 92, 54],
+      cellWidth: "wrap",
     },
     body: rows,
     didDrawPage: function (data) {

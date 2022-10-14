@@ -1,32 +1,31 @@
-@import '../../../../styles/variables.scss';
+@import "../../../../styles/variables.scss";
 
 .form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 30vw;
+  .header {
+    width: 100%;
+    text-align: center;
+    background-color: black;
+    color: white;
+    padding: 1rem;
+    font-weight: $h4FontWeight;
+    font-size: $h5FontSize;
+  }
+  .content {
+    width: 100%;
+    padding: 1rem;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-top-right-radius: 1rem;
-    border-top-left-radius: 1rem;
-    // box-shadow: 1px 1px 6px rgb(75, 74, 74);
-    flex: 1;
-    .header {
-        // border-top-right-radius: 1rem;
-        // border-top-left-radius: 1rem;
-        width: 100%;
-        text-align: center;
-        background-color: black;
-        color:white;
-        padding: 1rem;
-        font-weight: $h4FontWeight;
-        font-size: $h5FontSize;
+  }
+  .footer {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    padding: 1rem;
+    button {
+      border: none;
     }
-    .content {
-        // width: 80%;
-        padding: 0 2rem 1rem;
-        display: flex;
-        align-items: flex-end;
-        gap: 1rem;
-        button {
-            border: none;
-        }
-    }
+  }
 }

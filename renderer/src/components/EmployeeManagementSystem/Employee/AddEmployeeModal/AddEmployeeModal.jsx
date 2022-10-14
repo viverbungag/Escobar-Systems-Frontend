@@ -6,6 +6,7 @@ import Rest from "../../../../rest/Rest.tsx";
 import { TextField } from "@mui/material";
 import MediumButton from "../../Shared/Buttons/MediumButton/MediumButton";
 import dateFormat from "dateformat";
+import { toast } from "react-toastify";
 
 const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
@@ -13,18 +14,18 @@ function onlyLetters(data) {
   return /^[a-zA-Z\s]+$/.test(data);
 }
 
-function superiorNameValid(data) {
-  //last, first
-  return /^[a-zA-Z\s]+\,\s[a-zA-Z\s]+$/.test(data);
-}
+// function superiorNameValid(data) {
+//   //last, first
+//   return /^[a-zA-Z\s]+\,\s[a-zA-Z\s]+$/.test(data);
+// }
 
-function onlyLettersNumbers(data) {
-  return /^[a-zA-Z0-9\s]+$/.test(data);
-}
+// function onlyLettersNumbers(data) {
+//   return /^[a-zA-Z0-9\s]+$/.test(data);
+// }
 
-function validNumber(data) {
-  return /^0\d{10}$/.test(data);
-}
+// function validNumber(data) {
+//   return /^0\d{10}$/.test(data);
+// }
 
 function capitalizeData(data) {
   // data = data.charAt(0).toUpperCase() + data.slice(1).toLowerCase();
@@ -44,11 +45,6 @@ export default function EditEmployeeModal({
   inactiveEmployees,
 }) {
   const rest = new Rest();
-  const [firstNameError, setFirstNameError] = useState(false);
-  const [lastNameError, setLastNameError] = useState(false);
-  const [addressError, setAddressError] = useState(false);
-  const [contactNumberError, setContactNumberError] = useState(false);
-  const [superiorNameError, setSuperiorNameError] = useState(false);
   //get active positions data
   const [activePositions, setActivePositions] = useState([]);
   const handleActivePositions = (data) => {
@@ -79,9 +75,42 @@ export default function EditEmployeeModal({
       setValues({ ...values, [e.target.name]: capitalizeData(e.target.value) });
     }
   };
+  const [lastNameError, setLastNameError] = useState(false);
+  const [firstNameError, setFirstNameError] = useState(false);
   //submit
   const handleSubmit = () => {
-    console.log(values);
+    if (values.employeeLastName == "") {
+      toast.error("Last name must not be empty.");
+      setLastNameError(true);
+      return;
+    } else {
+      setLastNameError(false);
+    }
+
+    if (!onlyLetters(values.employeeLastName)) {
+      toast.error("Last name must not have numbers or special characters.");
+      setLastNameError(true);
+      return;
+    } else {
+      setLastNameError(false);
+    }
+
+    if (values.employeeFirstName == "") {
+      toast.error("First name must not be empty.");
+      setFirstNameError(true);
+      return;
+    } else {
+      setLastNameError(false);
+    }
+
+    if (!onlyLetters(values.employeeFirstName)) {
+      toast.error("First name must not have numbers or special characters.");
+      setFirstNameError(true);
+      return;
+    } else {
+      setLastNameError(false);
+    }
+
     rest.add(
       `${INITIAL_URL}/employee/add`,
       values,
@@ -113,6 +142,7 @@ export default function EditEmployeeModal({
     getActiveTypes();
     handleSuperiorOptions();
   }, []);
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>Add Employee</div>
@@ -126,16 +156,9 @@ export default function EditEmployeeModal({
                 name="employeeLastName"
                 label="Last"
                 variant="standard"
+                error={lastNameError == true}
                 fullWidth
               />
-              <div
-                className={[
-                  lastNameError && styles.error_show,
-                  styles.error,
-                ].join(" ")}
-              >
-                Must be letters only.
-              </div>
             </div>
             <div className={styles.group_textfields_row}>
               <TextField
@@ -143,16 +166,9 @@ export default function EditEmployeeModal({
                 name="employeeFirstName"
                 label="First"
                 variant="standard"
+                error={firstNameError == true}
                 fullWidth
               />
-              <div
-                className={[
-                  firstNameError && styles.error_show,
-                  styles.error,
-                ].join(" ")}
-              >
-                Must be letters only.
-              </div>
             </div>
           </div>
         </div>
@@ -167,14 +183,6 @@ export default function EditEmployeeModal({
                 variant="standard"
                 fullWidth
               />
-              <div
-                className={[
-                  addressError && styles.error_show,
-                  styles.error,
-                ].join(" ")}
-              >
-                Must be letters and numbers only.
-              </div>
             </div>
             <div className={styles.group_textfields_row}>
               <TextField
@@ -184,14 +192,6 @@ export default function EditEmployeeModal({
                 variant="standard"
                 fullWidth
               />
-              <div
-                className={[
-                  contactNumberError && styles.error_show,
-                  styles.error,
-                ].join(" ")}
-              >
-                Must be 11 digits and starts with 0.
-              </div>
             </div>
           </div>
         </div>
@@ -212,14 +212,6 @@ export default function EditEmployeeModal({
                   options={superiorOptions}
                   onChange={onChange}
                 />
-              </div>
-              <div
-                className={[
-                  superiorNameError && styles.error_show,
-                  styles.error,
-                ].join(" ")}
-              >
-                Format: Last, First
               </div>
               <div className={styles.group_textfields_select}>
                 <div className={styles.group_textfields_select_label}>

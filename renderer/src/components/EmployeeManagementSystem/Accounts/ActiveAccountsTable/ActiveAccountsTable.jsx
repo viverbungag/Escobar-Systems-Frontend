@@ -108,12 +108,12 @@ export default function ActiveAccountsTable({
     if (selected.length == 1) {
       return (
         <>
-          <Tooltip title="Edit/More Info">
+          <Tooltip title="Edit and view more account information">
             <IconButton onClick={handleOpenMoreModal}>
               <MediumButton label="More" />
             </IconButton>
           </Tooltip>
-          <Tooltip title="Inactivate Account/s">
+          <Tooltip title="Inactivate accounts">
             <IconButton onClick={handleOpenInactivateModal}>
               <MediumButton label="Inactivate" />
             </IconButton>
@@ -123,12 +123,12 @@ export default function ActiveAccountsTable({
     } else if (selected.length > 1) {
       return (
         <>
-          <Tooltip title="Edit/More Info">
+          <Tooltip title="Edit and view more account information">
             <IconButton disabled onClick={handleOpenMoreModal}>
               <MediumButton label="More" />
             </IconButton>
           </Tooltip>
-          <Tooltip title="Inactivate Account/s">
+          <Tooltip title="Inactivate accounts">
             <IconButton onClick={handleOpenInactivateModal}>
               <MediumButton label="Inactivate" />
             </IconButton>
@@ -138,12 +138,12 @@ export default function ActiveAccountsTable({
     } else if (selected.length == 0) {
       return (
         <>
-          <Tooltip title="Edit/More Info">
+          <Tooltip title="Edit and view more account information">
             <IconButton disabled onClick={handleOpenMoreModal}>
               <MediumButton label="More" />
             </IconButton>
           </Tooltip>
-          <Tooltip title="Inactivate Account/s">
+          <Tooltip title="Inactivate accounts">
             <IconButton disabled onClick={handleOpenInactivateModal}>
               <MediumButton label="Inactivate" />
             </IconButton>

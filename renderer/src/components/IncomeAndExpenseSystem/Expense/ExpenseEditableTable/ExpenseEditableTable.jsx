@@ -24,10 +24,10 @@ export default function ExpenseEditableTable({
   //for pdf
   const title = "Escobar - Expense Transactions Data";
   const pdfColumns = [
-    { header: "Category", dataKey: "expenseCategoryName" },
-    { header: "Description", dataKey: "expenseDescription" },
-    { header: "Date", dataKey: "expenseDate" },
-    { header: "Cost", dataKey: "expenseCost" },
+    { header: "Category", flex: 1, dataKey: "expenseCategoryName" },
+    { header: "Description", flex: 1, dataKey: "expenseDescription" },
+    { header: "Date", flex: 1, dataKey: "expenseDate" },
+    { header: "Cost", flex: 1, dataKey: "expenseCost" },
   ];
   const [pdfRows, setPdfRows] = useState([]);
   //

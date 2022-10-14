@@ -160,12 +160,12 @@ export default function EmployeeTable() {
     if (selected.length == 1) {
       return (
         <>
-          <Tooltip title="Edit/More Info">
+          <Tooltip title="Edit and view more employee information">
             <IconButton onClick={handleOpenMoreModal}>
               <MediumButton label="More" />
             </IconButton>
           </Tooltip>
-          <Tooltip title="Inactivate Employee">
+          <Tooltip title="Inactivate employees">
             <IconButton onClick={handleOpenInactivateModal}>
               <MediumButton label="Inactivate" />
             </IconButton>
@@ -175,12 +175,12 @@ export default function EmployeeTable() {
     } else if (selected.length > 1) {
       return (
         <>
-          <Tooltip title="Edit/More Info">
+          <Tooltip title="Edit and view more employee information">
             <IconButton disabled onClick={handleOpenMoreModal}>
               <MediumButton label="More" />
             </IconButton>
           </Tooltip>
-          <Tooltip title="Inactivate Employee">
+          <Tooltip title="Inactivate employees">
             <IconButton onClick={handleOpenInactivateModal}>
               <MediumButton label="Inactivate" />
             </IconButton>
@@ -190,12 +190,12 @@ export default function EmployeeTable() {
     } else if (selected.length == 0) {
       return (
         <>
-          <Tooltip title="Edit/More Info">
+          <Tooltip title="Edit and view more employee information">
             <IconButton disabled onClick={handleOpenMoreModal}>
               <MediumButton label="More" />
             </IconButton>
           </Tooltip>
-          <Tooltip title="Inactivate Employee">
+          <Tooltip title="Inactivate employees">
             <IconButton disabled onClick={handleOpenInactivateModal}>
               <MediumButton label="Inactivate" />
             </IconButton>
@@ -218,12 +218,16 @@ export default function EmployeeTable() {
     <div className={styles.container}>
       <div className={styles.header}>
         <div className={styles.header_right}>
-          <button onClick={handleOpenAddModal}>
-            <MediumButton label="Add Employee" />
-          </button>
-          <button onClick={handleOpenInactiveModal}>
-            <MediumButton label="View Inactive Employee" />
-          </button>
+          <Tooltip title="Add new employee">
+            <button onClick={handleOpenAddModal}>
+              <MediumButton label="Add Employee" />
+            </button>
+          </Tooltip>
+          <Tooltip title="View Inactive Employees">
+            <button onClick={handleOpenInactiveModal}>
+              <MediumButton label="View Inactive Employees" />
+            </button>
+          </Tooltip>
         </div>
       </div>
       <div className={styles.sub_header}>
