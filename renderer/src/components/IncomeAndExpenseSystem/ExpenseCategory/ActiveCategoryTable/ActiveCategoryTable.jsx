@@ -97,9 +97,11 @@ export default function ActiveCategoryTable({ reload, activeCategories }) {
       return (
         <>
           <Tooltip title="Edit Employee Position">
-            <IconButton disabled onClick={handleOpenEditModal}>
-              <MediumButton label="Edit" />
-            </IconButton>
+            <span>
+              <IconButton disabled onClick={handleOpenEditModal}>
+                <MediumButton label="Edit" />
+              </IconButton>
+            </span>
           </Tooltip>
           <Tooltip title="Inactivate Employee Position/s">
             <IconButton onClick={handleOpenInactivateModal}>
@@ -112,14 +114,18 @@ export default function ActiveCategoryTable({ reload, activeCategories }) {
       return (
         <>
           <Tooltip title="Edit Expense Category">
-            <IconButton disabled onClick={handleOpenEditModal}>
-              <MediumButton label="Edit" />
-            </IconButton>
+            <span>
+              <IconButton disabled onClick={handleOpenEditModal}>
+                <MediumButton label="Edit" />
+              </IconButton>
+            </span>
           </Tooltip>
           <Tooltip title="Inactivate Expense Categories">
-            <IconButton disabled onClick={handleOpenInactivateModal}>
-              <MediumButton label="Inactivate" />
-            </IconButton>
+            <span>
+              <IconButton disabled onClick={handleOpenInactivateModal}>
+                <MediumButton label="Inactivate" />
+              </IconButton>
+            </span>
           </Tooltip>
         </>
       );

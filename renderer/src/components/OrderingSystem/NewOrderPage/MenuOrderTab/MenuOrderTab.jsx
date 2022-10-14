@@ -62,9 +62,6 @@ const MenuOrderTab = ({
 
   const { employeeName } = useUser();
 
-  // const [pickUpFormat, setPickUpFormat] = useState("DineIn");
-  // const handlePickUpFormat = (event) => setPickUpFormat(event.target.value);
-
   const setInitialValues = () => {
     setTotal(subTotal);
     setChange(0.0);
@@ -322,15 +319,15 @@ const MenuOrderTab = ({
                   color: "#003049",
                   "&.Mui-checked": { color: "#003049;" },
                 }}
-                id="demo-radio-buttons-group-label"
+                id="demo-controlled-radio-buttons-group"
               >
                 Pickup Format
               </FormLabel>
               <RadioGroup
                 className={styles["radio-container"]}
-                aria-labelledby="demo-radio-buttons-group-label"
-                defaultValue={servingType}
-                name="radio-buttons-group"
+                aria-labelledby="demo-controlled-radio-buttons-group"
+                value={servingType}
+                name="controlled-radio-buttons-group"
                 onChange={handleServingTypeOnChange}
               >
                 <FormControlLabel
@@ -340,9 +337,9 @@ const MenuOrderTab = ({
                         color: "#003049;",
                         "&.Mui-checked": { color: "#003049;" },
                       }}
-                      value="TAKE_OUT"
                     />
                   }
+                  value="TAKE_OUT"
                   label="Take-Out"
                 />
                 <FormControlLabel
@@ -353,12 +350,11 @@ const MenuOrderTab = ({
                         color: "#003049;",
                         "&.Mui-checked": { color: "#003049;" },
                       }}
-                      value="DINE_IN"
                     />
                   }
+                  value="DINE_IN"
                   label="Dine-In"
                 />
-                {/* <FormControlLabel sx = {{ color: "#003049;"}} value="Delivery" control={<Radio sx = {{ color: "#003049;", '&.Mui-checked': {color: "#003049;",},}}/>}  label="Other" /> */}
               </RadioGroup>
             </FormControl>
             {servingType === "DINE_IN" && (
@@ -453,18 +449,20 @@ const MenuOrderTab = ({
 
                 <div className={styles["modal__data"]}>
                   <div className={styles["modal__data__label"]}>
-                    Discounted Price
+                    Current Total
                   </div>
                   <div className={styles["modal__data__label"]}>
-                    ₱{parseFloat(discountedPrice).toFixed(2)}
+                    ₱{parseFloat(total).toFixed(2)}
                   </div>
                 </div>
 
                 <div className={styles["modal__data"]}>
                   <div className={styles["modal__data__label"]}>
-                    Current Total
+                    Discounted Price
                   </div>
-                  <div className={styles["modal__data__label"]}>₱{total}</div>
+                  <div className={styles["modal__data__label"]}>
+                    ₱{parseFloat(discountedPrice).toFixed(2)}
+                  </div>
                 </div>
 
                 <div className={styles["modal__data"]}>
