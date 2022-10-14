@@ -121,7 +121,6 @@ export default function OrderServedTable({ ordersServed, fromDate, toDate }) {
           onChange={(searchValue) => requestSearch(searchValue)}
           onCancelSearch={() => cancelSearch()}
         /> */}
-        <button onClick={() => console.log(ordersServed)}>show</button>
         <Tooltip title="Print Orders Served">
           <LocalPrintshopIcon
             className={styles["print-btn"]}

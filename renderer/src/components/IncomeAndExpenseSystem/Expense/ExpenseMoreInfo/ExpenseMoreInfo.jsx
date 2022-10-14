@@ -46,7 +46,7 @@ export default function ExpenseMoreInfo({ selected, expenseData }) {
             <Tooltip title="Supply Name">
               <Inventory2Icon />
             </Tooltip>
-            {values.supplyName}
+            <div className={styles.content_inner_data}>{values.supplyName}</div>
             <CloseIcon />
             {values.transactionSupplyQuantity}
           </div>
@@ -54,19 +54,25 @@ export default function ExpenseMoreInfo({ selected, expenseData }) {
             <Tooltip title="Supplier Name">
               <ContactPhoneIcon />
             </Tooltip>
-            {values.supplierName}
+            <div className={styles.content_inner_data}>
+              {values.supplierName}
+            </div>
           </div>
           <div className={styles.content_inner_row}>
             <Tooltip title="Expense Cost">
               <AttachMoneyIcon />
             </Tooltip>
-            {values.expenseCost}
+            <div className={styles.content_inner_data}>
+              {values.expenseCost}
+            </div>
           </div>
           <div className={styles.content_inner_row}>
             <Tooltip title="Employee In-Charge">
               <AdminPanelSettingsIcon />
             </Tooltip>
-            {values.employeeName}
+            <div className={styles.content_inner_data}>
+              {values.employeeName}
+            </div>
           </div>
         </div>
       </div>

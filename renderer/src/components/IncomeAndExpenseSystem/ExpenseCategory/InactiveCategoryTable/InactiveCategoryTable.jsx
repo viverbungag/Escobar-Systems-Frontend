@@ -64,7 +64,7 @@ export default function InactiveCategoryTable({ reload, inactiveCategories }) {
       `${INITIAL_URL}/expense-category/activate`,
       { expenseCategoryListDto: selectedValues },
       activateSuccessAction,
-      `Successfully activated ${selectedValues.length} expense categories.`
+      `Successfully activated ${selectedValues.length} expense category/s.`
     );
   };
   //get shown buttons

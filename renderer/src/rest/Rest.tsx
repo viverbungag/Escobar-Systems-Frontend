@@ -15,18 +15,18 @@ class Rest {
       });
   }
 
-  getPost(url: string, body: Object, handleSuccessAction: Function){
+  getPost(url: string, body: Object, handleSuccessAction: Function) {
     axios
-    .post(url, body)
-    .then(function (response){
-        if(response.status == 200){
-            handleSuccessAction(response.data);
+      .post(url, body)
+      .then(function (response) {
+        if (response.status == 200) {
+          handleSuccessAction(response.data);
         }
-    })
-    .catch(function (error) {
+      })
+      .catch(function (error) {
         toast.error(error?.response?.data?.message);
-    })
-}
+      });
+  }
 
   post(
     url: string,
@@ -69,7 +69,7 @@ class Rest {
   getMenuBasedOnCategory(
     url: string,
     body: Object,
-    handleSuccessAction: Function,
+    handleSuccessAction: Function
   ) {
     axios
       .post(url, body)
@@ -82,7 +82,7 @@ class Rest {
         toast.error(error?.response?.data?.message);
       });
   }
-  
+
   add(
     url: string,
     body: Object,
@@ -199,6 +199,7 @@ class Rest {
 
   delete(
     url: string,
+    body: Object,
     handleSuccessAction: Function,
     successMessage: string
   ) {

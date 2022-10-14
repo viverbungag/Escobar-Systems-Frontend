@@ -1,52 +1,68 @@
-import React, { useState, useEffect } from 'react';
-import styles from './EditExpenseCategory.module.scss';
-import Rest from '../../../../rest/Rest.tsx';
-import ExpenseCategory from '../../../../model/ExpenseCategory.tsx';
-import { TextField } from '@mui/material';
-import MediumButton from '../../Shared/MediumButton/MediumButton';
+import React, { useState, useEffect } from "react";
+import styles from "./EditExpenseCategory.module.scss";
+import Rest from "../../../../rest/Rest.tsx";
+import ExpenseCategory from "../../../../model/ExpenseCategory.tsx";
+import { TextField } from "@mui/material";
+import MediumButton from "../../Shared/MediumButton/MediumButton";
+import { toast } from "react-toastify";
 
 const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 
-function capitalizeData(data){
-    data = data.charAt(0).toUpperCase() + data.slice(1).toLowerCase();
-    return data;
+function capitalizeData(data) {
+  data = data.charAt(0).toUpperCase() + data.slice(1).toLowerCase();
+  return data;
 }
 
-export default function EditExpenseCategory({ editSuccessAction, expenseCategoryId, expenseCategoryName }) {
-    const rest = new Rest();
-    const [newCategoryData, setNewCategoryData] = useState(
-        new ExpenseCategory (
-            expenseCategoryId[0],
-            expenseCategoryName, 
-            true
-        )
-    )
+export default function EditExpenseCategory({
+  editSuccessAction,
+  expenseCategoryId,
+  expenseCategoryName,
+}) {
+  const rest = new Rest();
 
-    const handleChange = (e) => {
-        setNewCategoryData({...newCategoryData, [e.target.name]:capitalizeData(e.target.value)});
+  const [categoryName, setCategoryName] = useState(expenseCategoryName[0]);
+  const handleCategoryNameOnChange = (e) => {
+    setCategoryName(e.target.value);
+  };
+
+  const [categoryNameError, setCategoryNameError] = useState(false);
+  const handleSubmit = () => {
+    if (categoryName === "") {
+      setCategoryNameError(true);
+      toast.error("Category name must not bee empty.");
+      return;
+    } else {
+      setCategoryNameError(false);
     }
 
-    const handleSubmit = () => {
-        rest.update(
-            `${INITIAL_URL}/expense-category/update/${newCategoryData.expenseCategoryId}`,
-            newCategoryData,
-            editSuccessAction,
-            `Successfully edited ${newCategoryData.expenseCategoryName}`
-        )
-    }
+    const newCategory = new ExpenseCategory(
+      expenseCategoryId[0],
+      categoryName,
+      true
+    );
+
+    rest.update(
+      `${INITIAL_URL}/expense-category/update/${newCategory.expenseCategoryId}`,
+      newCategory,
+      editSuccessAction,
+      `Successfully edited ${newCategory.expenseCategoryName}.`
+    );
+  };
 
   return (
     <div className={styles.container}>
-        <div className={styles.form}>
-        <div className={styles.header}>
-            Editing expense category: <span style={{ fontWeight: 700, textTransform: "uppercase"}}>{expenseCategoryName}</span>
-        </div>
+      <div className={styles.form}>
+        <div className={styles.header}>Edit expense category</div>
         <div className={styles.content}>
-          <div className={styles.content_header}>
-              Position ID: {expenseCategoryId}
-            </div>
-            <div className={styles.textfield}>
-              <TextField onChange={handleChange} name="expenseCategoryName" label="Expense Category Name" variant="standard" fullWidth />
+          <div className={styles.textfield}>
+            <TextField
+              onChange={handleCategoryNameOnChange}
+              value={categoryName}
+              label="Expense Category Name"
+              variant="standard"
+              error={categoryNameError == true}
+              fullWidth
+            />
           </div>
         </div>
         <div className={styles.footer}>
@@ -56,5 +72,5 @@ export default function EditExpenseCategory({ editSuccessAction, expenseCategory
         </div>
       </div>
     </div>
-  )
+  );
 }
