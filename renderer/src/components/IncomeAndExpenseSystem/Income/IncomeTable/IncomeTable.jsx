@@ -15,7 +15,7 @@ export default function IncomeTable() {
   const title = "Escobar - Income Data";
   const pdfColumns = [
     { header: "Date", dataKey: "incomeDate" },
-    { header: "Daily Income", dataKey: "dailyIncome" },
+    { header: "Daily Gross Income", dataKey: "dailyIncome" },
   ];
   const [pdfRows, setPdfRows] = useState([]);
   //
@@ -33,7 +33,7 @@ export default function IncomeTable() {
     { field: "incomeDate", headerName: "Date", flex: 1, align: "left" },
     {
       field: "dailyIncome",
-      headerName: "Daily Income",
+      headerName: "Daily Gross Income",
       flex: 1,
       align: "left",
     },

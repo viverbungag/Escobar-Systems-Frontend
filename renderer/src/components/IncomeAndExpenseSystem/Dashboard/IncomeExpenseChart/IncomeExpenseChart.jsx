@@ -22,10 +22,10 @@ function IncomeExpenseChart({
       <div className={styles.toggle_container}>
         <ToggleButtonGroup value={toggleType} onChange={handleToggleChange}>
           <ToggleButton value="Income and Expense Comparison">
-            Income and Expense Comparison
+            Gross Income and Expense Comparison
           </ToggleButton>
           <ToggleButton value="Income and Orders Per Hour">
-            Income and Orders Per Hour
+            Gross Income and Orders Per Hour
           </ToggleButton>
           <ToggleButton value="Orders Per Table">Orders Per Table</ToggleButton>
           <ToggleButton value="Dine-In & Take-Out Comparison">
@@ -38,7 +38,7 @@ function IncomeExpenseChart({
           <>
             <div className={styles.box}>
               <div className={styles.box_header}>
-                Income and Expense Per Month Comparison
+              Gross Income and Expense Per Month Comparison
               </div>
               <div className={styles.box_content}>
                 <Bar
@@ -60,7 +60,7 @@ function IncomeExpenseChart({
             </div>
             <div className={styles.box}>
               <div className={styles.box_header}>
-                Income and Expense Overall Comparison
+               Gross Income and Expense Overall Comparison
               </div>
               <div
                 className={[
@@ -115,7 +115,7 @@ function IncomeExpenseChart({
               </div>
             </div>
             <div className={styles.box}>
-              <div className={styles.box_header}>Income Per Hour</div>
+              <div className={styles.box_header}>Gross Income Per Hour</div>
               <div
                 className={[
                   styles["box_content"],

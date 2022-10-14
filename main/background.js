@@ -9,7 +9,7 @@ const findPidFromPort = require("find-pid-from-port");
 
 const isProd = process.env.NODE_ENV === "production";
 
-const BACKEND_PORT = 1111;
+const BACKEND_PORT = 2022;
 
 if (isProd) {
   serve({ directory: "app" });
