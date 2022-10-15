@@ -32,7 +32,7 @@ export default function ExpenseMoreInfo({ selected, expenseData }) {
 
   return (
     <div className={styles.container}>
-      <div className={styles.header}>Expense Stock-In ID: {values.id}</div>
+      <div className={styles.header}>Stock-In {values.id}</div>
       <div className={styles.content_outer}>
         <div className={styles.content_inner}>
           <div className={styles.content_inner_label}>Details</div>

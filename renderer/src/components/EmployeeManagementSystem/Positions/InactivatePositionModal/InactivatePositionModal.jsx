@@ -28,8 +28,12 @@ export default function InactivatePositionModal({
           return (
             <div className={styles.content_row} key={item.employeePositionId}>
               <div className={styles.details}>
-                <InfoIcon />
-                {item.employeePositionName}
+                <div className={styles.details__icon}>
+                  <InfoIcon />
+                </div>
+                <div className={styles.details__name}>
+                  {item.employeePositionName}
+                </div>
               </div>
             </div>
           );

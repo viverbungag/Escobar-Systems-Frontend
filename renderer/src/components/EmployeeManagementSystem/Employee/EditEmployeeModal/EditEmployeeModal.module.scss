@@ -6,10 +6,12 @@
   justify-content: space-between;
   gap: 1rem;
   height: fit-content;
+  width: 50vw;
   button {
     border: none;
   }
   .header {
+    border-radius: 1rem 1rem 0 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -40,7 +42,6 @@
     padding: 0 2rem;
     overflow: auto;
     height: 45vh;
-    overflow: auto;
     &__row {
       display: flex;
       flex-direction: column;
@@ -66,8 +67,7 @@
       color: rgb(75, 75, 75);
     }
     &__data {
-      white-space: nowrap;
-      overflow: auto;
+      word-wrap: break-word;
     }
     .group {
       display: flex;

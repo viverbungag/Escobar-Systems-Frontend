@@ -28,8 +28,12 @@ export default function InactivateTypes({
           return (
             <div className={styles.content_row} key={item.employeeTypeId}>
               <div className={styles.details}>
-                <InfoIcon />
-                {item.employeeTypeName}
+                <div className={styles.details__icon}>
+                  <InfoIcon />
+                </div>
+                <div className={styles.details__name}>
+                  {item.employeeTypeName}
+                </div>
               </div>
             </div>
           );

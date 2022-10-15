@@ -28,8 +28,12 @@ export default function InactivateExpenseCategory({
           return (
             <div className={styles.content_row} key={item.expenseCategoryId}>
               <div className={styles.details}>
+              <div className={styles.details__icon}>
                 <InfoIcon />
+              </div>
+              <div className={styles.details__name}>
                 {item.expenseCategoryName}
+              </div>
               </div>
             </div>
           );

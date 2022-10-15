@@ -10,6 +10,7 @@
     border: none;
   }
   .header {
+    border-radius: 1rem 1rem 0 0;
     color: white;
     background-color: black;
     padding: 1rem;
@@ -20,8 +21,8 @@
   .content {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    height: 30vh;
+    justify-content: flex-start;
+    height: 20vh;
     overflow: auto;
     gap: 1rem;
     padding: 0 1rem;

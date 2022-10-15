@@ -19,7 +19,7 @@ export default function InactiveEmployeeModal({
     { header: "ID", dataKey: "employeeId" },
     { header: "First", dataKey: "employeeFirstName" },
     { header: "Last", dataKey: "employeeLastName" },
-    { header: "Address", dataKey: "employeeAddress" },
+    // { header: "Address", dataKey: "employeeAddress" },
     { header: "Contact", dataKey: "employeeContactNumber" },
     { header: "Date Employed", dataKey: "dateEmployed" },
     { header: "Posiiton", dataKey: "employeePositionName" },
@@ -33,31 +33,36 @@ export default function InactiveEmployeeModal({
   const columns = [
     { field: "employeeFirstName", headerName: "First Name", flex: 1 },
     { field: "employeeLastName", headerName: "Last Name", flex: 1 },
-    {
-      field: "employeeAddress",
-      headerName: "Address",
-      flex: 1,
-      align: "right",
-    },
+    // {
+    //   field: "employeeAddress",
+    //   headerName: "Address",
+    //   flex: 1,
+    //   align: "right",
+    // },
     {
       field: "employeeContactNumber",
       headerName: "Contact",
       flex: 1,
-      align: "right",
+      align: "left",
     },
-    { field: "dateEmployed", headerName: "Position", flex: 1, align: "right" },
+    {
+      field: "dateEmployed",
+      headerName: "Date Employed",
+      flex: 1,
+      align: "left",
+    },
     {
       field: "employeePositionName",
       headerName: "Position",
       flex: 1,
-      align: "right",
+      align: "left",
     },
-    { field: "employeeTypeName", headerName: "Type", flex: 1, align: "right" },
+    { field: "employeeTypeName", headerName: "Type", flex: 1, align: "left" },
     {
       field: "superiorEmployeeName",
-      headerName: "Type",
+      headerName: "Superior",
       flex: 1,
-      align: "right",
+      align: "left",
     },
   ];
   //show button
@@ -66,6 +71,14 @@ export default function InactiveEmployeeModal({
       return (
         <Tooltip title="Activate Employee">
           <IconButton onClick={onActivate}>
+            <MediumButton label="Activate" />
+          </IconButton>
+        </Tooltip>
+      );
+    } else {
+      return (
+        <Tooltip title="Activate Employee">
+          <IconButton disabled onClick={onActivate}>
             <MediumButton label="Activate" />
           </IconButton>
         </Tooltip>

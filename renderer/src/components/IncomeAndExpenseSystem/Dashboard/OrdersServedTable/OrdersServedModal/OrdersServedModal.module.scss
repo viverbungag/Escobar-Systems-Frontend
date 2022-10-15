@@ -5,10 +5,12 @@
   flex-direction: column;
   justify-content: space-between;
   gap: 1rem;
+  width: 30vw;
   button {
     border: none;
   }
   &__header {
+    border-radius: 1rem 1rem 0 0;
     color: white;
     background-color: black;
     padding: 1rem;
@@ -19,8 +21,8 @@
   &__content {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    height: 30vh;
+    // justify-content: center;
+    height: 40vh;
     overflow: auto;
     gap: 1rem;
     padding: 0 1rem;

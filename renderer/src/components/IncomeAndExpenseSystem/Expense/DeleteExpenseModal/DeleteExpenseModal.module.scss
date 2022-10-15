@@ -7,6 +7,7 @@
   width: 40vw;
   height: 360px;
   .header {
+    border-radius: 1rem 1rem 0 0;
     text-align: center;
     font-size: $h5FontSize;
     font-weight: $h4FontWeight;
@@ -26,12 +27,12 @@
       width: 100%;
       display: flex;
       gap: 1rem;
-      white-space: nowrap;
     }
     .details {
       width: 30%;
       //   flex: 1 1 auto;
-      overflow: auto;
+      // overflow: auto;
+      word-wrap: break-word;
     }
   }
   .footer {

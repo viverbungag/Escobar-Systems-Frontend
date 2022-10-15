@@ -29,8 +29,10 @@ export default function InactivateAccountModal({
           return (
             <div className={styles.content_row} key={item.accountId}>
               <div className={styles.details}>
-                <PersonOutlineIcon />
-                {item.employeeName}
+                <div className={styles.details__icon}>
+                  <PersonOutlineIcon />
+                </div>
+                <div className={styles.details__name}>{item.employeeName}</div>
               </div>
             </div>
           );

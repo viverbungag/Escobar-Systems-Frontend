@@ -7,6 +7,7 @@
   height: 30vh;
   width: 30vw;
   .header {
+    border-radius: 1rem 1rem 0 0;
     text-align: center;
     font-size: $h5FontSize;
     font-weight: $h4FontWeight;
@@ -26,9 +27,15 @@
       gap: 2rem;
     }
     .details {
+      width: 100%;
       display: flex;
-      align-items: flex-end;
+      align-items: center;
       gap: 0.5rem;
+      &__name {
+        width: 90%;
+        flex: 1;
+        word-wrap: break-word;
+      }
     }
   }
   .footer {

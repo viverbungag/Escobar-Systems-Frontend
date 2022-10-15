@@ -29,8 +29,12 @@ export default function InactivateEmployeeModal({
           return (
             <div className={styles.content_row} key={item.employeeId}>
               <div className={styles.details}>
-                <PersonOutlineIcon />
-                {item.employeeLastName}, {item.employeeFirstName}
+                <div className={styles.details__icon}>
+                  <PersonOutlineIcon />
+                </div>
+                <div className={styles.details__name}>
+                  {item.employeeLastName}, {item.employeeFirstName}
+                </div>
               </div>
             </div>
           );

@@ -5,12 +5,13 @@
   flex-direction: column;
   gap: 1rem;
   overflow: auto;
-  width: 60vw;
+  width: 50vw;
   height: 45vh;
   button {
     border: none;
   }
   .header {
+    border-radius: 1rem 1rem 0 0;
     display: flex;
     justify-content: space-between;
     color: white;
@@ -60,11 +61,12 @@
     &__label {
       font-size: $body2FontSize;
       color: rgb(75, 75, 75);
-      white-space: nowrap;
+      // white-space: nowrap;
       padding-bottom: 1rem;
     }
     &__data {
-      overflow: auto;
+      // overflow: auto;
+      word-wrap: break-word;
     }
   }
   .footer {

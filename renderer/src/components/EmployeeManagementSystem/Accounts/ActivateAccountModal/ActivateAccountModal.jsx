@@ -30,8 +30,12 @@ export default function ActivateAccountModal({
           return (
             <div className={styles.content_row} key={item.accountId}>
               <div className={styles.details}>
-                <PersonOutlineIcon />
-                {item.accountUsername}
+                <div className={styles.details__icon}>
+                  <PersonOutlineIcon />
+                </div>
+                <div className={styles.details__name}>
+                  {item.accountUsername}
+                </div>
               </div>
             </div>
           );

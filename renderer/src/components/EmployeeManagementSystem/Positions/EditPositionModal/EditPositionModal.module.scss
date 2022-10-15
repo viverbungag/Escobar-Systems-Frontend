@@ -1,53 +1,32 @@
 @import "../../../../styles/variables.scss";
 
-.container {
+.form {
   display: flex;
-  align-items: center;
   flex-direction: column;
+  align-items: center;
   width: 30vw;
-  height: 30vh;
-  .form {
-    flex: 1;
+  .header {
+    border-radius: 1rem 1rem 0 0;
     width: 100%;
+    text-align: center;
+    background-color: black;
+    color: white;
+    padding: 1rem;
+    font-weight: $h4FontWeight;
+    font-size: $h5FontSize;
+  }
+  .content {
+    width: 100%;
+    padding: 1rem;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    // overflow: auto;
-    .header {
-      position: sticky;
-      top: 0;
-      font-size: $h5FontSize;
-      font-weight: $h3FontWeight;
-      text-align: center;
-      background-color: black;
-      color: white;
-      padding: 1rem;
-      text-transform: capitalize;
-    }
-    .content {
-      // margin: 2rem 0;
-      padding: 1rem;
-      font-size: $bodyFontSize;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      height: 16vh;
-      overflow: auto;
-      .content_header {
-        font-weight: $h3FontWeight;
-      }
-    }
-    .footer {
-      position: sticky;
-      bottom: 0;
-      display: flex;
-      justify-content: flex-end;
-      padding: 1rem;
-      background-color: rgb(255, 255, 255);
-      width: 100%;
-      button {
-        border: none;
-      }
+  }
+  .footer {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    padding: 1rem;
+    button {
+      border: none;
     }
   }
 }
