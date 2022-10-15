@@ -82,6 +82,7 @@ const PaymentPage = () => {
   }
 
   const handleVoidOrderSuccess = () => {
+    console.log("hello");
     getAllOrders();
   }
 

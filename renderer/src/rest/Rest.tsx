@@ -199,7 +199,6 @@ class Rest {
 
   delete(
     url: string,
-    body: Object,
     handleSuccessAction: Function,
     successMessage: string
   ) {

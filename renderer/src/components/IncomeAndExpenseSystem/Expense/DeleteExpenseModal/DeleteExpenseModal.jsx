@@ -15,7 +15,6 @@ export default function DeleteExpenseModal({
     selectedValues.map((item) => {
       rest.delete(
         `${INITIAL_URL}/expense/delete/${item.expenseId}`,
-        item,
         deleteSuccessAction,
         `Successfully deleted ${selectedValues.length} expense/s.`
       );

@@ -99,6 +99,11 @@ const MenuOrderTab = ({
       setTotal(parseFloat(subTotal).toFixed(2));
     } else {
       payButtonOnClick(
+        pdfRows,
+        pdfColumns,
+        pdfPaymentRows,
+        pdfPaymentColumns,
+        servingType,
         customerPayment,
         discountPayment,
         additionalPayment,
