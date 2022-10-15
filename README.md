@@ -1,38 +1,26 @@
-<p align="center"><img src="https://i.imgur.com/X7dSE68.png"></p>
+<h2 align="center"> Escobar System Frontend </h2>
+<div style = "">
+<img src = "https://media.giphy.com/media/jc2PkKKr3clTBekMzn/giphy.gif" align = "right" width = "70%" align = "center" loop = infinite/>
+<h3> Systems: </h3> 
 
-## Usage
+<h4> Inventory Management System </h4>
+<h4> Employee Management System </h4>
+<h4> Ordering System </h4>
+<h4> Income & Expense System </h4>
+<br/>
+<h3> Developers: </h3> 
 
-### Create an App
 
-```
-# with npx
-$ npx create-nextron-app my-app --example with-javascript
+<p> Viver Bungag </p> 
+<p> Aaron Go </p> 
+<p> Julienne Panes </p> 
+<p> Jay Tan </p> 
+</div> 
 
-# with yarn
-$ yarn create nextron-app my-app --example with-javascript
+<br/>
+<img src = "https://media.giphy.com/media/nqabPDH6qP7tNdkMjD/giphy.gif" align = "right" width = "60%" align = "center" loop = infinite/>
+<h1> Source of Inspiration: </h1> 
 
-# with pnpx
-$ pnpx create-nextron-app my-app --example with-javascript
-```
+<div align = "center" >
 
-### Install Dependencies
-
-```
-$ cd my-app
-
-# using yarn or npm
-$ yarn (or `npm install`)
-
-# using pnpm
-$ pnpm install --shamefully-hoist
-```
-
-### Use it
-
-```
-# development mode
-$ yarn dev (or `npm run dev` or `pnpm run dev`)
-
-# production build
-$ yarn build (or `npm run build` or `pnpm run build`)
-```
+</div>
