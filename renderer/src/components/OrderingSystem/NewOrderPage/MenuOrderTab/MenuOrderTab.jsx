@@ -149,7 +149,7 @@ const MenuOrderTab = ({
       console.log(item);
       arr.push({
         menuName: item.menuName,
-        menuQuantity: item.menuQuantity,
+        menuQuantity: item.orderMenuQuantity,
         menuPrice: item.menuPrice,
       });
     });
