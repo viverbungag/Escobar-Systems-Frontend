@@ -16,7 +16,7 @@ export default function AddExpenseCategory({ addSuccessAction }) {
   const rest = new Rest();
   const [newCategory, setNewCategory] = useState("");
   const handleChange = (e) => {
-    setNewCategory(capitalizeData(e.target.value));
+    setNewCategory(e.target.value);
   };
   const handleSubmit = () => {
     const addedCategory = new ExpenseCategory(1, newCategory, true);

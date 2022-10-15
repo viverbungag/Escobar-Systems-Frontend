@@ -52,7 +52,7 @@ export default function EditAccount({
     } else {
       setNewAccount({
         ...newAccount,
-        [e.target.name]: capitalizeData(e.target.value),
+        [e.target.name]: e.target.value,
       });
     }
   };

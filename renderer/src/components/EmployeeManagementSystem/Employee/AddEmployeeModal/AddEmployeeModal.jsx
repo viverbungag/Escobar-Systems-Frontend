@@ -72,7 +72,7 @@ export default function EditEmployeeModal({
     if (e.target == undefined) {
       setValues({ ...values, [e.key]: e.value });
     } else {
-      setValues({ ...values, [e.target.name]: capitalizeData(e.target.value) });
+      setValues({ ...values, [e.target.name]: e.target.value });
     }
   };
   const [lastNameError, setLastNameError] = useState(false);

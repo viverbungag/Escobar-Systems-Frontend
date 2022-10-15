@@ -20,7 +20,7 @@ export default function AddType({ addSuccessAction }) {
   const rest = new Rest();
   const [newType, setNewType] = useState("");
   const handleChange = (e) => {
-    setNewType(capitalizeData(e.target.value));
+    setNewType(e.target.value);
   };
   const handleSubmit = () => {
     const addedType = new Types(1, newType, true);

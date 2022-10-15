@@ -25,7 +25,7 @@ export default function EditTypes({
   const rest = new Rest();
   const [typeName, setTypeName] = useState(employeeTypeName[0]);
   const handleTypeNameOnChange = (e) => {
-    setTypeName(capitalizeData(e.target.value));
+    setTypeName(e.target.value);
   };
 
   const [typeNameError, setTypeNameError] = useState(false);

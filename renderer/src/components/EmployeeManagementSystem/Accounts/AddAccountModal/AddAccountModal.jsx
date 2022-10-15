@@ -51,7 +51,7 @@ export default function AddAccountModal({ addSuccessAction, activeEmployees }) {
     } else {
       setNewAccount({
         ...newAccount,
-        [e.target.name]: capitalizeData(e.target.value),
+        [e.target.name]: e.target.value,
       });
     }
   };

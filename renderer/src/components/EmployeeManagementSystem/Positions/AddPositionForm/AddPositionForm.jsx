@@ -22,7 +22,6 @@ export default function AddPositionForm({ addSuccessAction }) {
     setNewPosition(e.target.value);
   };
   const handleSubmit = () => {
-    newPosition = capitalizeData(newPosition);
     const addedPosition = new Position(1, newPosition, true);
     rest.add(
       `${INITIAL_URL}/employee-position/add`,

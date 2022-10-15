@@ -59,7 +59,7 @@ export default function EditExpenseModal({
     const updatedExpense = new Expense(
       selectedExpense.expenseId,
       category,
-      capitalizeData(description),
+      description,
       datetime,
       cost
     );

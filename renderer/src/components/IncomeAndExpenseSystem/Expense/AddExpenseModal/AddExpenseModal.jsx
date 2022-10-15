@@ -65,13 +65,7 @@ export default function AddExpenseModal({
       setCostError(false);
     }
 
-    const newExpense = new Expense(
-      1,
-      category,
-      capitalizeData(description),
-      datetime,
-      cost
-    );
+    const newExpense = new Expense(1, category, description, datetime, cost);
 
     rest.add(
       `${INITIAL_URL}/expense/add`,

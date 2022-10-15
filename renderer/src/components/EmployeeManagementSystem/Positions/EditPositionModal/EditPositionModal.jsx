@@ -30,7 +30,7 @@ export default function EditPositionModal({
 
   const [positionName, setPositionName] = useState(employeePositionName[0]);
   const handlePositionNameOnChange = (e) => {
-    setPositionName(capitalizeData(e.target.value));
+    setPositionName(e.target.value);
   };
 
   const [positionNameError, setPositionNameError] = useState(false);
