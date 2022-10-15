@@ -25,22 +25,27 @@
   }
 }
 
-.Txt-Section {
-  display: flex;
-  flex-direction: row;
-  gap: 5px;
-}
-.Title-Section {
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-
+.order-name {
+  width: 100%;
+  word-wrap: break-word;
   h2 {
     font-family: "SF Pro Text";
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
   }
+}
+
+.Txt-Section {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}
+
+.Title-Section {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
 
   .Counter-Section {
     display: flex;
@@ -84,7 +89,8 @@
     font-weight: 700;
     font-size: 14px;
     width: 100px;
-    overflow: auto;
+    // overflow: auto;
+    word-wrap: break-word;
     align-self: center;
   }
 }

@@ -6,13 +6,11 @@
   margin-top: 10px;
   overflow: auto;
 
-  
   table {
     margin-top: 20px;
     border-collapse: collapse;
     width: 100%;
     border: 1px solid black;
-
   }
 
   tr th {
@@ -29,29 +27,31 @@
     text-align: left;
   }
 
-  .Column-1{
+  .column__clickable {
     font-size: 16px;
     background-color: transparent;
     border: none;
-    width: 91%;
     padding: 12px 12px;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     text-align: left;
-
+    width: 250px;
+    word-wrap: break-word;
+    &:hover {
+      background-color: #cccccc;
+    }
   }
-  .Column-1:hover{
-    background-color: #afc5d1;
-  }
 
-  .Column-2{
+  .column__unclickable {
     font-size: 16px;
     background-color: transparent;
     border: none;
-    width: 91%;
+    width: 100%;
     padding: 12px 12px;
-    font-family: 'Poppins', sans-serif;
-  } 
-
+    font-family: "Poppins", sans-serif;
+    text-align: left;
+    width: 100px;
+    word-wrap: break-word;
+  }
 }
 
 .title {
@@ -59,7 +59,6 @@
   font-size: 26px;
   margin-bottom: 30px;
 }
-
 
 .style {
   position: absolute;
@@ -71,40 +70,37 @@
   width: 566px;
   height: 410px;
   display: flex;
-  background-color: #FAFAFA;
+  background-color: #fafafa;
   border: 3px solid;
   border-radius: 6px;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
-  .Wrapper{ 
-      justify-content: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-left: 100px;
-
+  .Wrapper {
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 100px;
   }
-  .Close_Button{
-      position:absolute;
-      top:0;
-      right:0;
-      background-color: red;
-      color: white;
-      border: 2px solid #000000;
+  .Close_Button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: red;
+    color: white;
+    border: 2px solid #000000;
   }
   .Image-Section {
-      margin-left: 10px;
-      margin-top: 5px;
+    margin-left: 10px;
+    margin-top: 5px;
   }
 
   .Text-Section {
-      h1 {
-
-          font-style: normal;
-          font-weight: 500;
-          font-size: 20px;
-          line-height: 20px;
-          margin-bottom: 10px;
-      }
-
+    h1 {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 20px;
+      margin-bottom: 10px;
+    }
   }
 }

@@ -21,20 +21,7 @@
     gap: 1rem;
   }
   &__data {
-    display: flex;
-    // flex: 1;
     width: 100px;
-    text-align: center;
-    overflow: auto;
-  }
-}
-
-.remove-button {
-  border: none;
-  background-color: none;
-  &:hover {
-    cursor: pointer;
-    transform: scale(1.1);
-    color: red;
+    word-wrap: break-word;
   }
 }

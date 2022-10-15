@@ -23,9 +23,11 @@ const MenuOrderTabCard = ({
           <Icon icon={circleX} />
         </button>
       </div>
+      <div className={styles["order-name"]}>
+        <h2>{title}</h2>
+      </div>
       <div className={styles["Txt-Section"]}>
         <div className={styles["Title-Section"]}>
-          <h2> {title}</h2>
           <div className={styles["Counter-Section"]}>
             <button onClick={() => quantityOnChange(title, quantity, -1)}>
               <Icon
