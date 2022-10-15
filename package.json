@@ -3,7 +3,7 @@
   "name": "escobar-systems",
   "description": "Escobar's Systems",
   "version": "1.0.0",
-  "author": "Viver Val Bungag <viverbungag1@gmail.com>, Julienne Andrea Panes <>, Jay Innhahn Tan<jaytan3825@gmail.com>, Aaron Go<>",
+  "author": "Viver Val Bungag <viverbungag1@gmail.com>, Julienne Andrea Panes <juliennepanes@gmail.com>, Jay Innhahn Tan<jaytan3825@gmail.com>, Aaron Go<aarongo0423@gmail.com>",
   "main": "app/background.js",
   "scripts": {
     "dev": "nextron",
