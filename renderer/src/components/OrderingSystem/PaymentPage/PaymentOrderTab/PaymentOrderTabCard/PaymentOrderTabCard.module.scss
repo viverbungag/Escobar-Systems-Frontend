@@ -1,27 +1,37 @@
 .PaymentOrderTabCard {
-  border: 1px solid;
-  padding: 10px;
-  box-shadow: 5px 10px rgb(134, 134, 134);
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  font-family: "SF Pro Text";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 15px;
-  &__header {
-    display: flex;
-    justify-content: flex-end;
-  }
-  &__content {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 1rem;
-  }
-  &__data {
-    width: 100px;
-    word-wrap: break-word;
-  }
+	border: 1px solid;
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	font-family: "SF Pro Text";
+	font-style: normal;
+	font-weight: 500;
+	font-size: 15px;
+	&__header {
+		display: flex;
+		justify-content: flex-end;
+	}
+	&__content {
+		display: flex;
+		width: 100%;
+		justify-content: space-between;
+		align-items: center;
+		gap: 1rem;
+	}
+	&__data {
+		width: 100px;
+		word-wrap: break-word;
+		margin-left: 0.5rem;
+	}
+	&__quantity {
+		width: 50px;
+		word-wrap: break-word;
+		margin-left: 3rem;
+	}
+	&__price {
+		width: 80px;
+		word-wrap: break-word;
+		margin-left: 3rem;
+	}
 }

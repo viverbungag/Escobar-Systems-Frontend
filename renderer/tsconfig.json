@@ -1,21 +1,31 @@
 {
-  "compilerOptions": {
-    "baseUrl": ".",
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": false,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "incremental": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve"
-  },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/components/Shared/DataTable/DataTable.jsx", "src/components/Shared/DataTable/DataTable.stories.jsx", "pages/home.jsx", "src/components/Shared/WindowControlBar/WindowControlBar.stories.jsx", "src/components/Shared/WindowControlBar/WindowControlBar.jsx", "find-pid-from-port"],
-  "exclude": ["node_modules"]
+	"compilerOptions": {
+		"baseUrl": ".",
+		"target": "es5",
+		"lib": ["dom", "dom.iterable", "esnext"],
+		"allowJs": true,
+		"skipLibCheck": true,
+		"strict": false,
+		"forceConsistentCasingInFileNames": true,
+		"noEmit": true,
+		"incremental": true,
+		"esModuleInterop": true,
+		"module": "esnext",
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"jsx": "preserve"
+	},
+	"include": [
+		"next-env.d.ts",
+		"**/*.ts",
+		"**/*.tsx",
+		"src/components/Shared/DataTable/DataTable.jsx",
+		"src/components/Shared/DataTable/DataTable.stories.jsx",
+		"pages/home.jsx",
+		"src/components/Shared/WindowControlBar/WindowControlBar.stories.jsx",
+		"src/components/Shared/WindowControlBar/WindowControlBar.jsx",
+		"find-pid-from-port"
+	],
+	"exclude": ["node_modules"]
 }
