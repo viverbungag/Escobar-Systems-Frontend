@@ -37,8 +37,8 @@
 		gap: 0.5rem;
 		.trashcan {
 			margin-right: 0.5rem;
-			background-color: #fafafa;
-			border: none solid;
+			background-color: transparent;
+			border: transparent;
 		}
 	}
 
@@ -172,6 +172,20 @@
 		width: 100%;
 		justify-content: flex-end;
 		padding: 1rem 0.4rem;
+
+		.Close_Button {
+			margin-right: 0.5rem;
+			margin-top: 0.5rem;
+			background-color: #ff0000db;
+			color: white;
+			box-shadow: 0 5px #666;
+			border: 3px solid #000000;
+			transition: transform 0.2s;
+			&:hover {
+				transform: translateY(2px);
+				background-color: #ff0000;
+			}
+		}
 	}
 
 	&__container {
@@ -239,38 +253,61 @@
 		flex-direction: column;
 		align-items: center;
 		padding: 1rem 0;
+
+		.confirm-button {
+			width: 128px;
+			height: 45.84px;
+			box-sizing: border-box;
+			background: #36cd1d;
+			border: 3px solid #000000;
+			color: white;
+			justify-content: center;
+			font-style: normal;
+			font-weight: 400;
+			font-size: 20px;
+			line-height: 30px;
+			transition: 0.32s;
+			&:hover {
+				transform: scale(1.1);
+			}
+		}
 	}
 }
 
-.close-button {
-	background-color: red;
-	color: white;
-	box-shadow: 0 5px #666;
-	border: 3px solid #000000;
-	transition: transform 0.2s;
-	&:hover {
-		transform: translateY(2px);
-		background-color: #ff0000;
-	}
-}
+// .Close_Button {
+// 	position: absolute;
+// 	top: 0;
+// 	right: 0;
 
-.confirm-button {
-	width: 128px;
-	height: 45.84px;
-	box-sizing: border-box;
-	background: #36cd1d;
-	border: 3px solid #000000;
-	color: white;
-	justify-content: center;
-	font-style: normal;
-	font-weight: 400;
-	font-size: 20px;
-	line-height: 30px;
-	transition: 0.32s;
-	&:hover {
-		transform: scale(1.1);
-	}
-}
+// 	margin-right: 0.5rem;
+// 	margin-top: 0.5rem;
+// 	background-color: #ff0000db;
+// 	color: white;
+// 	box-shadow: 0 5px #666;
+// 	border: 3px solid #000000;
+// 	transition: transform 0.2s;
+// 	&:hover {
+// 		transform: translateY(2px);
+// 		background-color: #ff0000;
+// 	}
+// }
+// .confirm-button {
+// 	width: 128px;
+// 	height: 45.84px;
+// 	box-sizing: border-box;
+// 	background: #36cd1d;
+// 	border: 3px solid #000000;
+// 	color: white;
+// 	justify-content: center;
+// 	font-style: normal;
+// 	font-weight: 400;
+// 	font-size: 20px;
+// 	line-height: 30px;
+// 	transition: 0.32s;
+// 	&:hover {
+// 		transform: scale(1.1);
+// 	}
+// }
 
 // .child-style {
 // 	position: absolute;

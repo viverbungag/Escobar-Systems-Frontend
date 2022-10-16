@@ -5,9 +5,6 @@ import shortid from "shortid";
 import { Icon } from "@iconify/react";
 import { useUser } from "../../../contexts/UserContext";
 import chevronRight from "@iconify/icons-akar-icons/chevron-right";
-import Modal from "@mui/material/Modal";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Rest from "../../../../rest/Rest";
 import Order from "../../../../model/Order";
 import { InputAdornment, TextField } from "@mui/material";
@@ -15,6 +12,9 @@ import printIcon from "@iconify/icons-bytesize/print";
 import { printReceipt } from "../../../../../print/printFunctions";
 import { toast } from "react-toastify";
 import set from "date-fns/set";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Modal from "@mui/material/Modal";
 
 const INITIAL_URL = process.env.NEXT_PUBLIC_INITIAL_URL;
 

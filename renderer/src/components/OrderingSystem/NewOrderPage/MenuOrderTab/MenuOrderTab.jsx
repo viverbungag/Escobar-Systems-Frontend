@@ -312,7 +312,7 @@ const MenuOrderTab = ({
 			<Modal open={open} onClose={handleClose}>
 				<Box className={styles["modal"]}>
 					<div className={styles["modal__title-bar"]}>
-						<Button onClick={handleClose} className={styles["close-button"]}>
+						<Button onClick={handleClose} className={styles["Close_Button"]}>
 							{" "}
 							X{" "}
 						</Button>

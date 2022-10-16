@@ -148,6 +148,20 @@
 		width: 100%;
 		justify-content: flex-end;
 		padding: 1rem 0.4rem;
+
+		.close-button {
+			margin-right: 0.5rem;
+			margin-top: 0.5rem;
+			background-color: red;
+			color: white;
+			box-shadow: 0 5px #666;
+			border: 3px solid #000000;
+			transition: transform 0.2s;
+			&:hover {
+				transform: translateY(2px);
+				background-color: #ff0000;
+			}
+		}
 	}
 
 	&__container {
@@ -237,18 +251,6 @@
 		flex-direction: column;
 		align-items: center;
 		padding: 1rem 0;
-	}
-}
-
-.close-button {
-	background-color: red;
-	color: white;
-	border: 3px solid #000000;
-	transition: transform 0.2s;
-	&:hover {
-		transform: translateY(2px);
-		box-shadow: 0 5px #666;
-		background-color: #ff0000;
 	}
 }
 
