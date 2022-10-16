@@ -63,7 +63,6 @@
 .style {
 	position: absolute;
 	user-select: none;
-
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
@@ -85,13 +84,21 @@
 		position: absolute;
 		top: 0;
 		right: 0;
+		margin-right: 0.5rem;
+		margin-top: 0.5rem;
 		background-color: red;
 		color: white;
-		border: 2px solid #000000;
+		box-shadow: 0 5px #666;
+		border: 3px solid #000000;
+		transition: transform 0.2s;
+		&:hover {
+			transform: translateY(2px);
+			background-color: #ff0000;
+		}
 	}
 	.Image-Section {
-		margin-left: 10px;
-		margin-top: 5px;
+		margin-left: 0.5rem;
+		margin-top: 0.5rem;
 	}
 
 	.Text-Section {

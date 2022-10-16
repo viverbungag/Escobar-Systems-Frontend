@@ -53,8 +53,8 @@ const DashboardTable = ({ unavailableMenu }) => {
 													<Image
 														src="/OrderingSystem/images/logo.png"
 														alt="Escobar Logo"
-														width="40"
-														height="40"
+														width="45"
+														height="45"
 														objectFit="contain"
 													/>
 												</div>

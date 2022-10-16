@@ -320,7 +320,7 @@ const UnpaidOrderTab = ({
 			<div className={styles["footer-section"]}>
 				<div className={styles["footer-section__row"]}>
 					<h2 className={styles["footer-section__text"]}> SubTotal </h2>
-					<h2 className={styles["footer-section__text"]}> {subTotal} </h2>
+					<h2 className={styles["footer-section__text"]}> ₱ {subTotal} </h2>
 				</div>
 				<div className={styles["pay-button"]} onClick={handlePayOpen}>
 					<div className={styles["pay-button__content"]}>

@@ -12,7 +12,7 @@ const UnpaidPageCard = ({
 	isSelected,
 	voidButtonOnClick,
 	orderDate,
-	tableNumber
+	tableNumber,
 }) => {
 	const [voidOpen, setVoidOpen] = React.useState(false);
 	const handleVoidOpen = () => setVoidOpen(true);
@@ -94,8 +94,7 @@ const UnpaidPageCard = ({
 						</Modal>
 					</div>
 
-					<div>
-					</div>
+					<div></div>
 					{/* <Modal open={open} onClose={handleClose}>
         <Box className={styles["style"]}>
           <Button onClick={handleClose} className={styles["Close_Button"]}>

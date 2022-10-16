@@ -1,228 +1,221 @@
-.PaymentPageCard{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 20px 10px;
-    gap: 20px;
-    background-color:white;
-    width: 450px;
-    height: 100px;
-    border-radius: 10px;
-    user-select: none;
+.PaymentPageCard {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	padding: 20px 10px;
+	gap: 20px;
+	background-color: white;
+	width: 450px;
+	height: 100px;
+	border-radius: 10px;
+	user-select: none;
 
-    &--selected{
-        background-color: #003049;
-        color: white;
-    }
-
-
+	&--selected {
+		background-color: #003049;
+		color: white;
+	}
 }
 
-.PaymentPageCard:hover{
-    background-color: #fafafa;
-    color: black
+.PaymentPageCard:hover {
+	background-color: #fafafa;
+	color: black;
 }
-.PaymentPageCard--selected:hover{
-    background-color: #003049;
-    color: white;
+.PaymentPageCard--selected:hover {
+	background-color: #003049;
+	color: white;
 }
-
 
 .style {
-    user-select: none;
+	user-select: none;
 
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 566px;
-    height: 410px;
-    display: flex;
-    background-color: #FAFAFA;
-    border: 3px solid;
-    border-radius: 6px;
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
-    .Wrapper{ 
-        justify-content: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-left: 85px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 566px;
+	height: 410px;
+	display: flex;
+	background-color: #fafafa;
+	border: 3px solid;
+	border-radius: 6px;
+	box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
+	.Wrapper {
+		justify-content: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-left: 85px;
+	}
+	// .Close_Button {
+	// 	position: absolute;
+	// 	top: 0;
+	// 	right: 0;
+	// 	background-color: red;
+	// 	color: white;
+	// 	border: 3px solid #000000;
+	// }
 
-    }
-    .Close_Button{
-        position:absolute;
-        top:0;
-        right:0;
-        background-color: red;
-        color: white;
-        border: 3px solid #000000;
+	.Close_Button {
+		position: absolute;
+		top: 0;
+		right: 0;
+		margin-right: 0.5rem;
+		margin-top: 0.5rem;
+		background-color: red;
+		color: white;
+		box-shadow: 0 5px #666;
+		border: 3px solid #000000;
+		transition: transform 0.2s;
+		&:hover {
+			transform: translateY(2px);
+			background-color: #ff0000;
+		}
+	}
+	.Image-Section {
+		margin-bottom: 25px;
+	}
+	.Text-Section {
+		h1 {
+			font-style: normal;
+			font-weight: 500;
+			font-size: 20px;
+			line-height: 20px;
+			text-align: center;
+		}
 
-    }
-    .Image-Section {
-        margin-bottom: 25px;
+		.Button-Section {
+			margin-top: 20px;
 
-    }
-    .Text-Section {
-        h1 {
-            font-style: normal;
-            font-weight: 500;
-            font-size: 20px;
-            line-height: 20px;
-            text-align: center;
-        }
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			gap: 30px;
 
-        .Button-Section {
-            margin-top: 20px;
+			.Confirm_Button {
+				width: 120px;
+				height: 50px;
+				box-sizing: border-box;
+				background: #36cd1d;
+				border: 3px solid #000000;
+				color: white;
 
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            gap: 30px;
+				font-style: normal;
+				font-weight: 400;
+				font-size: 20px;
+				line-height: 30px;
+				box-shadow: 0 2px #666;
+				transition: transform 0.2s;
+			}
+			.Confirm_Button:active {
+				box-shadow: 0 5px #666;
+				transform: translateY(2px);
+				background-color: #37cd1da6;
+			}
+			.Cancel_Button {
+				width: 120px;
+				height: 50px;
+				box-sizing: border-box;
+				background: #ff0000;
+				color: white;
+				border: 3px solid #000000;
 
-            .Confirm_Button{
-                width: 120px;
-                height: 50px;
-                box-sizing: border-box;
-                background: #36CD1D;
-                border: 3px solid #000000;
-                color: white;
-        
-                font-style: normal;
-                font-weight: 400;
-                font-size: 20px;
-                line-height: 30px;
-            }
-            .Confirm_Button:active{
-                box-shadow: 0 5px #666;
-                transform: translateY(2px);
-                background-color: #37cd1da6;
-            }
-            .Cancel_Button{
-                width: 120px;
-                height: 50px;
-                box-sizing: border-box;
-                background: #FF0000;
-                color: white;
-                border: 3px solid #000000;
-        
-                font-style: normal;
-                font-weight: 400;
-                font-size: 20px;
-                line-height: 30px;
-            }
-            .Cancel_Button:active{
-                box-shadow: 0 5px #666;
-                transform: translateY(2px);
-                background-color: #f80707bc;
-            }
-        }
-
-    }
-
-
-
-    
+				font-style: normal;
+				font-weight: 400;
+				font-size: 20px;
+				line-height: 30px;
+				box-shadow: 0 2px #666;
+				transition: transform 0.2s;
+			}
+			.Cancel_Button:active {
+				box-shadow: 0 5px #666;
+				transform: translateY(2px);
+				background-color: #f80707bc;
+			}
+		}
+	}
 }
-.Section{
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    height: 100%;
-}
-
-.First-Section{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0px;
-    gap: 20px;
-    width: 100%;
-
-    h3{
-        font-family: 'SF Pro Text';
-        font-style: bold;
-        font-weight: 700;
-        font-size: 20px;
-        line-height: 14px;
-        top: 0px;
-
-    }
+.Section {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	height: 100%;
 }
 
+.First-Section {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	padding: 0px;
+	gap: 20px;
+	width: 100%;
 
-    .Quantity-Section{
+	h3 {
+		font-family: "SF Pro Text";
+		font-style: bold;
+		font-weight: 700;
+		font-size: 20px;
+		line-height: 14px;
+		top: 0px;
+	}
+}
 
-        h3{
-            font-family: 'SF Pro Text';
-            font-style: normal;
-            font-weight: 700;
-            font-size: 14px;
-            line-height: 14px;
-            margin-top: 7px;
-        }
-    }
-    .Second-Section{
-        display: flex;
-        justify-content: flex-end;
-        width: 100%;
-        align-items: flex-end;
-        flex-direction: column;
-        padding: 0px;
-        right: 0px;
-        h4{ 
-            font-family: 'SF Pro Text';
-            font-style: normal;
-            font-weight: 700;
-            font-size: 14px;
-            line-height: 14px;
-            margin-bottom: 10px;
-            top: 0px;
-        }
-        .Price-Section{
-            display: flex;
-            flex-direction: row;
-            margin-top: 15px;
-            
-            h3{
-                font-family: 'SF Pro Text';
-                font-style: normal;
-                font-weight: 700;
-                font-size: 14px;
-                line-height: 14px;
-                margin-right: 10px;
-                margin-top: 5px;
-            }
-            button{
-                display: flex;
-                flex-direction: row;
-                justify-content: center;
-                align-items: center;
-                padding: 5px 20px;
-                gap: 10px;
-                width: 65px;
-                height: 24px;
-                
-                
-                background: red;
-                color: white;
-                border-radius: 30px;
-            }
-            button:active{
-                display: flex;
-                flex-direction: row;
-                justify-content: center;
-                align-items: center;
-                padding: 5px 20px;
-                gap: 10px;
-                margin-bottom: 10px;
-                width: 65px;
-                height: 24px;
-                transform: scale(1.2);
-                background: red;
-                color: white;
-                border-radius: 30px;
-            }
-        }
+.Quantity-Section {
+	h3 {
+		font-family: "SF Pro Text";
+		font-style: normal;
+		font-weight: 700;
+		font-size: 14px;
+		line-height: 14px;
+		margin-top: 7px;
+	}
+}
+.Second-Section {
+	display: flex;
+	justify-content: flex-end;
+	width: 100%;
+	align-items: flex-end;
+	flex-direction: column;
+	padding: 0px;
+	right: 0px;
+	h4 {
+		font-family: "SF Pro Text";
+		font-style: normal;
+		font-weight: 700;
+		font-size: 14px;
+		line-height: 14px;
+		margin-bottom: 10px;
+		top: 0px;
+	}
+	.Price-Section {
+		display: flex;
+		flex-direction: row;
+		margin-top: 15px;
 
-    }
+		h3 {
+			font-family: "SF Pro Text";
+			font-style: normal;
+			font-weight: 700;
+			font-size: 14px;
+			line-height: 14px;
+			margin-right: 10px;
+			margin-top: 5px;
+		}
+		button {
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+			padding: 5px 20px;
+			gap: 10px;
+			width: 65px;
+			height: 24px;
+
+			background: red;
+			color: white;
+			border-radius: 30px;
+		}
+		button:active {
+			transform: scale(1.2);
+		}
+	}
+}
